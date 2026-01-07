@@ -1,0 +1,202 @@
+import { PawPrint, Heart } from "lucide-react";
+import { fontFamily, fontFamilyHeading } from "../constants";
+import useTheme from "../hooks/useTheme";
+
+/**
+ * Footer Component
+ * Application footer with branding, navigation links, and copyright information.
+ *
+ * @param {Object} props - Component props
+ * @param {function} props.onOpenProductModal - Callback when product link is clicked
+ * @param {function} props.onOpenResourcesModal - Callback when resources link is clicked
+ * @param {function} props.onOpenCompanyModal - Callback when company link is clicked
+ * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
+ */
+const Footer = ({
+  onOpenProductModal,
+  onOpenResourcesModal,
+  onOpenCompanyModal,
+  darkMode: darkModeOverride,
+}) => {
+  // Use theme context with optional override for backward compatibility
+  let isDark = false;
+  try {
+    const theme = useTheme();
+    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
+  } catch {
+    // Fallback if used outside ThemeProvider (backward compatibility)
+    isDark = darkModeOverride ?? false;
+  }
+
+  // Handler for logo click - reload page
+  const handleLogoClick = () => {
+    window.location.reload();
+  };
+
+  // Handler for logo keyboard interaction
+  const handleLogoKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      window.location.reload();
+    }
+  };
+
+  // Theme-based classes
+  const headingClasses = isDark ? "text-slate-200" : "text-slate-700";
+  const textClasses = isDark ? "text-slate-400" : "text-slate-600";
+  const linkClasses = isDark
+    ? "text-slate-400 hover:text-slate-200"
+    : "text-slate-600 hover:text-slate-800";
+
+  return (
+    <footer
+      className={`mt-8 sm:mt-12 md:mt-16 border-t transition-all duration-300 ${
+        isDark
+          ? "bg-slate-900/50 border-slate-800 backdrop-blur-lg"
+          : "bg-white/80 border-slate-200 backdrop-blur-lg"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+          {/* Brand Section */}
+          <div className="col-span-2 sm:col-span-2 lg:col-span-1 space-y-2 sm:space-y-3 md:space-y-4">
+            <div
+              className="flex items-center space-x-2 sm:space-x-3 cursor-pointer w-fit"
+              onClick={handleLogoClick}
+              role="button"
+              tabIndex={0}
+              onKeyDown={handleLogoKeyDown}
+            >
+              <div
+                className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl ${
+                  isDark ? "bg-emerald-900/30" : "bg-emerald-100"
+                }`}
+              >
+                <PawPrint
+                  className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${
+                    isDark ? "text-emerald-400" : "text-emerald-600"
+                  }`}
+                />
+              </div>
+              <h3
+                className={`text-lg sm:text-xl md:text-2xl font-bold ${
+                  isDark ? "text-slate-100" : "text-slate-800"
+                }`}
+                style={{ fontFamily: fontFamilyHeading }}
+              >
+                ZOOLAB
+              </h3>
+            </div>
+            <p
+              className={`text-xs sm:text-sm leading-relaxed ${textClasses}`}
+              style={{ fontFamily }}
+            >
+              Professional zoo animal monitoring and management system for
+              zoolab staff, veterinarians, and wildlife conservation
+              specialists.
+            </p>
+          </div>
+
+          {/* Product Section */}
+          <div className="space-y-2 sm:space-y-3 md:space-y-4">
+            <h4
+              className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
+              style={{ fontFamily }}
+            >
+              Product
+            </h4>
+            <ul className="space-y-1 sm:space-y-2">
+              {["Features", "Support"].map((link) => (
+                <li key={link}>
+                  <button
+                    onClick={onOpenProductModal}
+                    className={`text-xs sm:text-sm transition-colors cursor-pointer text-left ${linkClasses}`}
+                    style={{ fontFamily }}
+                  >
+                    {link}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources Section */}
+          <div className="space-y-2 sm:space-y-3 md:space-y-4">
+            <h4
+              className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
+              style={{ fontFamily }}
+            >
+              Resources
+            </h4>
+            <ul className="space-y-1 sm:space-y-2">
+              {["Community", "Case Studies"].map((link) => (
+                <li key={link}>
+                  <button
+                    onClick={onOpenResourcesModal}
+                    className={`text-xs sm:text-sm transition-colors cursor-pointer text-left ${linkClasses}`}
+                    style={{ fontFamily }}
+                  >
+                    {link}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company Section */}
+          <div className="space-y-2 sm:space-y-3 md:space-y-4">
+            <h4
+              className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
+              style={{ fontFamily }}
+            >
+              Company
+            </h4>
+            <ul className="space-y-1 sm:space-y-2">
+              {["Privacy", "Terms"].map((link) => (
+                <li key={link}>
+                  <button
+                    onClick={onOpenCompanyModal}
+                    className={`text-xs sm:text-sm transition-colors cursor-pointer text-left ${linkClasses}`}
+                    style={{ fontFamily }}
+                  >
+                    {link}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div
+          className={`mt-6 sm:mt-8 md:mt-12 pt-4 sm:pt-6 md:pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 ${
+            isDark ? "border-slate-800" : "border-slate-200"
+          }`}
+        >
+          <p
+            className={`text-xs sm:text-sm text-center sm:text-left ${textClasses}`}
+            style={{ fontFamily }}
+          >
+            © 2025 ZOOLAB. All rights reserved.
+          </p>
+          <div className="flex items-center space-x-1">
+            <span
+              className={`text-xs sm:text-sm ${textClasses}`}
+              style={{ fontFamily }}
+            >
+              Made with
+            </span>
+            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 mx-0.5 sm:mx-1" />
+            <span
+              className={`text-xs sm:text-sm ${textClasses}`}
+              style={{ fontFamily }}
+            >
+              for wildlife conservation
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
