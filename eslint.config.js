@@ -5,7 +5,7 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "coverage"]),
   {
     files: ["**/*.{js,jsx}"],
     extends: [
@@ -24,6 +24,43 @@ export default defineConfig([
     },
     rules: {
       "no-unused-vars": ["error", { varsIgnorePattern: "^[A-Z_]" }],
+    },
+  },
+  // Test files configuration
+  {
+    files: [
+      "**/test/**/*.{js,jsx}",
+      "**/*.test.{js,jsx}",
+      "**/*.spec.{js,jsx}",
+    ],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        // Vitest globals
+        describe: "readonly",
+        it: "readonly",
+        expect: "readonly",
+        test: "readonly",
+        vi: "readonly",
+        vitest: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly",
+        global: "readonly",
+      },
+    },
+    rules: {
+      // Disable react-refresh for test files
+      "react-refresh/only-export-components": "off",
+      // Allow unused vars in tests for destructuring patterns
+      "no-unused-vars": [
+        "warn",
+        {
+          varsIgnorePattern: "^_|^[A-Z_]",
+          argsIgnorePattern: "^_",
+        },
+      ],
     },
   },
 ]);
