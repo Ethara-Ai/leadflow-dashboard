@@ -1,5 +1,7 @@
+import { memo } from "react";
+import PropTypes from "prop-types";
 import { fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 
 /**
  * Format value based on data type
@@ -25,21 +27,9 @@ const formatTooltipValue = (value, dataKey) => {
  * @param {string} [props.label] - Label for the tooltip
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const CustomTooltip = ({
-  active,
-  payload,
-  label,
-  darkMode: darkModeOverride,
-}) => {
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+const CustomTooltip = memo(function CustomTooltip({ active, payload, label, darkMode: darkModeOverride }) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   if (!active || !payload || payload.length === 0) {
     return null;
@@ -48,13 +38,13 @@ const CustomTooltip = ({
   return (
     <div
       className={`${
-        isDark
-          ? "bg-slate-800/95 border-slate-700"
-          : "bg-white/95 border-slate-300"
+        isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"
       } backdrop-blur-md rounded-lg p-2 sm:p-4 border shadow-xl max-w-37.5 sm:max-w-50 wrap-break-word`}
       style={{
         pointerEvents: "none",
       }}
+      role="tooltip"
+      aria-live="polite"
     >
       {label && (
         <p
@@ -73,13 +63,25 @@ const CustomTooltip = ({
           style={{ color: entry.color, fontFamily }}
         >
           <span className="font-semibold">{entry.name}: </span>
-          <span className="whitespace-nowrap">
-            {formatTooltipValue(entry.value, entry.dataKey)}
-          </span>
+          <span className="whitespace-nowrap">{formatTooltipValue(entry.value, entry.dataKey)}</span>
         </p>
       ))}
     </div>
   );
+});
+
+CustomTooltip.propTypes = {
+  active: PropTypes.bool,
+  payload: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      color: PropTypes.string,
+      dataKey: PropTypes.string,
+    }),
+  ),
+  label: PropTypes.string,
+  darkMode: PropTypes.bool,
 };
 
 export default CustomTooltip;

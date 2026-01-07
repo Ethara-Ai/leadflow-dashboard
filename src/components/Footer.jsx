@@ -1,6 +1,8 @@
+import { memo } from "react";
+import PropTypes from "prop-types";
 import { PawPrint, Heart } from "lucide-react";
 import { fontFamily, fontFamilyHeading } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 
 /**
  * Footer Component
@@ -12,21 +14,14 @@ import useTheme from "../hooks/useTheme";
  * @param {function} props.onOpenCompanyModal - Callback when company link is clicked
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const Footer = ({
+const Footer = memo(function Footer({
   onOpenProductModal,
   onOpenResourcesModal,
   onOpenCompanyModal,
   darkMode: darkModeOverride,
-}) => {
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+}) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   // Handler for logo click - reload page
   const handleLogoClick = () => {
@@ -36,6 +31,7 @@ const Footer = ({
   // Handler for logo keyboard interaction
   const handleLogoKeyDown = (e) => {
     if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
       window.location.reload();
     }
   };
@@ -43,17 +39,14 @@ const Footer = ({
   // Theme-based classes
   const headingClasses = isDark ? "text-slate-200" : "text-slate-700";
   const textClasses = isDark ? "text-slate-400" : "text-slate-600";
-  const linkClasses = isDark
-    ? "text-slate-400 hover:text-slate-200"
-    : "text-slate-600 hover:text-slate-800";
+  const linkClasses = isDark ? "text-slate-400 hover:text-slate-200" : "text-slate-600 hover:text-slate-800";
 
   return (
     <footer
       className={`mt-8 sm:mt-12 md:mt-16 border-t transition-all duration-300 ${
-        isDark
-          ? "bg-slate-900/50 border-slate-800 backdrop-blur-lg"
-          : "bg-white/80 border-slate-200 backdrop-blur-lg"
+        isDark ? "bg-slate-900/50 border-slate-800 backdrop-blur-lg" : "bg-white/80 border-slate-200 backdrop-blur-lg"
       }`}
+      role="contentinfo"
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-12">
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
@@ -65,40 +58,33 @@ const Footer = ({
               role="button"
               tabIndex={0}
               onKeyDown={handleLogoKeyDown}
+              aria-label="Reload page"
             >
               <div
-                className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl ${
-                  isDark ? "bg-emerald-900/30" : "bg-emerald-100"
-                }`}
+                className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl ${isDark ? "bg-emerald-900/30" : "bg-emerald-100"}`}
               >
                 <PawPrint
-                  className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${
-                    isDark ? "text-emerald-400" : "text-emerald-600"
-                  }`}
+                  className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${isDark ? "text-emerald-400" : "text-emerald-600"}`}
+                  aria-hidden="true"
                 />
               </div>
-              <h3
-                className={`text-lg sm:text-xl md:text-2xl font-bold ${
-                  isDark ? "text-slate-100" : "text-slate-800"
-                }`}
+              <span
+                className={`text-lg sm:text-xl md:text-2xl font-bold ${isDark ? "text-slate-100" : "text-slate-800"}`}
                 style={{ fontFamily: fontFamilyHeading }}
               >
                 ZOOLAB
-              </h3>
+              </span>
             </div>
-            <p
-              className={`text-xs sm:text-sm leading-relaxed ${textClasses}`}
-              style={{ fontFamily }}
-            >
-              Professional zoo animal monitoring and management system for
-              zoolab staff, veterinarians, and wildlife conservation
-              specialists.
+            <p className={`text-xs sm:text-sm leading-relaxed ${textClasses}`} style={{ fontFamily }}>
+              Professional zoo animal monitoring and management system for zoolab staff, veterinarians, and wildlife
+              conservation specialists.
             </p>
           </div>
 
           {/* Product Section */}
-          <div className="space-y-2 sm:space-y-3 md:space-y-4">
+          <nav className="space-y-2 sm:space-y-3 md:space-y-4" aria-labelledby="footer-product-heading">
             <h4
+              id="footer-product-heading"
               className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
               style={{ fontFamily }}
             >
@@ -117,11 +103,12 @@ const Footer = ({
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Resources Section */}
-          <div className="space-y-2 sm:space-y-3 md:space-y-4">
+          <nav className="space-y-2 sm:space-y-3 md:space-y-4" aria-labelledby="footer-resources-heading">
             <h4
+              id="footer-resources-heading"
               className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
               style={{ fontFamily }}
             >
@@ -140,11 +127,12 @@ const Footer = ({
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Company Section */}
-          <div className="space-y-2 sm:space-y-3 md:space-y-4">
+          <nav className="space-y-2 sm:space-y-3 md:space-y-4" aria-labelledby="footer-company-heading">
             <h4
+              id="footer-company-heading"
               className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
               style={{ fontFamily }}
             >
@@ -163,7 +151,7 @@ const Footer = ({
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
         </div>
 
         {/* Bottom Bar */}
@@ -172,24 +160,15 @@ const Footer = ({
             isDark ? "border-slate-800" : "border-slate-200"
           }`}
         >
-          <p
-            className={`text-xs sm:text-sm text-center sm:text-left ${textClasses}`}
-            style={{ fontFamily }}
-          >
-            © 2025 ZOOLAB. All rights reserved.
+          <p className={`text-xs sm:text-sm text-center sm:text-left ${textClasses}`} style={{ fontFamily }}>
+            © {new Date().getFullYear()} ZOOLAB. All rights reserved.
           </p>
           <div className="flex items-center space-x-1">
-            <span
-              className={`text-xs sm:text-sm ${textClasses}`}
-              style={{ fontFamily }}
-            >
+            <span className={`text-xs sm:text-sm ${textClasses}`} style={{ fontFamily }}>
               Made with
             </span>
-            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 mx-0.5 sm:mx-1" />
-            <span
-              className={`text-xs sm:text-sm ${textClasses}`}
-              style={{ fontFamily }}
-            >
+            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 mx-0.5 sm:mx-1" aria-label="love" />
+            <span className={`text-xs sm:text-sm ${textClasses}`} style={{ fontFamily }}>
               for wildlife conservation
             </span>
           </div>
@@ -197,6 +176,13 @@ const Footer = ({
       </div>
     </footer>
   );
+});
+
+Footer.propTypes = {
+  onOpenProductModal: PropTypes.func.isRequired,
+  onOpenResourcesModal: PropTypes.func.isRequired,
+  onOpenCompanyModal: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool,
 };
 
 export default Footer;

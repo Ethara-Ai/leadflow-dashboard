@@ -1,8 +1,9 @@
-// eslint-disable-next-line no-unused-vars
+import { memo } from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import { ShieldAlert, Info } from "lucide-react";
+import { ShieldAlert, Info, AlertCircle, CheckCircle } from "lucide-react";
 import { fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 
 /**
  * Alert type configurations for styling
@@ -22,6 +23,20 @@ const ALERT_TYPES = {
     darkIcon: "text-blue-400",
     lightIcon: "text-blue-600",
   },
+  error: {
+    icon: AlertCircle,
+    darkBg: "bg-red-900/20 border-red-800/30",
+    lightBg: "bg-red-50 border-red-200",
+    darkIcon: "text-red-400",
+    lightIcon: "text-red-600",
+  },
+  success: {
+    icon: CheckCircle,
+    darkBg: "bg-emerald-900/20 border-emerald-800/30",
+    lightBg: "bg-emerald-50 border-emerald-200",
+    darkIcon: "text-emerald-400",
+    lightIcon: "text-emerald-600",
+  },
 };
 
 /**
@@ -32,20 +47,13 @@ const ALERT_TYPES = {
  * @param {Object} props.alert - Alert object containing id, message, type, and time
  * @param {string} props.alert.id - Unique identifier for the alert
  * @param {string} props.alert.message - Alert message content
- * @param {string} props.alert.type - Alert type ("warning" | "info")
+ * @param {string} props.alert.type - Alert type ("warning" | "info" | "error" | "success")
  * @param {string} props.alert.time - Timestamp string
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const AlertItem = ({ alert, darkMode: darkModeOverride }) => {
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+const AlertItem = memo(function AlertItem({ alert, darkMode: darkModeOverride }) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   // Get alert type configuration, default to info if type not found
   const alertConfig = ALERT_TYPES[alert.type] || ALERT_TYPES.info;
@@ -58,17 +66,17 @@ const AlertItem = ({ alert, darkMode: darkModeOverride }) => {
   const timeClasses = isDark ? "text-slate-400" : "text-slate-500";
 
   return (
-    <motion.div
+    <motion.article
       className={`p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border ${bgClasses}`}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.2 }}
+      role="alert"
+      aria-label={`${alert.type} alert: ${alert.message}`}
     >
       <div className="flex items-start gap-2 sm:gap-3">
-        <IconComponent
-          className={`w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 mt-0.5 ${iconClasses}`}
-        />
+        <IconComponent className={`w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 mt-0.5 ${iconClasses}`} aria-hidden="true" />
         <div className="flex-1 min-w-0 overflow-hidden">
           <p
             className={`text-xs sm:text-sm font-medium leading-snug wrap-break-word ${textClasses}`}
@@ -80,16 +88,29 @@ const AlertItem = ({ alert, darkMode: darkModeOverride }) => {
           >
             {alert.message}
           </p>
-          <p
-            className={`text-[10px] sm:text-xs mt-0.5 sm:mt-1 ${timeClasses}`}
+          <time
+            className={`text-[10px] sm:text-xs mt-0.5 sm:mt-1 block ${timeClasses}`}
             style={{ fontFamily }}
+            dateTime={alert.timestamp}
           >
             {alert.time}
-          </p>
+          </time>
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   );
+});
+
+AlertItem.propTypes = {
+  alert: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    message: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(["warning", "info", "error", "success"]),
+    time: PropTypes.string.isRequired,
+    timestamp: PropTypes.string,
+    dismissed: PropTypes.bool,
+  }).isRequired,
+  darkMode: PropTypes.bool,
 };
 
 export default AlertItem;

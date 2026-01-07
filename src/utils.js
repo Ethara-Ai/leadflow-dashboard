@@ -1,3 +1,5 @@
+import { alertMessages } from "./constants";
+
 /**
  * Calculate the total number of active animals from weekly data
  * @param {Array} weekData - Array of daily animal activity data
@@ -18,22 +20,11 @@ export const formatEfficiency = (efficiency) => {
 
 /**
  * Get a random alert message from predefined list
+ * Uses alertMessages from constants to avoid duplication
  * @returns {string} Random alert message
  */
 export const getRandomAlertMessage = () => {
-  const messages = [
-    "Elephant enclosure temperature above optimal range",
-    "Veterinary checkup completed for primates section",
-    "Low stock alert: Vitamin supplements for reptile house",
-    "Unusual behavior detected in big cats section",
-    "Humidity level critical in tropical bird aviary",
-    "New animal arrival scheduled for quarantine area",
-    "Feeding schedule delayed for aquatic mammals",
-    "Water quality check required for penguin habitat",
-    "Enrichment activity completed in gorilla enclosure",
-    "Medical supplies restocking needed for clinic",
-  ];
-  return messages[Math.floor(Math.random() * messages.length)];
+  return alertMessages[Math.floor(Math.random() * alertMessages.length)];
 };
 
 /**
@@ -42,25 +33,13 @@ export const getRandomAlertMessage = () => {
  * @returns {string} Alert type ('warning' or 'info')
  */
 export const getAlertType = (message) => {
-  if (
-    message.includes("temperature") ||
-    message.includes("humidity") ||
-    message.includes("critical")
-  ) {
+  if (message.includes("temperature") || message.includes("humidity") || message.includes("critical")) {
     return "warning";
   }
-  if (
-    message.includes("completed") ||
-    message.includes("scheduled") ||
-    message.includes("checkup")
-  ) {
+  if (message.includes("completed") || message.includes("scheduled") || message.includes("checkup")) {
     return "info";
   }
-  if (
-    message.includes("Low stock") ||
-    message.includes("delayed") ||
-    message.includes("required")
-  ) {
+  if (message.includes("Low stock") || message.includes("delayed") || message.includes("required")) {
     return "warning";
   }
   return "info";
@@ -72,39 +51,33 @@ export const getAlertType = (message) => {
  * @param {string} filename - Name of the file to download
  */
 export const exportToCSV = (data, filename) => {
-  const { colonyData, activityData, foragingData, foodData, alerts } = data;
+  const { zooData, activityData, feedingData, dietData, alerts } = data;
 
   const csvData = [
     ["Metric", "Value", "Type"],
-    ["Total Animals", colonyData.population, "Zoo Stats"],
-    ["Avg Temperature", colonyData.temperature + "°C", "Environment"],
-    ["Avg Humidity", colonyData.humidity + "%", "Environment"],
-    ["Last Updated", colonyData.lastUpdated, "System"],
+    ["Total Animals", zooData.population, "Zoo Stats"],
+    ["Avg Temperature", zooData.temperature + "°C", "Environment"],
+    ["Avg Humidity", zooData.humidity + "%", "Environment"],
+    ["Last Updated", zooData.lastUpdated, "System"],
     [""],
     ["Animal Activity Data"],
     ["Period", "Active Animals", "Feedings Completed"],
-    ...activityData.map((item) => [
-      item.name,
-      item.animals,
-      item.feedingCompleted,
-    ]),
+    ...activityData.map((item) => [item.name, item.animals, item.feedingCompleted]),
     [""],
     ["Feeding Efficiency"],
     ["Period", "Efficiency"],
-    ...foragingData.map((item) => [item.name, item.efficiency + "%"]),
+    ...feedingData.map((item) => [item.name, item.efficiency + "%"]),
     [""],
     ["Diet Distribution"],
     ["Food Type", "Percentage"],
-    ...foodData.map((item) => [item.name, item.value + "%"]),
+    ...dietData.map((item) => [item.name, item.value + "%"]),
     [""],
     ["Active Alerts"],
     ["Message", "Type", "Time"],
     ...alerts.map((alert) => [alert.message, alert.type, alert.time]),
   ];
 
-  const csvContent = csvData
-    .map((row) => row.map((field) => `"${field}"`).join(","))
-    .join("\n");
+  const csvContent = csvData.map((row) => row.map((field) => `"${field}"`).join(",")).join("\n");
 
   const dataBlob = new Blob([csvContent], { type: "text/csv" });
   const url = URL.createObjectURL(dataBlob);

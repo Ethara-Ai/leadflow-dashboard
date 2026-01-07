@@ -1,8 +1,9 @@
-// eslint-disable-next-line no-unused-vars
+import { memo } from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { Info, X } from "lucide-react";
 import { fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 
 /**
  * WelcomeMessage Component
@@ -13,30 +14,23 @@ import useTheme from "../hooks/useTheme";
  * @param {function} props.onClose - Callback when message is dismissed
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const WelcomeMessage = ({ show, onClose, darkMode: darkModeOverride }) => {
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+const WelcomeMessage = memo(function WelcomeMessage({ show, onClose, darkMode: darkModeOverride }) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   if (!show) return null;
 
   return (
     <motion.div
       className={`mb-4 sm:mb-6 md:mb-8 p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl border ${
-        isDark
-          ? "bg-emerald-900/20 border-emerald-800/30"
-          : "bg-emerald-50 border-emerald-200"
+        isDark ? "bg-emerald-900/20 border-emerald-800/30" : "bg-emerald-50 border-emerald-200"
       }`}
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
+      role="status"
+      aria-live="polite"
     >
       <div className="flex items-start sm:items-center justify-between gap-2 sm:gap-4">
         <div className="flex items-start sm:items-center flex-1 min-w-0">
@@ -46,9 +40,8 @@ const WelcomeMessage = ({ show, onClose, darkMode: darkModeOverride }) => {
             } mr-2 sm:mr-3 md:mr-4`}
           >
             <Info
-              className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                isDark ? "text-emerald-400" : "text-emerald-600"
-              }`}
+              className={`w-4 h-4 sm:w-5 sm:h-5 ${isDark ? "text-emerald-400" : "text-emerald-600"}`}
+              aria-hidden="true"
             />
           </div>
           <div className="min-w-0 flex-1">
@@ -79,12 +72,19 @@ const WelcomeMessage = ({ show, onClose, darkMode: darkModeOverride }) => {
           }`}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
+          aria-label="Dismiss welcome message"
         >
-          <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" aria-hidden="true" />
         </motion.button>
       </div>
     </motion.div>
   );
+});
+
+WelcomeMessage.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool,
 };
 
 export default WelcomeMessage;

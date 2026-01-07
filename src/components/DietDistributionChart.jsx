@@ -1,9 +1,9 @@
-// eslint-disable-next-line no-unused-vars
+import { memo, useState, useEffect, useCallback } from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
 import { cardVariants, fontFamily, getColors } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 import CustomTooltip from "./CustomTooltip";
 import TimePeriodButtons from "./TimePeriodButtons";
 import { getChartCardClasses, getChartTitleClasses } from "../chartUtils";
@@ -15,14 +15,7 @@ const RADIAN = Math.PI / 180;
  * @param {Object} props - Label props from Recharts
  * @returns {JSX.Element} - SVG text element
  */
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  outerRadius,
-  name,
-  percent,
-}) => {
+const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, name, percent }) => {
   const radius = outerRadius + 30;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -49,7 +42,7 @@ const renderCustomizedLabel = ({
 };
 
 /**
- * FoodDistributionChart Component
+ * DietDistributionChart Component
  * Displays diet distribution data as a pie chart with responsive design.
  *
  * @param {Object} props - Component props
@@ -58,21 +51,14 @@ const renderCustomizedLabel = ({
  * @param {function} props.setTimePeriod - Callback when time period changes
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const FoodDistributionChart = ({
+const DietDistributionChart = memo(function DietDistributionChart({
   data,
   timePeriod,
   setTimePeriod,
   darkMode: darkModeOverride,
-}) => {
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+}) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   const COLORS = getColors(isDark);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -115,31 +101,23 @@ const FoodDistributionChart = ({
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <h3
-          className={`text-lg sm:text-xl font-bold ${titleClasses}`}
-          style={{ fontFamily }}
-        >
+        <h3 className={`text-lg sm:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
           Diet Distribution
         </h3>
-        <TimePeriodButtons
-          currentPeriod={timePeriod}
-          onPeriodChange={setTimePeriod}
-        />
+        <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
       </div>
 
       {/* Pie Chart - Original size for larger screens, compact for small screens */}
       <div
-        className={`${isSmallScreen ? "h-45" : "h-75"} relative ${
-          isDark ? "text-slate-300" : "text-slate-600"
-        }`}
+        className={`${isSmallScreen ? "h-45" : "h-75"} relative ${isDark ? "text-slate-300" : "text-slate-600"}`}
+        role="img"
+        aria-label="Diet distribution pie chart showing food type percentages"
       >
         <ResponsiveContainer width="100%" height="100%">
           <PieChart
             key={`diet-chart-${timePeriod}`}
             margin={
-              isSmallScreen
-                ? { top: 5, right: 5, bottom: 5, left: 5 }
-                : { top: 20, right: 20, bottom: 20, left: 20 }
+              isSmallScreen ? { top: 5, right: 5, bottom: 5, left: 5 } : { top: 20, right: 20, bottom: 20, left: 20 }
             }
             onMouseMove={handleMouseMove}
           >
@@ -183,26 +161,23 @@ const FoodDistributionChart = ({
 
       {/* Legend - Only visible on small screens for clear food source names */}
       {isSmallScreen && (
-        <div className="mt-3 grid grid-cols-2 gap-x-2 gap-y-2">
+        <div className="mt-3 grid grid-cols-2 gap-x-2 gap-y-2" role="list" aria-label="Diet distribution legend">
           {data.map((entry, index) => (
-            <div key={entry.name} className="flex items-center gap-1.5 min-w-0">
+            <div key={entry.name} className="flex items-center gap-1.5 min-w-0" role="listitem">
               <span
                 className="w-2.5 h-2.5 rounded-full shrink-0"
                 style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                aria-hidden="true"
               />
               <span
-                className={`text-[10px] truncate flex-1 ${
-                  isDark ? "text-slate-300" : "text-slate-600"
-                }`}
+                className={`text-[10px] truncate flex-1 ${isDark ? "text-slate-300" : "text-slate-600"}`}
                 style={{ fontFamily }}
                 title={entry.name}
               >
                 {entry.name}
               </span>
               <span
-                className={`text-[10px] font-semibold shrink-0 ${
-                  isDark ? "text-slate-200" : "text-slate-700"
-                }`}
+                className={`text-[10px] font-semibold shrink-0 ${isDark ? "text-slate-200" : "text-slate-700"}`}
                 style={{ fontFamily }}
               >
                 {entry.value}%
@@ -213,6 +188,18 @@ const FoodDistributionChart = ({
       )}
     </motion.div>
   );
+});
+
+DietDistributionChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+  timePeriod: PropTypes.oneOf(["week", "month", "year"]).isRequired,
+  setTimePeriod: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool,
 };
 
-export default FoodDistributionChart;
+export default DietDistributionChart;

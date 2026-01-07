@@ -3,6 +3,16 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Storage Keys
+// -----------------------------------------------------------------------------
+
+export const STORAGE_KEYS = {
+  THEME: "zoolab-theme",
+  NOTES: "zoolab-notes",
+  SETTINGS: "zoolab-settings",
+};
+
+// -----------------------------------------------------------------------------
 // Animal Activity Data
 // -----------------------------------------------------------------------------
 
@@ -37,11 +47,6 @@ export const activityYearData = [
   { name: "Nov", animals: 142, feedingCompleted: 72 },
   { name: "Dec", animals: 125, feedingCompleted: 58 },
 ];
-
-// Backward compatibility aliases
-export const weekData = activityWeekData;
-export const monthData = activityMonthData;
-export const yearData = activityYearData;
 
 // -----------------------------------------------------------------------------
 // Feeding Efficiency Data
@@ -79,11 +84,6 @@ export const feedingYearData = [
   { name: "Dec", efficiency: 72 },
 ];
 
-// Backward compatibility aliases
-export const foragingWeekData = feedingWeekData;
-export const foragingMonthData = feedingMonthData;
-export const foragingYearData = feedingYearData;
-
 // -----------------------------------------------------------------------------
 // Diet Distribution Data
 // -----------------------------------------------------------------------------
@@ -108,11 +108,6 @@ export const dietYearData = [
   { name: "Grains & Pellets", value: 24 },
   { name: "Supplements", value: 12 },
 ];
-
-// Backward compatibility aliases
-export const foodWeekData = dietWeekData;
-export const foodMonthData = dietMonthData;
-export const foodYearData = dietYearData;
 
 // -----------------------------------------------------------------------------
 // Chart Colors
@@ -159,6 +154,20 @@ export const staggerContainerVariants = {
   },
 };
 
+export const modalVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.2, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    transition: { duration: 0.15, ease: "easeIn" },
+  },
+};
+
 // -----------------------------------------------------------------------------
 // Initial Zoo Data
 // -----------------------------------------------------------------------------
@@ -170,9 +179,6 @@ export const initialZooData = {
   lastUpdated: new Date().toLocaleString(),
 };
 
-// Backward compatibility alias
-export const initialColonyData = initialZooData;
-
 // -----------------------------------------------------------------------------
 // Initial Notes
 // -----------------------------------------------------------------------------
@@ -180,14 +186,12 @@ export const initialColonyData = initialZooData;
 export const initialNotes = [
   {
     id: 1,
-    content:
-      "Lion enclosure: Male lion showing increased appetite after medication completed",
+    content: "Lion enclosure: Male lion showing increased appetite after medication completed",
     timestamp: new Date(Date.now() - 86400000).toLocaleString(),
   },
   {
     id: 2,
-    content:
-      "Penguin habitat: Water filtration system maintenance scheduled for next week",
+    content: "Penguin habitat: Water filtration system maintenance scheduled for next week",
     timestamp: new Date(Date.now() - 172800000).toLocaleString(),
   },
 ];
@@ -218,18 +222,57 @@ export const initialAlerts = [
 ];
 
 // -----------------------------------------------------------------------------
-// Alert Messages
+// Alert Messages (Single source of truth for random alerts)
 // -----------------------------------------------------------------------------
 
 export const alertMessages = [
+  // Temperature & Environment
   "Elephant enclosure temperature above optimal range",
-  "Veterinary checkup completed for primates section",
-  "Low stock alert: Vitamin supplements for reptile house",
-  "Unusual behavior detected in big cats section",
   "Humidity level critical in tropical bird aviary",
+  "Nocturnal house lighting schedule needs adjustment",
+  "Aquarium water temperature fluctuation detected",
+
+  // Veterinary & Health
+  "Veterinary checkup completed for primates section",
+  "Medical supplies restocking needed for clinic",
+  "Scheduled vaccination due for big cats section",
+  "Routine health screening completed for marine mammals",
+
+  // Stock & Supplies
+  "Low stock alert: Vitamin supplements for reptile house",
+  "Feed delivery scheduled for tomorrow morning",
+  "Enrichment toys inventory running low",
+  "Medication refill required for avian section",
+
+  // Animal Behavior & Activity
+  "Unusual behavior detected in big cats section",
+  "Enrichment activity completed in gorilla enclosure",
   "New animal arrival scheduled for quarantine area",
+  "Breeding program milestone achieved for endangered species",
+
+  // Maintenance & Operations
   "Feeding schedule delayed for aquatic mammals",
+  "Water quality check required for penguin habitat",
+  "Enclosure barrier inspection due this week",
+  "Filtration system maintenance completed successfully",
+
+  // General Updates
+  "Visitor capacity reached in African savanna exhibit",
+  "Educational program scheduled for primate section",
+  "Night shift handover notes available",
+  "Weekly safety drill completed successfully",
 ];
+
+// -----------------------------------------------------------------------------
+// Alert Types
+// -----------------------------------------------------------------------------
+
+export const ALERT_TYPES = {
+  INFO: "info",
+  WARNING: "warning",
+  ERROR: "error",
+  SUCCESS: "success",
+};
 
 // -----------------------------------------------------------------------------
 // Typography
@@ -237,3 +280,13 @@ export const alertMessages = [
 
 export const fontFamily = "'Manrope', sans-serif";
 export const fontFamilyHeading = "'Poppins', sans-serif";
+
+// -----------------------------------------------------------------------------
+// Time Periods
+// -----------------------------------------------------------------------------
+
+export const TIME_PERIOD_OPTIONS = [
+  { value: "week", label: "Week" },
+  { value: "month", label: "Month" },
+  { value: "year", label: "Year" },
+];
