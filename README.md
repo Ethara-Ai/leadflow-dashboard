@@ -1,17 +1,17 @@
-<div align="center">
-  <h1>ZOOLAB Dashboard</h1>
-  <p><strong>Professional Zoo Animal Monitoring and Management System</strong></p>
-  <p>A modern, responsive dashboard for zoo staff, veterinarians, and wildlife conservation specialists to monitor animal activity, feeding schedules, and health alerts.</p>
+# ZOOLAB Dashboard
 
-  ![React](https://img.shields.io/badge/React-19.2.0-61dafb?style=flat-square&logo=react)
-  ![Vite](https://img.shields.io/badge/Vite-7.2.4-646cff?style=flat-square&logo=vite)
-  ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.18-38bdf8?style=flat-square&logo=tailwindcss)
-  ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-</div>
+**Professional Zoo Animal Monitoring and Management System**
+
+A modern, responsive dashboard for zoo staff, veterinarians, and wildlife conservation specialists to monitor animal activity, feeding schedules, and health alerts.
+
+![React](https://img.shields.io/badge/React-19.2.0-61dafb?style=flat-square&logo=react)
+![Vite](https://img.shields.io/badge/Vite-7.2.4-646cff?style=flat-square&logo=vite)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.18-38bdf8?style=flat-square&logo=tailwindcss)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 ---
 
-##  Features
+## Features
 
 - **Real-time Statistics** — Monitor animal population, environmental temperature, and humidity levels
 - **Interactive Charts** — Visualize animal activity, feeding efficiency, and diet distribution with dynamic time-period filtering
@@ -24,7 +24,7 @@
 
 ---
 
-##  Tech Stack
+## Tech Stack
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
@@ -38,7 +38,7 @@
 
 ---
 
-##  Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -76,7 +76,7 @@
 
 ---
 
-##  Components
+## Components
 
 ### Layout Components
 
@@ -262,7 +262,7 @@ Error display component with retry functionality.
 
 ---
 
-##  Theme System
+## Theme System
 
 ZOOLAB uses a centralized theme management system via React Context.
 
@@ -300,7 +300,7 @@ Theme preferences are automatically persisted to `localStorage` under the key `a
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```
 zoolab-dashboard/
@@ -349,7 +349,7 @@ zoolab-dashboard/
 
 ---
 
-##  Contributing
+## Contributing
 
 We welcome contributions from the community! Here's how you can help:
 
@@ -425,29 +425,13 @@ We welcome contributions from the community! Here's how you can help:
 
 ---
 
-##  License
+## License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
-```
-MIT License
-
-Copyright (c) 2026 Sarvex Jatasra
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-```
 
 ---
 
-<div align="center">
-  <p>Made with ❤️ for wildlife conservation</p>
-  <p><strong>© 2025 ZOOLAB. All rights reserved.</strong></p>
-</div>
+Made with care for wildlife conservation
+
+**Copyright 2025 ZOOLAB. All rights reserved.**
