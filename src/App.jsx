@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
-import ZoolabDashboard from "./components/ZoolabDashboard";
+import ZoolabDashboard from "./components/dashboard";
 import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
@@ -40,7 +40,9 @@ function App() {
 
   return (
     <>
-      <AnimatePresence mode="wait">{isLoading && <LoadingScreen key="loading" />}</AnimatePresence>
+      <AnimatePresence mode="wait">
+        {isLoading && <LoadingScreen key="loading" />}
+      </AnimatePresence>
       {!isLoading && <ZoolabDashboard />}
     </>
   );

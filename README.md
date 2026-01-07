@@ -80,7 +80,7 @@ A modern, responsive dashboard for zoo staff, veterinarians, and wildlife conser
 
 ### Layout Components
 
-#### `<ZoolabDashboard />`
+#### `<Dashboard />`
 The main dashboard container that orchestrates all components and manages global state including theme, time periods, modals, and data.
 
 #### `<Header />`
@@ -327,7 +327,7 @@ zoolab-dashboard/
 │   │   ├── StatCards.jsx
 │   │   ├── TimePeriodButtons.jsx
 │   │   ├── WelcomeMessage.jsx
-│   │   └── ZoolabDashboard.jsx
+│   │   └── dashboard.jsx
 │   ├── hooks/             # Custom React hooks
 │   │   ├── ThemeContext.js
 │   │   ├── ThemeProvider.jsx

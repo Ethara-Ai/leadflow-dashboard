@@ -58,7 +58,7 @@ vi.mock("./components/LoadingScreen", () => ({
   default: () => <div data-testid="loading-screen">Loading...</div>,
 }));
 
-vi.mock("./components/ZoolabDashboard", () => ({
+vi.mock("./components/dashboard", () => ({
   default: () => <div data-testid="dashboard">Dashboard Content</div>,
 }));
 

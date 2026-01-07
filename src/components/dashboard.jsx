@@ -30,7 +30,11 @@ import CompanyModalContent from "./CompanyModalContent";
 import ErrorBoundary from "./ErrorBoundary";
 
 // Constants and Utils
-import { staggerContainerVariants, fontFamily, activityWeekData } from "../constants";
+import {
+  staggerContainerVariants,
+  fontFamily,
+  activityWeekData,
+} from "../constants";
 import { exportToCSV, exportToJSON, generateExportFilename } from "../utils";
 
 /**
@@ -53,13 +57,29 @@ const ChartSection = memo(function ChartSection({
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AnimalActivityChart data={activityData} timePeriod={activityPeriod} setTimePeriod={setActivityPeriod} />
-        <FeedingEfficiencyChart data={feedingData} timePeriod={feedingPeriod} setTimePeriod={setFeedingPeriod} />
+        <AnimalActivityChart
+          data={activityData}
+          timePeriod={activityPeriod}
+          setTimePeriod={setActivityPeriod}
+        />
+        <FeedingEfficiencyChart
+          data={feedingData}
+          timePeriod={feedingPeriod}
+          setTimePeriod={setFeedingPeriod}
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <DietDistributionChart data={dietData} timePeriod={dietPeriod} setTimePeriod={setDietPeriod} />
-        <AlertsPanel alerts={alerts} onAddAlert={onAddAlert} onClearAlerts={onClearAlerts} />
+        <DietDistributionChart
+          data={dietData}
+          timePeriod={dietPeriod}
+          setTimePeriod={setDietPeriod}
+        />
+        <AlertsPanel
+          alerts={alerts}
+          onAddAlert={onAddAlert}
+          onClearAlerts={onClearAlerts}
+        />
       </div>
     </>
   );
@@ -208,7 +228,12 @@ const DashboardContent = () => {
         />
 
         <AnimatePresence>
-          {showWelcomeMessage && <WelcomeMessage show={showWelcomeMessage} onClose={handleCloseWelcome} />}
+          {showWelcomeMessage && (
+            <WelcomeMessage
+              show={showWelcomeMessage}
+              onClose={handleCloseWelcome}
+            />
+          )}
         </AnimatePresence>
 
         <ErrorMessage error={error} />
@@ -268,15 +293,27 @@ const DashboardContent = () => {
         onDeleteNote={handleDeleteNote}
       />
 
-      <FooterModal isOpen={isProductModalOpen} onClose={closeProductModal} title="Product Information">
+      <FooterModal
+        isOpen={isProductModalOpen}
+        onClose={closeProductModal}
+        title="Product Information"
+      >
         <ProductModalContent />
       </FooterModal>
 
-      <FooterModal isOpen={isResourcesModalOpen} onClose={closeResourcesModal} title="Resources & Community">
+      <FooterModal
+        isOpen={isResourcesModalOpen}
+        onClose={closeResourcesModal}
+        title="Resources & Community"
+      >
         <ResourcesModalContent />
       </FooterModal>
 
-      <FooterModal isOpen={isCompanyModalOpen} onClose={closeCompanyModal} title="Company & Legal">
+      <FooterModal
+        isOpen={isCompanyModalOpen}
+        onClose={closeCompanyModal}
+        title="Company & Legal"
+      >
         <CompanyModalContent />
       </FooterModal>
     </div>
@@ -284,11 +321,11 @@ const DashboardContent = () => {
 };
 
 /**
- * ZoolabDashboard Component
+ * Dashboard Component
  * Main dashboard component wrapped with ThemeProvider and ErrorBoundary
  * for centralized theme management and error handling
  */
-const ZoolabDashboard = () => {
+const Dashboard = () => {
   return (
     <ErrorBoundary showDetails={import.meta.env.DEV}>
       <ThemeProvider defaultDarkMode={false}>
@@ -298,4 +335,4 @@ const ZoolabDashboard = () => {
   );
 };
 
-export default ZoolabDashboard;
+export default Dashboard;
