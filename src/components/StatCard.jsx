@@ -1,7 +1,8 @@
-// eslint-disable-next-line no-unused-vars
+import { memo } from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { cardVariants as defaultCardVariants, fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 
 /**
  * Variant color mappings for subValue display
@@ -29,7 +30,7 @@ const SUB_VALUE_VARIANT_CLASSES = {
  * @param {Object} [props.variants] - Framer Motion animation variants (injectable for testing)
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const StatCard = ({
+const StatCard = memo(function StatCard({
   title,
   value,
   icon,
@@ -39,21 +40,12 @@ const StatCard = ({
   subValueVariant = "neutral",
   variants = defaultCardVariants,
   darkMode: darkModeOverride,
-}) => {
-  // Use theme context, with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+}) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   // Get the appropriate color class for subValue
-  const subValueColorClass =
-    SUB_VALUE_VARIANT_CLASSES[subValueVariant] ||
-    SUB_VALUE_VARIANT_CLASSES.neutral;
+  const subValueColorClass = SUB_VALUE_VARIANT_CLASSES[subValueVariant] || SUB_VALUE_VARIANT_CLASSES.neutral;
 
   return (
     <motion.div
@@ -68,49 +60,49 @@ const StatCard = ({
       <div className="flex items-start justify-between mb-3 sm:mb-4">
         <div className="flex-1 min-w-0 pr-3">
           <h3
-            className={`text-sm sm:text-lg font-bold ${
-              isDark ? "text-slate-200" : "text-slate-700"
-            } truncate`}
+            className={`text-sm sm:text-lg font-bold ${isDark ? "text-slate-200" : "text-slate-700"} truncate`}
             style={{ fontFamily }}
           >
             {title}
           </h3>
         </div>
-        <div className={`${accent} p-2 sm:p-3 rounded-xl shadow-lg shrink-0`}>
+        <div className={`${accent} p-2 sm:p-3 rounded-xl shadow-lg shrink-0`} aria-hidden="true">
           {icon}
         </div>
       </div>
 
       <div className="flex flex-col">
         <p
-          className={`text-xl sm:text-4xl font-bold ${
-            isDark ? "text-slate-100" : "text-slate-800"
-          } wrap-break-word`}
+          className={`text-xl sm:text-4xl font-bold ${isDark ? "text-slate-100" : "text-slate-800"} wrap-break-word`}
           style={{ fontFamily }}
         >
           {value}
         </p>
         <div className="mt-2 sm:mt-3 flex items-center flex-wrap">
           {subValue && (
-            <span
-              className={`text-xs sm:text-sm font-bold ${subValueColorClass} mr-1 sm:mr-2`}
-              style={{ fontFamily }}
-            >
+            <span className={`text-xs sm:text-sm font-bold ${subValueColorClass} mr-1 sm:mr-2`} style={{ fontFamily }}>
               {subValue}
             </span>
           )}
-          <span
-            className={`text-xs sm:text-sm ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-            style={{ fontFamily }}
-          >
+          <span className={`text-xs sm:text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`} style={{ fontFamily }}>
             {subText}
           </span>
         </div>
       </div>
     </motion.div>
   );
+});
+
+StatCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  icon: PropTypes.node.isRequired,
+  subValue: PropTypes.string,
+  subText: PropTypes.string,
+  accent: PropTypes.string.isRequired,
+  subValueVariant: PropTypes.oneOf(["positive", "negative", "warning", "neutral"]),
+  variants: PropTypes.object,
+  darkMode: PropTypes.bool,
 };
 
 export default StatCard;

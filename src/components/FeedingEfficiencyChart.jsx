@@ -1,17 +1,9 @@
-// eslint-disable-next-line no-unused-vars
+import { memo } from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import {
-  ResponsiveContainer,
-  LineChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Line,
-} from "recharts";
+import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from "recharts";
 import { cardVariants, fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 import { formatEfficiency } from "../utils";
 import CustomTooltip from "./CustomTooltip";
 import TimePeriodButtons from "./TimePeriodButtons";
@@ -27,7 +19,7 @@ import {
 } from "../chartUtils";
 
 /**
- * ForagingEfficiencyChart Component
+ * FeedingEfficiencyChart Component
  * Displays feeding efficiency data as a line chart.
  *
  * @param {Object} props - Component props
@@ -36,21 +28,14 @@ import {
  * @param {function} props.setTimePeriod - Callback when time period changes
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const ForagingEfficiencyChart = ({
+const FeedingEfficiencyChart = memo(function FeedingEfficiencyChart({
   data,
   timePeriod,
   setTimePeriod,
   darkMode: darkModeOverride,
-}) => {
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+}) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   // Get theme-based styles
   const axisStyles = getAxisStyles(isDark);
@@ -70,20 +55,18 @@ const ForagingEfficiencyChart = ({
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <h3
-          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
-          style={{ fontFamily }}
-        >
+        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
           Feeding Efficiency
         </h3>
-        <TimePeriodButtons
-          currentPeriod={timePeriod}
-          onPeriodChange={setTimePeriod}
-        />
+        <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
       </div>
 
       {/* Chart Container */}
-      <div className="w-full h-55 sm:h-65 md:h-75">
+      <div
+        className="w-full h-55 sm:h-65 md:h-75"
+        role="img"
+        aria-label="Feeding efficiency line chart showing feeding rate percentage over time"
+      >
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={data}
@@ -140,6 +123,18 @@ const ForagingEfficiencyChart = ({
       </div>
     </motion.div>
   );
+});
+
+FeedingEfficiencyChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      efficiency: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+  timePeriod: PropTypes.oneOf(["week", "month", "year"]).isRequired,
+  setTimePeriod: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool,
 };
 
-export default ForagingEfficiencyChart;
+export default FeedingEfficiencyChart;

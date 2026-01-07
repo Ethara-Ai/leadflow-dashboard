@@ -1,18 +1,8 @@
 import { useState } from "react";
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  PawPrint,
-  Sun,
-  Moon,
-  RotateCcw,
-  StickyNote,
-  Menu,
-  Download,
-  FileText,
-} from "lucide-react";
+import { PawPrint, Sun, Moon, RotateCcw, StickyNote, Menu, Download, FileText } from "lucide-react";
 import { dropdownVariants, fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 
 /**
  * Header Component
@@ -38,15 +28,8 @@ const Header = ({
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   // Handler for logo click - reload page
   const handleLogoClick = () => {
@@ -78,6 +61,7 @@ const Header = ({
           role="button"
           tabIndex={0}
           onKeyDown={handleLogoKeyDown}
+          aria-label="Reload page"
         >
           <div
             className={`p-2 sm:p-2.5 md:p-3 rounded-xl sm:rounded-2xl ${
@@ -85,9 +69,7 @@ const Header = ({
             }`}
           >
             <PawPrint
-              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${
-                isDark ? "text-emerald-400" : "text-emerald-600"
-              }`}
+              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${isDark ? "text-emerald-400" : "text-emerald-600"}`}
             />
           </div>
           <h1
@@ -125,13 +107,9 @@ const Header = ({
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.95 }}
-          aria-label="Toggle dark mode"
+          aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         >
-          {isDark ? (
-            <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
-          ) : (
-            <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
-          )}
+          {isDark ? <Sun className="w-4 h-4 sm:w-5 sm:h-5" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5" />}
         </motion.button>
 
         {/* Refresh Button */}
@@ -145,9 +123,7 @@ const Header = ({
           disabled={isLoading}
           aria-label="Refresh data"
         >
-          <RotateCcw
-            className={`w-4 h-4 sm:w-5 sm:h-5 ${isLoading ? "animate-spin" : ""}`}
-          />
+          <RotateCcw className={`w-4 h-4 sm:w-5 sm:h-5 ${isLoading ? "animate-spin" : ""}`} />
         </motion.button>
 
         {/* Notes Button */}
@@ -173,6 +149,8 @@ const Header = ({
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             aria-label="Open menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-haspopup="true"
           >
             <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
           </motion.button>
@@ -181,20 +159,17 @@ const Header = ({
             {isMobileMenuOpen && (
               <>
                 {/* Backdrop to close menu when clicking outside */}
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                />
+                <div className="fixed inset-0 z-40" onClick={() => setIsMobileMenuOpen(false)} aria-hidden="true" />
                 <motion.div
                   className={`absolute right-0 mt-2 w-48 sm:w-56 ${
-                    isDark
-                      ? "bg-slate-800/95 border-slate-700"
-                      : "bg-white/95 border-slate-300"
+                    isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"
                   } backdrop-blur-md rounded-lg sm:rounded-xl border shadow-xl overflow-hidden z-50`}
                   initial="closed"
                   animate="open"
                   exit="closed"
                   variants={dropdownVariants}
+                  role="menu"
+                  aria-orientation="vertical"
                 >
                   <div className="p-1.5 sm:p-2">
                     <motion.button
@@ -203,13 +178,12 @@ const Header = ({
                         setIsMobileMenuOpen(false);
                       }}
                       className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 sm:gap-3 cursor-pointer ${
-                        isDark
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100"
+                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       style={{ fontFamily }}
+                      role="menuitem"
                     >
                       <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       Export Data (CSV)
@@ -220,13 +194,12 @@ const Header = ({
                         setIsMobileMenuOpen(false);
                       }}
                       className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 sm:gap-3 cursor-pointer ${
-                        isDark
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100"
+                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       style={{ fontFamily }}
+                      role="menuitem"
                     >
                       <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       Export Data (JSON)

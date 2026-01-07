@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
-// eslint-disable-next-line no-unused-vars
+import { useState, useEffect, useRef, memo } from "react";
+import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, ChevronDown } from "lucide-react";
 import { cardVariants, fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 import AlertItem from "./AlertItem";
 import AlertDropdown from "./AlertDropdown";
 
@@ -17,26 +17,14 @@ import AlertDropdown from "./AlertDropdown";
  * @param {function} props.onClearAlerts - Callback when all alerts are cleared
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const AlertsPanel = ({
-  alerts,
-  onAddAlert,
-  onClearAlerts,
-  darkMode: darkModeOverride,
-}) => {
+const AlertsPanel = memo(function AlertsPanel({ alerts, onAddAlert, onClearAlerts, darkMode: darkModeOverride }) {
   const [isAlertDropdownOpen, setIsAlertDropdownOpen] = useState(false);
   const [newAlert, setNewAlert] = useState("");
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
 
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   // Handle click outside to close dropdown
   useEffect(() => {
@@ -62,19 +50,20 @@ const AlertsPanel = ({
     };
   }, [isAlertDropdownOpen]);
 
-  // Prevent background scroll when dropdown is open
+  // Handle escape key to close dropdown
   useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === "Escape" && isAlertDropdownOpen) {
+        setIsAlertDropdownOpen(false);
+      }
+    };
+
     if (isAlertDropdownOpen) {
-      document.body.style.overflow = "hidden";
-      document.body.style.paddingRight = "0px";
-    } else {
-      document.body.style.overflow = "unset";
-      document.body.style.paddingRight = "0px";
+      document.addEventListener("keydown", handleEscape);
     }
 
     return () => {
-      document.body.style.overflow = "unset";
-      document.body.style.paddingRight = "0px";
+      document.removeEventListener("keydown", handleEscape);
     };
   }, [isAlertDropdownOpen]);
 
@@ -122,10 +111,7 @@ const AlertsPanel = ({
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <h3
-          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
-          style={{ fontFamily }}
-        >
+        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
           Zoo Alerts
         </h3>
 
@@ -138,13 +124,17 @@ const AlertsPanel = ({
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             style={{ fontFamily }}
+            aria-expanded={isAlertDropdownOpen}
+            aria-haspopup="true"
+            aria-label={`${alerts.length} alerts. Click to manage alerts.`}
           >
-            <Bell className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <Bell className="w-3.5 h-3.5 sm:w-4 sm:h-4" aria-hidden="true" />
             <span className="font-bold">{alerts.length}</span>
             <ChevronDown
               className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ml-0.5 sm:ml-1 transition-transform duration-200 ${
                 isAlertDropdownOpen ? "rotate-180" : ""
               }`}
+              aria-hidden="true"
             />
           </motion.button>
 
@@ -164,7 +154,12 @@ const AlertsPanel = ({
 
       {/* Alerts List */}
       {alerts.length > 0 ? (
-        <div className="max-h-75 sm:max-h-87.5 overflow-y-auto hidden-scrollbar">
+        <div
+          className="max-h-75 sm:max-h-87.5 overflow-y-auto hidden-scrollbar"
+          role="log"
+          aria-live="polite"
+          aria-label="Alert notifications"
+        >
           <div className="space-y-2 sm:space-y-3 md:space-y-4 p-1">
             <AnimatePresence mode="popLayout">
               {alerts.map((alert) => (
@@ -175,7 +170,11 @@ const AlertsPanel = ({
         </div>
       ) : (
         // Empty State
-        <div className="flex flex-col items-center justify-center py-8 sm:py-10 md:py-12 text-center">
+        <div
+          className="flex flex-col items-center justify-center py-8 sm:py-10 md:py-12 text-center"
+          role="status"
+          aria-label="No alerts"
+        >
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -186,24 +185,33 @@ const AlertsPanel = ({
               delay: 0.2,
             }}
           >
-            <Bell className={`w-6 h-6 sm:w-8 sm:h-8 ${emptyIconClasses}`} />
+            <Bell className={`w-6 h-6 sm:w-8 sm:h-8 ${emptyIconClasses}`} aria-hidden="true" />
           </motion.div>
-          <p
-            className={`mt-3 sm:mt-4 text-sm sm:text-base font-medium ${emptyTextClasses}`}
-            style={{ fontFamily }}
-          >
+          <p className={`mt-3 sm:mt-4 text-sm sm:text-base font-medium ${emptyTextClasses}`} style={{ fontFamily }}>
             No current alerts
           </p>
-          <p
-            className={`mt-1 text-xs sm:text-sm ${emptySubtextClasses}`}
-            style={{ fontFamily }}
-          >
+          <p className={`mt-1 text-xs sm:text-sm ${emptySubtextClasses}`} style={{ fontFamily }}>
             All animals and enclosures are in good condition!
           </p>
         </div>
       )}
     </motion.div>
   );
+});
+
+AlertsPanel.propTypes = {
+  alerts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      message: PropTypes.string.isRequired,
+      type: PropTypes.oneOf(["info", "warning", "error", "success"]),
+      time: PropTypes.string,
+      dismissed: PropTypes.bool,
+    }),
+  ).isRequired,
+  onAddAlert: PropTypes.func.isRequired,
+  onClearAlerts: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool,
 };
 
 export default AlertsPanel;

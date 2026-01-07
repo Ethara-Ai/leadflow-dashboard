@@ -1,41 +1,39 @@
-import { useState } from "react";
-// eslint-disable-next-line no-unused-vars
+import { useState, useRef, useEffect, memo } from "react";
+import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Plus, Eye, Clock, Save, StickyNote } from "lucide-react";
-import { fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import { fontFamily, modalVariants } from "../constants";
+import useThemeSafe from "../hooks/useThemeSafe";
 
 /**
  * NoteItem Component
  * Displays a single note with timestamp and delete option.
  */
-const NoteItem = ({ note, onDelete, isDark }) => {
-  const cardClasses = isDark
-    ? "bg-slate-700/30 border-slate-600"
-    : "bg-slate-50 border-slate-200";
+const NoteItem = memo(function NoteItem({ note, onDelete, isDark }) {
+  const cardClasses = isDark ? "bg-slate-700/30 border-slate-600" : "bg-slate-50 border-slate-200";
   const textClasses = isDark ? "text-slate-200" : "text-slate-700";
-  const deleteButtonClasses = isDark
-    ? "text-slate-400 hover:text-red-400"
-    : "text-slate-500 hover:text-red-500";
+  const deleteButtonClasses = isDark ? "text-slate-400 hover:text-red-400" : "text-slate-500 hover:text-red-500";
 
   return (
-    <motion.div
+    <motion.article
       className={`p-4 rounded-xl border overflow-hidden ${cardClasses}`}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.2 }}
+      aria-label={`Note from ${note.timestamp}`}
     >
       <div className="flex justify-between items-start mb-2">
         <div className="flex items-center gap-2 text-sm text-slate-500">
-          <Clock size={14} />
-          <span style={{ fontFamily }}>{note.timestamp}</span>
+          <Clock size={14} aria-hidden="true" />
+          <time style={{ fontFamily }}>{note.timestamp}</time>
         </div>
         <button
           onClick={() => onDelete(note.id)}
           className={`p-1 rounded transition-colors cursor-pointer ${deleteButtonClasses}`}
+          aria-label={`Delete note from ${note.timestamp}`}
         >
-          <X size={14} />
+          <X size={14} aria-hidden="true" />
         </button>
       </div>
       <p
@@ -48,16 +46,32 @@ const NoteItem = ({ note, onDelete, isDark }) => {
       >
         {note.content}
       </p>
-    </motion.div>
+    </motion.article>
   );
+});
+
+NoteItem.propTypes = {
+  note: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    content: PropTypes.string.isRequired,
+    timestamp: PropTypes.string.isRequired,
+  }).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  isDark: PropTypes.bool.isRequired,
 };
 
 /**
  * AddNoteForm Component
  * Form for adding new notes.
  */
-const AddNoteForm = ({ onSave, isDark }) => {
+const AddNoteForm = memo(function AddNoteForm({ onSave, isDark }) {
   const [currentNote, setCurrentNote] = useState("");
+  const textareaRef = useRef(null);
+
+  // Focus textarea on mount
+  useEffect(() => {
+    textareaRef.current?.focus();
+  }, []);
 
   const handleSave = () => {
     if (!currentNote.trim()) return;
@@ -65,40 +79,67 @@ const AddNoteForm = ({ onSave, isDark }) => {
     setCurrentNote("");
   };
 
+  const handleKeyDown = (e) => {
+    // Cmd/Ctrl + Enter to save
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && currentNote.trim()) {
+      e.preventDefault();
+      handleSave();
+    }
+  };
+
   const labelClasses = isDark ? "text-slate-300" : "text-slate-700";
   const inputClasses = isDark
     ? "bg-slate-700/50 border-slate-600 text-slate-200 placeholder-slate-400 focus:border-blue-500"
     : "bg-slate-50 border-slate-300 text-slate-700 placeholder-slate-500 focus:border-blue-500";
-  const disabledButtonClasses = isDark
-    ? "bg-slate-700 text-slate-500"
-    : "bg-slate-200 text-slate-400";
+  const disabledButtonClasses = isDark ? "bg-slate-700 text-slate-500" : "bg-slate-200 text-slate-400";
+
+  const characterCount = currentNote.length;
+  const maxCharacters = 1000;
 
   return (
     <div className="space-y-4">
       <div>
         <label
+          htmlFor="note-textarea"
           className={`block text-sm font-medium mb-2 ${labelClasses}`}
           style={{ fontFamily }}
         >
           Animal Observation Note
         </label>
         <textarea
+          ref={textareaRef}
+          id="note-textarea"
           value={currentNote}
           onChange={(e) => setCurrentNote(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Enter your animal observation (e.g., behavior, health, feeding notes)..."
           rows={6}
-          maxLength={1000}
+          maxLength={maxCharacters}
           className={`w-full p-4 rounded-xl border transition-all duration-200 resize-none ${inputClasses} focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
           style={{
             fontFamily,
             wordBreak: "break-word",
             overflowWrap: "anywhere",
           }}
+          aria-describedby="note-help character-count"
         />
+        <div className="flex justify-between items-center mt-2">
+          <p id="note-help" className="text-xs text-slate-500" style={{ fontFamily }}>
+            Press Cmd/Ctrl + Enter to save
+          </p>
+          <p
+            id="character-count"
+            className={`text-xs ${characterCount > maxCharacters * 0.9 ? "text-amber-500" : "text-slate-500"}`}
+            style={{ fontFamily }}
+            aria-live="polite"
+          >
+            {characterCount}/{maxCharacters}
+          </p>
+        </div>
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm text-slate-500">
-          <Clock size={16} />
+          <Clock size={16} aria-hidden="true" />
           <span style={{ fontFamily }}>{new Date().toLocaleString()}</span>
         </div>
         <motion.button
@@ -112,49 +153,61 @@ const AddNoteForm = ({ onSave, isDark }) => {
           whileHover={currentNote.trim() ? { scale: 1.05 } : {}}
           whileTap={currentNote.trim() ? { scale: 0.95 } : {}}
           style={{ fontFamily }}
+          aria-disabled={!currentNote.trim()}
         >
-          <Save size={16} />
+          <Save size={16} aria-hidden="true" />
           Save Note
         </motion.button>
       </div>
     </div>
   );
+});
+
+AddNoteForm.propTypes = {
+  onSave: PropTypes.func.isRequired,
+  isDark: PropTypes.bool.isRequired,
 };
 
 /**
  * NotesList Component
  * Displays a list of notes or empty state.
  */
-const NotesList = ({ notes, onDeleteNote, isDark }) => {
+const NotesList = memo(function NotesList({ notes, onDeleteNote, isDark }) {
   const emptyIconClasses = isDark ? "text-slate-500" : "text-slate-400";
   const emptyTextClasses = isDark ? "text-slate-400" : "text-slate-600";
 
   if (notes.length === 0) {
     return (
-      <div className="text-center py-8">
-        <StickyNote size={32} className={`mx-auto mb-3 ${emptyIconClasses}`} />
+      <div className="text-center py-8" role="status" aria-label="No notes available">
+        <StickyNote size={32} className={`mx-auto mb-3 ${emptyIconClasses}`} aria-hidden="true" />
         <p className={`text-sm ${emptyTextClasses}`} style={{ fontFamily }}>
-          No observations yet. Start documenting animal behavior and health
-          notes!
+          No observations yet. Start documenting animal behavior and health notes!
         </p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" role="feed" aria-label="Notes list">
       <AnimatePresence mode="popLayout">
         {notes.map((note) => (
-          <NoteItem
-            key={note.id}
-            note={note}
-            onDelete={onDeleteNote}
-            isDark={isDark}
-          />
+          <NoteItem key={note.id} note={note} onDelete={onDeleteNote} isDark={isDark} />
         ))}
       </AnimatePresence>
     </div>
   );
+});
+
+NotesList.propTypes = {
+  notes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      content: PropTypes.string.isRequired,
+      timestamp: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  onDeleteNote: PropTypes.func.isRequired,
+  isDark: PropTypes.bool.isRequired,
 };
 
 /**
@@ -169,25 +222,65 @@ const NotesList = ({ notes, onDeleteNote, isDark }) => {
  * @param {function} props.onDeleteNote - Callback when a note is deleted
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const NotesModal = ({
+const NotesModal = memo(function NotesModal({
   isOpen,
   onClose,
   notes,
   onSaveNote,
   onDeleteNote,
   darkMode: darkModeOverride,
-}) => {
+}) {
   const [notesMode, setNotesMode] = useState("add");
+  const modalRef = useRef(null);
+  const closeButtonRef = useRef(null);
 
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
+
+  // Focus management and escape key handling
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Focus the close button when modal opens
+    closeButtonRef.current?.focus();
+
+    // Handle escape key
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isOpen, onClose]);
+
+  // Trap focus within modal
+  useEffect(() => {
+    if (!isOpen || !modalRef.current) return;
+
+    const modal = modalRef.current;
+    const focusableElements = modal.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    const handleTabKey = (e) => {
+      if (e.key !== "Tab") return;
+
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement?.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleTabKey);
+    return () => document.removeEventListener("keydown", handleTabKey);
+  }, [isOpen, notesMode]);
 
   // Handle save and switch to view mode
   const handleSaveNote = (content) => {
@@ -195,15 +288,8 @@ const NotesModal = ({
     setNotesMode("view");
   };
 
-  // Handle close and reset state
-  const handleClose = () => {
-    onClose();
-  };
-
   // Theme-based classes
-  const modalClasses = isDark
-    ? "bg-slate-800/95 border-slate-700"
-    : "bg-white/95 border-slate-300";
+  const modalClasses = isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300";
   const headerBorderClasses = isDark ? "border-slate-700" : "border-slate-200";
   const titleClasses = isDark ? "text-slate-200" : "text-slate-700";
   const closeButtonClasses = isDark
@@ -229,42 +315,55 @@ const NotesModal = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={handleClose}
+          onClick={onClose}
+          role="presentation"
         >
           <motion.div
+            ref={modalRef}
             className={`${modalClasses} backdrop-blur-md rounded-2xl border shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden`}
-            initial={{ scale: 0.9, y: 20 }}
-            animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0.9, y: 20 }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={modalVariants}
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="notes-modal-title"
+            aria-describedby="notes-modal-description"
           >
             {/* Header */}
             <div className={`p-6 border-b ${headerBorderClasses}`}>
               <div className="flex justify-between items-center mb-4">
-                <h3
-                  className={`text-xl font-bold ${titleClasses}`}
-                  style={{ fontFamily }}
-                >
+                <h2 id="notes-modal-title" className={`text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
                   Animal Observations
-                </h3>
+                </h2>
                 <button
-                  onClick={handleClose}
+                  ref={closeButtonRef}
+                  onClick={onClose}
                   className={`p-2 rounded-lg transition-colors cursor-pointer ${closeButtonClasses}`}
+                  aria-label="Close modal"
                 >
-                  <X size={20} />
+                  <X size={20} aria-hidden="true" />
                 </button>
               </div>
+              <p id="notes-modal-description" className="sr-only">
+                Modal for managing animal observation notes. Use the tabs to add new notes or view existing ones.
+              </p>
 
               {/* Mode Toggle Buttons */}
-              <div className="flex gap-2">
+              <div className="flex gap-2" role="tablist" aria-label="Notes view options">
                 <motion.button
                   onClick={() => setNotesMode("add")}
                   className={`px-4 py-2 rounded-xl text-sm font-medium cursor-pointer transition-all duration-200 flex items-center gap-2 ${getModeButtonClasses("add")}`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   style={{ fontFamily }}
+                  role="tab"
+                  aria-selected={notesMode === "add"}
+                  aria-controls="add-note-panel"
+                  id="add-note-tab"
                 >
-                  <Plus size={16} />
+                  <Plus size={16} aria-hidden="true" />
                   Add Note
                 </motion.button>
                 <motion.button
@@ -273,8 +372,12 @@ const NotesModal = ({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   style={{ fontFamily }}
+                  role="tab"
+                  aria-selected={notesMode === "view"}
+                  aria-controls="view-notes-panel"
+                  id="view-notes-tab"
                 >
-                  <Eye size={16} />
+                  <Eye size={16} aria-hidden="true" />
                   View Notes ({notes.length})
                 </motion.button>
               </div>
@@ -283,13 +386,13 @@ const NotesModal = ({
             {/* Content */}
             <div className="p-6 max-h-96 overflow-y-auto custom-scroll">
               {notesMode === "add" ? (
-                <AddNoteForm onSave={handleSaveNote} isDark={isDark} />
+                <div role="tabpanel" id="add-note-panel" aria-labelledby="add-note-tab">
+                  <AddNoteForm onSave={handleSaveNote} isDark={isDark} />
+                </div>
               ) : (
-                <NotesList
-                  notes={notes}
-                  onDeleteNote={onDeleteNote}
-                  isDark={isDark}
-                />
+                <div role="tabpanel" id="view-notes-panel" aria-labelledby="view-notes-tab">
+                  <NotesList notes={notes} onDeleteNote={onDeleteNote} isDark={isDark} />
+                </div>
               )}
             </div>
           </motion.div>
@@ -297,6 +400,21 @@ const NotesModal = ({
       )}
     </AnimatePresence>
   );
+});
+
+NotesModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  notes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      content: PropTypes.string.isRequired,
+      timestamp: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  onSaveNote: PropTypes.func.isRequired,
+  onDeleteNote: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool,
 };
 
 export default NotesModal;

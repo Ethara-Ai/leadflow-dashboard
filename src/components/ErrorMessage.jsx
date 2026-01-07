@@ -1,8 +1,9 @@
-// eslint-disable-next-line no-unused-vars
+import { memo } from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { ShieldAlert } from "lucide-react";
 import { fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 
 /**
  * ErrorMessage Component
@@ -12,16 +13,9 @@ import useTheme from "../hooks/useTheme";
  * @param {string} props.error - Error message to display (null/undefined hides component)
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const ErrorMessage = ({ error, darkMode: darkModeOverride }) => {
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+const ErrorMessage = memo(function ErrorMessage({ error, darkMode: darkModeOverride }) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   if (!error) return null;
 
@@ -33,18 +27,23 @@ const ErrorMessage = ({ error, darkMode: darkModeOverride }) => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      role="alert"
+      aria-live="assertive"
     >
       <p
-        className={`text-sm font-medium flex items-center ${
-          isDark ? "text-red-400" : "text-red-600"
-        }`}
+        className={`text-sm font-medium flex items-center ${isDark ? "text-red-400" : "text-red-600"}`}
         style={{ fontFamily }}
       >
-        <ShieldAlert size={16} className="mr-2" />
-        {error}
+        <ShieldAlert size={16} className="mr-2 shrink-0" aria-hidden="true" />
+        <span>{error}</span>
       </p>
     </motion.div>
   );
+});
+
+ErrorMessage.propTypes = {
+  error: PropTypes.string,
+  darkMode: PropTypes.bool,
 };
 
 export default ErrorMessage;

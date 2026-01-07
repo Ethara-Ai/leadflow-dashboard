@@ -1,18 +1,9 @@
-// eslint-disable-next-line no-unused-vars
+import { memo } from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import {
-  ResponsiveContainer,
-  ComposedChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Area,
-  Bar,
-} from "recharts";
+import { ResponsiveContainer, ComposedChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Area, Bar } from "recharts";
 import { cardVariants, fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 import CustomTooltip from "./CustomTooltip";
 import TimePeriodButtons from "./TimePeriodButtons";
 import { ChartLegend, XAxisTick } from "./ChartComponents";
@@ -27,7 +18,7 @@ import {
 } from "../chartUtils";
 
 /**
- * AntActivityChart Component
+ * AnimalActivityChart Component
  * Displays animal activity data as a composed chart with area and bar elements.
  *
  * @param {Object} props - Component props
@@ -36,21 +27,14 @@ import {
  * @param {function} props.setTimePeriod - Callback when time period changes
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const AntActivityChart = ({
+const AnimalActivityChart = memo(function AnimalActivityChart({
   data,
   timePeriod,
   setTimePeriod,
   darkMode: darkModeOverride,
-}) => {
-  // Use theme context with optional override for backward compatibility
-  let isDark = false;
-  try {
-    const theme = useTheme();
-    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-    isDark = darkModeOverride ?? false;
-  }
+}) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 
   // Get theme-based styles
   const axisStyles = getAxisStyles(isDark);
@@ -71,20 +55,18 @@ const AntActivityChart = ({
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <h3
-          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
-          style={{ fontFamily }}
-        >
+        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
           Animal Activity
         </h3>
-        <TimePeriodButtons
-          currentPeriod={timePeriod}
-          onPeriodChange={setTimePeriod}
-        />
+        <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
       </div>
 
       {/* Chart Container */}
-      <div className="w-full h-55 sm:h-65 md:h-75">
+      <div
+        className="w-full h-55 sm:h-65 md:h-75"
+        role="img"
+        aria-label="Animal activity chart showing active animals and feedings completed"
+      >
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
             data={data}
@@ -101,16 +83,8 @@ const AntActivityChart = ({
                 <stop offset="95%" stopColor={primaryColor} stopOpacity={0.2} />
               </linearGradient>
               <linearGradient id="colorFeeding" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor={secondaryColor}
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor={secondaryColor}
-                  stopOpacity={0.2}
-                />
+                <stop offset="5%" stopColor={secondaryColor} stopOpacity={0.8} />
+                <stop offset="95%" stopColor={secondaryColor} stopOpacity={0.2} />
               </linearGradient>
             </defs>
             <CartesianGrid {...gridStyles} />
@@ -133,10 +107,7 @@ const AntActivityChart = ({
               width={40}
               axisLine={axisStyles.axisLine}
             />
-            <Tooltip
-              content={(props) => <CustomTooltip {...props} />}
-              cursor={cursorStyles}
-            />
+            <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={cursorStyles} />
             <Legend
               content={(props) => <ChartLegend {...props} />}
               wrapperStyle={{
@@ -165,6 +136,19 @@ const AntActivityChart = ({
       </div>
     </motion.div>
   );
+});
+
+AnimalActivityChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      animals: PropTypes.number.isRequired,
+      feedingCompleted: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+  timePeriod: PropTypes.oneOf(["week", "month", "year"]).isRequired,
+  setTimePeriod: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool,
 };
 
-export default AntActivityChart;
+export default AnimalActivityChart;

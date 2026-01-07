@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { fontFamily } from "../constants";
 
@@ -19,11 +18,7 @@ const LoadingScreen = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <svg
-            className="w-9 h-9 text-white"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
+          <svg className="w-9 h-9 text-white" viewBox="0 0 24 24" fill="currentColor">
             <ellipse cx="12" cy="17" rx="3.5" ry="3" />
             <ellipse cx="6" cy="10" rx="2" ry="2.5" />
             <ellipse cx="18" cy="10" rx="2" ry="2.5" />
