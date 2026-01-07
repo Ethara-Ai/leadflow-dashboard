@@ -1,5 +1,5 @@
-import { useState, useCallback, memo } from "react";
-import { AnimatePresence } from "framer-motion";
+import { useState, useCallback, memo, useLayoutEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Hooks
 import useGlobalStyles from "../hooks/useGlobalStyles";
@@ -122,12 +122,10 @@ const DashboardContent = () => {
   // Apply global styles
   useGlobalStyles(darkMode);
 
-  // Use layout effect pattern for mount detection to avoid cascading renders
-  // This is safe because we're only setting state once on mount
-  if (!isMounted) {
-    // This will trigger a re-render, but only once
-    setTimeout(() => setIsMounted(true), 0);
-  }
+  // Use useLayoutEffect for mount detection to avoid flash of empty content
+  useLayoutEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Event handlers
   const handleAddAlert = useCallback(

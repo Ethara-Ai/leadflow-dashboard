@@ -1,26 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-// Font imports are handled separately to avoid reloading on theme changes
-const FONT_STYLES_ID = "zoolab-font-styles";
 const THEME_STYLES_ID = "zoolab-theme-styles";
-
-/**
- * Inject font styles once on initial load
- * This is separate from theme styles to avoid reloading fonts on theme toggle
- */
-const injectFontStyles = () => {
-  if (document.getElementById(FONT_STYLES_ID)) {
-    return; // Already injected
-  }
-
-  const fontStyleElement = document.createElement("style");
-  fontStyleElement.id = FONT_STYLES_ID;
-  fontStyleElement.textContent = `
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-  `;
-  document.head.appendChild(fontStyleElement);
-};
 
 /**
  * Generate scrollbar styles based on dark mode
@@ -91,24 +71,14 @@ const generateScrollbarStyles = (isDark) => `
 
 /**
  * Custom hook for injecting global styles into the document head.
- * Handles scrollbar styling based on dark mode and font imports.
+ * Handles scrollbar styling based on dark mode.
  *
- * Font imports are done once and not reloaded on theme changes.
- * Scrollbar styles update dynamically based on the dark mode state.
+ * Note: Font imports are now handled in index.html for better performance.
+ * This hook only manages theme-dependent scrollbar styles.
  *
  * @param {boolean} darkMode - Whether dark mode is enabled
  */
 const useGlobalStyles = (darkMode) => {
-  const hasInjectedFonts = useRef(false);
-
-  // Inject font styles once on mount
-  useEffect(() => {
-    if (!hasInjectedFonts.current) {
-      injectFontStyles();
-      hasInjectedFonts.current = true;
-    }
-  }, []);
-
   // Update theme-dependent styles when dark mode changes
   useEffect(() => {
     let styleElement = document.getElementById(THEME_STYLES_ID);
