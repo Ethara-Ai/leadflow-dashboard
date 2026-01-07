@@ -147,10 +147,10 @@ describe("FooterModal", () => {
       expect(screen.getByText("Second Title")).toBeInTheDocument();
     });
 
-    it("should render title as h3 element", () => {
+    it("should render title as h2 element", () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
       const title = screen.getByText("Test Modal Title");
-      expect(title.tagName).toBe("H3");
+      expect(title.tagName).toBe("H2");
     });
 
     it("should apply font-bold to title", () => {
@@ -171,7 +171,7 @@ describe("FooterModal", () => {
       const { container } = renderWithTheme(
         <FooterModal {...defaultProps} title="" />,
       );
-      expect(container.querySelector("h3")).toBeInTheDocument();
+      expect(container.querySelector("h2")).toBeInTheDocument();
     });
   });
 
@@ -378,7 +378,7 @@ describe("FooterModal", () => {
   describe("accessibility", () => {
     it("should have proper heading structure", () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
-      const heading = screen.getByRole("heading", { level: 3 });
+      const heading = screen.getByRole("heading", { level: 2 });
       expect(heading).toBeInTheDocument();
     });
 

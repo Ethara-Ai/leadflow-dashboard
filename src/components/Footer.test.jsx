@@ -68,8 +68,9 @@ describe("Footer", () => {
 
     it("should render the copyright text", () => {
       renderWithTheme(<Footer {...defaultProps} />);
+      const currentYear = new Date().getFullYear();
       expect(
-        screen.getByText("© 2025 ZOOLAB. All rights reserved."),
+        screen.getByText(`© ${currentYear} ZOOLAB. All rights reserved.`),
       ).toBeInTheDocument();
     });
 
@@ -483,12 +484,13 @@ describe("Footer", () => {
       renderWithTheme(<Footer {...defaultProps} />);
 
       // Verify all main elements are present
+      const currentYear = new Date().getFullYear();
       expect(screen.getByText("ZOOLAB")).toBeInTheDocument();
       expect(screen.getByText("Product")).toBeInTheDocument();
       expect(screen.getByText("Resources")).toBeInTheDocument();
       expect(screen.getByText("Company")).toBeInTheDocument();
       expect(
-        screen.getByText("© 2025 ZOOLAB. All rights reserved."),
+        screen.getByText(`© ${currentYear} ZOOLAB. All rights reserved.`),
       ).toBeInTheDocument();
     });
   });

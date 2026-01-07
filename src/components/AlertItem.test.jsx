@@ -32,6 +32,11 @@ vi.mock("framer-motion", () => ({
         {children}
       </div>
     ),
+    article: ({ children, className, ...props }) => (
+      <article className={className} {...props}>
+        {children}
+      </article>
+    ),
   },
 }));
 
@@ -526,11 +531,11 @@ describe("AlertItem", () => {
       expect(message.tagName).toBe("P");
     });
 
-    it("should have semantic paragraph element for time", () => {
+    it("should have semantic time element for time", () => {
       const alert = createAlert();
       renderWithTheme(<AlertItem alert={alert} />);
       const time = screen.getByText(alert.time);
-      expect(time.tagName).toBe("P");
+      expect(time.tagName).toBe("TIME");
     });
 
     it("should have appropriate text contrast in light mode", () => {

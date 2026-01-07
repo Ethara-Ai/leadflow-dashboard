@@ -264,7 +264,7 @@ describe("ThemeProvider", () => {
         wrapper: createWrapper(false),
       });
 
-      expect(localStorage.getItem).toHaveBeenCalledWith("antlab-theme");
+      expect(localStorage.getItem).toHaveBeenCalledWith("zoolab-theme");
       expect(result.current.isDark).toBe(true);
     });
 
@@ -293,7 +293,7 @@ describe("ThemeProvider", () => {
 
       await waitFor(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
-          "antlab-theme",
+          "zoolab-theme",
           "dark",
         );
       });
@@ -312,7 +312,7 @@ describe("ThemeProvider", () => {
 
       await waitFor(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
-          "antlab-theme",
+          "zoolab-theme",
           "light",
         );
       });
@@ -331,7 +331,7 @@ describe("ThemeProvider", () => {
 
       await waitFor(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
-          "antlab-theme",
+          "zoolab-theme",
           "dark",
         );
       });

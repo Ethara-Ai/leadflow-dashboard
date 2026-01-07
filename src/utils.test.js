@@ -13,6 +13,7 @@ import {
   exportToJSON,
   generateExportFilename,
 } from "./utils";
+import { alertMessages } from "./constants";
 
 // =============================================================================
 // calculateTotalAnimals Tests
@@ -109,19 +110,6 @@ describe("formatEfficiency", () => {
 // =============================================================================
 
 describe("getRandomAlertMessage", () => {
-  const validMessages = [
-    "Elephant enclosure temperature above optimal range",
-    "Veterinary checkup completed for primates section",
-    "Low stock alert: Vitamin supplements for reptile house",
-    "Unusual behavior detected in big cats section",
-    "Humidity level critical in tropical bird aviary",
-    "New animal arrival scheduled for quarantine area",
-    "Feeding schedule delayed for aquatic mammals",
-    "Water quality check required for penguin habitat",
-    "Enrichment activity completed in gorilla enclosure",
-    "Medical supplies restocking needed for clinic",
-  ];
-
   it("should return a string", () => {
     const result = getRandomAlertMessage();
     expect(typeof result).toBe("string");
@@ -129,7 +117,7 @@ describe("getRandomAlertMessage", () => {
 
   it("should return a message from the predefined list", () => {
     const result = getRandomAlertMessage();
-    expect(validMessages).toContain(result);
+    expect(alertMessages).toContain(result);
   });
 
   it("should return non-empty strings", () => {
@@ -279,7 +267,7 @@ describe("exportToCSV", () => {
   });
 
   const mockExportData = {
-    colonyData: {
+    zooData: {
       population: 847,
       temperature: 24.5,
       humidity: 58,
@@ -289,11 +277,11 @@ describe("exportToCSV", () => {
       { name: "Mon", animals: 120, feedingCompleted: 15 },
       { name: "Tue", animals: 150, feedingCompleted: 22 },
     ],
-    foragingData: [
+    feedingData: [
       { name: "Mon", efficiency: 80 },
       { name: "Tue", efficiency: 85 },
     ],
-    foodData: [
+    dietData: [
       { name: "Fresh Produce", value: 35 },
       { name: "Protein/Meat", value: 30 },
     ],
@@ -331,15 +319,15 @@ describe("exportToCSV", () => {
 
   it("should handle empty data arrays", () => {
     const emptyData = {
-      colonyData: {
+      zooData: {
         population: 0,
         temperature: 0,
         humidity: 0,
         lastUpdated: "",
       },
       activityData: [],
-      foragingData: [],
-      foodData: [],
+      feedingData: [],
+      dietData: [],
       alerts: [],
     };
 

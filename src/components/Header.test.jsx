@@ -102,7 +102,7 @@ describe("Header", () => {
 
     it("should render all action buttons", () => {
       renderWithTheme(<Header {...defaultProps} />);
-      expect(screen.getByLabelText("Toggle dark mode")).toBeInTheDocument();
+      expect(screen.getByLabelText("Switch to dark mode")).toBeInTheDocument();
       expect(screen.getByLabelText("Refresh data")).toBeInTheDocument();
       expect(screen.getByLabelText("Open notes")).toBeInTheDocument();
       expect(screen.getByLabelText("Open menu")).toBeInTheDocument();
@@ -153,7 +153,7 @@ describe("Header", () => {
       const user = userEvent.setup();
       renderWithTheme(<Header {...defaultProps} />);
 
-      const darkModeButton = screen.getByLabelText("Toggle dark mode");
+      const darkModeButton = screen.getByLabelText("Switch to dark mode");
       await user.click(darkModeButton);
 
       expect(defaultProps.onToggleDarkMode).toHaveBeenCalledTimes(1);
@@ -161,14 +161,14 @@ describe("Header", () => {
 
     it("should show Sun icon in dark mode", () => {
       renderWithTheme(<Header {...defaultProps} />, { darkMode: true });
-      const darkModeButton = screen.getByLabelText("Toggle dark mode");
+      const darkModeButton = screen.getByLabelText("Switch to light mode");
       // In dark mode, Sun icon should be visible
       expect(darkModeButton).toHaveClass("text-yellow-400");
     });
 
     it("should show Moon icon in light mode", () => {
       renderWithTheme(<Header {...defaultProps} />, { darkMode: false });
-      const darkModeButton = screen.getByLabelText("Toggle dark mode");
+      const darkModeButton = screen.getByLabelText("Switch to dark mode");
       expect(darkModeButton).toHaveClass("text-slate-700");
     });
   });
@@ -376,7 +376,7 @@ describe("Header", () => {
   describe("accessibility", () => {
     it("should have aria-label on all action buttons", () => {
       renderWithTheme(<Header {...defaultProps} />);
-      expect(screen.getByLabelText("Toggle dark mode")).toBeInTheDocument();
+      expect(screen.getByLabelText("Switch to dark mode")).toBeInTheDocument();
       expect(screen.getByLabelText("Refresh data")).toBeInTheDocument();
       expect(screen.getByLabelText("Open notes")).toBeInTheDocument();
       expect(screen.getByLabelText("Open menu")).toBeInTheDocument();

@@ -61,6 +61,11 @@ vi.mock("framer-motion", () => ({
         {children}
       </button>
     ),
+    article: ({ children, className, ...props }) => (
+      <article className={className} {...props}>
+        {children}
+      </article>
+    ),
   },
   AnimatePresence: ({ children }) => <>{children}</>,
 }));
@@ -510,7 +515,7 @@ describe("NotesModal", () => {
   describe("accessibility", () => {
     it("should have proper heading structure", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
-      const heading = screen.getByRole("heading", { level: 3 });
+      const heading = screen.getByRole("heading", { level: 2 });
       expect(heading).toHaveTextContent("Animal Observations");
     });
 
