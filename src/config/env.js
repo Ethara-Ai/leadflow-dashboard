@@ -1,5 +1,5 @@
 // =============================================================================
-// ZOOLAB DASHBOARD - ENVIRONMENT CONFIGURATION
+// LEADFLOW DASHBOARD - ENVIRONMENT CONFIGURATION
 // =============================================================================
 // Centralized configuration for all environment variables.
 // Provides type-safe access and default values.
@@ -50,7 +50,7 @@ const config = {
   // ---------------------------------------------------------------------------
   app: {
     env: getEnv("VITE_APP_ENV", "development"),
-    name: getEnv("VITE_APP_NAME", "ZOOLAB Dashboard"),
+    name: getEnv("VITE_APP_NAME", "LeadFlow Dashboard"),
     version: getEnv("VITE_APP_VERSION", "1.0.0"),
     url: getEnv("VITE_APP_URL", "http://localhost:5173"),
     basePath: getEnv("VITE_BASE_PATH", "/"),
@@ -74,7 +74,10 @@ const config = {
     domain: getEnv("VITE_AUTH_DOMAIN", ""),
     clientId: getEnv("VITE_AUTH_CLIENT_ID", ""),
     audience: getEnv("VITE_AUTH_AUDIENCE", ""),
-    redirectUri: getEnv("VITE_AUTH_REDIRECT_URI", "http://localhost:5173/callback"),
+    redirectUri: getEnv(
+      "VITE_AUTH_REDIRECT_URI",
+      "http://localhost:5173/callback",
+    ),
     sessionTimeout: getNumberEnv("VITE_SESSION_TIMEOUT", 60),
     csrfEnabled: getBoolEnv("VITE_CSRF_ENABLED", true),
   },
@@ -99,7 +102,10 @@ const config = {
     gaMeasurementId: getEnv("VITE_GA_MEASUREMENT_ID", ""),
     sentryDsn: getEnv("VITE_SENTRY_DSN", ""),
     sentryEnvironment: getEnv("VITE_SENTRY_ENVIRONMENT", "development"),
-    performanceMonitoring: getBoolEnv("VITE_ENABLE_PERFORMANCE_MONITORING", false),
+    performanceMonitoring: getBoolEnv(
+      "VITE_ENABLE_PERFORMANCE_MONITORING",
+      false,
+    ),
     logrocketAppId: getEnv("VITE_LOGROCKET_APP_ID", ""),
     hotjarSiteId: getEnv("VITE_HOTJAR_SITE_ID", ""),
   },
@@ -156,7 +162,7 @@ const config = {
   // Contact & Support
   // ---------------------------------------------------------------------------
   support: {
-    email: getEnv("VITE_SUPPORT_EMAIL", "support@zoolab.example.com"),
+    email: getEnv("VITE_SUPPORT_EMAIL", "support@leadflow.example.com"),
     docsUrl: getEnv("VITE_DOCS_URL", ""),
     statusUrl: getEnv("VITE_STATUS_URL", ""),
   },
@@ -227,7 +233,7 @@ export const getAssetUrl = (path) => {
 export const logConfig = () => {
   if (!isDevelopment()) return;
 
-  console.group("🔧 ZOOLAB Dashboard Configuration");
+  console.group("🔧 LeadFlow Dashboard Configuration");
   console.log("Environment:", config.app.env);
   console.log("Version:", config.app.version);
   console.log("API URL:", getApiUrl());

@@ -1,7 +1,16 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from "recharts";
+import {
+  ResponsiveContainer,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  Line,
+} from "recharts";
 import { cardVariants, fontFamily } from "../constants";
 import useThemeSafe from "../hooks/useThemeSafe";
 import { formatEfficiency } from "../utils";
@@ -19,8 +28,8 @@ import {
 } from "../chartUtils";
 
 /**
- * FeedingEfficiencyChart Component
- * Displays feeding efficiency data as a line chart.
+ * ConversionRateChart Component
+ * Displays conversion rate data as a line chart.
  *
  * @param {Object} props - Component props
  * @param {Array} props.data - Chart data array
@@ -28,7 +37,7 @@ import {
  * @param {function} props.setTimePeriod - Callback when time period changes
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const FeedingEfficiencyChart = memo(function FeedingEfficiencyChart({
+const FeedingEfficiencyChart = memo(function ConversionRateChart({
   data,
   timePeriod,
   setTimePeriod,
@@ -55,17 +64,23 @@ const FeedingEfficiencyChart = memo(function FeedingEfficiencyChart({
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
-          Feeding Efficiency
+        <h3
+          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
+          style={{ fontFamily }}
+        >
+          Conversion Rate
         </h3>
-        <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
+        <TimePeriodButtons
+          currentPeriod={timePeriod}
+          onPeriodChange={setTimePeriod}
+        />
       </div>
 
       {/* Chart Container */}
       <div
         className="w-full h-55 sm:h-65 md:h-75"
         role="img"
-        aria-label="Feeding efficiency line chart showing feeding rate percentage over time"
+        aria-label="Conversion rate line chart showing conversion percentage over time"
       >
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
@@ -101,7 +116,10 @@ const FeedingEfficiencyChart = memo(function FeedingEfficiencyChart({
             <Tooltip
               content={(props) => <CustomTooltip {...props} />}
               cursor={cursorStyles}
-              formatter={(value) => [formatEfficiency(value), "Efficiency"]}
+              formatter={(value) => [
+                formatEfficiency(value),
+                "Conversion Rate",
+              ]}
             />
             <Legend
               content={(props) => <ChartLegend {...props} />}
@@ -112,7 +130,7 @@ const FeedingEfficiencyChart = memo(function FeedingEfficiencyChart({
             <Line
               type="monotone"
               dataKey="efficiency"
-              name="Feeding Rate"
+              name="Conversion Rate"
               stroke={lineColor}
               strokeWidth={2}
               dot={getDotStyles(isDark, lineColor)}

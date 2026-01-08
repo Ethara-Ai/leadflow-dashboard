@@ -5,7 +5,7 @@
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import {
-  calculateTotalAnimals,
+  calculateTotalLeads,
   formatEfficiency,
   getRandomAlertMessage,
   getAlertType,
@@ -16,57 +16,57 @@ import {
 import { alertMessages } from "./constants";
 
 // =============================================================================
-// calculateTotalAnimals Tests
+// calculateTotalLeads Tests
 // =============================================================================
 
-describe("calculateTotalAnimals", () => {
-  it("should calculate the sum of animals from week data", () => {
+describe("calculateTotalLeads", () => {
+  it("should calculate the sum of leads from week data", () => {
     const weekData = [
-      { name: "Mon", animals: 120 },
-      { name: "Tue", animals: 150 },
-      { name: "Wed", animals: 180 },
+      { name: "Mon", leads: 120 },
+      { name: "Tue", leads: 150 },
+      { name: "Wed", leads: 180 },
     ];
 
-    const result = calculateTotalAnimals(weekData);
+    const result = calculateTotalLeads(weekData);
     expect(result).toBe(450);
   });
 
   it("should return 0 for empty array", () => {
-    const result = calculateTotalAnimals([]);
+    const result = calculateTotalLeads([]);
     expect(result).toBe(0);
   });
 
   it("should handle single day data", () => {
-    const weekData = [{ name: "Mon", animals: 100 }];
-    const result = calculateTotalAnimals(weekData);
+    const weekData = [{ name: "Mon", leads: 100 }];
+    const result = calculateTotalLeads(weekData);
     expect(result).toBe(100);
   });
 
-  it("should handle data with zero animals", () => {
+  it("should handle data with zero leads", () => {
     const weekData = [
-      { name: "Mon", animals: 0 },
-      { name: "Tue", animals: 0 },
+      { name: "Mon", leads: 0 },
+      { name: "Tue", leads: 0 },
     ];
-    const result = calculateTotalAnimals(weekData);
+    const result = calculateTotalLeads(weekData);
     expect(result).toBe(0);
   });
 
   it("should handle large numbers correctly", () => {
     const weekData = [
-      { name: "Mon", animals: 10000 },
-      { name: "Tue", animals: 20000 },
-      { name: "Wed", animals: 30000 },
+      { name: "Mon", leads: 10000 },
+      { name: "Tue", leads: 20000 },
+      { name: "Wed", leads: 30000 },
     ];
-    const result = calculateTotalAnimals(weekData);
+    const result = calculateTotalLeads(weekData);
     expect(result).toBe(60000);
   });
 
   it("should ignore other properties in data objects", () => {
     const weekData = [
-      { name: "Mon", animals: 100, feedingCompleted: 15, extra: "data" },
-      { name: "Tue", animals: 200, feedingCompleted: 22, extra: "more" },
+      { name: "Mon", leads: 100, callsCompleted: 15, extra: "data" },
+      { name: "Tue", leads: 200, callsCompleted: 22, extra: "more" },
     ];
-    const result = calculateTotalAnimals(weekData);
+    const result = calculateTotalLeads(weekData);
     expect(result).toBe(300);
   });
 });
@@ -144,40 +144,33 @@ describe("getRandomAlertMessage", () => {
 
 describe("getAlertType", () => {
   describe("warning alerts", () => {
-    it('should return "warning" for temperature messages', () => {
+    it('should return "warning" for immediate follow-up messages', () => {
       const result = getAlertType(
-        "Elephant enclosure temperature above optimal range",
+        "High-value lead from FinanceX requires immediate follow-up",
       );
       expect(result).toBe("warning");
     });
 
-    it('should return "warning" for humidity messages', () => {
+    it('should return "warning" for pending messages', () => {
       const result = getAlertType(
-        "Humidity level critical in tropical bird aviary",
+        "5 leads pending outreach for more than 48 hours",
       );
       expect(result).toBe("warning");
     });
 
-    it('should return "warning" for critical messages', () => {
-      const result = getAlertType("critical issue detected");
+    it('should return "warning" for requires messages', () => {
+      const result = getAlertType("This task requires attention");
       expect(result).toBe("warning");
     });
 
-    it('should return "warning" for low stock messages', () => {
-      const result = getAlertType("Low stock alert: Vitamin supplements");
+    it('should return "warning" for high-value lead messages', () => {
+      const result = getAlertType("High-value opportunity identified");
       expect(result).toBe("warning");
     });
 
-    it('should return "warning" for delayed messages', () => {
+    it('should return "warning" for hot lead messages', () => {
       const result = getAlertType(
-        "Feeding schedule delayed for aquatic mammals",
-      );
-      expect(result).toBe("warning");
-    });
-
-    it('should return "warning" for required messages', () => {
-      const result = getAlertType(
-        "Water quality check required for penguin habitat",
+        "Hot lead from healthcare sector needs proposal by EOD",
       );
       expect(result).toBe("warning");
     });
@@ -186,20 +179,20 @@ describe("getAlertType", () => {
   describe("info alerts", () => {
     it('should return "info" for completed messages', () => {
       const result = getAlertType(
-        "Veterinary checkup completed for primates section",
+        "Call campaign completed - 85% contact rate achieved",
       );
       expect(result).toBe("info");
     });
 
-    it('should return "info" for scheduled messages', () => {
+    it('should return "info" for achieved messages', () => {
       const result = getAlertType(
-        "New animal arrival scheduled for quarantine area",
+        "Monthly sales targets achieved - great team performance",
       );
       expect(result).toBe("info");
     });
 
-    it('should return "info" for checkup messages', () => {
-      const result = getAlertType("checkup finished");
+    it('should return "info" for improved messages', () => {
+      const result = getAlertType("Conversion rate improved by 8% this week");
       expect(result).toBe("info");
     });
   });
@@ -218,12 +211,12 @@ describe("getAlertType", () => {
 
   describe("case sensitivity", () => {
     it("should be case sensitive (lowercase keywords)", () => {
-      const result = getAlertType("temperature alert");
+      const result = getAlertType("immediate action needed");
       expect(result).toBe("warning");
     });
 
     it("should not match uppercase keywords (default to info)", () => {
-      const result = getAlertType("TEMPERATURE ALERT");
+      const result = getAlertType("IMMEDIATE ACTION NEEDED");
       expect(result).toBe("info");
     });
   });
@@ -269,21 +262,21 @@ describe("exportToCSV", () => {
   const mockExportData = {
     zooData: {
       population: 847,
-      temperature: 24.5,
-      humidity: 58,
+      temperature: 342,
+      humidity: 67,
       lastUpdated: "1/1/2024, 12:00:00 PM",
     },
     activityData: [
-      { name: "Mon", animals: 120, feedingCompleted: 15 },
-      { name: "Tue", animals: 150, feedingCompleted: 22 },
+      { name: "Mon", leads: 120, callsCompleted: 15 },
+      { name: "Tue", leads: 150, callsCompleted: 22 },
     ],
     feedingData: [
       { name: "Mon", efficiency: 80 },
       { name: "Tue", efficiency: 85 },
     ],
     dietData: [
-      { name: "Fresh Produce", value: 35 },
-      { name: "Protein/Meat", value: 30 },
+      { name: "Website", value: 35 },
+      { name: "Referrals", value: 30 },
     ],
     alerts: [
       { message: "Test alert 1", type: "warning", time: "1 hour ago" },
@@ -372,9 +365,9 @@ describe("exportToJSON", () => {
   });
 
   const mockData = {
-    population: 847,
-    temperature: 24.5,
-    humidity: 58,
+    totalLeads: 847,
+    callsMade: 342,
+    meetingsScheduled: 67,
     alerts: [{ id: 1, message: "Test" }],
   };
 
@@ -442,12 +435,12 @@ describe("generateExportFilename", () => {
 
   it("should generate filename with csv extension", () => {
     const result = generateExportFilename("csv");
-    expect(result).toBe("zoolab-data-2024-06-15.csv");
+    expect(result).toBe("leadflow-data-2024-06-15.csv");
   });
 
   it("should generate filename with json extension", () => {
     const result = generateExportFilename("json");
-    expect(result).toBe("zoolab-data-2024-06-15.json");
+    expect(result).toBe("leadflow-data-2024-06-15.json");
   });
 
   it("should include current date in ISO format (date part only)", () => {
@@ -457,23 +450,23 @@ describe("generateExportFilename", () => {
 
   it("should work with any extension", () => {
     const result = generateExportFilename("xlsx");
-    expect(result).toBe("zoolab-data-2024-06-15.xlsx");
+    expect(result).toBe("leadflow-data-2024-06-15.xlsx");
   });
 
   it("should work with empty extension", () => {
     const result = generateExportFilename("");
-    expect(result).toBe("zoolab-data-2024-06-15.");
+    expect(result).toBe("leadflow-data-2024-06-15.");
   });
 
   it("should handle different dates correctly", () => {
     vi.setSystemTime(new Date("2025-12-31T23:59:59.000Z"));
     const result = generateExportFilename("csv");
-    expect(result).toBe("zoolab-data-2025-12-31.csv");
+    expect(result).toBe("leadflow-data-2025-12-31.csv");
   });
 
-  it("should always start with zoolab-data prefix", () => {
+  it("should always start with leadflow-data prefix", () => {
     const result = generateExportFilename("csv");
-    expect(result.startsWith("zoolab-data-")).toBe(true);
+    expect(result.startsWith("leadflow-data-")).toBe(true);
   });
 });
 
@@ -488,14 +481,14 @@ describe("Utils Integration Tests", () => {
     expect(["warning", "info"]).toContain(type);
   });
 
-  it("should calculate and format efficiency workflow", () => {
+  it("should calculate and format conversion rate workflow", () => {
     const weekData = [
-      { name: "Mon", animals: 100 },
-      { name: "Tue", animals: 200 },
+      { name: "Mon", leads: 100 },
+      { name: "Tue", leads: 200 },
     ];
-    const total = calculateTotalAnimals(weekData);
-    const efficiency = Math.round((total / 300) * 100);
-    const formatted = formatEfficiency(efficiency);
+    const total = calculateTotalLeads(weekData);
+    const conversionRate = Math.round((total / 300) * 100);
+    const formatted = formatEfficiency(conversionRate);
     expect(formatted).toBe("100%");
   });
 });

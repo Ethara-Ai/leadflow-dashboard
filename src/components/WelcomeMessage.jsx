@@ -14,7 +14,11 @@ import useThemeSafe from "../hooks/useThemeSafe";
  * @param {function} props.onClose - Callback when message is dismissed
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const WelcomeMessage = memo(function WelcomeMessage({ show, onClose, darkMode: darkModeOverride }) {
+const WelcomeMessage = memo(function WelcomeMessage({
+  show,
+  onClose,
+  darkMode: darkModeOverride,
+}) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
@@ -22,8 +26,10 @@ const WelcomeMessage = memo(function WelcomeMessage({ show, onClose, darkMode: d
 
   return (
     <motion.div
-      className={`mb-4 sm:mb-6 md:mb-8 p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl border ${
-        isDark ? "bg-emerald-900/20 border-emerald-800/30" : "bg-emerald-50 border-emerald-200"
+      className={`mb-4 sm:mb-6 md:mb-8 p-3 sm:p-4 md:p-4 rounded-xl sm:rounded-2xl border ${
+        isDark
+          ? "bg-blue-900/20 border-blue-800/30"
+          : "bg-blue-50 border-blue-200"
       }`}
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -36,11 +42,11 @@ const WelcomeMessage = memo(function WelcomeMessage({ show, onClose, darkMode: d
         <div className="flex items-start sm:items-center flex-1 min-w-0">
           <div
             className={`p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl shrink-0 ${
-              isDark ? "bg-emerald-800/30" : "bg-emerald-100"
+              isDark ? "bg-blue-800/30" : "bg-blue-100"
             } mr-2 sm:mr-3 md:mr-4`}
           >
             <Info
-              className={`w-4 h-4 sm:w-5 sm:h-5 ${isDark ? "text-emerald-400" : "text-emerald-600"}`}
+              className={`w-4 h-4 sm:w-5 sm:h-5 ${isDark ? "text-blue-400" : "text-blue-600"}`}
               aria-hidden="true"
             />
           </div>
@@ -51,7 +57,7 @@ const WelcomeMessage = memo(function WelcomeMessage({ show, onClose, darkMode: d
               }`}
               style={{ fontFamily }}
             >
-              Welcome back, Zoolab Staff!
+              Welcome back, John Doe!
             </h3>
             <p
               className={`text-xs sm:text-sm mt-0.5 sm:mt-1 leading-snug ${
@@ -59,7 +65,7 @@ const WelcomeMessage = memo(function WelcomeMessage({ show, onClose, darkMode: d
               }`}
               style={{ fontFamily }}
             >
-              Here's the current status of your zoo and animal enclosures
+              Here's the current status of your leads and sales pipeline
             </p>
           </div>
         </div>

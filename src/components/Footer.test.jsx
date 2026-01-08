@@ -52,16 +52,16 @@ describe("Footer", () => {
   });
 
   describe("basic rendering", () => {
-    it("should render the ZOOLAB logo text", () => {
+    it("should render the LeadFlow logo text", () => {
       renderWithTheme(<Footer {...defaultProps} />);
-      expect(screen.getByText("ZOOLAB")).toBeInTheDocument();
+      expect(screen.getByText("LeadFlow")).toBeInTheDocument();
     });
 
     it("should render the footer description", () => {
       renderWithTheme(<Footer {...defaultProps} />);
       expect(
         screen.getByText(
-          /Professional zoo animal monitoring and management system/,
+          /Professional lead generation and management platform/,
         ),
       ).toBeInTheDocument();
     });
@@ -70,14 +70,14 @@ describe("Footer", () => {
       renderWithTheme(<Footer {...defaultProps} />);
       const currentYear = new Date().getFullYear();
       expect(
-        screen.getByText(`© ${currentYear} ZOOLAB. All rights reserved.`),
+        screen.getByText(`© ${currentYear} LeadFlow. All rights reserved.`),
       ).toBeInTheDocument();
     });
 
     it("should render the Made with heart text", () => {
       renderWithTheme(<Footer {...defaultProps} />);
       expect(screen.getByText("Made with")).toBeInTheDocument();
-      expect(screen.getByText("for wildlife conservation")).toBeInTheDocument();
+      expect(screen.getByText("for business growth")).toBeInTheDocument();
     });
 
     it("should render the Heart icon", () => {
@@ -86,7 +86,7 @@ describe("Footer", () => {
       expect(heartIcon).toBeInTheDocument();
     });
 
-    it("should render the PawPrint icon", () => {
+    it("should render the Zap icon", () => {
       const { container } = renderWithTheme(<Footer {...defaultProps} />);
       expect(container.querySelector("svg")).toBeInTheDocument();
     });
@@ -305,13 +305,13 @@ describe("Footer", () => {
 
     it("should apply dark theme logo text color in dark mode", () => {
       renderWithTheme(<Footer {...defaultProps} />, { darkMode: true });
-      const logo = screen.getByText("ZOOLAB");
+      const logo = screen.getByText("LeadFlow");
       expect(logo).toHaveClass("text-slate-100");
     });
 
     it("should apply light theme logo text color in light mode", () => {
       renderWithTheme(<Footer {...defaultProps} />, { darkMode: false });
-      const logo = screen.getByText("ZOOLAB");
+      const logo = screen.getByText("LeadFlow");
       expect(logo).toHaveClass("text-slate-800");
     });
   });
@@ -432,7 +432,7 @@ describe("Footer", () => {
         .mockImplementation(() => {});
 
       render(<Footer {...defaultProps} darkMode={true} />);
-      expect(screen.getByText("ZOOLAB")).toBeInTheDocument();
+      expect(screen.getByText("LeadFlow")).toBeInTheDocument();
 
       consoleSpy.mockRestore();
     });
@@ -485,12 +485,12 @@ describe("Footer", () => {
 
       // Verify all main elements are present
       const currentYear = new Date().getFullYear();
-      expect(screen.getByText("ZOOLAB")).toBeInTheDocument();
+      expect(screen.getByText("LeadFlow")).toBeInTheDocument();
       expect(screen.getByText("Product")).toBeInTheDocument();
       expect(screen.getByText("Resources")).toBeInTheDocument();
       expect(screen.getByText("Company")).toBeInTheDocument();
       expect(
-        screen.getByText(`© ${currentYear} ZOOLAB. All rights reserved.`),
+        screen.getByText(`© ${currentYear} LeadFlow. All rights reserved.`),
       ).toBeInTheDocument();
     });
   });

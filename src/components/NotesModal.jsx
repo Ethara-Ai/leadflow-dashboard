@@ -10,9 +10,13 @@ import useThemeSafe from "../hooks/useThemeSafe";
  * Displays a single note with timestamp and delete option.
  */
 const NoteItem = memo(function NoteItem({ note, onDelete, isDark }) {
-  const cardClasses = isDark ? "bg-slate-700/30 border-slate-600" : "bg-slate-50 border-slate-200";
+  const cardClasses = isDark
+    ? "bg-slate-700/30 border-slate-600"
+    : "bg-slate-50 border-slate-200";
   const textClasses = isDark ? "text-slate-200" : "text-slate-700";
-  const deleteButtonClasses = isDark ? "text-slate-400 hover:text-red-400" : "text-slate-500 hover:text-red-500";
+  const deleteButtonClasses = isDark
+    ? "text-slate-400 hover:text-red-400"
+    : "text-slate-500 hover:text-red-500";
 
   return (
     <motion.article
@@ -91,7 +95,9 @@ const AddNoteForm = memo(function AddNoteForm({ onSave, isDark }) {
   const inputClasses = isDark
     ? "bg-slate-700/50 border-slate-600 text-slate-200 placeholder-slate-400 focus:border-blue-500"
     : "bg-slate-50 border-slate-300 text-slate-700 placeholder-slate-500 focus:border-blue-500";
-  const disabledButtonClasses = isDark ? "bg-slate-700 text-slate-500" : "bg-slate-200 text-slate-400";
+  const disabledButtonClasses = isDark
+    ? "bg-slate-700 text-slate-500"
+    : "bg-slate-200 text-slate-400";
 
   const characterCount = currentNote.length;
   const maxCharacters = 1000;
@@ -104,7 +110,7 @@ const AddNoteForm = memo(function AddNoteForm({ onSave, isDark }) {
           className={`block text-sm font-medium mb-2 ${labelClasses}`}
           style={{ fontFamily }}
         >
-          Animal Observation Note
+          Lead Note
         </label>
         <textarea
           ref={textareaRef}
@@ -112,7 +118,7 @@ const AddNoteForm = memo(function AddNoteForm({ onSave, isDark }) {
           value={currentNote}
           onChange={(e) => setCurrentNote(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter your animal observation (e.g., behavior, health, feeding notes)..."
+          placeholder="Enter your lead note (e.g., follow-up details, client requirements, next steps)..."
           rows={6}
           maxLength={maxCharacters}
           className={`w-full p-4 rounded-xl border transition-all duration-200 resize-none ${inputClasses} focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
@@ -124,7 +130,11 @@ const AddNoteForm = memo(function AddNoteForm({ onSave, isDark }) {
           aria-describedby="note-help character-count"
         />
         <div className="flex justify-between items-center mt-2">
-          <p id="note-help" className="text-xs text-slate-500" style={{ fontFamily }}>
+          <p
+            id="note-help"
+            className="text-xs text-slate-500"
+            style={{ fontFamily }}
+          >
             Press Cmd/Ctrl + Enter to save
           </p>
           <p
@@ -178,10 +188,18 @@ const NotesList = memo(function NotesList({ notes, onDeleteNote, isDark }) {
 
   if (notes.length === 0) {
     return (
-      <div className="text-center py-8" role="status" aria-label="No notes available">
-        <StickyNote size={32} className={`mx-auto mb-3 ${emptyIconClasses}`} aria-hidden="true" />
+      <div
+        className="text-center py-8"
+        role="status"
+        aria-label="No notes available"
+      >
+        <StickyNote
+          size={32}
+          className={`mx-auto mb-3 ${emptyIconClasses}`}
+          aria-hidden="true"
+        />
         <p className={`text-sm ${emptyTextClasses}`} style={{ fontFamily }}>
-          No observations yet. Start documenting animal behavior and health notes!
+          No notes yet. Start documenting lead interactions and follow-up tasks!
         </p>
       </div>
     );
@@ -191,7 +209,12 @@ const NotesList = memo(function NotesList({ notes, onDeleteNote, isDark }) {
     <div className="space-y-4" role="feed" aria-label="Notes list">
       <AnimatePresence mode="popLayout">
         {notes.map((note) => (
-          <NoteItem key={note.id} note={note} onDelete={onDeleteNote} isDark={isDark} />
+          <NoteItem
+            key={note.id}
+            note={note}
+            onDelete={onDeleteNote}
+            isDark={isDark}
+          />
         ))}
       </AnimatePresence>
     </div>
@@ -212,7 +235,7 @@ NotesList.propTypes = {
 
 /**
  * NotesModal Component
- * Modal for viewing and adding animal observation notes.
+ * Modal for viewing and adding lead notes and follow-up tasks.
  *
  * @param {Object} props - Component props
  * @param {boolean} props.isOpen - Whether the modal is open
@@ -289,7 +312,9 @@ const NotesModal = memo(function NotesModal({
   };
 
   // Theme-based classes
-  const modalClasses = isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300";
+  const modalClasses = isDark
+    ? "bg-slate-800/95 border-slate-700"
+    : "bg-white/95 border-slate-300";
   const headerBorderClasses = isDark ? "border-slate-700" : "border-slate-200";
   const titleClasses = isDark ? "text-slate-200" : "text-slate-700";
   const closeButtonClasses = isDark
@@ -311,7 +336,7 @@ const NotesModal = memo(function NotesModal({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 overflow-y-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -320,7 +345,7 @@ const NotesModal = memo(function NotesModal({
         >
           <motion.div
             ref={modalRef}
-            className={`${modalClasses} backdrop-blur-md rounded-2xl border shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden`}
+            className={`${modalClasses} backdrop-blur-md rounded-2xl border shadow-2xl w-full max-w-2xl max-h-[95vh] sm:max-h-[85vh] overflow-hidden flex flex-col my-2 sm:my-0`}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -332,10 +357,16 @@ const NotesModal = memo(function NotesModal({
             aria-describedby="notes-modal-description"
           >
             {/* Header */}
-            <div className={`p-6 border-b ${headerBorderClasses}`}>
+            <div
+              className={`p-4 sm:p-6 border-b shrink-0 ${headerBorderClasses}`}
+            >
               <div className="flex justify-between items-center mb-4">
-                <h2 id="notes-modal-title" className={`text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
-                  Animal Observations
+                <h2
+                  id="notes-modal-title"
+                  className={`text-xl font-bold ${titleClasses}`}
+                  style={{ fontFamily }}
+                >
+                  Lead Notes
                 </h2>
                 <button
                   ref={closeButtonRef}
@@ -347,11 +378,16 @@ const NotesModal = memo(function NotesModal({
                 </button>
               </div>
               <p id="notes-modal-description" className="sr-only">
-                Modal for managing animal observation notes. Use the tabs to add new notes or view existing ones.
+                Modal for managing lead notes and follow-up tasks. Use the tabs
+                to add new notes or view existing ones.
               </p>
 
               {/* Mode Toggle Buttons */}
-              <div className="flex gap-2" role="tablist" aria-label="Notes view options">
+              <div
+                className="flex gap-2"
+                role="tablist"
+                aria-label="Notes view options"
+              >
                 <motion.button
                   onClick={() => setNotesMode("add")}
                   className={`px-4 py-2 rounded-xl text-sm font-medium cursor-pointer transition-all duration-200 flex items-center gap-2 ${getModeButtonClasses("add")}`}
@@ -384,14 +420,26 @@ const NotesModal = memo(function NotesModal({
             </div>
 
             {/* Content */}
-            <div className="p-6 max-h-96 overflow-y-auto custom-scroll">
+            <div className="p-4 sm:p-6 flex-1 overflow-y-auto custom-scroll min-h-0">
               {notesMode === "add" ? (
-                <div role="tabpanel" id="add-note-panel" aria-labelledby="add-note-tab">
+                <div
+                  role="tabpanel"
+                  id="add-note-panel"
+                  aria-labelledby="add-note-tab"
+                >
                   <AddNoteForm onSave={handleSaveNote} isDark={isDark} />
                 </div>
               ) : (
-                <div role="tabpanel" id="view-notes-panel" aria-labelledby="view-notes-tab">
-                  <NotesList notes={notes} onDeleteNote={onDeleteNote} isDark={isDark} />
+                <div
+                  role="tabpanel"
+                  id="view-notes-panel"
+                  aria-labelledby="view-notes-tab"
+                >
+                  <NotesList
+                    notes={notes}
+                    onDeleteNote={onDeleteNote}
+                    isDark={isDark}
+                  />
                 </div>
               )}
             </div>

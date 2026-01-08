@@ -39,12 +39,12 @@ const ProductModalContent = ({ darkMode: darkModeOverride }) => {
               className={`font-semibold ${headingClasses}`}
               style={{ fontFamily }}
             >
-              Real-time Animal Monitoring
+              Real-time Lead Tracking
             </h5>
             <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
-              Track animal populations, enclosure conditions, feeding schedules,
-              and activity patterns with live updates and historical data
-              analysis.
+              Track leads across your pipeline, monitor conversion rates, call
+              activities, and meeting schedules with live updates and historical
+              data analysis.
             </p>
           </div>
           <div className={`p-4 rounded-xl ${cardClasses}`}>
@@ -55,9 +55,9 @@ const ProductModalContent = ({ darkMode: darkModeOverride }) => {
               Advanced Analytics Dashboard
             </h5>
             <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
-              Interactive charts, feeding efficiency metrics, and diet
-              distribution analysis with exportable reports for veterinary
-              records.
+              Interactive charts, conversion rate metrics, and lead source
+              distribution analysis with exportable reports for sales
+              performance reviews.
             </p>
           </div>
           <div className={`p-4 rounded-xl ${cardClasses}`}>
@@ -68,9 +68,9 @@ const ProductModalContent = ({ darkMode: darkModeOverride }) => {
               Smart Alert System
             </h5>
             <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
-              Automated health monitoring with customizable alerts for
-              temperature changes, animal behavior, medical schedules, and
-              enclosure maintenance.
+              Automated lead monitoring with customizable alerts for follow-up
+              reminders, deal updates, meeting schedules, and pipeline
+              milestones.
             </p>
           </div>
         </div>
@@ -112,10 +112,10 @@ const ProductModalContent = ({ darkMode: darkModeOverride }) => {
               }`}
               style={{ fontFamily }}
             >
-              Staff Training
+              Sales Team Training
             </h6>
             <p className={`text-xs mt-1 ${textClasses}`} style={{ fontFamily }}>
-              Complete zoolab staff onboarding
+              Complete team onboarding program
             </p>
           </div>
         </div>

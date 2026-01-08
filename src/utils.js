@@ -1,12 +1,12 @@
 import { alertMessages } from "./constants";
 
 /**
- * Calculate the total number of active animals from weekly data
- * @param {Array} weekData - Array of daily animal activity data
- * @returns {number} Total animals
+ * Calculate the total number of active leads from weekly data
+ * @param {Array} weekData - Array of daily lead activity data
+ * @returns {number} Total leads
  */
-export const calculateTotalAnimals = (weekData) => {
-  return weekData.reduce((sum, day) => sum + day.animals, 0);
+export const calculateTotalLeads = (weekData) => {
+  return weekData.reduce((sum, day) => sum + day.leads, 0);
 };
 
 /**
@@ -33,13 +33,25 @@ export const getRandomAlertMessage = () => {
  * @returns {string} Alert type ('warning' or 'info')
  */
 export const getAlertType = (message) => {
-  if (message.includes("temperature") || message.includes("humidity") || message.includes("critical")) {
+  if (
+    message.includes("immediate") ||
+    message.includes("pending") ||
+    message.includes("requires")
+  ) {
     return "warning";
   }
-  if (message.includes("completed") || message.includes("scheduled") || message.includes("checkup")) {
+  if (
+    message.includes("completed") ||
+    message.includes("achieved") ||
+    message.includes("improved")
+  ) {
     return "info";
   }
-  if (message.includes("Low stock") || message.includes("delayed") || message.includes("required")) {
+  if (
+    message.includes("Hot lead") ||
+    message.includes("High-value") ||
+    message.includes("urgent")
+  ) {
     return "warning";
   }
   return "info";
@@ -51,33 +63,41 @@ export const getAlertType = (message) => {
  * @param {string} filename - Name of the file to download
  */
 export const exportToCSV = (data, filename) => {
-  const { zooData, activityData, feedingData, dietData, alerts } = data;
+  const {
+    zooData: leadData,
+    activityData,
+    feedingData: conversionData,
+    dietData: sourceData,
+    alerts,
+  } = data;
 
   const csvData = [
     ["Metric", "Value", "Type"],
-    ["Total Animals", zooData.population, "Zoo Stats"],
-    ["Avg Temperature", zooData.temperature + "°C", "Environment"],
-    ["Avg Humidity", zooData.humidity + "%", "Environment"],
-    ["Last Updated", zooData.lastUpdated, "System"],
+    ["Total Leads", leadData.population, "Lead Stats"],
+    ["Calls Made", leadData.temperature, "Activity"],
+    ["Meetings Scheduled", leadData.humidity, "Activity"],
+    ["Last Updated", leadData.lastUpdated, "System"],
     [""],
-    ["Animal Activity Data"],
-    ["Period", "Active Animals", "Feedings Completed"],
-    ...activityData.map((item) => [item.name, item.animals, item.feedingCompleted]),
+    ["Lead Activity Data"],
+    ["Period", "Active Leads", "Calls Completed"],
+    ...activityData.map((item) => [item.name, item.leads, item.callsCompleted]),
     [""],
-    ["Feeding Efficiency"],
-    ["Period", "Efficiency"],
-    ...feedingData.map((item) => [item.name, item.efficiency + "%"]),
+    ["Conversion Rate"],
+    ["Period", "Rate"],
+    ...conversionData.map((item) => [item.name, item.efficiency + "%"]),
     [""],
-    ["Diet Distribution"],
-    ["Food Type", "Percentage"],
-    ...dietData.map((item) => [item.name, item.value + "%"]),
+    ["Lead Source Distribution"],
+    ["Source", "Percentage"],
+    ...sourceData.map((item) => [item.name, item.value + "%"]),
     [""],
     ["Active Alerts"],
     ["Message", "Type", "Time"],
     ...alerts.map((alert) => [alert.message, alert.type, alert.time]),
   ];
 
-  const csvContent = csvData.map((row) => row.map((field) => `"${field}"`).join(",")).join("\n");
+  const csvContent = csvData
+    .map((row) => row.map((field) => `"${field}"`).join(","))
+    .join("\n");
 
   const dataBlob = new Blob([csvContent], { type: "text/csv" });
   const url = URL.createObjectURL(dataBlob);
@@ -114,5 +134,5 @@ export const exportToJSON = (data, filename) => {
  * @returns {string} Filename with date
  */
 export const generateExportFilename = (extension) => {
-  return `zoolab-data-${new Date().toISOString().split("T")[0]}.${extension}`;
+  return `leadflow-data-${new Date().toISOString().split("T")[0]}.${extension}`;
 };

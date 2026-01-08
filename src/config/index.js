@@ -1,5 +1,5 @@
 // =============================================================================
-// ZOOLAB DASHBOARD - CONFIGURATION INDEX
+// LEADFLOW DASHBOARD - CONFIGURATION INDEX
 // =============================================================================
 // Re-export all configuration modules for cleaner imports.
 // Usage: import config, { isProduction } from '@/config';

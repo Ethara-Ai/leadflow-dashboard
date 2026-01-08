@@ -51,7 +51,10 @@ const ALERT_TYPES = {
  * @param {string} props.alert.time - Timestamp string
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const AlertItem = memo(function AlertItem({ alert, darkMode: darkModeOverride }) {
+const AlertItem = memo(function AlertItem({
+  alert,
+  darkMode: darkModeOverride,
+}) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
@@ -67,7 +70,7 @@ const AlertItem = memo(function AlertItem({ alert, darkMode: darkModeOverride })
 
   return (
     <motion.article
-      className={`p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border ${bgClasses}`}
+      className={`p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl border ${bgClasses}`}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
@@ -75,8 +78,11 @@ const AlertItem = memo(function AlertItem({ alert, darkMode: darkModeOverride })
       role="alert"
       aria-label={`${alert.type} alert: ${alert.message}`}
     >
-      <div className="flex items-start gap-2 sm:gap-3">
-        <IconComponent className={`w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 mt-0.5 ${iconClasses}`} aria-hidden="true" />
+      <div className="flex items-start gap-3 sm:gap-4">
+        <IconComponent
+          className={`w-5 h-5 sm:w-5 sm:h-5 shrink-0 mt-0.5 ${iconClasses}`}
+          aria-hidden="true"
+        />
         <div className="flex-1 min-w-0 overflow-hidden">
           <p
             className={`text-xs sm:text-sm font-medium leading-snug wrap-break-word ${textClasses}`}
@@ -89,7 +95,7 @@ const AlertItem = memo(function AlertItem({ alert, darkMode: darkModeOverride })
             {alert.message}
           </p>
           <time
-            className={`text-[10px] sm:text-xs mt-0.5 sm:mt-1 block ${timeClasses}`}
+            className={`text-[11px] sm:text-xs mt-1.5 sm:mt-2 block ${timeClasses}`}
             style={{ fontFamily }}
             dateTime={alert.timestamp}
           >

@@ -414,7 +414,7 @@ describe("AlertItem", () => {
 
     it("should render long message", () => {
       const longMessage =
-        "This is a very long alert message that contains a lot of information about an event that occurred in the zoo management system";
+        "This is a very long alert message that contains a lot of information about an event that occurred in the lead management system";
       const alert = createAlert({ message: longMessage });
       renderWithTheme(<AlertItem alert={alert} />);
       expect(screen.getByText(longMessage)).toBeInTheDocument();

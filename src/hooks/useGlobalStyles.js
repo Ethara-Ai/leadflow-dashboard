@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const THEME_STYLES_ID = "zoolab-theme-styles";
+const THEME_STYLES_ID = "leadflow-theme-styles";
 
 /**
  * Generate scrollbar styles based on dark mode

@@ -1,8 +1,8 @@
-# ZOOLAB Dashboard
+# LeadFlow Dashboard
 
-**Professional Zoo Animal Monitoring and Management System**
+**Professional Lead Generation and Management Platform**
 
-A modern, responsive dashboard for zoo staff, veterinarians, and wildlife conservation specialists to monitor animal activity, feeding schedules, and health alerts.
+A modern, responsive dashboard for sales teams, marketing professionals, and business development specialists to track lead activity, call metrics, meeting schedules, and sales performance.
 
 ![React](https://img.shields.io/badge/React-19.2.0-61dafb?style=flat-square&logo=react)
 ![Vite](https://img.shields.io/badge/Vite-7.2.4-646cff?style=flat-square&logo=vite)
@@ -13,14 +13,17 @@ A modern, responsive dashboard for zoo staff, veterinarians, and wildlife conser
 
 ## Features
 
-- **Real-time Statistics** — Monitor animal population, environmental temperature, and humidity levels
-- **Interactive Charts** — Visualize animal activity, feeding efficiency, and diet distribution with dynamic time-period filtering
-- **Alert Management** — Track and manage zoo-wide alerts with severity levels
-- **Dark/Light Theme** — Seamless theme switching with persistent preferences
-- **Animal Observation Notes** — Document and review animal behavior and health observations
-- **Data Export** — Export dashboard data in CSV or JSON formats
-- **Responsive Design** — Fully responsive layout optimized for desktop, tablet, and mobile devices
-- **Smooth Animations** — Polished UI with Framer Motion animations
+- **Real-time Statistics** - Monitor total leads, calls made, meetings scheduled, and conversion rates
+- **Interactive Charts** - Visualize lead activity, conversion rates, and lead source distribution with dynamic time-period filtering
+- **Meeting Schedule** - Interactive calendar with click-to-expand meeting details and month navigation
+- **Recent Activities** - Track latest lead interactions with status indicators
+- **Alert Management** - Track and manage sales alerts with priority levels
+- **Dark/Light Theme** - Seamless theme switching with persistent preferences
+- **Lead Notes** - Document and review lead interactions and follow-up tasks
+- **Data Export** - Export dashboard data in CSV or JSON formats
+- **Responsive Design** - Fully responsive layout optimized for desktop, tablet, and mobile devices
+- **Mobile Navigation** - Hamburger menu for consolidated navigation on mobile and tablet devices
+- **Smooth Animations** - Polished UI with Framer Motion animations
 
 ---
 
@@ -49,8 +52,8 @@ A modern, responsive dashboard for zoo staff, veterinarians, and wildlife conser
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/zoolab-dashboard.git
-   cd zoolab-dashboard
+   git clone https://github.com/your-username/leadflow-dashboard.git
+   cd leadflow-dashboard
    ```
 
 2. **Install dependencies**
@@ -73,6 +76,8 @@ A modern, responsive dashboard for zoo staff, veterinarians, and wildlife conser
 | `npm run build` | Build for production |
 | `npm run preview` | Preview production build locally |
 | `npm run lint` | Run ESLint to check code quality |
+| `npm run test` | Run test suite |
+| `npm run coverage` | Run tests with coverage report |
 
 ---
 
@@ -90,6 +95,7 @@ Application header featuring:
 - Refresh data button
 - Notes modal trigger
 - Export menu (CSV/JSON)
+- Hamburger menu for mobile/tablet devices with consolidated actions
 
 ```jsx
 <Header
@@ -122,18 +128,18 @@ Reusable card component for displaying individual statistics with icon, value, a
 
 ```jsx
 <StatCard
-  title="Animal Population"
+  title="Total Leads"
   value="1,247"
   icon={<Users />}
-  subValue="+12"
-  subText="from last week"
-  accent="bg-blue-100"
+  subValue="+24"
+  subText="new this week"
+  accent="bg-emerald-100"
   subValueVariant="positive" // "positive" | "negative" | "warning" | "neutral"
 />
 ```
 
 #### `<StatCards />`
-Grid container that renders multiple StatCard components with zoo metrics data.
+Grid container that renders multiple StatCard components with lead metrics data including Total Leads, Calls Made, Meetings, and Conversion Rate.
 
 ```jsx
 <StatCards zooData={object} activityData={array} />
@@ -144,7 +150,7 @@ Grid container that renders multiple StatCard components with zoo metrics data.
 ### Chart Components
 
 #### `<AnimalActivityChart />`
-Composed chart displaying animal activity levels and feeding completion rates over time.
+Composed chart displaying lead activity levels and engagement metrics over time.
 
 ```jsx
 <AnimalActivityChart
@@ -155,7 +161,7 @@ Composed chart displaying animal activity levels and feeding completion rates ov
 ```
 
 #### `<FeedingEfficiencyChart />`
-Visualizes feeding efficiency metrics with area chart representation.
+Visualizes conversion rate metrics with area chart representation.
 
 ```jsx
 <FeedingEfficiencyChart
@@ -166,7 +172,11 @@ Visualizes feeding efficiency metrics with area chart representation.
 ```
 
 #### `<DietDistributionChart />`
-Displays diet composition data using pie/donut chart visualization.
+Displays lead source distribution data using pie/donut chart visualization with:
+- Title displayed first
+- Time period selector below title
+- Pie chart in the middle
+- Legend with complete source names and percentages below the chart
 
 ```jsx
 <DietDistributionChart
@@ -191,10 +201,33 @@ Theme-aware tooltip component for chart data points.
 
 ---
 
+### Meeting and Activity Components
+
+#### `<MeetingScheduleCard />`
+Interactive calendar card for viewing and managing meeting schedules featuring:
+- Calendar view with month navigation
+- Click-to-expand meeting details below specific date rows
+- List view toggle showing all meetings for current month
+- Dynamic meeting count per month
+- Support for past and future months
+
+```jsx
+<MeetingScheduleCard meetings={array} />
+```
+
+#### `<RecentLeadActivities />`
+Panel displaying recent lead interactions with status indicators and timestamps.
+
+```jsx
+<RecentLeadActivities activities={array} />
+```
+
+---
+
 ### Alert Components
 
 #### `<AlertsPanel />`
-Panel displaying zoo alerts with management dropdown for adding/clearing alerts.
+Panel displaying lead alerts with management dropdown for adding/clearing alerts. Features improved padding and spacing between alert items.
 
 ```jsx
 <AlertsPanel
@@ -205,7 +238,7 @@ Panel displaying zoo alerts with management dropdown for adding/clearing alerts.
 ```
 
 #### `<AlertItem />`
-Individual alert display with type-based styling (info, warning, error).
+Individual alert display with type-based styling (info, warning, error) and enhanced spacing.
 
 #### `<AlertDropdown />`
 Dropdown menu for adding new alerts and bulk operations.
@@ -215,7 +248,7 @@ Dropdown menu for adding new alerts and bulk operations.
 ### Modal Components
 
 #### `<NotesModal />`
-Full-featured modal for creating and viewing animal observation notes.
+Full-featured modal for creating and viewing lead notes and follow-up tasks.
 
 ```jsx
 <NotesModal
@@ -228,7 +261,7 @@ Full-featured modal for creating and viewing animal observation notes.
 ```
 
 #### `<FooterModal />`
-Generic modal wrapper for footer content sections.
+Generic modal wrapper for footer content sections with proper mobile visibility and scrolling support.
 
 ```jsx
 <FooterModal
@@ -239,6 +272,15 @@ Generic modal wrapper for footer content sections.
   {children}
 </FooterModal>
 ```
+
+#### `<ProductModalContent />`
+Content component for the Product information modal.
+
+#### `<ResourcesModalContent />`
+Content component for the Resources and Community modal.
+
+#### `<CompanyModalContent />`
+Content component for the Company and Legal modal.
 
 ---
 
@@ -260,11 +302,14 @@ Error display component with retry functionality.
 <ErrorMessage error="Error message string" />
 ```
 
+#### `<ErrorBoundary />`
+React error boundary component for graceful error handling.
+
 ---
 
 ## Theme System
 
-ZOOLAB uses a centralized theme management system via React Context.
+LeadFlow uses a centralized theme management system via React Context.
 
 ### Theme Provider
 
@@ -296,14 +341,29 @@ const MyComponent = () => {
 
 ### Theme Persistence
 
-Theme preferences are automatically persisted to `localStorage` under the key `antlab-theme`.
+Theme preferences are automatically persisted to `localStorage` under the key `leadflow-theme`.
+
+---
+
+## Custom Hooks
+
+| Hook | Purpose |
+|------|---------|
+| `useTheme` | Access theme context (isDark, toggleTheme, setDarkMode) |
+| `useThemeSafe` | Safe theme hook with fallback for use outside ThemeProvider |
+| `useGlobalStyles` | Inject global theme-dependent styles |
+| `useAlerts` | Manage alert state and operations |
+| `useNotes` | Manage notes state and operations |
+| `useModals` | Manage modal open/close states |
+| `useChartPeriods` | Manage time period selection for charts |
+| `useZooData` | Fetch and manage dashboard data |
 
 ---
 
 ## Project Structure
 
 ```
-zoolab-dashboard/
+leadflow-dashboard/
 ├── public/                 # Static assets
 ├── src/
 │   ├── assets/            # Images and SVGs
@@ -313,8 +373,10 @@ zoolab-dashboard/
 │   │   ├── AlertsPanel.jsx
 │   │   ├── AnimalActivityChart.jsx
 │   │   ├── ChartComponents.jsx
+│   │   ├── CompanyModalContent.jsx
 │   │   ├── CustomTooltip.jsx
 │   │   ├── DietDistributionChart.jsx
+│   │   ├── ErrorBoundary.jsx
 │   │   ├── ErrorMessage.jsx
 │   │   ├── FeedingEfficiencyChart.jsx
 │   │   ├── Footer.jsx
@@ -322,7 +384,11 @@ zoolab-dashboard/
 │   │   ├── Header.jsx
 │   │   ├── LoadingScreen.jsx
 │   │   ├── LoadingSkeleton.jsx
+│   │   ├── MeetingScheduleCard.jsx
 │   │   ├── NotesModal.jsx
+│   │   ├── ProductModalContent.jsx
+│   │   ├── RecentLeadActivities.jsx
+│   │   ├── ResourcesModalContent.jsx
 │   │   ├── StatCard.jsx
 │   │   ├── StatCards.jsx
 │   │   ├── TimePeriodButtons.jsx
@@ -331,8 +397,14 @@ zoolab-dashboard/
 │   ├── hooks/             # Custom React hooks
 │   │   ├── ThemeContext.js
 │   │   ├── ThemeProvider.jsx
+│   │   ├── useAlerts.js
+│   │   ├── useChartPeriods.js
 │   │   ├── useGlobalStyles.js
+│   │   ├── useModals.js
+│   │   ├── useNotes.js
 │   │   ├── useTheme.jsx
+│   │   ├── useThemeSafe.js
+│   │   ├── useZooData.js
 │   │   └── withTheme.jsx
 │   ├── App.jsx            # Root application component
 │   ├── chartUtils.js      # Chart styling utilities
@@ -344,21 +416,35 @@ zoolab-dashboard/
 ├── package.json           # Project dependencies
 ├── vite.config.js         # Vite configuration
 ├── eslint.config.js       # ESLint configuration
+├── prompt.md              # Project specification
 └── README.md              # Project documentation
 ```
 
 ---
 
+## Mobile and Tablet Support
+
+LeadFlow Dashboard is fully optimized for mobile and tablet devices:
+
+- **Hamburger Menu** - All action buttons consolidated into a single menu on small screens
+- **Responsive Modals** - Modals adjust to viewport with proper scrolling and safe area support
+- **Touch Scrolling** - Smooth scrolling behavior with `-webkit-overflow-scrolling: touch`
+- **Scroll Lock** - Background scroll prevention when hamburger menu is open
+- **Hidden Tagline** - Logo tagline hidden on mobile to save space
+- **Adaptive Layouts** - Grid layouts adjust from 4 columns on desktop to 2 columns on mobile
+
+---
+
 ## Contributing
 
-We welcome contributions from the community! Here's how you can help:
+We welcome contributions from the community! Here is how you can help:
 
 ### Getting Started
 
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally
    ```bash
-   git clone https://github.com/your-username/zoolab-dashboard.git
+   git clone https://github.com/your-username/leadflow-dashboard.git
    ```
 3. **Create a feature branch**
    ```bash
@@ -380,7 +466,11 @@ We welcome contributions from the community! Here's how you can help:
    ```bash
    npm run dev
    ```
-4. Build to verify production readiness:
+4. Run tests:
+   ```bash
+   npm run test
+   ```
+5. Build to verify production readiness:
    ```bash
    npm run build
    ```
@@ -389,17 +479,17 @@ We welcome contributions from the community! Here's how you can help:
 
 1. **Commit your changes** with clear, descriptive messages:
    ```bash
-   git commit -m "feat: add new animal tracking feature"
+   git commit -m "feat: add new lead tracking feature"
    ```
    
    Follow [Conventional Commits](https://www.conventionalcommits.org/) format:
-   - `feat:` — New features
-   - `fix:` — Bug fixes
-   - `docs:` — Documentation changes
-   - `style:` — Code style changes (formatting, etc.)
-   - `refactor:` — Code refactoring
-   - `test:` — Adding or updating tests
-   - `chore:` — Maintenance tasks
+   - `feat:` - New features
+   - `fix:` - Bug fixes
+   - `docs:` - Documentation changes
+   - `style:` - Code style changes (formatting, etc.)
+   - `refactor:` - Code refactoring
+   - `test:` - Adding or updating tests
+   - `chore:` - Maintenance tasks
 
 2. **Push to your fork**:
    ```bash
@@ -427,11 +517,10 @@ We welcome contributions from the community! Here's how you can help:
 
 ## License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-Made with care for wildlife conservation
+Built for sales and business development professionals.
 
-**Copyright 2025 ZOOLAB. All rights reserved.**
+**Copyright 2025 LeadFlow. All rights reserved.**

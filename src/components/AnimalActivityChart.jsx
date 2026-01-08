@@ -1,7 +1,17 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import { ResponsiveContainer, ComposedChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Area, Bar } from "recharts";
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  Area,
+  Bar,
+} from "recharts";
 import { cardVariants, fontFamily } from "../constants";
 import useThemeSafe from "../hooks/useThemeSafe";
 import CustomTooltip from "./CustomTooltip";
@@ -19,7 +29,7 @@ import {
 
 /**
  * AnimalActivityChart Component
- * Displays animal activity data as a composed chart with area and bar elements.
+ * Displays lead activity data as a composed chart with area and bar elements.
  *
  * @param {Object} props - Component props
  * @param {Array} props.data - Chart data array
@@ -55,17 +65,23 @@ const AnimalActivityChart = memo(function AnimalActivityChart({
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
-          Animal Activity
+        <h3
+          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
+          style={{ fontFamily }}
+        >
+          Lead Activity
         </h3>
-        <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
+        <TimePeriodButtons
+          currentPeriod={timePeriod}
+          onPeriodChange={setTimePeriod}
+        />
       </div>
 
       {/* Chart Container */}
       <div
         className="w-full h-55 sm:h-65 md:h-75"
         role="img"
-        aria-label="Animal activity chart showing active animals and feedings completed"
+        aria-label="Lead activity chart showing active leads and calls completed"
       >
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
@@ -78,13 +94,21 @@ const AnimalActivityChart = memo(function AnimalActivityChart({
             }}
           >
             <defs>
-              <linearGradient id="colorAnimals" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={primaryColor} stopOpacity={0.8} />
                 <stop offset="95%" stopColor={primaryColor} stopOpacity={0.2} />
               </linearGradient>
-              <linearGradient id="colorFeeding" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={secondaryColor} stopOpacity={0.8} />
-                <stop offset="95%" stopColor={secondaryColor} stopOpacity={0.2} />
+              <linearGradient id="colorCalls" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor={secondaryColor}
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor={secondaryColor}
+                  stopOpacity={0.2}
+                />
               </linearGradient>
             </defs>
             <CartesianGrid {...gridStyles} />
@@ -107,7 +131,10 @@ const AnimalActivityChart = memo(function AnimalActivityChart({
               width={40}
               axisLine={axisStyles.axisLine}
             />
-            <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={cursorStyles} />
+            <Tooltip
+              content={(props) => <CustomTooltip {...props} />}
+              cursor={cursorStyles}
+            />
             <Legend
               content={(props) => <ChartLegend {...props} />}
               wrapperStyle={{
@@ -116,18 +143,18 @@ const AnimalActivityChart = memo(function AnimalActivityChart({
             />
             <Area
               type="monotone"
-              dataKey="animals"
-              name="Active Animals"
-              fill="url(#colorAnimals)"
+              dataKey="leads"
+              name="Active Leads"
+              fill="url(#colorLeads)"
               stroke={primaryColor}
               strokeWidth={2}
               dot={getDotStyles(isDark, primaryColor)}
               activeDot={getActiveDotStyles(isDark, primaryColor)}
             />
             <Bar
-              dataKey="feedingCompleted"
-              name="Feedings Completed"
-              fill="url(#colorFeeding)"
+              dataKey="callsCompleted"
+              name="Calls Completed"
+              fill={secondaryColor}
               barSize={timePeriod === "year" ? 6 : 10}
               radius={[3, 3, 0, 0]}
             />
@@ -142,8 +169,8 @@ AnimalActivityChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      animals: PropTypes.number.isRequired,
-      feedingCompleted: PropTypes.number.isRequired,
+      leads: PropTypes.number.isRequired,
+      callsCompleted: PropTypes.number.isRequired,
     }),
   ).isRequired,
   timePeriod: PropTypes.oneOf(["week", "month", "year"]).isRequired,

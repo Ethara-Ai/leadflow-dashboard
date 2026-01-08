@@ -48,8 +48,7 @@ const CompanyModalContent = ({ darkMode: darkModeOverride }) => {
                 style={{ fontFamily }}
               >
                 We employ enterprise-grade encryption and security measures to
-                protect your animal records, veterinary data, and zoo
-                observations.
+                protect your lead records, sales data, and customer information.
               </p>
             </div>
             <div>
@@ -63,7 +62,7 @@ const CompanyModalContent = ({ darkMode: darkModeOverride }) => {
                 className={`text-sm mt-1 ${textClasses}`}
                 style={{ fontFamily }}
               >
-                Your zoo data belongs to you. We provide tools for easy export
+                Your sales data belongs to you. We provide tools for easy export
                 and maintain strict data portability standards for regulatory
                 compliance.
               </p>
@@ -93,9 +92,9 @@ const CompanyModalContent = ({ darkMode: darkModeOverride }) => {
                 className={`text-sm mt-1 ${textClasses}`}
                 style={{ fontFamily }}
               >
-                Licensed for accredited zoos, wildlife sanctuaries, and
-                conservation organizations. Custom enterprise plans available
-                for large facilities.
+                Licensed for sales teams, marketing agencies, and business
+                development organizations. Custom enterprise plans available for
+                large teams.
               </p>
             </div>
             <div>
@@ -103,15 +102,15 @@ const CompanyModalContent = ({ darkMode: darkModeOverride }) => {
                 className={`font-medium ${headingClasses}`}
                 style={{ fontFamily }}
               >
-                Animal Welfare Standards
+                Data Compliance Standards
               </h6>
               <p
                 className={`text-sm mt-1 ${textClasses}`}
                 style={{ fontFamily }}
               >
-                Committed to AZA (Association of Zoos and Aquariums) standards
-                and promoting responsible animal care, welfare, and conservation
-                practices.
+                Committed to GDPR, CCPA, and SOC 2 compliance standards,
+                ensuring responsible data handling, customer privacy, and secure
+                business practices.
               </p>
             </div>
           </div>
@@ -122,17 +121,17 @@ const CompanyModalContent = ({ darkMode: darkModeOverride }) => {
       <div
         className={`p-4 rounded-xl border ${
           isDark
-            ? "bg-emerald-900/20 border-emerald-800/30"
-            : "bg-emerald-50 border-emerald-200"
+            ? "bg-blue-900/20 border-blue-800/30"
+            : "bg-blue-50 border-blue-200"
         }`}
       >
         <p
           className={`text-sm ${
-            isDark ? "text-emerald-300" : "text-emerald-700"
+            isDark ? "text-blue-300" : "text-blue-700"
           } text-center`}
           style={{ fontFamily }}
         >
-          For detailed legal documents, contact: legal@zoolab.wildlife
+          For detailed legal documents, contact: legal@leadflow.io
         </p>
       </div>
     </div>

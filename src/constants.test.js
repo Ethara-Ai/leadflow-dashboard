@@ -49,19 +49,19 @@ describe("Activity Week Data", () => {
     expect(dayNames).toEqual(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]);
   });
 
-  it("should have animals property for each day", () => {
+  it("should have leads property for each day", () => {
     activityWeekData.forEach((day) => {
-      expect(day).toHaveProperty("animals");
-      expect(typeof day.animals).toBe("number");
-      expect(day.animals).toBeGreaterThan(0);
+      expect(day).toHaveProperty("leads");
+      expect(typeof day.leads).toBe("number");
+      expect(day.leads).toBeGreaterThan(0);
     });
   });
 
-  it("should have feedingCompleted property for each day", () => {
+  it("should have callsCompleted property for each day", () => {
     activityWeekData.forEach((day) => {
-      expect(day).toHaveProperty("feedingCompleted");
-      expect(typeof day.feedingCompleted).toBe("number");
-      expect(day.feedingCompleted).toBeGreaterThanOrEqual(0);
+      expect(day).toHaveProperty("callsCompleted");
+      expect(typeof day.callsCompleted).toBe("number");
+      expect(day.callsCompleted).toBeGreaterThanOrEqual(0);
     });
   });
 });
@@ -76,12 +76,12 @@ describe("Activity Month Data", () => {
     expect(weekNames).toEqual(["Week 1", "Week 2", "Week 3", "Week 4"]);
   });
 
-  it("should have animals and feedingCompleted properties", () => {
+  it("should have leads and callsCompleted properties", () => {
     activityMonthData.forEach((week) => {
-      expect(week).toHaveProperty("animals");
-      expect(week).toHaveProperty("feedingCompleted");
-      expect(typeof week.animals).toBe("number");
-      expect(typeof week.feedingCompleted).toBe("number");
+      expect(week).toHaveProperty("leads");
+      expect(week).toHaveProperty("callsCompleted");
+      expect(typeof week.leads).toBe("number");
+      expect(typeof week.callsCompleted).toBe("number");
     });
   });
 });
@@ -109,12 +109,12 @@ describe("Activity Year Data", () => {
     ]);
   });
 
-  it("should have animals and feedingCompleted properties for each month", () => {
+  it("should have leads and callsCompleted properties for each month", () => {
     activityYearData.forEach((month) => {
-      expect(month).toHaveProperty("animals");
-      expect(month).toHaveProperty("feedingCompleted");
-      expect(typeof month.animals).toBe("number");
-      expect(typeof month.feedingCompleted).toBe("number");
+      expect(month).toHaveProperty("leads");
+      expect(month).toHaveProperty("callsCompleted");
+      expect(typeof month.leads).toBe("number");
+      expect(typeof month.callsCompleted).toBe("number");
     });
   });
 });
@@ -180,12 +180,12 @@ describe("Diet Week Data", () => {
     expect(dietWeekData).toHaveLength(4);
   });
 
-  it("should have correct food category names", () => {
+  it("should have correct lead source names", () => {
     const categoryNames = dietWeekData.map((d) => d.name);
-    expect(categoryNames).toContain("Fresh Produce");
-    expect(categoryNames).toContain("Protein/Meat");
-    expect(categoryNames).toContain("Grains & Pellets");
-    expect(categoryNames).toContain("Supplements");
+    expect(categoryNames).toContain("Website");
+    expect(categoryNames).toContain("Referrals");
+    expect(categoryNames).toContain("Social Media");
+    expect(categoryNames).toContain("Cold Outreach");
   });
 
   it("should have value property for each category", () => {
@@ -373,22 +373,21 @@ describe("staggerContainerVariants", () => {
 // =============================================================================
 
 describe("initialZooData", () => {
-  it("should have population property", () => {
-    expect(initialZooData).toHaveProperty("population");
-    expect(typeof initialZooData.population).toBe("number");
-    expect(initialZooData.population).toBeGreaterThan(0);
+  it("should have totalLeads property", () => {
+    expect(initialZooData).toHaveProperty("totalLeads");
+    expect(typeof initialZooData.totalLeads).toBe("number");
+    expect(initialZooData.totalLeads).toBeGreaterThan(0);
   });
 
-  it("should have temperature property", () => {
-    expect(initialZooData).toHaveProperty("temperature");
-    expect(typeof initialZooData.temperature).toBe("number");
+  it("should have callsMade property", () => {
+    expect(initialZooData).toHaveProperty("callsMade");
+    expect(typeof initialZooData.callsMade).toBe("number");
   });
 
-  it("should have humidity property", () => {
-    expect(initialZooData).toHaveProperty("humidity");
-    expect(typeof initialZooData.humidity).toBe("number");
-    expect(initialZooData.humidity).toBeGreaterThanOrEqual(0);
-    expect(initialZooData.humidity).toBeLessThanOrEqual(100);
+  it("should have meetingsScheduled property", () => {
+    expect(initialZooData).toHaveProperty("meetingsScheduled");
+    expect(typeof initialZooData.meetingsScheduled).toBe("number");
+    expect(initialZooData.meetingsScheduled).toBeGreaterThanOrEqual(0);
   });
 
   it("should have lastUpdated property", () => {
@@ -498,51 +497,51 @@ describe("alertMessages", () => {
     });
   });
 
-  it("should contain zoo-related content", () => {
-    const zooKeywords = [
-      "enclosure",
-      "temperature",
-      "checkup",
-      "stock",
-      "alert",
-      "behavior",
-      "humidity",
-      "animal",
-      "feeding",
-      "schedule",
-      "habitat",
-      "section",
-      "maintenance",
-      "safety",
-      "exhibit",
-      "program",
-      "species",
-      "mammal",
-      "avian",
-      "reptile",
-      "primate",
-      "aquarium",
-      "zoo",
-      "veterinary",
-      "enrichment",
-      "medication",
-      "visitor",
-      "bird",
-      "cats",
-      "penguin",
-      "gorilla",
-      "water",
-      "lighting",
-      "vaccination",
-      "medical",
+  it("should contain lead-related content", () => {
+    const leadKeywords = [
+      "lead",
+      "sales",
+      "follow-up",
+      "meeting",
+      "call",
+      "campaign",
+      "conversion",
+      "pipeline",
+      "prospect",
+      "client",
+      "deal",
+      "proposal",
+      "outreach",
+      "contact",
+      "target",
+      "performance",
+      "team",
+      "enterprise",
+      "demo",
+      "opportunity",
+      "contract",
+      "negotiation",
+      "upsell",
+      "CRM",
+      "training",
+      "scheduled",
+      "achieved",
+      "completed",
+      "pending",
+      "assigned",
+      "qualified",
+      "rate",
+      "value",
+      "monthly",
+      "weekly",
     ];
 
-    // Check that most messages contain zoo-related keywords
+    // Check that most messages contain lead-related keywords
     const matchingMessages = alertMessages.filter((message) =>
-      zooKeywords.some((keyword) => message.toLowerCase().includes(keyword)),
+      leadKeywords.some((keyword) => message.toLowerCase().includes(keyword)),
     );
 
-    // At least 80% of messages should contain zoo-related keywords
+    // At least 80% of messages should contain lead-related keywords
     const matchPercentage = matchingMessages.length / alertMessages.length;
     expect(matchPercentage).toBeGreaterThanOrEqual(0.8);
   });
@@ -597,8 +596,8 @@ describe("Constants Integration", () => {
     const checkStructure = (data) => {
       data.forEach((item) => {
         expect(item).toHaveProperty("name", expect.any(String));
-        expect(item).toHaveProperty("animals", expect.any(Number));
-        expect(item).toHaveProperty("feedingCompleted", expect.any(Number));
+        expect(item).toHaveProperty("leads", expect.any(Number));
+        expect(item).toHaveProperty("callsCompleted", expect.any(Number));
       });
     };
 

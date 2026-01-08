@@ -1,8 +1,11 @@
 {
-  "name": "zoolab-dashboard",
+  "name": "leadflow-dashboard",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Professional Lead Generation and Management Platform - A modern dashboard for sales teams, marketing professionals, and business development specialists.",
   "type": "module",
+  "author": "LeadFlow",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

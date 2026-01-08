@@ -80,23 +80,21 @@ describe("Header", () => {
   });
 
   describe("basic rendering", () => {
-    it("should render the ZOOLAB title", () => {
+    it("should render the LeadFlow title", () => {
       renderWithTheme(<Header {...defaultProps} />);
-      expect(screen.getByText("ZOOLAB")).toBeInTheDocument();
+      expect(screen.getByText("LeadFlow")).toBeInTheDocument();
     });
 
     it("should render the tagline", () => {
       renderWithTheme(<Header {...defaultProps} />);
       expect(
-        screen.getByText(
-          "Professional zoo animal monitoring and management system",
-        ),
+        screen.getByText("Lead generation and management platform"),
       ).toBeInTheDocument();
     });
 
-    it("should render the PawPrint icon", () => {
+    it("should render the Zap icon", () => {
       const { container } = renderWithTheme(<Header {...defaultProps} />);
-      // PawPrint icon should be in the logo area
+      // Zap icon should be in the logo area
       expect(container.querySelector("svg")).toBeInTheDocument();
     });
 
@@ -320,13 +318,13 @@ describe("Header", () => {
 
     it("should apply dark theme text color to title in dark mode", () => {
       renderWithTheme(<Header {...defaultProps} />, { darkMode: true });
-      const title = screen.getByText("ZOOLAB");
+      const title = screen.getByText("LeadFlow");
       expect(title).toHaveClass("text-white");
     });
 
     it("should apply light theme text color to title in light mode", () => {
       renderWithTheme(<Header {...defaultProps} />, { darkMode: false });
-      const title = screen.getByText("ZOOLAB");
+      const title = screen.getByText("LeadFlow");
       expect(title).toHaveClass("text-slate-800");
     });
 
@@ -356,7 +354,7 @@ describe("Header", () => {
       renderWithTheme(<Header {...defaultProps} darkMode={true} />, {
         darkMode: false,
       });
-      const title = screen.getByText("ZOOLAB");
+      const title = screen.getByText("LeadFlow");
       expect(title).toHaveClass("text-white");
     });
 
@@ -364,7 +362,7 @@ describe("Header", () => {
       renderWithTheme(<Header {...defaultProps} darkMode={false} />, {
         darkMode: true,
       });
-      const title = screen.getByText("ZOOLAB");
+      const title = screen.getByText("LeadFlow");
       expect(title).toHaveClass("text-slate-800");
     });
   });
@@ -384,7 +382,7 @@ describe("Header", () => {
 
     it("should have proper heading structure", () => {
       renderWithTheme(<Header {...defaultProps} />);
-      const title = screen.getByText("ZOOLAB");
+      const title = screen.getByText("LeadFlow");
       expect(title.tagName).toBe("H1");
     });
 
@@ -410,11 +408,8 @@ describe("Header", () => {
 
     it("should have responsive text sizes for title", () => {
       renderWithTheme(<Header {...defaultProps} />);
-      const title = screen.getByText("ZOOLAB");
-      expect(title).toHaveClass("text-2xl");
-      expect(title).toHaveClass("sm:text-3xl");
-      expect(title).toHaveClass("md:text-4xl");
-      expect(title).toHaveClass("lg:text-5xl");
+      const title = screen.getByText("LeadFlow");
+      expect(title).toHaveClass("text-[2rem]");
     });
   });
 
@@ -429,7 +424,7 @@ describe("Header", () => {
         .mockImplementation(() => {});
 
       render(<Header {...defaultProps} darkMode={true} />);
-      expect(screen.getByText("ZOOLAB")).toBeInTheDocument();
+      expect(screen.getByText("LeadFlow")).toBeInTheDocument();
 
       consoleSpy.mockRestore();
     });
@@ -440,7 +435,7 @@ describe("Header", () => {
         .mockImplementation(() => {});
 
       render(<Header {...defaultProps} />);
-      const title = screen.getByText("ZOOLAB");
+      const title = screen.getByText("LeadFlow");
       expect(title).toHaveClass("text-slate-800");
 
       consoleSpy.mockRestore();
@@ -464,7 +459,7 @@ describe("Header", () => {
       await user.click(menuButton);
 
       // Should still function properly
-      expect(screen.getByText("ZOOLAB")).toBeInTheDocument();
+      expect(screen.getByText("LeadFlow")).toBeInTheDocument();
     });
 
     it("should handle multiple export clicks", async () => {

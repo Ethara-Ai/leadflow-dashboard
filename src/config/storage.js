@@ -5,13 +5,13 @@
 
 export const STORAGE_KEYS = {
   /** Theme preference (light/dark) */
-  THEME: "zoolab-theme",
+  THEME: "leadflow-theme",
   /** User notes data */
-  NOTES: "zoolab-notes",
+  NOTES: "leadflow-notes",
   /** Application settings */
-  SETTINGS: "zoolab-settings",
+  SETTINGS: "leadflow-settings",
   /** Welcome message dismissed state */
-  WELCOME_DISMISSED: "zoolab-welcome-dismissed",
+  WELCOME_DISMISSED: "leadflow-welcome-dismissed",
 };
 
 export default STORAGE_KEYS;

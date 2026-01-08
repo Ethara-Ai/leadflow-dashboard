@@ -8,6 +8,7 @@ export const MODAL_IDS = {
   PRODUCT: "product",
   RESOURCES: "resources",
   COMPANY: "company",
+  ALERTS: "alerts",
 };
 
 /**
@@ -34,7 +35,7 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
         return next;
       });
     },
-    [allowMultiple]
+    [allowMultiple],
   );
 
   /**
@@ -67,7 +68,7 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
         }
       });
     },
-    [allowMultiple]
+    [allowMultiple],
   );
 
   /**
@@ -86,7 +87,7 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
     (modalId) => {
       return openModals.has(modalId);
     },
-    [openModals]
+    [openModals],
   );
 
   /**
@@ -129,8 +130,9 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
       isProductModalOpen: openModals.has(MODAL_IDS.PRODUCT),
       isResourcesModalOpen: openModals.has(MODAL_IDS.RESOURCES),
       isCompanyModalOpen: openModals.has(MODAL_IDS.COMPANY),
+      isAlertsModalOpen: openModals.has(MODAL_IDS.ALERTS),
     }),
-    [openModals]
+    [openModals],
   );
 
   // Convenience handlers for common modals (backward compatibility)
@@ -144,8 +146,10 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
       closeResourcesModal: () => closeModal(MODAL_IDS.RESOURCES),
       openCompanyModal: () => openModal(MODAL_IDS.COMPANY),
       closeCompanyModal: () => closeModal(MODAL_IDS.COMPANY),
+      openAlertsModal: () => openModal(MODAL_IDS.ALERTS),
+      closeAlertsModal: () => closeModal(MODAL_IDS.ALERTS),
     }),
-    [openModal, closeModal]
+    [openModal, closeModal],
   );
 
   return {

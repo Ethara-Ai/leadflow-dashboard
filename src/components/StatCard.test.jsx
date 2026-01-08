@@ -17,9 +17,9 @@ const renderWithTheme = (ui, { darkMode = false } = {}) => {
 };
 
 const defaultProps = {
-  title: "Total Animals",
+  title: "Total Leads",
   value: "847",
-  icon: <span data-testid="test-icon">🦁</span>,
+  icon: <span data-testid="test-icon">👤</span>,
   accent: "bg-blue-500",
 };
 
@@ -42,7 +42,7 @@ describe("StatCard", () => {
   describe("basic rendering", () => {
     it("should render the title", () => {
       renderWithTheme(<StatCard {...defaultProps} />);
-      expect(screen.getByText("Total Animals")).toBeInTheDocument();
+      expect(screen.getByText("Total Leads")).toBeInTheDocument();
     });
 
     it("should render the value", () => {
@@ -182,13 +182,13 @@ describe("StatCard", () => {
 
     it("should apply dark text colors in dark mode", () => {
       renderWithTheme(<StatCard {...defaultProps} />, { darkMode: true });
-      const title = screen.getByText("Total Animals");
+      const title = screen.getByText("Total Leads");
       expect(title).toHaveClass("text-slate-200");
     });
 
     it("should apply light text colors in light mode", () => {
       renderWithTheme(<StatCard {...defaultProps} />, { darkMode: false });
-      const title = screen.getByText("Total Animals");
+      const title = screen.getByText("Total Leads");
       expect(title).toHaveClass("text-slate-700");
     });
 
@@ -243,7 +243,7 @@ describe("StatCard", () => {
         .mockImplementation(() => {});
 
       render(<StatCard {...defaultProps} darkMode={true} />);
-      expect(screen.getByText("Total Animals")).toBeInTheDocument();
+      expect(screen.getByText("Total Leads")).toBeInTheDocument();
 
       consoleSpy.mockRestore();
     });
@@ -271,7 +271,7 @@ describe("StatCard", () => {
       renderWithTheme(<StatCard {...defaultProps} variants={customVariants} />);
 
       // Component should render without issues
-      expect(screen.getByText("Total Animals")).toBeInTheDocument();
+      expect(screen.getByText("Total Leads")).toBeInTheDocument();
     });
   });
 
@@ -285,7 +285,7 @@ describe("StatCard", () => {
 
     it("should have responsive text sizes for title", () => {
       renderWithTheme(<StatCard {...defaultProps} />);
-      const title = screen.getByText("Total Animals");
+      const title = screen.getByText("Total Leads");
       expect(title).toHaveClass("text-sm");
       expect(title).toHaveClass("sm:text-lg");
     });
@@ -343,13 +343,13 @@ describe("StatCard", () => {
   describe("accessibility", () => {
     it("should have proper heading structure for title", () => {
       renderWithTheme(<StatCard {...defaultProps} />);
-      const title = screen.getByText("Total Animals");
+      const title = screen.getByText("Total Leads");
       expect(title.tagName).toBe("H3");
     });
 
     it("should have readable text contrast in light mode", () => {
       renderWithTheme(<StatCard {...defaultProps} />, { darkMode: false });
-      const title = screen.getByText("Total Animals");
+      const title = screen.getByText("Total Leads");
       const value = screen.getByText("847");
       // Classes indicate readable contrast
       expect(title).toHaveClass("text-slate-700");

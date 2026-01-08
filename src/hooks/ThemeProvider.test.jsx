@@ -194,7 +194,7 @@ describe("ThemeProvider", () => {
         </ThemeProvider>,
       );
 
-      expect(localStorage.getItem).toHaveBeenCalledWith("zoolab-theme");
+      expect(localStorage.getItem).toHaveBeenCalledWith("leadflow-theme");
     });
 
     it("should use dark mode when localStorage has 'dark'", () => {
@@ -249,7 +249,7 @@ describe("ThemeProvider", () => {
 
       await waitFor(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
-          "zoolab-theme",
+          "leadflow-theme",
           "dark",
         );
       });
@@ -272,7 +272,7 @@ describe("ThemeProvider", () => {
 
       await waitFor(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
-          "zoolab-theme",
+          "leadflow-theme",
           "light",
         );
       });

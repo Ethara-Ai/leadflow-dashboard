@@ -264,7 +264,7 @@ describe("ThemeProvider", () => {
         wrapper: createWrapper(false),
       });
 
-      expect(localStorage.getItem).toHaveBeenCalledWith("zoolab-theme");
+      expect(localStorage.getItem).toHaveBeenCalledWith("leadflow-theme");
       expect(result.current.isDark).toBe(true);
     });
 
@@ -293,7 +293,7 @@ describe("ThemeProvider", () => {
 
       await waitFor(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
-          "zoolab-theme",
+          "leadflow-theme",
           "dark",
         );
       });
@@ -312,7 +312,7 @@ describe("ThemeProvider", () => {
 
       await waitFor(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
-          "zoolab-theme",
+          "leadflow-theme",
           "light",
         );
       });
@@ -331,7 +331,7 @@ describe("ThemeProvider", () => {
 
       await waitFor(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
-          "zoolab-theme",
+          "leadflow-theme",
           "dark",
         );
       });

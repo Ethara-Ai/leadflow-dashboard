@@ -16,7 +16,13 @@ import useThemeSafe from "../hooks/useThemeSafe";
  * @param {React.ReactNode} props.children - Modal content
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const FooterModal = memo(function FooterModal({ isOpen, onClose, title, children, darkMode: darkModeOverride }) {
+const FooterModal = memo(function FooterModal({
+  isOpen,
+  onClose,
+  title,
+  children,
+  darkMode: darkModeOverride,
+}) {
   const modalRef = useRef(null);
   const closeButtonRef = useRef(null);
   const previousActiveElement = useRef(null);
@@ -84,7 +90,9 @@ const FooterModal = memo(function FooterModal({ isOpen, onClose, title, children
   const descriptionId = `footer-modal-description-${title?.toLowerCase().replace(/\s+/g, "-") || "default"}`;
 
   // Theme-based classes
-  const modalClasses = isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300";
+  const modalClasses = isDark
+    ? "bg-slate-800/95 border-slate-700"
+    : "bg-white/95 border-slate-300";
   const headerBorderClasses = isDark ? "border-slate-700" : "border-slate-200";
   const titleClasses = isDark ? "text-slate-200" : "text-slate-700";
   const closeButtonClasses = isDark
@@ -95,7 +103,7 @@ const FooterModal = memo(function FooterModal({ isOpen, onClose, title, children
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 overflow-y-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -104,7 +112,7 @@ const FooterModal = memo(function FooterModal({ isOpen, onClose, title, children
         >
           <motion.div
             ref={modalRef}
-            className={`${modalClasses} backdrop-blur-md rounded-2xl border shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden`}
+            className={`${modalClasses} backdrop-blur-md rounded-2xl border shadow-2xl w-full max-w-2xl max-h-[95vh] sm:max-h-[85vh] overflow-hidden flex flex-col my-2 sm:my-0`}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -116,9 +124,15 @@ const FooterModal = memo(function FooterModal({ isOpen, onClose, title, children
             aria-describedby={descriptionId}
           >
             {/* Header */}
-            <div className={`p-6 border-b ${headerBorderClasses}`}>
+            <div
+              className={`p-4 sm:p-6 border-b shrink-0 ${headerBorderClasses}`}
+            >
               <div className="flex justify-between items-center">
-                <h2 id={titleId} className={`text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
+                <h2
+                  id={titleId}
+                  className={`text-xl font-bold ${titleClasses}`}
+                  style={{ fontFamily }}
+                >
                   {title}
                 </h2>
                 <button
@@ -138,7 +152,9 @@ const FooterModal = memo(function FooterModal({ isOpen, onClose, title, children
             </p>
 
             {/* Content */}
-            <div className="p-6 max-h-96 overflow-y-auto custom-scroll">{children}</div>
+            <div className="p-4 sm:p-6 flex-1 overflow-y-auto custom-scroll min-h-0">
+              {children}
+            </div>
           </motion.div>
         </motion.div>
       )}

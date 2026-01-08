@@ -51,33 +51,41 @@ describe("WelcomeMessage", () => {
   describe("basic rendering", () => {
     it("should render when show is true", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      expect(screen.getByText("Welcome back, Zoolab Staff!")).toBeInTheDocument();
+      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
     });
 
     it("should not render when show is false", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} show={false} />);
-      expect(screen.queryByText("Welcome back, Zoolab Staff!")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Welcome back, Sales Team!"),
+      ).not.toBeInTheDocument();
     });
 
     it("should render the welcome title", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      expect(screen.getByText("Welcome back, Zoolab Staff!")).toBeInTheDocument();
+      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
     });
 
     it("should render the welcome description", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
       expect(
-        screen.getByText("Here's the current status of your zoo and animal enclosures")
+        screen.getByText(
+          "Here's the current status of your leads and sales pipeline",
+        ),
       ).toBeInTheDocument();
     });
 
     it("should render the Info icon", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       expect(container.querySelector("svg")).toBeInTheDocument();
     });
 
     it("should render the close button", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const closeButton = container.querySelector("button");
       expect(closeButton).toBeInTheDocument();
     });
@@ -90,7 +98,9 @@ describe("WelcomeMessage", () => {
   describe("close functionality", () => {
     it("should call onClose when close button is clicked", async () => {
       const user = userEvent.setup();
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
 
       const closeButton = container.querySelector("button");
       await user.click(closeButton);
@@ -100,7 +110,9 @@ describe("WelcomeMessage", () => {
 
     it("should only call onClose once per click", async () => {
       const user = userEvent.setup();
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
 
       const closeButton = container.querySelector("button");
       await user.click(closeButton);
@@ -110,7 +122,9 @@ describe("WelcomeMessage", () => {
 
     it("should handle multiple clicks on close button", async () => {
       const user = userEvent.setup();
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
 
       const closeButton = container.querySelector("button");
       await user.click(closeButton);
@@ -127,94 +141,122 @@ describe("WelcomeMessage", () => {
 
   describe("dark mode styling", () => {
     it("should apply dark theme background in dark mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: true,
-      });
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: true,
+        },
+      );
       const banner = container.firstChild;
-      expect(banner).toHaveClass("bg-emerald-900/20");
+      expect(banner).toHaveClass("bg-blue-900/20");
     });
 
     it("should apply light theme background in light mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: false,
-      });
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: false,
+        },
+      );
       const banner = container.firstChild;
-      expect(banner).toHaveClass("bg-emerald-50");
+      expect(banner).toHaveClass("bg-blue-50");
     });
 
     it("should apply dark theme border in dark mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: true,
-      });
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: true,
+        },
+      );
       const banner = container.firstChild;
-      expect(banner).toHaveClass("border-emerald-800/30");
+      expect(banner).toHaveClass("border-blue-800/30");
     });
 
     it("should apply light theme border in light mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: false,
-      });
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: false,
+        },
+      );
       const banner = container.firstChild;
-      expect(banner).toHaveClass("border-emerald-200");
+      expect(banner).toHaveClass("border-blue-200");
     });
 
     it("should apply dark theme title color in dark mode", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />, { darkMode: true });
-      const title = screen.getByText("Welcome back, Zoolab Staff!");
+      const title = screen.getByText("Welcome back, Sales Team!");
       expect(title).toHaveClass("text-slate-200");
     });
 
     it("should apply light theme title color in light mode", () => {
-      renderWithTheme(<WelcomeMessage {...defaultProps} />, { darkMode: false });
-      const title = screen.getByText("Welcome back, Zoolab Staff!");
+      renderWithTheme(<WelcomeMessage {...defaultProps} />, {
+        darkMode: false,
+      });
+      const title = screen.getByText("Welcome back, Sales Team!");
       expect(title).toHaveClass("text-slate-700");
     });
 
     it("should apply dark theme description color in dark mode", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />, { darkMode: true });
       const description = screen.getByText(
-        "Here's the current status of your zoo and animal enclosures"
+        "Here's the current status of your leads and sales pipeline",
       );
       expect(description).toHaveClass("text-slate-400");
     });
 
     it("should apply light theme description color in light mode", () => {
-      renderWithTheme(<WelcomeMessage {...defaultProps} />, { darkMode: false });
+      renderWithTheme(<WelcomeMessage {...defaultProps} />, {
+        darkMode: false,
+      });
       const description = screen.getByText(
-        "Here's the current status of your zoo and animal enclosures"
+        "Here's the current status of your leads and sales pipeline",
       );
       expect(description).toHaveClass("text-slate-600");
     });
 
     it("should apply dark theme icon container background in dark mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: true,
-      });
-      const iconContainer = container.querySelector(".bg-emerald-800\\/30");
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: true,
+        },
+      );
+      const iconContainer = container.querySelector(".bg-blue-800\\/30");
       expect(iconContainer).toBeInTheDocument();
     });
 
     it("should apply light theme icon container background in light mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: false,
-      });
-      const iconContainer = container.querySelector(".bg-emerald-100");
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: false,
+        },
+      );
+      const iconContainer = container.querySelector(".bg-blue-100");
       expect(iconContainer).toBeInTheDocument();
     });
 
     it("should apply dark theme icon color in dark mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: true,
-      });
-      const icon = container.querySelector(".text-emerald-400");
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: true,
+        },
+      );
+      const icon = container.querySelector(".text-blue-400");
       expect(icon).toBeInTheDocument();
     });
 
     it("should apply light theme icon color in light mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: false,
-      });
-      const icon = container.querySelector(".text-emerald-600");
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: false,
+        },
+      );
+      const icon = container.querySelector(".text-blue-600");
       expect(icon).toBeInTheDocument();
     });
   });
@@ -227,27 +269,30 @@ describe("WelcomeMessage", () => {
     it("should use darkMode override when provided (true)", () => {
       const { container } = renderWithTheme(
         <WelcomeMessage {...defaultProps} darkMode={true} />,
-        { darkMode: false }
+        { darkMode: false },
       );
       const banner = container.firstChild;
-      expect(banner).toHaveClass("bg-emerald-900/20");
+      expect(banner).toHaveClass("bg-blue-900/20");
     });
 
     it("should use darkMode override when provided (false)", () => {
       const { container } = renderWithTheme(
         <WelcomeMessage {...defaultProps} darkMode={false} />,
-        { darkMode: true }
+        { darkMode: true },
       );
       const banner = container.firstChild;
-      expect(banner).toHaveClass("bg-emerald-50");
+      expect(banner).toHaveClass("bg-blue-50");
     });
 
     it("should use context value when darkMode override is undefined", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: true,
-      });
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: true,
+        },
+      );
       const banner = container.firstChild;
-      expect(banner).toHaveClass("bg-emerald-900/20");
+      expect(banner).toHaveClass("bg-blue-900/20");
     });
   });
 
@@ -258,27 +303,31 @@ describe("WelcomeMessage", () => {
   describe("accessibility", () => {
     it("should have proper heading structure for title", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      const title = screen.getByText("Welcome back, Zoolab Staff!");
+      const title = screen.getByText("Welcome back, Sales Team!");
       expect(title.tagName).toBe("H3");
     });
 
     it("should have proper paragraph element for description", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
       const description = screen.getByText(
-        "Here's the current status of your zoo and animal enclosures"
+        "Here's the current status of your leads and sales pipeline",
       );
       expect(description.tagName).toBe("P");
     });
 
     it("should have clickable close button", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const closeButton = container.querySelector("button");
       expect(closeButton).toHaveClass("cursor-pointer");
     });
 
     it("should be keyboard accessible", async () => {
       const user = userEvent.setup();
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
 
       const closeButton = container.querySelector("button");
       closeButton.focus();
@@ -294,7 +343,9 @@ describe("WelcomeMessage", () => {
 
   describe("responsive classes", () => {
     it("should have responsive margin classes", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const banner = container.firstChild;
       expect(banner).toHaveClass("mb-4");
       expect(banner).toHaveClass("sm:mb-6");
@@ -302,16 +353,18 @@ describe("WelcomeMessage", () => {
     });
 
     it("should have responsive padding classes", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const banner = container.firstChild;
       expect(banner).toHaveClass("p-3");
       expect(banner).toHaveClass("sm:p-4");
-      expect(banner).toHaveClass("md:p-6");
+      expect(banner).toHaveClass("md:p-4");
     });
 
     it("should have responsive text sizes for title", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      const title = screen.getByText("Welcome back, Zoolab Staff!");
+      const title = screen.getByText("Welcome back, Sales Team!");
       expect(title).toHaveClass("text-sm");
       expect(title).toHaveClass("sm:text-base");
       expect(title).toHaveClass("md:text-lg");
@@ -320,20 +373,24 @@ describe("WelcomeMessage", () => {
     it("should have responsive text sizes for description", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
       const description = screen.getByText(
-        "Here's the current status of your zoo and animal enclosures"
+        "Here's the current status of your leads and sales pipeline",
       );
       expect(description).toHaveClass("text-xs");
       expect(description).toHaveClass("sm:text-sm");
     });
 
     it("should have responsive icon container padding", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const iconContainers = container.querySelectorAll("[class*='p-2']");
       expect(iconContainers.length).toBeGreaterThan(0);
     });
 
     it("should have responsive rounded corners", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const banner = container.firstChild;
       expect(banner).toHaveClass("rounded-xl");
       expect(banner).toHaveClass("sm:rounded-2xl");
@@ -346,26 +403,32 @@ describe("WelcomeMessage", () => {
 
   describe("styling classes", () => {
     it("should have border class", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const banner = container.firstChild;
       expect(banner).toHaveClass("border");
     });
 
     it("should have flex layout for content", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const flexContainer = container.querySelector(".flex");
       expect(flexContainer).toBeInTheDocument();
     });
 
     it("should have proper spacing between icon and text", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const iconContainer = container.querySelector("[class*='mr-']");
       expect(iconContainer).toBeInTheDocument();
     });
 
     it("should have font-bold on title", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      const title = screen.getByText("Welcome back, Zoolab Staff!");
+      const title = screen.getByText("Welcome back, Sales Team!");
       expect(title).toHaveClass("font-bold");
     });
   });
@@ -376,31 +439,41 @@ describe("WelcomeMessage", () => {
 
   describe("close button styling", () => {
     it("should have dark theme close button styling in dark mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: true,
-      });
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: true,
+        },
+      );
       const closeButton = container.querySelector("button");
       expect(closeButton).toHaveClass("text-slate-400");
       expect(closeButton).toHaveClass("hover:text-slate-200");
     });
 
     it("should have light theme close button styling in light mode", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />, {
-        darkMode: false,
-      });
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+        {
+          darkMode: false,
+        },
+      );
       const closeButton = container.querySelector("button");
       expect(closeButton).toHaveClass("text-slate-500");
       expect(closeButton).toHaveClass("hover:text-slate-700");
     });
 
     it("should have rounded corners on close button", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const closeButton = container.querySelector("button");
       expect(closeButton).toHaveClass("rounded-md");
     });
 
     it("should have transition classes on close button", () => {
-      const { container } = renderWithTheme(<WelcomeMessage {...defaultProps} />);
+      const { container } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} />,
+      );
       const closeButton = container.querySelector("button");
       expect(closeButton).toHaveClass("transition-colors");
     });
@@ -412,20 +485,24 @@ describe("WelcomeMessage", () => {
 
   describe("backward compatibility (outside ThemeProvider)", () => {
     it("should render without ThemeProvider using darkMode prop", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       render(<WelcomeMessage {...defaultProps} darkMode={true} />);
-      expect(screen.getByText("Welcome back, Zoolab Staff!")).toBeInTheDocument();
+      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
 
       consoleSpy.mockRestore();
     });
 
     it("should default to light mode when outside ThemeProvider without darkMode prop", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       const { container } = render(<WelcomeMessage {...defaultProps} />);
       const banner = container.firstChild;
-      expect(banner).toHaveClass("bg-emerald-50");
+      expect(banner).toHaveClass("bg-blue-50");
 
       consoleSpy.mockRestore();
     });
@@ -437,44 +514,56 @@ describe("WelcomeMessage", () => {
 
   describe("edge cases", () => {
     it("should handle show prop changing from true to false", () => {
-      const { rerender } = renderWithTheme(<WelcomeMessage {...defaultProps} show={true} />);
-      expect(screen.getByText("Welcome back, Zoolab Staff!")).toBeInTheDocument();
+      const { rerender } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} show={true} />,
+      );
+      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
 
       rerender(
         <ThemeProvider defaultDarkMode={false}>
           <WelcomeMessage {...defaultProps} show={false} />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      expect(screen.queryByText("Welcome back, Zoolab Staff!")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Welcome back, Sales Team!"),
+      ).not.toBeInTheDocument();
     });
 
     it("should handle show prop changing from false to true", () => {
-      const { rerender } = renderWithTheme(<WelcomeMessage {...defaultProps} show={false} />);
-      expect(screen.queryByText("Welcome back, Zoolab Staff!")).not.toBeInTheDocument();
+      const { rerender } = renderWithTheme(
+        <WelcomeMessage {...defaultProps} show={false} />,
+      );
+      expect(
+        screen.queryByText("Welcome back, Sales Team!"),
+      ).not.toBeInTheDocument();
 
       rerender(
         <ThemeProvider defaultDarkMode={false}>
           <WelcomeMessage {...defaultProps} show={true} />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      expect(screen.getByText("Welcome back, Zoolab Staff!")).toBeInTheDocument();
+      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
     });
 
     it("should handle undefined show prop (falsy)", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} show={undefined} />);
-      expect(screen.queryByText("Welcome back, Zoolab Staff!")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Welcome back, Sales Team!"),
+      ).not.toBeInTheDocument();
     });
 
     it("should handle null show prop (falsy)", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} show={null} />);
-      expect(screen.queryByText("Welcome back, Zoolab Staff!")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Welcome back, Sales Team!"),
+      ).not.toBeInTheDocument();
     });
 
     it("should handle onClose being called rapidly", async () => {
       const user = userEvent.setup();
       const onClose = vi.fn();
       const { container } = renderWithTheme(
-        <WelcomeMessage show={true} onClose={onClose} />
+        <WelcomeMessage show={true} onClose={onClose} />,
       );
 
       const closeButton = container.querySelector("button");
@@ -495,14 +584,14 @@ describe("WelcomeMessage", () => {
   describe("return value", () => {
     it("should return null when show is false", () => {
       const { container } = renderWithTheme(
-        <WelcomeMessage {...defaultProps} show={false} />
+        <WelcomeMessage {...defaultProps} show={false} />,
       );
       expect(container.firstChild).toBeNull();
     });
 
     it("should return content when show is true", () => {
       const { container } = renderWithTheme(
-        <WelcomeMessage {...defaultProps} show={true} />
+        <WelcomeMessage {...defaultProps} show={true} />,
       );
       expect(container.firstChild).not.toBeNull();
     });

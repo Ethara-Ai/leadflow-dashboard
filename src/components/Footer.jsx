@@ -1,6 +1,6 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
-import { PawPrint, Heart } from "lucide-react";
+import { Zap, Heart } from "lucide-react";
 import { fontFamily, fontFamilyHeading } from "../constants";
 import useThemeSafe from "../hooks/useThemeSafe";
 
@@ -39,12 +39,16 @@ const Footer = memo(function Footer({
   // Theme-based classes
   const headingClasses = isDark ? "text-slate-200" : "text-slate-700";
   const textClasses = isDark ? "text-slate-400" : "text-slate-600";
-  const linkClasses = isDark ? "text-slate-400 hover:text-slate-200" : "text-slate-600 hover:text-slate-800";
+  const linkClasses = isDark
+    ? "text-slate-400 hover:text-slate-200"
+    : "text-slate-600 hover:text-slate-800";
 
   return (
     <footer
       className={`mt-8 sm:mt-12 md:mt-16 border-t transition-all duration-300 ${
-        isDark ? "bg-slate-900/50 border-slate-800 backdrop-blur-lg" : "bg-white/80 border-slate-200 backdrop-blur-lg"
+        isDark
+          ? "bg-slate-900/50 border-slate-800 backdrop-blur-lg"
+          : "bg-white/80 border-slate-200 backdrop-blur-lg"
       }`}
       role="contentinfo"
     >
@@ -61,10 +65,10 @@ const Footer = memo(function Footer({
               aria-label="Reload page"
             >
               <div
-                className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl ${isDark ? "bg-emerald-900/30" : "bg-emerald-100"}`}
+                className={`p-2 sm:p-2.5 md:p-3 rounded-xl ${isDark ? "bg-blue-900/30" : "bg-blue-100"}`}
               >
-                <PawPrint
-                  className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${isDark ? "text-emerald-400" : "text-emerald-600"}`}
+                <Zap
+                  className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${isDark ? "text-blue-400" : "text-blue-600"}`}
                   aria-hidden="true"
                 />
               </div>
@@ -72,17 +76,24 @@ const Footer = memo(function Footer({
                 className={`text-lg sm:text-xl md:text-2xl font-bold ${isDark ? "text-slate-100" : "text-slate-800"}`}
                 style={{ fontFamily: fontFamilyHeading }}
               >
-                ZOOLAB
+                LeadFlow
               </span>
             </div>
-            <p className={`text-xs sm:text-sm leading-relaxed ${textClasses}`} style={{ fontFamily }}>
-              Professional zoo animal monitoring and management system for zoolab staff, veterinarians, and wildlife
-              conservation specialists.
+            <p
+              className={`text-xs sm:text-sm leading-relaxed ${textClasses}`}
+              style={{ fontFamily }}
+            >
+              Professional lead generation and management platform for sales
+              teams, marketing professionals, and business development
+              specialists.
             </p>
           </div>
 
           {/* Product Section */}
-          <nav className="space-y-2 sm:space-y-3 md:space-y-4" aria-labelledby="footer-product-heading">
+          <nav
+            className="space-y-2 sm:space-y-3 md:space-y-4"
+            aria-labelledby="footer-product-heading"
+          >
             <h4
               id="footer-product-heading"
               className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
@@ -106,7 +117,10 @@ const Footer = memo(function Footer({
           </nav>
 
           {/* Resources Section */}
-          <nav className="space-y-2 sm:space-y-3 md:space-y-4" aria-labelledby="footer-resources-heading">
+          <nav
+            className="space-y-2 sm:space-y-3 md:space-y-4"
+            aria-labelledby="footer-resources-heading"
+          >
             <h4
               id="footer-resources-heading"
               className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
@@ -130,7 +144,10 @@ const Footer = memo(function Footer({
           </nav>
 
           {/* Company Section */}
-          <nav className="space-y-2 sm:space-y-3 md:space-y-4" aria-labelledby="footer-company-heading">
+          <nav
+            className="space-y-2 sm:space-y-3 md:space-y-4"
+            aria-labelledby="footer-company-heading"
+          >
             <h4
               id="footer-company-heading"
               className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
@@ -160,16 +177,28 @@ const Footer = memo(function Footer({
             isDark ? "border-slate-800" : "border-slate-200"
           }`}
         >
-          <p className={`text-xs sm:text-sm text-center sm:text-left ${textClasses}`} style={{ fontFamily }}>
-            © {new Date().getFullYear()} ZOOLAB. All rights reserved.
+          <p
+            className={`text-xs sm:text-sm text-center sm:text-left ${textClasses}`}
+            style={{ fontFamily }}
+          >
+            © {new Date().getFullYear()} LeadFlow. All rights reserved.
           </p>
           <div className="flex items-center space-x-1">
-            <span className={`text-xs sm:text-sm ${textClasses}`} style={{ fontFamily }}>
+            <span
+              className={`text-xs sm:text-sm ${textClasses}`}
+              style={{ fontFamily }}
+            >
               Made with
             </span>
-            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 mx-0.5 sm:mx-1" aria-label="love" />
-            <span className={`text-xs sm:text-sm ${textClasses}`} style={{ fontFamily }}>
-              for wildlife conservation
+            <Heart
+              className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 mx-0.5 sm:mx-1"
+              aria-label="love"
+            />
+            <span
+              className={`text-xs sm:text-sm ${textClasses}`}
+              style={{ fontFamily }}
+            >
+              for business growth
             </span>
           </div>
         </div>

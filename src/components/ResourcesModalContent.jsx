@@ -39,12 +39,12 @@ const ResourcesModalContent = ({ darkMode: darkModeOverride }) => {
               className={`font-semibold ${headingClasses}`}
               style={{ fontFamily }}
             >
-              Global Zoolab Network
+              Global Sales Network
             </h5>
             <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
-              Connect with zoolab staff, veterinarians, and wildlife
-              conservation specialists worldwide. Share best practices and
-              collaborate on animal welfare initiatives.
+              Connect with sales professionals, business development experts,
+              and marketing specialists worldwide. Share best practices and
+              collaborate on lead generation strategies.
             </p>
           </div>
           <div className={`p-4 rounded-xl ${cardClasses}`}>
@@ -55,8 +55,8 @@ const ResourcesModalContent = ({ darkMode: darkModeOverride }) => {
               Discussion Forums
             </h5>
             <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
-              Active community discussions on animal behavior, enclosure
-              enrichment techniques, veterinary care, and conservation efforts.
+              Active community discussions on sales techniques, lead nurturing
+              strategies, CRM best practices, and conversion optimization.
             </p>
           </div>
         </div>
@@ -83,11 +83,11 @@ const ResourcesModalContent = ({ darkMode: darkModeOverride }) => {
               }`}
               style={{ fontFamily }}
             >
-              San Diego Zoo Wildlife Alliance
+              TechCorp Enterprise Solutions
             </h6>
             <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
-              How leading zoos use ZOOLAB for comprehensive animal health
-              tracking and endangered species breeding programs.
+              How leading enterprises use LeadFlow for comprehensive pipeline
+              management and achieved 40% increase in conversion rates.
             </p>
           </div>
           <div
@@ -103,12 +103,11 @@ const ResourcesModalContent = ({ darkMode: darkModeOverride }) => {
               }`}
               style={{ fontFamily }}
             >
-              Wildlife Conservation Projects
+              StartupX Growth Story
             </h6>
             <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
-              Real-world applications in species reintroduction programs,
-              habitat preservation, and global biodiversity monitoring
-              initiatives.
+              Real-world applications in scaling sales operations, automating
+              lead qualification, and building predictable revenue pipelines.
             </p>
           </div>
         </div>

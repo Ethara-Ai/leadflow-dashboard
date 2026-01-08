@@ -8,42 +8,9 @@ import CustomTooltip from "./CustomTooltip";
 import TimePeriodButtons from "./TimePeriodButtons";
 import { getChartCardClasses, getChartTitleClasses } from "../chartUtils";
 
-const RADIAN = Math.PI / 180;
-
-/**
- * Custom label renderer for pie chart (used on larger screens)
- * @param {Object} props - Label props from Recharts
- * @returns {JSX.Element} - SVG text element
- */
-const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, name, percent }) => {
-  const radius = outerRadius + 30;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  // Determine text anchor based on position
-  const textAnchor = x > cx ? "start" : "end";
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="currentColor"
-      textAnchor={textAnchor}
-      dominantBaseline="central"
-      style={{
-        fontSize: "12px",
-        fontFamily,
-        fontWeight: 500,
-      }}
-    >
-      {`${name}: ${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
-
 /**
  * DietDistributionChart Component
- * Displays diet distribution data as a pie chart with responsive design.
+ * Displays lead source distribution data as a pie chart with responsive design.
  *
  * @param {Object} props - Component props
  * @param {Array} props.data - Chart data array
@@ -99,39 +66,43 @@ const DietDistributionChart = memo(function DietDistributionChart({
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
       variants={cardVariants}
     >
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <h3 className={`text-lg sm:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
-          Diet Distribution
+      {/* Header - Title first, then time period below */}
+      <div className="flex flex-col items-center mb-3">
+        <h3
+          className={`text-lg sm:text-xl font-bold ${titleClasses} mb-2`}
+          style={{ fontFamily }}
+        >
+          Lead Source Distribution
         </h3>
-        <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
+        <TimePeriodButtons
+          currentPeriod={timePeriod}
+          onPeriodChange={setTimePeriod}
+        />
       </div>
 
-      {/* Pie Chart - Original size for larger screens, compact for small screens */}
+      {/* Pie Chart - Centered without external labels */}
       <div
-        className={`${isSmallScreen ? "h-45" : "h-75"} relative ${isDark ? "text-slate-300" : "text-slate-600"}`}
+        className={`${isSmallScreen ? "h-40" : "h-48"} relative ${isDark ? "text-slate-300" : "text-slate-600"}`}
         role="img"
-        aria-label="Diet distribution pie chart showing food type percentages"
+        aria-label="Lead source distribution pie chart showing lead source percentages"
       >
         <ResponsiveContainer width="100%" height="100%">
           <PieChart
-            key={`diet-chart-${timePeriod}`}
-            margin={
-              isSmallScreen ? { top: 5, right: 5, bottom: 5, left: 5 } : { top: 20, right: 20, bottom: 20, left: 20 }
-            }
+            key={`lead-source-chart-${timePeriod}`}
+            margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
             onMouseMove={handleMouseMove}
           >
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={isSmallScreen ? 30 : 40}
-              outerRadius={isSmallScreen ? 55 : 70}
+              innerRadius={isSmallScreen ? 35 : 50}
+              outerRadius={isSmallScreen ? 60 : 80}
               paddingAngle={3}
               dataKey="value"
               nameKey="name"
               labelLine={false}
-              label={isSmallScreen ? false : renderCustomizedLabel}
+              label={false}
               style={{ fontSize: "12px", fontFamily }}
               animationBegin={0}
               animationDuration={300}
@@ -159,33 +130,38 @@ const DietDistributionChart = memo(function DietDistributionChart({
         </ResponsiveContainer>
       </div>
 
-      {/* Legend - Only visible on small screens for clear food source names */}
-      {isSmallScreen && (
-        <div className="mt-3 grid grid-cols-2 gap-x-2 gap-y-2" role="list" aria-label="Diet distribution legend">
-          {data.map((entry, index) => (
-            <div key={entry.name} className="flex items-center gap-1.5 min-w-0" role="listitem">
-              <span
-                className="w-2.5 h-2.5 rounded-full shrink-0"
-                style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                aria-hidden="true"
-              />
-              <span
-                className={`text-[10px] truncate flex-1 ${isDark ? "text-slate-300" : "text-slate-600"}`}
-                style={{ fontFamily }}
-                title={entry.name}
-              >
-                {entry.name}
-              </span>
-              <span
-                className={`text-[10px] font-semibold shrink-0 ${isDark ? "text-slate-200" : "text-slate-700"}`}
-                style={{ fontFamily }}
-              >
-                {entry.value}%
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Legend - Always visible with complete names and percentages */}
+      <div
+        className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2"
+        role="list"
+        aria-label="Lead source distribution legend"
+      >
+        {data.map((entry, index) => (
+          <div
+            key={entry.name}
+            className="flex items-center gap-2 min-w-0"
+            role="listitem"
+          >
+            <span
+              className="w-3 h-3 rounded-full shrink-0"
+              style={{ backgroundColor: COLORS[index % COLORS.length] }}
+              aria-hidden="true"
+            />
+            <span
+              className={`text-xs flex-1 ${isDark ? "text-slate-300" : "text-slate-600"}`}
+              style={{ fontFamily }}
+            >
+              {entry.name}
+            </span>
+            <span
+              className={`text-xs font-semibold shrink-0 ${isDark ? "text-slate-200" : "text-slate-700"}`}
+              style={{ fontFamily }}
+            >
+              {entry.value}%
+            </span>
+          </div>
+        ))}
+      </div>
     </motion.div>
   );
 });

@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
-import { PawPrint, Thermometer, Droplet, Activity } from "lucide-react";
+import { Users, Phone, Calendar, TrendingUp } from "lucide-react";
 import { staggerContainerVariants } from "../constants";
-import { calculateTotalAnimals } from "../utils";
+import { calculateTotalLeads } from "../utils";
 import useThemeSafe from "../hooks/useThemeSafe";
 import StatCard from "./StatCard";
 
@@ -25,48 +25,60 @@ const getSubValueVariant = (subValue) => {
  * Uses theme context for dark mode styling.
  *
  * @param {Object} props - Component props
- * @param {Object} props.zooData - Zoo statistics data (population, temperature, humidity)
+ * @param {Object} props.zooData - Lead statistics data (total leads, calls, meetings, conversion rate)
  * @param {Array} props.activityData - Activity data for calculating totals
  * @param {boolean} [props.darkMode] - Optional override for dark mode (backward compatibility)
  */
-const StatCards = memo(function StatCards({ zooData, activityData, darkMode: darkModeOverride }) {
+const StatCards = memo(function StatCards({
+  zooData,
+  activityData,
+  darkMode: darkModeOverride,
+}) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
-  const totalAnimals = calculateTotalAnimals(activityData);
+  const totalLeads = calculateTotalLeads(activityData);
 
   const stats = [
     {
-      title: "Total Animals",
+      title: "Total Leads",
       value: zooData.population,
-      icon: <PawPrint className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: "+8",
-      subText: "new arrivals",
-      accent: isDark ? "bg-emerald-900/40 text-emerald-400" : "bg-emerald-100 text-emerald-600",
+      icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" />,
+      subValue: "+24",
+      subText: "new this week",
+      accent: isDark
+        ? "bg-emerald-900/40 text-emerald-400"
+        : "bg-emerald-100 text-emerald-600",
     },
     {
-      title: "Avg Temp",
-      value: `${zooData.temperature}°C`,
-      icon: <Thermometer className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: "+0.5°C",
+      title: "Calls Made",
+      value: zooData.temperature,
+      icon: <Phone className="w-4 h-4 sm:w-5 sm:h-5" />,
+      subValue: "+18",
       subText: "vs yesterday",
-      accent: isDark ? "bg-amber-900/40 text-amber-400" : "bg-amber-100 text-amber-600",
+      accent: isDark
+        ? "bg-amber-900/40 text-amber-400"
+        : "bg-amber-100 text-amber-600",
     },
     {
-      title: "Humidity",
-      value: `${zooData.humidity}%`,
-      icon: <Droplet className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: "-3%",
-      subText: "vs yesterday",
-      accent: isDark ? "bg-cyan-900/40 text-cyan-400" : "bg-cyan-100 text-cyan-600",
+      title: "Meetings",
+      value: `${zooData.humidity}`,
+      icon: <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />,
+      subValue: "+5",
+      subText: "scheduled",
+      accent: isDark
+        ? "bg-cyan-900/40 text-cyan-400"
+        : "bg-cyan-100 text-cyan-600",
     },
     {
-      title: "Active",
-      value: totalAnimals,
-      icon: <Activity className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: "+12.4%",
-      subText: "activity",
-      accent: isDark ? "bg-blue-900/40 text-blue-400" : "bg-blue-100 text-blue-600",
+      title: "Conversion Rate",
+      value: `${totalLeads}%`,
+      icon: <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />,
+      subValue: "+3.2%",
+      subText: "from meetings",
+      accent: isDark
+        ? "bg-blue-900/40 text-blue-400"
+        : "bg-blue-100 text-blue-600",
     },
   ];
 

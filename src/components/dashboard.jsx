@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import useGlobalStyles from "../hooks/useGlobalStyles";
 import useTheme from "../hooks/useTheme";
 import ThemeProvider from "../hooks/ThemeProvider";
-import useZooData from "../hooks/useZooData";
+import useLeadData from "../hooks/useLeadData";
 import useAlerts from "../hooks/useAlerts";
 import useNotes from "../hooks/useNotes";
 import useModals, { MODAL_IDS } from "../hooks/useModals";
@@ -18,12 +18,15 @@ import AnimalActivityChart from "./AnimalActivityChart";
 import FeedingEfficiencyChart from "./FeedingEfficiencyChart";
 import DietDistributionChart from "./DietDistributionChart";
 import AlertsPanel from "./AlertsPanel";
+import MeetingScheduleCard from "./MeetingScheduleCard";
+import RecentLeadActivities from "./RecentLeadActivities";
 import WelcomeMessage from "./WelcomeMessage";
 import ErrorMessage from "./ErrorMessage";
 import LoadingSkeleton from "./LoadingSkeleton";
 import Footer from "./Footer";
 import FooterModal from "./FooterModal";
 import NotesModal from "./NotesModal";
+import AlertsModal from "./AlertsModal";
 import ProductModalContent from "./ProductModalContent";
 import ResourcesModalContent from "./ResourcesModalContent";
 import CompanyModalContent from "./CompanyModalContent";
@@ -34,6 +37,8 @@ import {
   staggerContainerVariants,
   fontFamily,
   activityWeekData,
+  initialMeetings,
+  initialActivities,
 } from "../constants";
 import { exportToCSV, exportToJSON, generateExportFilename } from "../utils";
 
@@ -51,35 +56,37 @@ const ChartSection = memo(function ChartSection({
   dietPeriod,
   setDietPeriod,
   alerts,
-  onAddAlert,
-  onClearAlerts,
+  onOpenAlertsModal,
 }) {
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AnimalActivityChart
-          data={activityData}
-          timePeriod={activityPeriod}
-          setTimePeriod={setActivityPeriod}
-        />
-        <FeedingEfficiencyChart
-          data={feedingData}
-          timePeriod={feedingPeriod}
-          setTimePeriod={setFeedingPeriod}
-        />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+          <AnimalActivityChart
+            data={activityData}
+            timePeriod={activityPeriod}
+            setTimePeriod={setActivityPeriod}
+          />
+          <FeedingEfficiencyChart
+            data={feedingData}
+            timePeriod={feedingPeriod}
+            setTimePeriod={setFeedingPeriod}
+          />
+        </div>
+        <div className="space-y-4 sm:space-y-6">
+          <DietDistributionChart
+            data={dietData}
+            timePeriod={dietPeriod}
+            setTimePeriod={setDietPeriod}
+          />
+          <AlertsPanel alerts={alerts} onOpenModal={onOpenAlertsModal} />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <DietDistributionChart
-          data={dietData}
-          timePeriod={dietPeriod}
-          setTimePeriod={setDietPeriod}
-        />
-        <AlertsPanel
-          alerts={alerts}
-          onAddAlert={onAddAlert}
-          onClearAlerts={onClearAlerts}
-        />
+      {/* New Cards Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
+        <MeetingScheduleCard meetings={initialMeetings} />
+        <RecentLeadActivities activities={initialActivities} />
       </div>
     </>
   );
@@ -105,6 +112,7 @@ const DashboardContent = () => {
     isProductModalOpen,
     isResourcesModalOpen,
     isCompanyModalOpen,
+    isAlertsModalOpen,
     openNotes,
     closeNotes,
     openProductModal,
@@ -113,6 +121,8 @@ const DashboardContent = () => {
     closeResourcesModal,
     openCompanyModal,
     closeCompanyModal,
+    openAlertsModal,
+    closeAlertsModal,
   } = useModals();
 
   // Handle new alerts from zoo data refresh
@@ -123,7 +133,7 @@ const DashboardContent = () => {
     [addAlert],
   );
 
-  const { zooData, isLoading, error, refreshData } = useZooData({
+  const { zooData, isLoading, error, refreshData } = useLeadData({
     onNewAlert: handleNewAlert,
   });
 
@@ -208,13 +218,14 @@ const DashboardContent = () => {
 
   return (
     <div
-      className={`min-h-screen transition-all duration-300 ${
+      className={`min-h-screen transition-all duration-300 overflow-x-hidden overflow-y-auto ${
         darkMode
           ? "bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white"
           : "bg-linear-to-br from-slate-50 via-white to-slate-50 text-slate-900"
       }`}
       style={{
         fontFamily: `${fontFamily}, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`,
+        WebkitOverflowScrolling: "touch",
       }}
     >
       <div className="max-w-7xl mx-auto p-4 sm:p-8">
@@ -260,8 +271,7 @@ const DashboardContent = () => {
               dietPeriod={dietPeriod}
               setDietPeriod={setDietPeriod}
               alerts={alerts}
-              onAddAlert={handleAddAlert}
-              onClearAlerts={handleClearAlerts}
+              onOpenAlertsModal={openAlertsModal}
             />
 
             <motion.div
@@ -316,6 +326,14 @@ const DashboardContent = () => {
       >
         <CompanyModalContent />
       </FooterModal>
+
+      <AlertsModal
+        isOpen={isAlertsModalOpen}
+        onClose={closeAlertsModal}
+        alerts={alerts}
+        onAddAlert={handleAddAlert}
+        onClearAlerts={handleClearAlerts}
+      />
     </div>
   );
 };
