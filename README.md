@@ -37,6 +37,7 @@ A modern, responsive dashboard for sales teams, marketing professionals, and bus
 | [Framer Motion](https://www.framer.com/motion/) | 12.24.1 | Animation library |
 | [Recharts](https://recharts.org/) | 3.6.0 | Charting library |
 | [Lucide React](https://lucide.dev/) | 0.562.0 | Icon library |
+| [Vitest](https://vitest.dev/) | 4.0.16 | Testing framework |
 | [ESLint](https://eslint.org/) | 9.39.1 | Code linting |
 
 ---
@@ -52,7 +53,7 @@ A modern, responsive dashboard for sales teams, marketing professionals, and bus
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/leadflow-dashboard.git
+   git clone https://github.com/Ethara-AI/leadflow-dashboard.git
    cd leadflow-dashboard
    ```
 
@@ -76,8 +77,12 @@ A modern, responsive dashboard for sales teams, marketing professionals, and bus
 | `npm run build` | Build for production |
 | `npm run preview` | Preview production build locally |
 | `npm run lint` | Run ESLint to check code quality |
-| `npm run test` | Run test suite |
-| `npm run coverage` | Run tests with coverage report |
+| `npm run lint:fix` | Run ESLint and auto-fix issues |
+| `npm run test` | Run test suite in watch mode |
+| `npm run test:run` | Run tests once |
+| `npm run test:ui` | Run tests with UI |
+| `npm run test:coverage` | Run tests with coverage report |
+| `npm run test:watch` | Run tests in watch mode |
 
 ---
 
@@ -142,36 +147,36 @@ Reusable card component for displaying individual statistics with icon, value, a
 Grid container that renders multiple StatCard components with lead metrics data including Total Leads, Calls Made, Meetings, and Conversion Rate.
 
 ```jsx
-<StatCards zooData={object} activityData={array} />
+<StatCards leadData={object} activityData={array} />
 ```
 
 ---
 
 ### Chart Components
 
-#### `<AnimalActivityChart />`
+#### `<LeadActivityChart />`
 Composed chart displaying lead activity levels and engagement metrics over time.
 
 ```jsx
-<AnimalActivityChart
+<LeadActivityChart
   data={array}
   timePeriod="week" // "week" | "month" | "year"
   setTimePeriod={function}
 />
 ```
 
-#### `<FeedingEfficiencyChart />`
+#### `<ConversionRateChart />`
 Visualizes conversion rate metrics with area chart representation.
 
 ```jsx
-<FeedingEfficiencyChart
+<ConversionRateChart
   data={array}
   timePeriod="week"
   setTimePeriod={function}
 />
 ```
 
-#### `<DietDistributionChart />`
+#### `<LeadSourceChart />`
 Displays lead source distribution data using pie/donut chart visualization with:
 - Title displayed first
 - Time period selector below title
@@ -179,7 +184,7 @@ Displays lead source distribution data using pie/donut chart visualization with:
 - Legend with complete source names and percentages below the chart
 
 ```jsx
-<DietDistributionChart
+<LeadSourceChart
   data={array}
   timePeriod="week"
   setTimePeriod={function}
@@ -198,6 +203,9 @@ Shared button group for selecting chart time periods (Week, Month, Year).
 
 #### `<CustomTooltip />`
 Theme-aware tooltip component for chart data points.
+
+#### `<ChartErrorBoundary />`
+Error boundary specific to chart components for graceful error handling.
 
 ---
 
@@ -231,6 +239,19 @@ Panel displaying lead alerts with management dropdown for adding/clearing alerts
 
 ```jsx
 <AlertsPanel
+  alerts={array}
+  onAddAlert={function}
+  onClearAlerts={function}
+/>
+```
+
+#### `<AlertsModal />`
+Modal component for displaying and managing alerts in an expanded view.
+
+```jsx
+<AlertsModal
+  isOpen={boolean}
+  onClose={function}
   alerts={array}
   onAddAlert={function}
   onClearAlerts={function}
@@ -305,6 +326,25 @@ Error display component with retry functionality.
 #### `<ErrorBoundary />`
 React error boundary component for graceful error handling.
 
+#### `<withErrorBoundary />`
+Higher-order component for wrapping components with error boundary.
+
+---
+
+### Dashboard Sub-Components
+
+#### `<DashboardCharts />`
+Container component for organizing and rendering all chart components.
+
+#### `<DashboardContent />`
+Main content area component for the dashboard layout.
+
+#### `<DashboardHeader />`
+Header section specific to the dashboard view.
+
+#### `<DashboardModals />`
+Container component managing all modal states and rendering.
+
 ---
 
 ## Theme System
@@ -356,7 +396,19 @@ Theme preferences are automatically persisted to `localStorage` under the key `l
 | `useNotes` | Manage notes state and operations |
 | `useModals` | Manage modal open/close states |
 | `useChartPeriods` | Manage time period selection for charts |
-| `useZooData` | Fetch and manage dashboard data |
+| `useChartStyles` | Provide consistent chart styling based on theme |
+| `useLeadData` | Fetch and manage dashboard lead data |
+| `useScrollLock` | Lock body scroll when modals are open |
+
+---
+
+## Context
+
+| Context | Purpose |
+|---------|---------|
+| `ThemeContext` | Provides theme state across the application |
+| `DashboardContext` | Provides dashboard state and actions |
+| `useDashboard` | Hook to access DashboardContext |
 
 ---
 
@@ -364,24 +416,41 @@ Theme preferences are automatically persisted to `localStorage` under the key `l
 
 ```
 leadflow-dashboard/
-├── public/                 # Static assets
+├── .github/               # GitHub configuration
+│   └── workflows/         # CI/CD workflows
+├── public/                # Static assets
 ├── src/
-│   ├── assets/            # Images and SVGs
-│   ├── components/        # React components
+│   ├── api/              # API client and services
+│   │   ├── client.js     # HTTP client configuration
+│   │   ├── index.js      # API exports
+│   │   └── leads.js      # Lead-related API calls
+│   ├── assets/           # Images and SVGs
+│   ├── components/       # React components
+│   │   ├── charts/       # Chart-specific components
+│   │   │   ├── ChartErrorBoundary.jsx
+│   │   │   └── index.js
+│   │   ├── dashboard/    # Dashboard sub-components
+│   │   │   ├── DashboardCharts.jsx
+│   │   │   ├── DashboardContent.jsx
+│   │   │   ├── DashboardHeader.jsx
+│   │   │   ├── DashboardModals.jsx
+│   │   │   └── index.js
 │   │   ├── AlertDropdown.jsx
 │   │   ├── AlertItem.jsx
+│   │   ├── AlertsModal.jsx
 │   │   ├── AlertsPanel.jsx
-│   │   ├── AnimalActivityChart.jsx
 │   │   ├── ChartComponents.jsx
 │   │   ├── CompanyModalContent.jsx
+│   │   ├── ConversionRateChart.jsx
 │   │   ├── CustomTooltip.jsx
-│   │   ├── DietDistributionChart.jsx
+│   │   ├── dashboard.jsx
 │   │   ├── ErrorBoundary.jsx
 │   │   ├── ErrorMessage.jsx
-│   │   ├── FeedingEfficiencyChart.jsx
 │   │   ├── Footer.jsx
 │   │   ├── FooterModal.jsx
 │   │   ├── Header.jsx
+│   │   ├── LeadActivityChart.jsx
+│   │   ├── LeadSourceChart.jsx
 │   │   ├── LoadingScreen.jsx
 │   │   ├── LoadingSkeleton.jsx
 │   │   ├── MeetingScheduleCard.jsx
@@ -393,31 +462,57 @@ leadflow-dashboard/
 │   │   ├── StatCards.jsx
 │   │   ├── TimePeriodButtons.jsx
 │   │   ├── WelcomeMessage.jsx
-│   │   └── dashboard.jsx
-│   ├── hooks/             # Custom React hooks
+│   │   └── withErrorBoundary.jsx
+│   ├── config/           # Application configuration
+│   │   ├── animations.js # Animation settings
+│   │   ├── env.js        # Environment configuration
+│   │   ├── index.js      # Config exports
+│   │   └── storage.js    # Storage keys configuration
+│   ├── constants/        # Application constants
+│   │   ├── animations.js # Animation constants
+│   │   ├── chartData.js  # Chart configuration data
+│   │   ├── index.js      # Constants exports
+│   │   ├── mockData.js   # Mock data for development
+│   │   ├── storage.js    # Storage constants
+│   │   └── typography.js # Typography constants
+│   ├── context/          # React Context providers
+│   │   ├── DashboardContext.jsx
+│   │   ├── index.js
+│   │   └── useDashboard.js
+│   ├── data/             # Data layer
+│   │   └── mocks/        # Mock data files
+│   ├── hooks/            # Custom React hooks
+│   │   ├── index.js
 │   │   ├── ThemeContext.js
 │   │   ├── ThemeProvider.jsx
 │   │   ├── useAlerts.js
 │   │   ├── useChartPeriods.js
+│   │   ├── useChartStyles.js
 │   │   ├── useGlobalStyles.js
+│   │   ├── useLeadData.js
 │   │   ├── useModals.js
 │   │   ├── useNotes.js
+│   │   ├── useScrollLock.js
 │   │   ├── useTheme.jsx
 │   │   ├── useThemeSafe.js
-│   │   ├── useZooData.js
 │   │   └── withTheme.jsx
-│   ├── App.jsx            # Root application component
-│   ├── chartUtils.js      # Chart styling utilities
-│   ├── constants.js       # Application constants and mock data
-│   ├── index.css          # Global styles
-│   ├── main.jsx           # Application entry point
-│   └── utils.js           # Utility functions
-├── index.html             # HTML template
-├── package.json           # Project dependencies
-├── vite.config.js         # Vite configuration
-├── eslint.config.js       # ESLint configuration
-├── prompt.md              # Project specification
-└── README.md              # Project documentation
+│   ├── test/             # Test utilities
+│   │   ├── setup.js      # Test setup configuration
+│   │   └── test-utils.jsx # Testing utilities
+│   ├── App.jsx           # Root application component
+│   ├── chartUtils.js     # Chart styling utilities
+│   ├── index.css         # Global styles
+│   ├── main.jsx          # Application entry point
+│   └── utils.js          # Utility functions
+├── .gitignore            # Git ignore rules
+├── eslint.config.js      # ESLint configuration
+├── index.html            # HTML template
+├── LICENSE               # MIT License
+├── package.json          # Project dependencies
+├── PROMPT.md             # Project specification
+├── README.md             # Project documentation
+├── vite.config.js        # Vite configuration
+└── vitest.config.js      # Vitest configuration
 ```
 
 ---
@@ -432,6 +527,32 @@ LeadFlow Dashboard is fully optimized for mobile and tablet devices:
 - **Scroll Lock** - Background scroll prevention when hamburger menu is open
 - **Hidden Tagline** - Logo tagline hidden on mobile to save space
 - **Adaptive Layouts** - Grid layouts adjust from 4 columns on desktop to 2 columns on mobile
+
+---
+
+## Testing
+
+LeadFlow uses Vitest with React Testing Library for unit and integration testing.
+
+### Running Tests
+
+```bash
+# Run tests in watch mode
+npm run test
+
+# Run tests once
+npm run test:run
+
+# Run tests with UI
+npm run test:ui
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+### Test Structure
+
+Test files are co-located with their components using the `.test.jsx` or `.test.js` suffix.
 
 ---
 
@@ -468,7 +589,7 @@ We welcome contributions from the community! Here is how you can help:
    ```
 4. Run tests:
    ```bash
-   npm run test
+   npm run test:run
    ```
 5. Build to verify production readiness:
    ```bash
@@ -506,6 +627,7 @@ We welcome contributions from the community! Here is how you can help:
 - Add JSDoc comments for component props
 - Use Tailwind CSS for styling
 - Keep components small and focused on a single responsibility
+- Write tests for new components and features
 
 ### Reporting Issues
 
@@ -521,6 +643,14 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
+## Links
+
+- **Homepage**: [https://components.ethara.ai/leadflow-dashboard](https://components.ethara.ai/leadflow-dashboard)
+- **Repository**: [https://github.com/Ethara-AI/leadflow-dashboard](https://github.com/Ethara-AI/leadflow-dashboard)
+- **Issues**: [https://github.com/Ethara-AI/leadflow-dashboard/issues](https://github.com/Ethara-AI/leadflow-dashboard/issues)
+
+---
+
 Built for sales and business development professionals.
 
-**Copyright 2025 LeadFlow. All rights reserved.**
+**Copyright 2026 LeadFlow. All rights reserved.**

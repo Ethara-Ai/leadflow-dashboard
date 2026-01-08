@@ -21,17 +21,17 @@ const mockNotes = [
   {
     id: 1,
     content: "Lion enclosure: Male lion showing increased appetite",
-    timestamp: "1/1/2025, 10:00:00 AM",
+    timestamp: "1/1/2026, 10:00:00 AM",
   },
   {
     id: 2,
     content: "Penguin habitat: Water filtration maintenance scheduled",
-    timestamp: "1/1/2025, 9:00:00 AM",
+    timestamp: "1/1/2026, 9:00:00 AM",
   },
   {
     id: 3,
     content: "Gorilla section: New enrichment activities working well",
-    timestamp: "1/1/2025, 8:00:00 AM",
+    timestamp: "1/1/2026, 8:00:00 AM",
   },
 ];
 
@@ -291,7 +291,7 @@ describe("NotesModal", () => {
 
       await user.click(screen.getByText(/View Notes/));
 
-      expect(screen.getByText("1/1/2025, 10:00:00 AM")).toBeInTheDocument();
+      expect(screen.getByText("1/1/2026, 10:00:00 AM")).toBeInTheDocument();
     });
 
     it("should show empty state when no notes", async () => {
@@ -602,7 +602,7 @@ describe("NotesModal", () => {
     it("should handle notes with very long content", async () => {
       const user = userEvent.setup();
       const longContent = "A".repeat(500);
-      const notesWithLongContent = [{ id: 1, content: longContent, timestamp: "1/1/2025, 10:00:00 AM" }];
+      const notesWithLongContent = [{ id: 1, content: longContent, timestamp: "1/1/2026, 10:00:00 AM" }];
       renderWithTheme(<NotesModal {...defaultProps} notes={notesWithLongContent} />);
 
       await user.click(screen.getByText(/View Notes/));
@@ -612,7 +612,7 @@ describe("NotesModal", () => {
     it("should handle notes with special characters", async () => {
       const user = userEvent.setup();
       const specialContent = "Note: <script>test</script> & \"quotes\" 'apostrophe'";
-      const notesWithSpecialChars = [{ id: 1, content: specialContent, timestamp: "1/1/2025, 10:00:00 AM" }];
+      const notesWithSpecialChars = [{ id: 1, content: specialContent, timestamp: "1/1/2026, 10:00:00 AM" }];
       renderWithTheme(<NotesModal {...defaultProps} notes={notesWithSpecialChars} />);
 
       await user.click(screen.getByText(/View Notes/));
@@ -636,7 +636,7 @@ describe("NotesModal", () => {
       const manyNotes = Array.from({ length: 50 }, (_, i) => ({
         id: i,
         content: `Note content ${i}`,
-        timestamp: `1/1/2025, ${i}:00:00 AM`,
+        timestamp: `1/1/2026, ${i}:00:00 AM`,
       }));
       renderWithTheme(<NotesModal {...defaultProps} notes={manyNotes} />);
 

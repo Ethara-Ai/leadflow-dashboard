@@ -39,7 +39,7 @@ export const activityYearData = [
 ];
 
 // -----------------------------------------------------------------------------
-// Conversion Rate Data (formerly Feeding Efficiency)
+// Conversion Rate Data
 // -----------------------------------------------------------------------------
 
 export const conversionWeekData = [
@@ -74,13 +74,8 @@ export const conversionYearData = [
   { name: "Dec", efficiency: 25 },
 ];
 
-// Backward compatibility aliases
-export const feedingWeekData = conversionWeekData;
-export const feedingMonthData = conversionMonthData;
-export const feedingYearData = conversionYearData;
-
 // -----------------------------------------------------------------------------
-// Lead Source Distribution Data (formerly Diet Distribution)
+// Lead Source Distribution Data
 // -----------------------------------------------------------------------------
 
 export const sourceWeekData = [
@@ -104,11 +99,6 @@ export const sourceYearData = [
   { name: "Cold Outreach", value: 15 },
 ];
 
-// Backward compatibility aliases
-export const dietWeekData = sourceWeekData;
-export const dietMonthData = sourceMonthData;
-export const dietYearData = sourceYearData;
-
 // -----------------------------------------------------------------------------
 // Chart Colors
 // -----------------------------------------------------------------------------
@@ -116,20 +106,12 @@ export const dietYearData = sourceYearData;
 export const CHART_COLORS_DARK = ["#60a5fa", "#34d399", "#fbbf24", "#f87171"];
 export const CHART_COLORS_LIGHT = ["#2563eb", "#059669", "#d97706", "#dc2626"];
 
-// Backward compatibility aliases
-export const COLORS_DARK = CHART_COLORS_DARK;
-export const COLORS_LIGHT = CHART_COLORS_LIGHT;
-
 /**
  * Get chart colors based on theme
  * @param {boolean} isDark - Whether dark mode is enabled
  * @returns {string[]} Array of color hex values
  */
-export const getChartColors = (isDark) =>
-  isDark ? CHART_COLORS_DARK : CHART_COLORS_LIGHT;
-
-// Backward compatibility alias
-export const getColors = getChartColors;
+export const getChartColors = (isDark) => (isDark ? CHART_COLORS_DARK : CHART_COLORS_LIGHT);
 
 // -----------------------------------------------------------------------------
 // Time Period Configuration

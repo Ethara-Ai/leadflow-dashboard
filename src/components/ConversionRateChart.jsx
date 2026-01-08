@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from "recharts";
@@ -37,15 +37,36 @@ const ConversionRateChart = memo(function ConversionRateChart({
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
-  // Get theme-based styles
-  const axisStyles = getAxisStyles(isDark);
-  const gridStyles = getGridStyles(isDark);
-  const cursorStyles = getTooltipCursorStyles(isDark);
-  const cardClasses = getChartCardClasses(isDark);
-  const titleClasses = getChartTitleClasses(isDark);
+  // Memoize theme-based styles to prevent recreation on every render
+  const axisStyles = useMemo(() => getAxisStyles(isDark), [isDark]);
+  const gridStyles = useMemo(() => getGridStyles(isDark), [isDark]);
+  const cursorStyles = useMemo(() => getTooltipCursorStyles(isDark), [isDark]);
+  const cardClasses = useMemo(() => getChartCardClasses(isDark), [isDark]);
+  const titleClasses = useMemo(() => getChartTitleClasses(isDark), [isDark]);
 
-  // Chart colors based on theme
-  const lineColor = isDark ? "#fbbf24" : "#d97706";
+  // Memoize chart color based on theme
+  const lineColor = useMemo(() => (isDark ? "#fbbf24" : "#d97706"), [isDark]);
+
+  // Memoize dot styles
+  const dotStyles = useMemo(() => getDotStyles(isDark, lineColor), [isDark, lineColor]);
+  const activeDotStyles = useMemo(() => getActiveDotStyles(isDark, lineColor), [isDark, lineColor]);
+
+  // Memoize legend wrapper style
+  const legendWrapperStyle = useMemo(() => ({ paddingTop: "10px" }), []);
+
+  // Memoize chart margins
+  const chartMargins = useMemo(
+    () => ({
+      top: 10,
+      right: 10,
+      left: 0,
+      bottom: 25,
+    }),
+    [],
+  );
+
+  // Memoize tooltip formatter
+  const tooltipFormatter = useMemo(() => (value) => [formatEfficiency(value), "Conversion Rate"], []);
 
   return (
     <motion.div
@@ -68,15 +89,7 @@ const ConversionRateChart = memo(function ConversionRateChart({
         aria-label="Conversion rate line chart showing conversion percentage over time"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={data}
-            margin={{
-              top: 10,
-              right: 10,
-              left: 0,
-              bottom: 25,
-            }}
-          >
+          <LineChart data={data} margin={chartMargins}>
             <CartesianGrid {...gridStyles} />
             <XAxis
               dataKey="name"
@@ -101,22 +114,17 @@ const ConversionRateChart = memo(function ConversionRateChart({
             <Tooltip
               content={(props) => <CustomTooltip {...props} />}
               cursor={cursorStyles}
-              formatter={(value) => [formatEfficiency(value), "Conversion Rate"]}
+              formatter={tooltipFormatter}
             />
-            <Legend
-              content={(props) => <ChartLegend {...props} />}
-              wrapperStyle={{
-                paddingTop: "10px",
-              }}
-            />
+            <Legend content={(props) => <ChartLegend {...props} />} wrapperStyle={legendWrapperStyle} />
             <Line
               type="monotone"
               dataKey="efficiency"
               name="Conversion Rate"
               stroke={lineColor}
               strokeWidth={2}
-              dot={getDotStyles(isDark, lineColor)}
-              activeDot={getActiveDotStyles(isDark, lineColor)}
+              dot={dotStyles}
+              activeDot={activeDotStyles}
             />
           </LineChart>
         </ResponsiveContainer>

@@ -205,7 +205,7 @@ export const getAlertType = (message) => {
  * @param {string} filename - Name of the file to download
  */
 export const exportToCSV = (data, filename) => {
-  const { leadData, activityData, feedingData: conversionData, dietData: sourceData, alerts } = data;
+  const { leadData, activityData, conversionData, sourceData, alerts } = data;
 
   const csvData = [
     ["Metric", "Value", "Type"],

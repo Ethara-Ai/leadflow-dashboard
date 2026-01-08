@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Zap, Sun, Moon, RotateCcw, StickyNote, Menu, Download, FileText, FileDown } from "lucide-react";
 import { dropdownVariants, fontFamily } from "../constants";
@@ -18,7 +18,7 @@ import useScrollLock from "../hooks/useScrollLock";
  * @param {function} props.onExportJSON - Callback when JSON export is clicked
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const Header = ({
+const Header = memo(function Header({
   isLoading,
   onToggleDarkMode,
   onRefresh,
@@ -26,7 +26,7 @@ const Header = ({
   onExportCSV,
   onExportJSON,
   darkMode: darkModeOverride,
-}) => {
+}) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
 
@@ -37,21 +37,114 @@ const Header = ({
   const { isDark } = useThemeSafe(darkModeOverride);
 
   // Handler for logo click - reload page
-  const handleLogoClick = () => {
+  const handleLogoClick = useCallback(() => {
     window.location.reload();
-  };
+  }, []);
 
   // Handler for logo keyboard interaction
-  const handleLogoKeyDown = (e) => {
+  const handleLogoKeyDown = useCallback((e) => {
     if (e.key === "Enter" || e.key === " ") {
       window.location.reload();
     }
-  };
+  }, []);
+
+  // Memoized style objects to prevent recreation on every render
+  const titleStyle = useMemo(
+    () => ({
+      fontFamily,
+      textShadow: isDark
+        ? "0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)"
+        : "0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05)",
+      transform: "perspective(1000px) rotateX(5deg)",
+    }),
+    [isDark],
+  );
+
+  const fontFamilyStyle = useMemo(() => ({ fontFamily }), []);
+
+  // Memoize motion animation variants
+  const logoInitial = useMemo(() => ({ opacity: 0, y: -20 }), []);
+  const logoAnimate = useMemo(() => ({ opacity: 1, y: 0 }), []);
+  const logoTransition = useMemo(() => ({ duration: 0.4 }), []);
+
+  // Memoize hover and tap animations
+  const buttonHover = useMemo(() => ({ scale: 1.05, y: -2 }), []);
+  const buttonTap = useMemo(() => ({ scale: 0.95 }), []);
+  const menuItemHover = useMemo(() => ({ scale: 1.02 }), []);
+  const menuItemTap = useMemo(() => ({ scale: 0.98 }), []);
 
   // Common button classes based on theme
-  const buttonClasses = isDark
-    ? "bg-slate-800/60 border-slate-700/50 shadow-lg shadow-slate-900/20"
-    : "bg-white/90 border-slate-200/60 shadow-lg shadow-slate-900/10";
+  const buttonClasses = useMemo(
+    () =>
+      isDark
+        ? "bg-slate-800/60 border-slate-700/50 shadow-lg shadow-slate-900/20"
+        : "bg-white/90 border-slate-200/60 shadow-lg shadow-slate-900/10",
+    [isDark],
+  );
+
+  // Memoize menu item classes
+  const menuItemClasses = useMemo(
+    () => (isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"),
+    [isDark],
+  );
+
+  // Memoize dropdown container classes
+  const dropdownClasses = useMemo(
+    () => (isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"),
+    [isDark],
+  );
+
+  // Memoize handlers for menu items
+  const handleToggleDarkMode = useCallback(() => {
+    onToggleDarkMode();
+    setIsHamburgerMenuOpen(false);
+  }, [onToggleDarkMode]);
+
+  const handleRefresh = useCallback(() => {
+    onRefresh();
+    setIsHamburgerMenuOpen(false);
+  }, [onRefresh]);
+
+  const handleOpenNotes = useCallback(() => {
+    onOpenNotes();
+    setIsHamburgerMenuOpen(false);
+  }, [onOpenNotes]);
+
+  const handleExportCSVMobile = useCallback(() => {
+    onExportCSV();
+    setIsHamburgerMenuOpen(false);
+  }, [onExportCSV]);
+
+  const handleExportJSONMobile = useCallback(() => {
+    onExportJSON();
+    setIsHamburgerMenuOpen(false);
+  }, [onExportJSON]);
+
+  const handleExportCSVDesktop = useCallback(() => {
+    onExportCSV();
+    setIsMobileMenuOpen(false);
+  }, [onExportCSV]);
+
+  const handleExportJSONDesktop = useCallback(() => {
+    onExportJSON();
+    setIsMobileMenuOpen(false);
+  }, [onExportJSON]);
+
+  const toggleHamburgerMenu = useCallback(() => {
+    setIsHamburgerMenuOpen((prev) => !prev);
+  }, []);
+
+  const closeHamburgerMenu = useCallback(() => {
+    setIsHamburgerMenuOpen(false);
+  }, []);
+
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen((prev) => !prev);
+  }, []);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
 
   return (
     <header className="flex flex-row justify-between items-center mb-6 sm:mb-8 md:mb-12">
@@ -59,9 +152,9 @@ const Header = ({
       <div className="w-auto">
         <motion.div
           className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 cursor-pointer"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
+          initial={logoInitial}
+          animate={logoAnimate}
+          transition={logoTransition}
           onClick={handleLogoClick}
           role="button"
           tabIndex={0}
@@ -76,13 +169,7 @@ const Header = ({
               className={`text-[2rem] font-black tracking-tight leading-none ${
                 isDark ? "text-white" : "text-slate-800"
               }`}
-              style={{
-                fontFamily,
-                textShadow: isDark
-                  ? "0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)"
-                  : "0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05)",
-                transform: "perspective(1000px) rotateX(5deg)",
-              }}
+              style={titleStyle}
             >
               LeadFlow
             </h1>
@@ -90,7 +177,7 @@ const Header = ({
               className={`hidden lg:block text-[0.625rem] sm:text-[0.75rem] font-medium leading-tight mt-1.5 ${
                 isDark ? "text-slate-300" : "text-slate-600"
               }`}
-              style={{ fontFamily }}
+              style={fontFamilyStyle}
             >
               Lead generation and management platform
             </p>
@@ -106,9 +193,9 @@ const Header = ({
             className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
               isDark ? "text-slate-300" : "text-slate-700"
             } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
-            onClick={() => setIsHamburgerMenuOpen(!isHamburgerMenuOpen)}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            onClick={toggleHamburgerMenu}
+            whileHover={buttonHover}
+            whileTap={buttonTap}
             aria-label="Open navigation menu"
             aria-expanded={isHamburgerMenuOpen}
             aria-haspopup="true"
@@ -120,11 +207,9 @@ const Header = ({
             {isHamburgerMenuOpen && (
               <>
                 {/* Backdrop to close menu when clicking outside */}
-                <div className="fixed inset-0 z-40" onClick={() => setIsHamburgerMenuOpen(false)} aria-hidden="true" />
+                <div className="fixed inset-0 z-40" onClick={closeHamburgerMenu} aria-hidden="true" />
                 <motion.div
-                  className={`absolute right-0 mt-2 w-56 ${
-                    isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"
-                  } backdrop-blur-md rounded-xl border shadow-xl overflow-hidden z-50`}
+                  className={`absolute right-0 mt-2 w-56 ${dropdownClasses} backdrop-blur-md rounded-xl border shadow-xl overflow-hidden z-50`}
                   initial="closed"
                   animate="open"
                   exit="closed"
@@ -135,16 +220,11 @@ const Header = ({
                   <div className="p-2">
                     {/* Dark Mode Toggle */}
                     <motion.button
-                      onClick={() => {
-                        onToggleDarkMode();
-                        setIsHamburgerMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{ fontFamily }}
+                      onClick={handleToggleDarkMode}
+                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${menuItemClasses}`}
+                      whileHover={menuItemHover}
+                      whileTap={menuItemTap}
+                      style={fontFamilyStyle}
                       role="menuitem"
                     >
                       {isDark ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4" />}
@@ -153,17 +233,12 @@ const Header = ({
 
                     {/* Refresh Button */}
                     <motion.button
-                      onClick={() => {
-                        onRefresh();
-                        setIsHamburgerMenuOpen(false);
-                      }}
+                      onClick={handleRefresh}
                       disabled={isLoading}
-                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{ fontFamily }}
+                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${menuItemClasses}`}
+                      whileHover={menuItemHover}
+                      whileTap={menuItemTap}
+                      style={fontFamilyStyle}
                       role="menuitem"
                     >
                       <RotateCcw
@@ -174,16 +249,11 @@ const Header = ({
 
                     {/* Notes Button */}
                     <motion.button
-                      onClick={() => {
-                        onOpenNotes();
-                        setIsHamburgerMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{ fontFamily }}
+                      onClick={handleOpenNotes}
+                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${menuItemClasses}`}
+                      whileHover={menuItemHover}
+                      whileTap={menuItemTap}
+                      style={fontFamilyStyle}
                       role="menuitem"
                     >
                       <StickyNote className="w-4 h-4" />
@@ -192,16 +262,11 @@ const Header = ({
 
                     {/* Export CSV */}
                     <motion.button
-                      onClick={() => {
-                        onExportCSV();
-                        setIsHamburgerMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{ fontFamily }}
+                      onClick={handleExportCSVMobile}
+                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${menuItemClasses}`}
+                      whileHover={menuItemHover}
+                      whileTap={menuItemTap}
+                      style={fontFamilyStyle}
                       role="menuitem"
                     >
                       <Download className="w-4 h-4" />
@@ -210,16 +275,11 @@ const Header = ({
 
                     {/* Export JSON */}
                     <motion.button
-                      onClick={() => {
-                        onExportJSON();
-                        setIsHamburgerMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{ fontFamily }}
+                      onClick={handleExportJSONMobile}
+                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${menuItemClasses}`}
+                      whileHover={menuItemHover}
+                      whileTap={menuItemTap}
+                      style={fontFamilyStyle}
                       role="menuitem"
                     >
                       <FileText className="w-4 h-4" />
@@ -239,8 +299,8 @@ const Header = ({
           className={`hidden lg:flex p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
             isDark ? "text-yellow-400" : "text-slate-700"
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={buttonHover}
+          whileTap={buttonTap}
           aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         >
           {isDark ? <Sun className="w-4 h-4 sm:w-5 sm:h-5" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5" />}
@@ -252,8 +312,8 @@ const Header = ({
           className={`hidden lg:flex p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
             isDark ? "text-blue-400" : "text-slate-700"
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={buttonHover}
+          whileTap={buttonTap}
           disabled={isLoading}
           aria-label="Refresh data"
         >
@@ -266,8 +326,8 @@ const Header = ({
           className={`hidden lg:flex p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
             isDark ? "text-slate-300" : "text-slate-700"
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={buttonHover}
+          whileTap={buttonTap}
           aria-label="Open notes"
         >
           <StickyNote className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -279,9 +339,9 @@ const Header = ({
             className={`p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
               isDark ? "text-slate-300" : "text-slate-700"
             } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            onClick={toggleMobileMenu}
+            whileHover={buttonHover}
+            whileTap={buttonTap}
             aria-label="Open menu"
             aria-expanded={isMobileMenuOpen}
             aria-haspopup="true"
@@ -293,11 +353,9 @@ const Header = ({
             {isMobileMenuOpen && (
               <>
                 {/* Backdrop to close menu when clicking outside */}
-                <div className="fixed inset-0 z-40" onClick={() => setIsMobileMenuOpen(false)} aria-hidden="true" />
+                <div className="fixed inset-0 z-40" onClick={closeMobileMenu} aria-hidden="true" />
                 <motion.div
-                  className={`absolute right-0 mt-2 w-48 sm:w-56 ${
-                    isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"
-                  } backdrop-blur-md rounded-lg sm:rounded-xl border shadow-xl overflow-hidden z-50`}
+                  className={`absolute right-0 mt-2 w-48 sm:w-56 ${dropdownClasses} backdrop-blur-md rounded-lg sm:rounded-xl border shadow-xl overflow-hidden z-50`}
                   initial="closed"
                   animate="open"
                   exit="closed"
@@ -307,32 +365,22 @@ const Header = ({
                 >
                   <div className="p-1.5 sm:p-2">
                     <motion.button
-                      onClick={() => {
-                        onExportCSV();
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 sm:gap-3 cursor-pointer ${
-                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{ fontFamily }}
+                      onClick={handleExportCSVDesktop}
+                      className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 sm:gap-3 cursor-pointer ${menuItemClasses}`}
+                      whileHover={menuItemHover}
+                      whileTap={menuItemTap}
+                      style={fontFamilyStyle}
                       role="menuitem"
                     >
                       <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       Export Data (CSV)
                     </motion.button>
                     <motion.button
-                      onClick={() => {
-                        onExportJSON();
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 sm:gap-3 cursor-pointer ${
-                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{ fontFamily }}
+                      onClick={handleExportJSONDesktop}
+                      className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 sm:gap-3 cursor-pointer ${menuItemClasses}`}
+                      whileHover={menuItemHover}
+                      whileTap={menuItemTap}
+                      style={fontFamilyStyle}
                       role="menuitem"
                     >
                       <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -347,6 +395,6 @@ const Header = ({
       </div>
     </header>
   );
-};
+});
 
 export default Header;

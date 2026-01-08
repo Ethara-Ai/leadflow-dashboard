@@ -663,9 +663,9 @@ describe("generateExportFilename", () => {
   });
 
   it("should handle different dates correctly", () => {
-    vi.setSystemTime(new Date("2025-12-31T23:59:59.000Z"));
+    vi.setSystemTime(new Date("2026-12-31T23:59:59.000Z"));
     const result = generateExportFilename("csv");
-    expect(result).toBe("leadflow-data-2025-12-31.csv");
+    expect(result).toBe("leadflow-data-2026-12-31.csv");
   });
 
   it("should always start with leadflow-data prefix", () => {

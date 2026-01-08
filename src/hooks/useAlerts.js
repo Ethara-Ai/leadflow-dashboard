@@ -5,6 +5,7 @@
 
 import { useState, useCallback } from "react";
 import { initialAlerts, MAX_ALERTS, ALERT_TYPES } from "../constants/index.js";
+import { getAlertType } from "../utils.js";
 
 /**
  * Custom hook for managing alerts state
@@ -16,26 +17,6 @@ import { initialAlerts, MAX_ALERTS, ALERT_TYPES } from "../constants/index.js";
  */
 const useAlerts = ({ initialState = initialAlerts, maxAlerts = MAX_ALERTS } = {}) => {
   const [alerts, setAlerts] = useState(initialState);
-
-  /**
-   * Determine alert type based on message content
-   * @param {string} message - Alert message
-   * @returns {string} Alert type
-   */
-  const getAlertTypeFromMessage = useCallback((message) => {
-    const lowerMessage = message.toLowerCase();
-
-    if (lowerMessage.includes("warning") || lowerMessage.includes("pending") || lowerMessage.includes("requires")) {
-      return ALERT_TYPES.WARNING;
-    }
-    if (lowerMessage.includes("error") || lowerMessage.includes("failed")) {
-      return ALERT_TYPES.ERROR;
-    }
-    if (lowerMessage.includes("success") || lowerMessage.includes("completed") || lowerMessage.includes("achieved")) {
-      return ALERT_TYPES.SUCCESS;
-    }
-    return ALERT_TYPES.INFO;
-  }, []);
 
   /**
    * Add a new alert to the list
@@ -50,7 +31,7 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = MAX_ALERTS } = {}
         newAlert = {
           id: Date.now(),
           message,
-          type: getAlertTypeFromMessage(message),
+          type: getAlertType(message),
           time: "Just now",
           timestamp: new Date().toISOString(),
         };
@@ -66,7 +47,7 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = MAX_ALERTS } = {}
 
       setAlerts((prev) => [newAlert, ...prev].slice(0, maxAlerts));
     },
-    [maxAlerts, getAlertTypeFromMessage],
+    [maxAlerts],
   );
 
   /**
@@ -149,9 +130,6 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = MAX_ALERTS } = {}
     clearAlerts,
     resetAlerts,
     getAlertsByType,
-
-    // Utilities
-    getAlertTypeFromMessage,
   };
 };
 

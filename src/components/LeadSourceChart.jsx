@@ -1,8 +1,8 @@
-import { memo, useState, useEffect, useCallback } from "react";
+import { memo, useState, useEffect, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
-import { cardVariants, fontFamily, getColors } from "../constants";
+import { cardVariants, fontFamily, getChartColors } from "../constants";
 import useThemeSafe from "../hooks/useThemeSafe";
 import CustomTooltip from "./CustomTooltip";
 import TimePeriodButtons from "./TimePeriodButtons";
@@ -22,13 +22,40 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
-  const COLORS = getColors(isDark);
+  // Memoize colors based on theme
+  const COLORS = useMemo(() => getChartColors(isDark), [isDark]);
+
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
-  // Get theme-based styles
-  const cardClasses = getChartCardClasses(isDark);
-  const titleClasses = getChartTitleClasses(isDark);
+  // Memoize theme-based styles to prevent recreation on every render
+  const cardClasses = useMemo(() => getChartCardClasses(isDark), [isDark]);
+  const titleClasses = useMemo(() => getChartTitleClasses(isDark), [isDark]);
+
+  // Memoize pie chart dimensions
+  const pieRadii = useMemo(
+    () => ({
+      inner: isSmallScreen ? 35 : 50,
+      outer: isSmallScreen ? 60 : 80,
+    }),
+    [isSmallScreen],
+  );
+
+  // Memoize pie chart margins
+  const chartMargins = useMemo(() => ({ top: 5, right: 5, bottom: 5, left: 5 }), []);
+
+  // Memoize pie style
+  const pieStyle = useMemo(() => ({ fontSize: "12px", fontFamily }), []);
+
+  // Memoize tooltip wrapper style
+  const tooltipWrapperStyle = useMemo(
+    () => ({
+      zIndex: 50,
+      pointerEvents: "none",
+      visibility: "visible",
+    }),
+    [],
+  );
 
   // Detect screen size
   useEffect(() => {
@@ -55,6 +82,13 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
     [isSmallScreen],
   );
 
+  // Memoize container height class
+  const containerHeightClass = isSmallScreen ? "h-40" : "h-48";
+
+  // Memoize text color classes
+  const legendTextClass = useMemo(() => (isDark ? "text-slate-300" : "text-slate-600"), [isDark]);
+  const legendValueClass = useMemo(() => (isDark ? "text-slate-200" : "text-slate-700"), [isDark]);
+
   return (
     <motion.div
       className={`${cardClasses} backdrop-blur-lg rounded-2xl p-4 sm:p-6 border transition-all duration-300 hover:shadow-2xl overflow-hidden`}
@@ -71,28 +105,24 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
 
       {/* Pie Chart - Centered without external labels */}
       <div
-        className={`${isSmallScreen ? "h-40" : "h-48"} relative ${isDark ? "text-slate-300" : "text-slate-600"}`}
+        className={`${containerHeightClass} relative ${legendTextClass}`}
         role="img"
         aria-label="Lead source distribution pie chart showing lead source percentages"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart
-            key={`lead-source-chart-${timePeriod}`}
-            margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
-            onMouseMove={handleMouseMove}
-          >
+          <PieChart key={`lead-source-chart-${timePeriod}`} margin={chartMargins} onMouseMove={handleMouseMove}>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={isSmallScreen ? 35 : 50}
-              outerRadius={isSmallScreen ? 60 : 80}
+              innerRadius={pieRadii.inner}
+              outerRadius={pieRadii.outer}
               paddingAngle={3}
               dataKey="value"
               nameKey="name"
               labelLine={false}
               label={false}
-              style={{ fontSize: "12px", fontFamily }}
+              style={pieStyle}
               animationBegin={0}
               animationDuration={300}
             >
@@ -107,11 +137,7 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
             </Pie>
             <Tooltip
               content={(props) => <CustomTooltip {...props} />}
-              wrapperStyle={{
-                zIndex: 50,
-                pointerEvents: "none",
-                visibility: "visible",
-              }}
+              wrapperStyle={tooltipWrapperStyle}
               allowEscapeViewBox={{ x: false, y: false }}
               position={isSmallScreen ? tooltipPosition : undefined}
             />
@@ -128,13 +154,10 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
               style={{ backgroundColor: COLORS[index % COLORS.length] }}
               aria-hidden="true"
             />
-            <span className={`text-xs flex-1 ${isDark ? "text-slate-300" : "text-slate-600"}`} style={{ fontFamily }}>
+            <span className={`text-xs flex-1 ${legendTextClass}`} style={{ fontFamily }}>
               {entry.name}
             </span>
-            <span
-              className={`text-xs font-semibold shrink-0 ${isDark ? "text-slate-200" : "text-slate-700"}`}
-              style={{ fontFamily }}
-            >
+            <span className={`text-xs font-semibold shrink-0 ${legendValueClass}`} style={{ fontFamily }}>
               {entry.value}%
             </span>
           </div>

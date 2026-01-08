@@ -22,7 +22,6 @@ export {
   updateLead,
   deleteLead,
   fetchLeadActivities,
-  getAlertTypeFromMessage,
   maybeGenerateAlert,
 } from "./leads.js";
 

@@ -20,7 +20,7 @@ const mockLeadData = {
   totalLeads: 847,
   callsMade: 342,
   meetingsScheduled: 67,
-  lastUpdated: "1/1/2025, 10:00:00 AM",
+  lastUpdated: "1/1/2026, 10:00:00 AM",
 };
 
 const mockActivityData = [

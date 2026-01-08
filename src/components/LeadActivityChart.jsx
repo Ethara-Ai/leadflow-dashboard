@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { ResponsiveContainer, ComposedChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Area, Bar } from "recharts";
@@ -36,16 +36,37 @@ const LeadActivityChart = memo(function LeadActivityChart({
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
-  // Get theme-based styles
-  const axisStyles = getAxisStyles(isDark);
-  const gridStyles = getGridStyles(isDark);
-  const cursorStyles = getTooltipCursorStyles(isDark);
-  const cardClasses = getChartCardClasses(isDark);
-  const titleClasses = getChartTitleClasses(isDark);
+  // Memoize theme-based styles to prevent recreation on every render
+  const axisStyles = useMemo(() => getAxisStyles(isDark), [isDark]);
+  const gridStyles = useMemo(() => getGridStyles(isDark), [isDark]);
+  const cursorStyles = useMemo(() => getTooltipCursorStyles(isDark), [isDark]);
+  const cardClasses = useMemo(() => getChartCardClasses(isDark), [isDark]);
+  const titleClasses = useMemo(() => getChartTitleClasses(isDark), [isDark]);
 
-  // Chart colors based on theme
-  const primaryColor = isDark ? "#60a5fa" : "#2563eb";
-  const secondaryColor = isDark ? "#34d399" : "#059669";
+  // Memoize chart colors based on theme
+  const primaryColor = useMemo(() => (isDark ? "#60a5fa" : "#2563eb"), [isDark]);
+  const secondaryColor = useMemo(() => (isDark ? "#34d399" : "#059669"), [isDark]);
+
+  // Memoize dot styles
+  const dotStyles = useMemo(() => getDotStyles(isDark, primaryColor), [isDark, primaryColor]);
+  const activeDotStyles = useMemo(() => getActiveDotStyles(isDark, primaryColor), [isDark, primaryColor]);
+
+  // Memoize legend wrapper style
+  const legendWrapperStyle = useMemo(() => ({ paddingTop: "10px" }), []);
+
+  // Memoize chart margins
+  const chartMargins = useMemo(
+    () => ({
+      top: 10,
+      right: 10,
+      left: 0,
+      bottom: 25,
+    }),
+    [],
+  );
+
+  // Calculate bar size based on time period
+  const barSize = timePeriod === "year" ? 6 : 10;
 
   return (
     <motion.div
@@ -68,15 +89,7 @@ const LeadActivityChart = memo(function LeadActivityChart({
         aria-label="Lead activity chart showing active leads and calls completed"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart
-            data={data}
-            margin={{
-              top: 10,
-              right: 10,
-              left: 0,
-              bottom: 25,
-            }}
-          >
+          <ComposedChart data={data} margin={chartMargins}>
             <defs>
               <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={primaryColor} stopOpacity={0.8} />
@@ -108,12 +121,7 @@ const LeadActivityChart = memo(function LeadActivityChart({
               axisLine={axisStyles.axisLine}
             />
             <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={cursorStyles} />
-            <Legend
-              content={(props) => <ChartLegend {...props} />}
-              wrapperStyle={{
-                paddingTop: "10px",
-              }}
-            />
+            <Legend content={(props) => <ChartLegend {...props} />} wrapperStyle={legendWrapperStyle} />
             <Area
               type="monotone"
               dataKey="leads"
@@ -121,14 +129,14 @@ const LeadActivityChart = memo(function LeadActivityChart({
               fill="url(#colorLeads)"
               stroke={primaryColor}
               strokeWidth={2}
-              dot={getDotStyles(isDark, primaryColor)}
-              activeDot={getActiveDotStyles(isDark, primaryColor)}
+              dot={dotStyles}
+              activeDot={activeDotStyles}
             />
             <Bar
               dataKey="callsCompleted"
               name="Calls Completed"
               fill={secondaryColor}
-              barSize={timePeriod === "year" ? 6 : 10}
+              barSize={barSize}
               radius={[3, 3, 0, 0]}
             />
           </ComposedChart>

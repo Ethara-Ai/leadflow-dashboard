@@ -30,27 +30,18 @@ export {
   activityWeekData,
   activityMonthData,
   activityYearData,
-  // Conversion Data (with backward-compatible aliases)
+  // Conversion Data
   conversionWeekData,
   conversionMonthData,
   conversionYearData,
-  feedingWeekData,
-  feedingMonthData,
-  feedingYearData,
-  // Source Distribution Data (with backward-compatible aliases)
+  // Source Distribution Data
   sourceWeekData,
   sourceMonthData,
   sourceYearData,
-  dietWeekData,
-  dietMonthData,
-  dietYearData,
   // Chart Colors
   CHART_COLORS_DARK,
   CHART_COLORS_LIGHT,
-  COLORS_DARK,
-  COLORS_LIGHT,
   getChartColors,
-  getColors,
   // Time Periods
   TIME_PERIODS,
   TIME_PERIOD_OPTIONS,
@@ -62,7 +53,6 @@ export {
 export {
   // Lead Data
   initialLeadData,
-  initialZooData,
   // Notes
   initialNotes,
   // Alerts

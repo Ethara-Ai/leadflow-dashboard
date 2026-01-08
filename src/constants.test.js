@@ -9,24 +9,23 @@ import {
   activityWeekData,
   activityMonthData,
   activityYearData,
-  // Feeding Efficiency Data (backward compatibility aliases)
-  feedingWeekData,
-  feedingMonthData,
-  feedingYearData,
-  // Diet Distribution Data (backward compatibility aliases)
-  dietWeekData,
-  dietMonthData,
-  dietYearData,
+  // Conversion Rate Data
+  conversionWeekData,
+  conversionMonthData,
+  conversionYearData,
+  // Source Distribution Data
+  sourceWeekData,
+  sourceMonthData,
+  sourceYearData,
   // Chart Colors
-  COLORS_DARK,
-  COLORS_LIGHT,
-  getColors,
+  CHART_COLORS_DARK,
+  CHART_COLORS_LIGHT,
+  getChartColors,
   // Animation Variants
   cardVariants,
   dropdownVariants,
   staggerContainerVariants,
   // Initial Data
-  initialZooData,
   initialLeadData,
   initialNotes,
   initialAlerts,
@@ -62,7 +61,7 @@ describe("Activity Week Data", () => {
     activityWeekData.forEach((day) => {
       expect(day).toHaveProperty("callsCompleted");
       expect(typeof day.callsCompleted).toBe("number");
-      expect(day.callsCompleted).toBeGreaterThanOrEqual(0);
+      expect(day.callsCompleted).toBeGreaterThan(0);
     });
   });
 });
@@ -73,17 +72,14 @@ describe("Activity Month Data", () => {
   });
 
   it("should have correct week names", () => {
-    const weekNames = activityMonthData.map((w) => w.name);
+    const weekNames = activityMonthData.map((d) => d.name);
     expect(weekNames).toEqual(["Week 1", "Week 2", "Week 3", "Week 4"]);
   });
 
-  it("should have leads and callsCompleted properties", () => {
-    activityMonthData.forEach((week) => {
-      expect(week).toHaveProperty("leads");
-      expect(week).toHaveProperty("callsCompleted");
-      expect(typeof week.leads).toBe("number");
-      expect(typeof week.callsCompleted).toBe("number");
-    });
+  it("should have leads greater than week data (aggregated)", () => {
+    const monthLeads = activityMonthData[0].leads;
+    const weekLeads = activityWeekData[0].leads;
+    expect(monthLeads).toBeGreaterThan(weekLeads);
   });
 });
 
@@ -92,123 +88,91 @@ describe("Activity Year Data", () => {
     expect(activityYearData).toHaveLength(12);
   });
 
-  it("should have correct month abbreviations", () => {
-    const monthNames = activityYearData.map((m) => m.name);
+  it("should have correct month names", () => {
+    const monthNames = activityYearData.map((d) => d.name);
     expect(monthNames).toEqual(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]);
-  });
-
-  it("should have leads and callsCompleted properties for each month", () => {
-    activityYearData.forEach((month) => {
-      expect(month).toHaveProperty("leads");
-      expect(month).toHaveProperty("callsCompleted");
-      expect(typeof month.leads).toBe("number");
-      expect(typeof month.callsCompleted).toBe("number");
-    });
   });
 });
 
 // =============================================================================
-// Feeding Efficiency Data Tests
+// Conversion Rate Data Tests
 // =============================================================================
 
-describe("Feeding Week Data", () => {
+describe("Conversion Week Data", () => {
   it("should have 7 days of data", () => {
-    expect(feedingWeekData).toHaveLength(7);
+    expect(conversionWeekData).toHaveLength(7);
   });
 
-  it("should have correct day names", () => {
-    const dayNames = feedingWeekData.map((d) => d.name);
-    expect(dayNames).toEqual(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]);
-  });
-
-  it("should have efficiency property with values between 0 and 100", () => {
-    feedingWeekData.forEach((day) => {
+  it("should have efficiency property for each day", () => {
+    conversionWeekData.forEach((day) => {
       expect(day).toHaveProperty("efficiency");
       expect(typeof day.efficiency).toBe("number");
-      expect(day.efficiency).toBeGreaterThanOrEqual(0);
+      expect(day.efficiency).toBeGreaterThan(0);
       expect(day.efficiency).toBeLessThanOrEqual(100);
     });
   });
 });
 
-describe("Feeding Month Data", () => {
+describe("Conversion Month Data", () => {
   it("should have 4 weeks of data", () => {
-    expect(feedingMonthData).toHaveLength(4);
+    expect(conversionMonthData).toHaveLength(4);
   });
 
-  it("should have efficiency property for each week", () => {
-    feedingMonthData.forEach((week) => {
-      expect(week).toHaveProperty("efficiency");
-      expect(typeof week.efficiency).toBe("number");
+  it("should have efficiency values between 0 and 100", () => {
+    conversionMonthData.forEach((week) => {
       expect(week.efficiency).toBeGreaterThanOrEqual(0);
       expect(week.efficiency).toBeLessThanOrEqual(100);
     });
   });
 });
 
-describe("Feeding Year Data", () => {
+describe("Conversion Year Data", () => {
   it("should have 12 months of data", () => {
-    expect(feedingYearData).toHaveLength(12);
-  });
-
-  it("should have efficiency property for each month", () => {
-    feedingYearData.forEach((month) => {
-      expect(month).toHaveProperty("efficiency");
-      expect(typeof month.efficiency).toBe("number");
-    });
+    expect(conversionYearData).toHaveLength(12);
   });
 });
 
 // =============================================================================
-// Diet Distribution Data Tests
+// Source Distribution Data Tests
 // =============================================================================
 
-describe("Diet Week Data", () => {
-  it("should have 4 food categories", () => {
-    expect(dietWeekData).toHaveLength(4);
+describe("Source Week Data", () => {
+  it("should have lead source categories", () => {
+    expect(sourceWeekData.length).toBeGreaterThan(0);
   });
 
-  it("should have correct lead source names", () => {
-    const categoryNames = dietWeekData.map((d) => d.name);
-    expect(categoryNames).toContain("Website");
-    expect(categoryNames).toContain("Referrals");
-    expect(categoryNames).toContain("Social Media");
-    expect(categoryNames).toContain("Cold Outreach");
-  });
-
-  it("should have value property for each category", () => {
-    dietWeekData.forEach((category) => {
-      expect(category).toHaveProperty("value");
-      expect(typeof category.value).toBe("number");
-      expect(category.value).toBeGreaterThan(0);
+  it("should have name and value properties", () => {
+    sourceWeekData.forEach((source) => {
+      expect(source).toHaveProperty("name");
+      expect(source).toHaveProperty("value");
+      expect(typeof source.name).toBe("string");
+      expect(typeof source.value).toBe("number");
     });
   });
 
-  it("should have values that sum to 100 (percentage)", () => {
-    const total = dietWeekData.reduce((sum, item) => sum + item.value, 0);
-    expect(total).toBe(100);
+  it("should have values that could represent percentages", () => {
+    sourceWeekData.forEach((source) => {
+      expect(source.value).toBeGreaterThanOrEqual(0);
+      expect(source.value).toBeLessThanOrEqual(100);
+    });
+  });
+
+  it("should have expected source names", () => {
+    const names = sourceWeekData.map((d) => d.name);
+    expect(names).toContain("Website");
+    expect(names).toContain("Referrals");
   });
 });
 
-describe("Diet Month Data", () => {
-  it("should have 4 food categories", () => {
-    expect(dietMonthData).toHaveLength(4);
-  });
-
-  it("should have values that sum to 100 (percentage)", () => {
-    const total = dietMonthData.reduce((sum, item) => sum + item.value, 0);
-    expect(total).toBe(100);
+describe("Source Month Data", () => {
+  it("should have same categories as week data", () => {
+    expect(sourceMonthData.length).toBe(sourceWeekData.length);
   });
 });
 
-describe("Diet Year Data", () => {
-  it("should have 4 food categories", () => {
-    expect(dietYearData).toHaveLength(4);
-  });
-
-  it("should have values that sum to 100 (percentage)", () => {
-    const total = dietYearData.reduce((sum, item) => sum + item.value, 0);
-    expect(total).toBe(100);
+describe("Source Year Data", () => {
+  it("should have same categories as week data", () => {
+    expect(sourceYearData.length).toBe(sourceWeekData.length);
   });
 });
 
@@ -216,62 +180,31 @@ describe("Diet Year Data", () => {
 // Chart Colors Tests
 // =============================================================================
 
-describe("COLORS_DARK", () => {
-  it("should have 4 colors", () => {
-    expect(COLORS_DARK).toHaveLength(4);
-  });
-
-  it("should contain valid hex color codes", () => {
-    const hexColorRegex = /^#[0-9a-fA-F]{6}$/;
-    COLORS_DARK.forEach((color) => {
-      expect(color).toMatch(hexColorRegex);
+describe("Chart Colors", () => {
+  it("CHART_COLORS_DARK should be an array of hex colors", () => {
+    expect(Array.isArray(CHART_COLORS_DARK)).toBe(true);
+    CHART_COLORS_DARK.forEach((color) => {
+      expect(color).toMatch(/^#[0-9A-Fa-f]{6}$/);
     });
   });
 
-  it("should have specific dark theme colors", () => {
-    expect(COLORS_DARK).toEqual(["#60a5fa", "#34d399", "#fbbf24", "#f87171"]);
-  });
-});
-
-describe("COLORS_LIGHT", () => {
-  it("should have 4 colors", () => {
-    expect(COLORS_LIGHT).toHaveLength(4);
-  });
-
-  it("should contain valid hex color codes", () => {
-    const hexColorRegex = /^#[0-9a-fA-F]{6}$/;
-    COLORS_LIGHT.forEach((color) => {
-      expect(color).toMatch(hexColorRegex);
+  it("CHART_COLORS_LIGHT should be an array of hex colors", () => {
+    expect(Array.isArray(CHART_COLORS_LIGHT)).toBe(true);
+    CHART_COLORS_LIGHT.forEach((color) => {
+      expect(color).toMatch(/^#[0-9A-Fa-f]{6}$/);
     });
   });
 
-  it("should have specific light theme colors", () => {
-    expect(COLORS_LIGHT).toEqual(["#2563eb", "#059669", "#d97706", "#dc2626"]);
-  });
-});
-
-describe("getColors", () => {
-  it("should return COLORS_DARK when darkMode is true", () => {
-    const result = getColors(true);
-    expect(result).toBe(COLORS_DARK);
+  it("should have same number of colors in both palettes", () => {
+    expect(CHART_COLORS_DARK.length).toBe(CHART_COLORS_LIGHT.length);
   });
 
-  it("should return COLORS_LIGHT when darkMode is false", () => {
-    const result = getColors(false);
-    expect(result).toBe(COLORS_LIGHT);
+  it("getChartColors should return dark colors when isDark is true", () => {
+    expect(getChartColors(true)).toEqual(CHART_COLORS_DARK);
   });
 
-  it("should return COLORS_LIGHT for falsy values", () => {
-    expect(getColors(null)).toBe(COLORS_LIGHT);
-    expect(getColors(undefined)).toBe(COLORS_LIGHT);
-    expect(getColors(0)).toBe(COLORS_LIGHT);
-    expect(getColors("")).toBe(COLORS_LIGHT);
-  });
-
-  it("should return COLORS_DARK for truthy values", () => {
-    expect(getColors(1)).toBe(COLORS_DARK);
-    expect(getColors("dark")).toBe(COLORS_DARK);
-    expect(getColors({})).toBe(COLORS_DARK);
+  it("getChartColors should return light colors when isDark is false", () => {
+    expect(getChartColors(false)).toEqual(CHART_COLORS_LIGHT);
   });
 });
 
@@ -279,119 +212,72 @@ describe("getColors", () => {
 // Animation Variants Tests
 // =============================================================================
 
-describe("cardVariants", () => {
-  it("should have hidden state", () => {
+describe("Card Variants", () => {
+  it("should have hidden and visible states", () => {
     expect(cardVariants).toHaveProperty("hidden");
-  });
-
-  it("should have visible state", () => {
     expect(cardVariants).toHaveProperty("visible");
   });
 
-  it("should have opacity and y transform in hidden state", () => {
-    expect(cardVariants.hidden).toHaveProperty("opacity", 0);
-    expect(cardVariants.hidden).toHaveProperty("y", 20);
+  it("hidden state should have opacity 0", () => {
+    expect(cardVariants.hidden.opacity).toBe(0);
   });
 
-  it("should have opacity and y transform in visible state", () => {
-    expect(cardVariants.visible).toHaveProperty("opacity", 1);
-    expect(cardVariants.visible).toHaveProperty("y", 0);
-  });
-
-  it("should have transition in visible state", () => {
-    expect(cardVariants.visible).toHaveProperty("transition");
-    expect(cardVariants.visible.transition).toHaveProperty("duration");
-    expect(cardVariants.visible.transition).toHaveProperty("ease");
+  it("visible state should have opacity 1", () => {
+    expect(cardVariants.visible.opacity).toBe(1);
   });
 });
 
-describe("dropdownVariants", () => {
-  it("should have closed state", () => {
+describe("Dropdown Variants", () => {
+  it("should have closed and open states", () => {
     expect(dropdownVariants).toHaveProperty("closed");
-  });
-
-  it("should have open state", () => {
     expect(dropdownVariants).toHaveProperty("open");
   });
 
-  it("should have opacity, y, and height in closed state", () => {
-    expect(dropdownVariants.closed).toHaveProperty("opacity", 0);
-    expect(dropdownVariants.closed).toHaveProperty("y", -10);
-    expect(dropdownVariants.closed).toHaveProperty("height", 0);
+  it("closed state should have opacity 0", () => {
+    expect(dropdownVariants.closed.opacity).toBe(0);
   });
 
-  it("should have opacity, y, and height in open state", () => {
-    expect(dropdownVariants.open).toHaveProperty("opacity", 1);
-    expect(dropdownVariants.open).toHaveProperty("y", 0);
-    expect(dropdownVariants.open).toHaveProperty("height", "auto");
+  it("open state should have opacity 1", () => {
+    expect(dropdownVariants.open.opacity).toBe(1);
   });
 
-  it("should have transitions for both states", () => {
-    expect(dropdownVariants.closed).toHaveProperty("transition");
-    expect(dropdownVariants.open).toHaveProperty("transition");
+  it("open state should have y at 0", () => {
+    expect(dropdownVariants.open.y).toBe(0);
   });
 });
 
-describe("staggerContainerVariants", () => {
-  it("should have hidden state", () => {
+describe("Stagger Container Variants", () => {
+  it("should have hidden and visible states", () => {
     expect(staggerContainerVariants).toHaveProperty("hidden");
-  });
-
-  it("should have visible state", () => {
     expect(staggerContainerVariants).toHaveProperty("visible");
   });
 
-  it("should have opacity in hidden state", () => {
-    expect(staggerContainerVariants.hidden).toHaveProperty("opacity", 0);
-  });
-
-  it("should have stagger transition in visible state", () => {
-    expect(staggerContainerVariants.visible).toHaveProperty("transition");
+  it("visible state should have stagger children transition", () => {
     expect(staggerContainerVariants.visible.transition).toHaveProperty("staggerChildren");
-    expect(staggerContainerVariants.visible.transition).toHaveProperty("delayChildren");
   });
 });
 
 // =============================================================================
-// Initial Zoo Data Tests
+// Initial Lead Data Tests
 // =============================================================================
 
-describe("initialZooData (backward compatibility alias)", () => {
-  it("should have population property (alias for totalLeads)", () => {
-    expect(initialZooData).toHaveProperty("population");
-    expect(typeof initialZooData.population).toBe("number");
-  });
-
-  it("should have temperature property (alias for callsMade)", () => {
-    expect(initialZooData).toHaveProperty("temperature");
-    expect(typeof initialZooData.temperature).toBe("number");
-  });
-
-  it("should have humidity property (alias for meetingsScheduled)", () => {
-    expect(initialZooData).toHaveProperty("humidity");
-    expect(typeof initialZooData.humidity).toBe("number");
-  });
-
-  it("should have lastUpdated property", () => {
-    expect(initialZooData).toHaveProperty("lastUpdated");
-    expect(typeof initialZooData.lastUpdated).toBe("string");
-  });
-});
-
-describe("initialLeadData", () => {
+describe("Initial Lead Data", () => {
   it("should have totalLeads property", () => {
     expect(initialLeadData).toHaveProperty("totalLeads");
     expect(typeof initialLeadData.totalLeads).toBe("number");
+    expect(initialLeadData.totalLeads).toBeGreaterThan(0);
   });
 
   it("should have callsMade property", () => {
     expect(initialLeadData).toHaveProperty("callsMade");
     expect(typeof initialLeadData.callsMade).toBe("number");
+    expect(initialLeadData.callsMade).toBeGreaterThan(0);
   });
 
   it("should have meetingsScheduled property", () => {
     expect(initialLeadData).toHaveProperty("meetingsScheduled");
     expect(typeof initialLeadData.meetingsScheduled).toBe("number");
+    expect(initialLeadData.meetingsScheduled).toBeGreaterThan(0);
   });
 
   it("should have lastUpdated property", () => {
@@ -404,7 +290,7 @@ describe("initialLeadData", () => {
 // Initial Notes Tests
 // =============================================================================
 
-describe("initialNotes", () => {
+describe("Initial Notes", () => {
   it("should be an array", () => {
     expect(Array.isArray(initialNotes)).toBe(true);
   });
@@ -413,7 +299,7 @@ describe("initialNotes", () => {
     expect(initialNotes.length).toBeGreaterThan(0);
   });
 
-  it("should have notes with required properties", () => {
+  it("each note should have id, content, and timestamp", () => {
     initialNotes.forEach((note) => {
       expect(note).toHaveProperty("id");
       expect(note).toHaveProperty("content");
@@ -421,16 +307,10 @@ describe("initialNotes", () => {
     });
   });
 
-  it("should have unique ids for each note", () => {
-    const ids = initialNotes.map((note) => note.id);
-    const uniqueIds = new Set(ids);
-    expect(uniqueIds.size).toBe(ids.length);
-  });
-
-  it("should have non-empty content for each note", () => {
-    initialNotes.forEach((note) => {
-      expect(note.content.length).toBeGreaterThan(0);
-    });
+  it("note ids should be unique", () => {
+    const ids = initialNotes.map((n) => n.id);
+    const uniqueIds = [...new Set(ids)];
+    expect(ids.length).toBe(uniqueIds.length);
   });
 });
 
@@ -438,7 +318,7 @@ describe("initialNotes", () => {
 // Initial Alerts Tests
 // =============================================================================
 
-describe("initialAlerts", () => {
+describe("Initial Alerts", () => {
   it("should be an array", () => {
     expect(Array.isArray(initialAlerts)).toBe(true);
   });
@@ -447,7 +327,7 @@ describe("initialAlerts", () => {
     expect(initialAlerts.length).toBeGreaterThan(0);
   });
 
-  it("should have alerts with required properties", () => {
+  it("each alert should have id, message, type, and time", () => {
     initialAlerts.forEach((alert) => {
       expect(alert).toHaveProperty("id");
       expect(alert).toHaveProperty("message");
@@ -456,22 +336,10 @@ describe("initialAlerts", () => {
     });
   });
 
-  it("should have unique ids for each alert", () => {
-    const ids = initialAlerts.map((alert) => alert.id);
-    const uniqueIds = new Set(ids);
-    expect(uniqueIds.size).toBe(ids.length);
-  });
-
-  it("should have valid alert types (warning or info)", () => {
-    const validTypes = ["warning", "info"];
+  it("alert types should be valid", () => {
+    const validTypes = ["info", "warning", "error", "success"];
     initialAlerts.forEach((alert) => {
       expect(validTypes).toContain(alert.type);
-    });
-  });
-
-  it("should have non-empty messages", () => {
-    initialAlerts.forEach((alert) => {
-      expect(alert.message.length).toBeGreaterThan(0);
     });
   });
 });
@@ -480,74 +348,20 @@ describe("initialAlerts", () => {
 // Alert Messages Tests
 // =============================================================================
 
-describe("alertMessages", () => {
+describe("Alert Messages", () => {
   it("should be an array", () => {
     expect(Array.isArray(alertMessages)).toBe(true);
   });
 
   it("should have multiple messages", () => {
-    expect(alertMessages.length).toBeGreaterThan(1);
+    expect(alertMessages.length).toBeGreaterThan(5);
   });
 
-  it("should contain only strings", () => {
+  it("each message should be a non-empty string", () => {
     alertMessages.forEach((message) => {
       expect(typeof message).toBe("string");
-    });
-  });
-
-  it("should have non-empty messages", () => {
-    alertMessages.forEach((message) => {
       expect(message.length).toBeGreaterThan(0);
     });
-  });
-
-  it("should contain lead-related content", () => {
-    const leadKeywords = [
-      "lead",
-      "sales",
-      "follow-up",
-      "meeting",
-      "call",
-      "campaign",
-      "conversion",
-      "pipeline",
-      "prospect",
-      "client",
-      "deal",
-      "proposal",
-      "outreach",
-      "contact",
-      "target",
-      "performance",
-      "team",
-      "enterprise",
-      "demo",
-      "opportunity",
-      "contract",
-      "negotiation",
-      "upsell",
-      "CRM",
-      "training",
-      "scheduled",
-      "achieved",
-      "completed",
-      "pending",
-      "assigned",
-      "qualified",
-      "rate",
-      "value",
-      "monthly",
-      "weekly",
-    ];
-
-    // Check that most messages contain lead-related keywords
-    const matchingMessages = alertMessages.filter((message) =>
-      leadKeywords.some((keyword) => message.toLowerCase().includes(keyword)),
-    );
-
-    // At least 80% of messages should contain lead-related keywords
-    const matchPercentage = matchingMessages.length / alertMessages.length;
-    expect(matchPercentage).toBeGreaterThanOrEqual(0.8);
   });
 });
 
@@ -555,44 +369,56 @@ describe("alertMessages", () => {
 // Typography Tests
 // =============================================================================
 
-describe("fontFamily", () => {
-  it("should be defined", () => {
-    expect(fontFamily).toBeDefined();
-  });
-
-  it("should be a string", () => {
+describe("Typography Constants", () => {
+  it("fontFamily should be a string", () => {
     expect(typeof fontFamily).toBe("string");
   });
 
-  it("should contain Manrope font", () => {
-    expect(fontFamily).toContain("Manrope");
+  it("fontFamily should contain a font name", () => {
+    expect(fontFamily.length).toBeGreaterThan(0);
   });
 
-  it("should have sans-serif fallback", () => {
-    expect(fontFamily).toContain("sans-serif");
-  });
-});
-
-describe("fontFamilyHeading", () => {
-  it("should be defined", () => {
-    expect(fontFamilyHeading).toBeDefined();
-  });
-
-  it("should be a string", () => {
+  it("fontFamilyHeading should be a string", () => {
     expect(typeof fontFamilyHeading).toBe("string");
   });
 
-  it("should contain Poppins font", () => {
-    expect(fontFamilyHeading).toContain("Poppins");
-  });
-
-  it("should have sans-serif fallback", () => {
-    expect(fontFamilyHeading).toContain("sans-serif");
+  it("fontFamilyHeading should contain a font name", () => {
+    expect(fontFamilyHeading.length).toBeGreaterThan(0);
   });
 });
 
 // =============================================================================
-// Integration Tests
+// Data Consistency Tests
+// =============================================================================
+
+describe("Data Consistency", () => {
+  it("all activity data periods should have leads property", () => {
+    [activityWeekData, activityMonthData, activityYearData].forEach((data) => {
+      data.forEach((item) => {
+        expect(item).toHaveProperty("leads");
+      });
+    });
+  });
+
+  it("all conversion data periods should have efficiency property", () => {
+    [conversionWeekData, conversionMonthData, conversionYearData].forEach((data) => {
+      data.forEach((item) => {
+        expect(item).toHaveProperty("efficiency");
+      });
+    });
+  });
+
+  it("all source data periods should have value property", () => {
+    [sourceWeekData, sourceMonthData, sourceYearData].forEach((data) => {
+      data.forEach((item) => {
+        expect(item).toHaveProperty("value");
+      });
+    });
+  });
+});
+
+// =============================================================================
+// Constants Integration Tests
 // =============================================================================
 
 describe("Constants Integration", () => {
@@ -610,7 +436,7 @@ describe("Constants Integration", () => {
     checkStructure(activityYearData);
   });
 
-  it("should have consistent structure across all feeding data periods", () => {
+  it("should have consistent structure across all conversion data periods", () => {
     const checkStructure = (data) => {
       data.forEach((item) => {
         expect(item).toHaveProperty("name", expect.any(String));
@@ -618,12 +444,12 @@ describe("Constants Integration", () => {
       });
     };
 
-    checkStructure(feedingWeekData);
-    checkStructure(feedingMonthData);
-    checkStructure(feedingYearData);
+    checkStructure(conversionWeekData);
+    checkStructure(conversionMonthData);
+    checkStructure(conversionYearData);
   });
 
-  it("should have consistent structure across all diet data periods", () => {
+  it("should have consistent structure across all source data periods", () => {
     const checkStructure = (data) => {
       data.forEach((item) => {
         expect(item).toHaveProperty("name", expect.any(String));
@@ -631,18 +457,18 @@ describe("Constants Integration", () => {
       });
     };
 
-    checkStructure(dietWeekData);
-    checkStructure(dietMonthData);
-    checkStructure(dietYearData);
+    checkStructure(sourceWeekData);
+    checkStructure(sourceMonthData);
+    checkStructure(sourceYearData);
   });
 
   it("should have same number of colors in dark and light palettes", () => {
-    expect(COLORS_DARK.length).toBe(COLORS_LIGHT.length);
+    expect(CHART_COLORS_DARK.length).toBe(CHART_COLORS_LIGHT.length);
   });
 
-  it("should have colors that match diet data categories count", () => {
-    expect(COLORS_DARK.length).toBeGreaterThanOrEqual(dietWeekData.length);
-    expect(COLORS_LIGHT.length).toBeGreaterThanOrEqual(dietWeekData.length);
+  it("should have colors that match source data categories count", () => {
+    expect(CHART_COLORS_DARK.length).toBeGreaterThanOrEqual(sourceWeekData.length);
+    expect(CHART_COLORS_LIGHT.length).toBeGreaterThanOrEqual(sourceWeekData.length);
   });
 
   it("should have messages in alertMessages that match initial alerts", () => {

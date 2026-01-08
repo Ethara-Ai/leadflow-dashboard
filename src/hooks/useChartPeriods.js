@@ -27,9 +27,6 @@ export const CHART_IDS = {
   ACTIVITY: "activity",
   CONVERSION: "conversion",
   SOURCE: "source",
-  // Backward compatibility aliases
-  FEEDING: "conversion",
-  DIET: "source",
 };
 
 /**
@@ -109,10 +106,8 @@ const useChartPeriods = ({ defaultPeriod = TIME_PERIODS.WEEK } = {}) => {
       case CHART_IDS.ACTIVITY:
         return setActivityPeriod;
       case CHART_IDS.CONVERSION:
-      case CHART_IDS.FEEDING: // backward compatibility
         return setConversionPeriod;
       case CHART_IDS.SOURCE:
-      case CHART_IDS.DIET: // backward compatibility
         return setSourcePeriod;
       default:
         return () => {};
@@ -154,24 +149,6 @@ const useChartPeriods = ({ defaultPeriod = TIME_PERIODS.WEEK } = {}) => {
 
     // Status
     arePeriodsSync,
-
-    // Backward compatibility aliases for "feeding" terminology
-    feedingPeriod: conversionPeriod,
-    setFeedingPeriod: setConversionPeriod,
-    feedingData: conversionData,
-
-    // Backward compatibility aliases for "diet" terminology
-    dietPeriod: sourcePeriod,
-    setDietPeriod: setSourcePeriod,
-    dietData: sourceData,
-
-    // Legacy aliases
-    timePeriod: activityPeriod,
-    setTimePeriod: setActivityPeriod,
-    foragingTimePeriod: conversionPeriod,
-    setForagingTimePeriod: setConversionPeriod,
-    foodTimePeriod: sourcePeriod,
-    setFoodTimePeriod: setSourcePeriod,
   };
 };
 

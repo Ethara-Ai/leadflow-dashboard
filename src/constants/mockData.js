@@ -13,14 +13,6 @@ export const initialLeadData = {
   lastUpdated: new Date().toLocaleString(),
 };
 
-// Backward compatibility alias for initialLeadData with zoo-themed property names
-export const initialZooData = {
-  population: initialLeadData.totalLeads,
-  temperature: initialLeadData.callsMade,
-  humidity: initialLeadData.meetingsScheduled,
-  lastUpdated: initialLeadData.lastUpdated,
-};
-
 // -----------------------------------------------------------------------------
 // Initial Notes
 // -----------------------------------------------------------------------------

@@ -4,7 +4,8 @@
 // =============================================================================
 
 import { apiClient } from "./client.js";
-import { initialLeadData, alertMessages, ALERT_TYPES, ALERT_GENERATION_PROBABILITY } from "../constants/index.js";
+import { initialLeadData, alertMessages, ALERT_GENERATION_PROBABILITY } from "../constants/index.js";
+import { getAlertType } from "../utils.js";
 
 /**
  * Simulates network delay for mock responses
@@ -50,41 +51,6 @@ const generateMockLeadData = (previousData = null) => {
 };
 
 /**
- * Determine alert type based on message content
- * @param {string} message - Alert message
- * @returns {string} Alert type
- */
-export const getAlertTypeFromMessage = (message) => {
-  const lowerMessage = message.toLowerCase();
-
-  if (
-    lowerMessage.includes("immediate") ||
-    lowerMessage.includes("pending") ||
-    lowerMessage.includes("requires") ||
-    lowerMessage.includes("hot lead") ||
-    lowerMessage.includes("high-value") ||
-    lowerMessage.includes("urgent")
-  ) {
-    return ALERT_TYPES.WARNING;
-  }
-
-  if (
-    lowerMessage.includes("completed") ||
-    lowerMessage.includes("achieved") ||
-    lowerMessage.includes("improved") ||
-    lowerMessage.includes("closed")
-  ) {
-    return ALERT_TYPES.SUCCESS;
-  }
-
-  if (lowerMessage.includes("error") || lowerMessage.includes("failed")) {
-    return ALERT_TYPES.ERROR;
-  }
-
-  return ALERT_TYPES.INFO;
-};
-
-/**
  * Generate a random alert (may return null based on probability)
  * @returns {Object|null} Alert object or null
  */
@@ -98,7 +64,7 @@ export const maybeGenerateAlert = () => {
   return {
     id: Date.now(),
     message,
-    type: getAlertTypeFromMessage(message),
+    type: getAlertType(message),
     time: "Just now",
     timestamp: new Date().toISOString(),
   };
@@ -354,6 +320,5 @@ export default {
   deleteLead,
   fetchLeadActivities,
   // Utilities
-  getAlertTypeFromMessage,
   maybeGenerateAlert,
 };

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
-import Dashboard from "./components/Dashboard.jsx";
+import Dashboard from "./components/dashboard.jsx";
 import LoadingScreen from "./components/LoadingScreen";
 import { MAX_LOADING_TIME, MIN_LOADING_TIME } from "./constants/index.js";
 
