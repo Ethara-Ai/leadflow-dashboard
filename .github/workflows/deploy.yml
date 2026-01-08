@@ -18,4 +18,4 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: sudo /home/ubuntu/ethara-ai-prod/zoolab-dashboard/deploy.sh
+          script: sudo /home/ubuntu/ethara-ai-prod/leadflow-dashboard/deploy.sh
