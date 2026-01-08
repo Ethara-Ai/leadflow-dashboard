@@ -82,17 +82,17 @@ describe("NotesModal", () => {
   describe("basic rendering", () => {
     it("should render when isOpen is true", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
-      expect(screen.getByText("Animal Observations")).toBeInTheDocument();
+      expect(screen.getByText("Lead Notes")).toBeInTheDocument();
     });
 
     it("should not render when isOpen is false", () => {
       renderWithTheme(<NotesModal {...defaultProps} isOpen={false} />);
-      expect(screen.queryByText("Animal Observations")).not.toBeInTheDocument();
+      expect(screen.queryByText("Lead Notes")).not.toBeInTheDocument();
     });
 
     it("should render the modal title", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
-      expect(screen.getByText("Animal Observations")).toBeInTheDocument();
+      expect(screen.getByText("Lead Notes")).toBeInTheDocument();
     });
 
     it("should render the close button", () => {
@@ -120,9 +120,9 @@ describe("NotesModal", () => {
   describe("mode toggle", () => {
     it("should start in add mode by default", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
-      expect(screen.getByText("Animal Observation Note")).toBeInTheDocument();
+      expect(screen.getByText("Lead Note")).toBeInTheDocument();
       expect(
-        screen.getByPlaceholderText(/Enter your animal observation/),
+        screen.getByPlaceholderText(/Enter your lead note/),
       ).toBeInTheDocument();
     });
 
@@ -151,7 +151,7 @@ describe("NotesModal", () => {
       // Go back to add mode
       await user.click(screen.getByText("Add Note"));
 
-      expect(screen.getByText("Animal Observation Note")).toBeInTheDocument();
+      expect(screen.getByText("Lead Note")).toBeInTheDocument();
     });
 
     it("should highlight active mode button", async () => {
@@ -174,9 +174,7 @@ describe("NotesModal", () => {
   describe("add note functionality", () => {
     it("should render textarea in add mode", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       expect(textarea).toBeInTheDocument();
     });
 
@@ -195,9 +193,7 @@ describe("NotesModal", () => {
       const user = userEvent.setup();
       renderWithTheme(<NotesModal {...defaultProps} />);
 
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       await user.type(textarea, "New observation note");
 
       const saveButton = screen.getByText("Save Note");
@@ -208,9 +204,7 @@ describe("NotesModal", () => {
       const user = userEvent.setup();
       renderWithTheme(<NotesModal {...defaultProps} />);
 
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       await user.type(textarea, "New observation note");
 
       const saveButton = screen.getByText("Save Note");
@@ -225,9 +219,7 @@ describe("NotesModal", () => {
       const user = userEvent.setup();
       renderWithTheme(<NotesModal {...defaultProps} />);
 
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       await user.type(textarea, "New observation note");
 
       await user.click(screen.getByText("Save Note"));
@@ -243,18 +235,14 @@ describe("NotesModal", () => {
       const user = userEvent.setup();
       renderWithTheme(<NotesModal {...defaultProps} />);
 
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       await user.type(textarea, "New observation note");
       await user.click(screen.getByText("Save Note"));
 
       // Go back to add mode
       await user.click(screen.getByText("Add Note"));
 
-      const newTextarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const newTextarea = screen.getByPlaceholderText(/Enter your lead note/);
       expect(newTextarea.value).toBe("");
     });
 
@@ -272,9 +260,7 @@ describe("NotesModal", () => {
       const user = userEvent.setup();
       renderWithTheme(<NotesModal {...defaultProps} />);
 
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       await user.type(textarea, "   ");
 
       const saveButton = screen.getByText("Save Note");
@@ -285,9 +271,7 @@ describe("NotesModal", () => {
 
     it("should have maxLength attribute on textarea", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       expect(textarea).toHaveAttribute("maxLength", "1000");
     });
 
@@ -341,7 +325,7 @@ describe("NotesModal", () => {
 
       await user.click(screen.getByText(/View Notes/));
 
-      expect(screen.getByText(/No observations yet/)).toBeInTheDocument();
+      expect(screen.getByText(/No notes yet/)).toBeInTheDocument();
     });
 
     it("should call onDeleteNote when delete button is clicked", async () => {
@@ -419,7 +403,7 @@ describe("NotesModal", () => {
       const user = userEvent.setup();
       renderWithTheme(<NotesModal {...defaultProps} />);
 
-      const title = screen.getByText("Animal Observations");
+      const title = screen.getByText("Lead Notes");
       await user.click(title);
 
       expect(defaultProps.onClose).not.toHaveBeenCalled();
@@ -449,29 +433,25 @@ describe("NotesModal", () => {
 
     it("should apply dark theme title color in dark mode", () => {
       renderWithTheme(<NotesModal {...defaultProps} />, { darkMode: true });
-      const title = screen.getByText("Animal Observations");
+      const title = screen.getByText("Lead Notes");
       expect(title).toHaveClass("text-slate-200");
     });
 
     it("should apply light theme title color in light mode", () => {
       renderWithTheme(<NotesModal {...defaultProps} />, { darkMode: false });
-      const title = screen.getByText("Animal Observations");
+      const title = screen.getByText("Lead Notes");
       expect(title).toHaveClass("text-slate-700");
     });
 
     it("should apply dark theme textarea styling in dark mode", () => {
       renderWithTheme(<NotesModal {...defaultProps} />, { darkMode: true });
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       expect(textarea).toHaveClass("bg-slate-700/50");
     });
 
     it("should apply light theme textarea styling in light mode", () => {
       renderWithTheme(<NotesModal {...defaultProps} />, { darkMode: false });
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       expect(textarea).toHaveClass("bg-slate-50");
     });
   });
@@ -516,19 +496,17 @@ describe("NotesModal", () => {
     it("should have proper heading structure", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
       const heading = screen.getByRole("heading", { level: 2 });
-      expect(heading).toHaveTextContent("Animal Observations");
+      expect(heading).toHaveTextContent("Lead Notes");
     });
 
     it("should have label for textarea", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
-      expect(screen.getByText("Animal Observation Note")).toBeInTheDocument();
+      expect(screen.getByText("Lead Note")).toBeInTheDocument();
     });
 
     it("should have rows attribute on textarea", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       expect(textarea).toHaveAttribute("rows", "6");
     });
 
@@ -603,9 +581,7 @@ describe("NotesModal", () => {
       const user = userEvent.setup();
       renderWithTheme(<NotesModal {...defaultProps} />);
 
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       await user.type(textarea, "Test note");
 
       const saveButton = screen.getByText("Save Note");
@@ -623,9 +599,7 @@ describe("NotesModal", () => {
       const user = userEvent.setup();
       renderWithTheme(<NotesModal {...defaultProps} />);
 
-      const textarea = screen.getByPlaceholderText(
-        /Enter your animal observation/,
-      );
+      const textarea = screen.getByPlaceholderText(/Enter your lead note/);
       await user.type(textarea, "Test note");
 
       const saveButton = screen.getByText("Save Note");
@@ -644,7 +618,7 @@ describe("NotesModal", () => {
         .mockImplementation(() => {});
 
       render(<NotesModal {...defaultProps} darkMode={true} />);
-      expect(screen.getByText("Animal Observations")).toBeInTheDocument();
+      expect(screen.getByText("Lead Notes")).toBeInTheDocument();
 
       consoleSpy.mockRestore();
     });
@@ -700,14 +674,14 @@ describe("NotesModal", () => {
       const { rerender } = renderWithTheme(
         <NotesModal {...defaultProps} isOpen={true} />,
       );
-      expect(screen.getByText("Animal Observations")).toBeInTheDocument();
+      expect(screen.getByText("Lead Notes")).toBeInTheDocument();
 
       rerender(
         <ThemeProvider defaultDarkMode={false}>
           <NotesModal {...defaultProps} isOpen={false} />
         </ThemeProvider>,
       );
-      expect(screen.queryByText("Animal Observations")).not.toBeInTheDocument();
+      expect(screen.queryByText("Lead Notes")).not.toBeInTheDocument();
     });
 
     it("should handle large number of notes", async () => {

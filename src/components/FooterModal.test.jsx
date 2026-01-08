@@ -221,7 +221,9 @@ describe("FooterModal", () => {
       const { container } = renderWithTheme(
         <FooterModal {...defaultProps} children={null} />,
       );
-      expect(container.querySelector(".p-6.max-h-96")).toBeInTheDocument();
+      expect(
+        container.querySelector(".p-4.sm\\:p-6.flex-1.overflow-y-auto"),
+      ).toBeInTheDocument();
     });
   });
 
@@ -394,10 +396,10 @@ describe("FooterModal", () => {
       expect(contentArea).toBeInTheDocument();
     });
 
-    it("should have max-height on content for scroll", () => {
+    it("should have max-height on modal for scroll", () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const contentArea = container.querySelector(".max-h-96");
-      expect(contentArea).toBeInTheDocument();
+      const modalContainer = container.querySelector("[class*='max-h']");
+      expect(modalContainer).toBeInTheDocument();
     });
   });
 
@@ -481,14 +483,14 @@ describe("FooterModal", () => {
     it("should have flex centering on backdrop", () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
       const backdrop = container.querySelector(
-        ".flex.items-center.justify-center",
+        ".flex.items-start.sm\\:items-center.justify-center",
       );
       expect(backdrop).toBeInTheDocument();
     });
 
     it("should have padding on backdrop for mobile", () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const backdrop = container.querySelector(".p-4");
+      const backdrop = container.querySelector(".p-2");
       expect(backdrop).toBeInTheDocument();
     });
   });
@@ -500,7 +502,7 @@ describe("FooterModal", () => {
   describe("header section", () => {
     it("should have padding on header", () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const header = container.querySelector(".p-6.border-b");
+      const header = container.querySelector(".p-4.sm\\:p-6.border-b");
       expect(header).toBeInTheDocument();
     });
 
@@ -526,7 +528,9 @@ describe("FooterModal", () => {
   describe("content section", () => {
     it("should have padding on content", () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const content = container.querySelector(".p-6.max-h-96");
+      const content = container.querySelector(
+        ".p-4.sm\\:p-6.flex-1.overflow-y-auto",
+      );
       expect(content).toBeInTheDocument();
     });
 

@@ -51,19 +51,19 @@ describe("WelcomeMessage", () => {
   describe("basic rendering", () => {
     it("should render when show is true", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
+      expect(screen.getByText("Welcome back, John Doe!")).toBeInTheDocument();
     });
 
     it("should not render when show is false", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} show={false} />);
       expect(
-        screen.queryByText("Welcome back, Sales Team!"),
+        screen.queryByText("Welcome back, John Doe!"),
       ).not.toBeInTheDocument();
     });
 
     it("should render the welcome title", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
+      expect(screen.getByText("Welcome back, John Doe!")).toBeInTheDocument();
     });
 
     it("should render the welcome description", () => {
@@ -186,7 +186,7 @@ describe("WelcomeMessage", () => {
 
     it("should apply dark theme title color in dark mode", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />, { darkMode: true });
-      const title = screen.getByText("Welcome back, Sales Team!");
+      const title = screen.getByText("Welcome back, John Doe!");
       expect(title).toHaveClass("text-slate-200");
     });
 
@@ -194,7 +194,7 @@ describe("WelcomeMessage", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />, {
         darkMode: false,
       });
-      const title = screen.getByText("Welcome back, Sales Team!");
+      const title = screen.getByText("Welcome back, John Doe!");
       expect(title).toHaveClass("text-slate-700");
     });
 
@@ -303,7 +303,7 @@ describe("WelcomeMessage", () => {
   describe("accessibility", () => {
     it("should have proper heading structure for title", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      const title = screen.getByText("Welcome back, Sales Team!");
+      const title = screen.getByText("Welcome back, John Doe!");
       expect(title.tagName).toBe("H3");
     });
 
@@ -364,7 +364,7 @@ describe("WelcomeMessage", () => {
 
     it("should have responsive text sizes for title", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      const title = screen.getByText("Welcome back, Sales Team!");
+      const title = screen.getByText("Welcome back, John Doe!");
       expect(title).toHaveClass("text-sm");
       expect(title).toHaveClass("sm:text-base");
       expect(title).toHaveClass("md:text-lg");
@@ -428,7 +428,7 @@ describe("WelcomeMessage", () => {
 
     it("should have font-bold on title", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} />);
-      const title = screen.getByText("Welcome back, Sales Team!");
+      const title = screen.getByText("Welcome back, John Doe!");
       expect(title).toHaveClass("font-bold");
     });
   });
@@ -490,7 +490,7 @@ describe("WelcomeMessage", () => {
         .mockImplementation(() => {});
 
       render(<WelcomeMessage {...defaultProps} darkMode={true} />);
-      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
+      expect(screen.getByText("Welcome back, John Doe!")).toBeInTheDocument();
 
       consoleSpy.mockRestore();
     });
@@ -517,7 +517,7 @@ describe("WelcomeMessage", () => {
       const { rerender } = renderWithTheme(
         <WelcomeMessage {...defaultProps} show={true} />,
       );
-      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
+      expect(screen.getByText("Welcome back, John Doe!")).toBeInTheDocument();
 
       rerender(
         <ThemeProvider defaultDarkMode={false}>
@@ -525,7 +525,7 @@ describe("WelcomeMessage", () => {
         </ThemeProvider>,
       );
       expect(
-        screen.queryByText("Welcome back, Sales Team!"),
+        screen.queryByText("Welcome back, John Doe!"),
       ).not.toBeInTheDocument();
     });
 
@@ -534,7 +534,7 @@ describe("WelcomeMessage", () => {
         <WelcomeMessage {...defaultProps} show={false} />,
       );
       expect(
-        screen.queryByText("Welcome back, Sales Team!"),
+        screen.queryByText("Welcome back, John Doe!"),
       ).not.toBeInTheDocument();
 
       rerender(
@@ -542,20 +542,20 @@ describe("WelcomeMessage", () => {
           <WelcomeMessage {...defaultProps} show={true} />
         </ThemeProvider>,
       );
-      expect(screen.getByText("Welcome back, Sales Team!")).toBeInTheDocument();
+      expect(screen.getByText("Welcome back, John Doe!")).toBeInTheDocument();
     });
 
     it("should handle undefined show prop (falsy)", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} show={undefined} />);
       expect(
-        screen.queryByText("Welcome back, Sales Team!"),
+        screen.queryByText("Welcome back, John Doe!"),
       ).not.toBeInTheDocument();
     });
 
     it("should handle null show prop (falsy)", () => {
       renderWithTheme(<WelcomeMessage {...defaultProps} show={null} />);
       expect(
-        screen.queryByText("Welcome back, Sales Team!"),
+        screen.queryByText("Welcome back, John Doe!"),
       ).not.toBeInTheDocument();
     });
 

@@ -330,9 +330,8 @@ describe("AlertItem", () => {
       const alert = createAlert();
       const { container } = renderWithTheme(<AlertItem alert={alert} />);
       const alertElement = container.firstChild;
-      expect(alertElement).toHaveClass("p-2.5");
-      expect(alertElement).toHaveClass("sm:p-3");
-      expect(alertElement).toHaveClass("md:p-4");
+      expect(alertElement).toHaveClass("p-3");
+      expect(alertElement).toHaveClass("sm:p-4");
     });
 
     it("should have flex layout for icon and content", () => {
@@ -345,16 +344,17 @@ describe("AlertItem", () => {
     it("should have gap between icon and content", () => {
       const alert = createAlert();
       const { container } = renderWithTheme(<AlertItem alert={alert} />);
-      const flexContainer = container.querySelector(".flex.items-start");
-      expect(flexContainer).toHaveClass("gap-2");
+      const flexContainer = container.querySelector(".flex");
+      expect(flexContainer).toHaveClass("gap-3");
+      expect(flexContainer).toHaveClass("sm:gap-4");
     });
 
     it("should have responsive icon sizes", () => {
       const alert = createAlert();
       const { container } = renderWithTheme(<AlertItem alert={alert} />);
       const icon = container.querySelector("svg");
-      expect(icon).toHaveClass("w-4");
-      expect(icon).toHaveClass("h-4");
+      expect(icon).toHaveClass("w-5");
+      expect(icon).toHaveClass("h-5");
     });
 
     it("should have shrink-0 on icon to prevent shrinking", () => {
@@ -389,7 +389,7 @@ describe("AlertItem", () => {
       const alert = createAlert();
       renderWithTheme(<AlertItem alert={alert} />);
       const time = screen.getByText(alert.time);
-      expect(time).toHaveClass("text-[10px]");
+      expect(time).toHaveClass("text-[11px]");
       expect(time).toHaveClass("sm:text-xs");
     });
 

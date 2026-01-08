@@ -291,7 +291,7 @@ describe("Footer", () => {
       const { container } = renderWithTheme(<Footer {...defaultProps} />, {
         darkMode: true,
       });
-      const iconContainer = container.querySelector(".bg-emerald-900\\/30");
+      const iconContainer = container.querySelector(".bg-blue-900\\/30");
       expect(iconContainer).toBeInTheDocument();
     });
 
@@ -299,7 +299,7 @@ describe("Footer", () => {
       const { container } = renderWithTheme(<Footer {...defaultProps} />, {
         darkMode: false,
       });
-      const iconContainer = container.querySelector(".bg-emerald-100");
+      const iconContainer = container.querySelector(".bg-blue-100");
       expect(iconContainer).toBeInTheDocument();
     });
 
