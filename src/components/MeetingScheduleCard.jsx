@@ -149,7 +149,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
 
   return (
     <motion.div
-      className={`${cardClasses} backdrop-blur-lg rounded-2xl p-4 sm:p-5 border transition-all duration-300 hover:shadow-2xl h-150 flex flex-col`}
+      className={`${cardClasses} backdrop-blur-lg rounded-2xl p-4 sm:p-5 border transition-all duration-300 hover:shadow-2xl h-auto min-[634px]:h-150 flex flex-col`}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
       variants={cardVariants}
     >
@@ -212,8 +212,8 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
         </div>
       </div>
 
-      {/* Content Area with fixed height */}
-      <div className="flex-1 min-h-0 overflow-hidden relative">
+      {/* Content Area with responsive height */}
+      <div className="flex-1 min-h-[280px] min-[634px]:min-h-0 overflow-hidden relative">
         {viewMode === "calendar" ? (
           /* Calendar View - Fully visible without scrolling */
           <div className="h-full flex flex-col">

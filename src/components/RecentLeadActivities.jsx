@@ -123,7 +123,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
 
   return (
     <motion.div
-      className={`${cardClasses} backdrop-blur-lg rounded-2xl p-4 sm:p-5 border transition-all duration-300 hover:shadow-2xl h-150 flex flex-col`}
+      className={`${cardClasses} backdrop-blur-lg rounded-2xl p-4 sm:p-5 border transition-all duration-300 hover:shadow-2xl h-auto min-[634px]:h-150 flex flex-col`}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
       variants={cardVariants}
     >
