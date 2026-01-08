@@ -134,9 +134,7 @@ describe("FooterModal", () => {
 
   describe("title rendering", () => {
     it("should render different titles", () => {
-      const { rerender } = renderWithTheme(
-        <FooterModal {...defaultProps} title="First Title" />,
-      );
+      const { rerender } = renderWithTheme(<FooterModal {...defaultProps} title="First Title" />);
       expect(screen.getByText("First Title")).toBeInTheDocument();
 
       rerender(
@@ -160,17 +158,14 @@ describe("FooterModal", () => {
     });
 
     it("should handle long titles", () => {
-      const longTitle =
-        "This is a very long modal title that might wrap to multiple lines";
+      const longTitle = "This is a very long modal title that might wrap to multiple lines";
       renderWithTheme(<FooterModal {...defaultProps} title={longTitle} />);
       expect(screen.getByText(longTitle)).toBeInTheDocument();
     });
 
     it("should handle empty title", () => {
       renderWithTheme(<FooterModal {...defaultProps} title="" />);
-      const { container } = renderWithTheme(
-        <FooterModal {...defaultProps} title="" />,
-      );
+      const { container } = renderWithTheme(<FooterModal {...defaultProps} title="" />);
       expect(container.querySelector("h2")).toBeInTheDocument();
     });
   });
@@ -218,12 +213,8 @@ describe("FooterModal", () => {
     });
 
     it("should handle null children", () => {
-      const { container } = renderWithTheme(
-        <FooterModal {...defaultProps} children={null} />,
-      );
-      expect(
-        container.querySelector(".p-4.sm\\:p-6.flex-1.overflow-y-auto"),
-      ).toBeInTheDocument();
+      const { container } = renderWithTheme(<FooterModal {...defaultProps} children={null} />);
+      expect(container.querySelector(".p-4.sm\\:p-6.flex-1.overflow-y-auto")).toBeInTheDocument();
     });
   });
 
@@ -347,19 +338,13 @@ describe("FooterModal", () => {
 
   describe("darkMode override prop", () => {
     it("should use darkMode override when provided (true)", () => {
-      const { container } = renderWithTheme(
-        <FooterModal {...defaultProps} darkMode={true} />,
-        { darkMode: false },
-      );
+      const { container } = renderWithTheme(<FooterModal {...defaultProps} darkMode={true} />, { darkMode: false });
       const modalContainer = container.querySelector(".bg-slate-800\\/95");
       expect(modalContainer).toBeInTheDocument();
     });
 
     it("should use darkMode override when provided (false)", () => {
-      const { container } = renderWithTheme(
-        <FooterModal {...defaultProps} darkMode={false} />,
-        { darkMode: true },
-      );
+      const { container } = renderWithTheme(<FooterModal {...defaultProps} darkMode={false} />, { darkMode: true });
       const modalContainer = container.querySelector(".bg-white\\/95");
       expect(modalContainer).toBeInTheDocument();
     });
@@ -482,9 +467,7 @@ describe("FooterModal", () => {
 
     it("should have flex centering on backdrop", () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const backdrop = container.querySelector(
-        ".flex.items-start.sm\\:items-center.justify-center",
-      );
+      const backdrop = container.querySelector(".flex.items-start.sm\\:items-center.justify-center");
       expect(backdrop).toBeInTheDocument();
     });
 
@@ -514,9 +497,7 @@ describe("FooterModal", () => {
 
     it("should have flex layout for header content", () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const headerFlex = container.querySelector(
-        ".flex.justify-between.items-center",
-      );
+      const headerFlex = container.querySelector(".flex.justify-between.items-center");
       expect(headerFlex).toBeInTheDocument();
     });
   });
@@ -528,9 +509,7 @@ describe("FooterModal", () => {
   describe("content section", () => {
     it("should have padding on content", () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const content = container.querySelector(
-        ".p-4.sm\\:p-6.flex-1.overflow-y-auto",
-      );
+      const content = container.querySelector(".p-4.sm\\:p-6.flex-1.overflow-y-auto");
       expect(content).toBeInTheDocument();
     });
 
@@ -547,9 +526,7 @@ describe("FooterModal", () => {
 
   describe("backward compatibility (outside ThemeProvider)", () => {
     it("should render without ThemeProvider using darkMode prop", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       render(<FooterModal {...defaultProps} darkMode={true} />);
       expect(screen.getByText("Test Modal Title")).toBeInTheDocument();
@@ -558,9 +535,7 @@ describe("FooterModal", () => {
     });
 
     it("should default to light mode when outside ThemeProvider without darkMode prop", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       const { container } = render(<FooterModal {...defaultProps} />);
       const modalContainer = container.querySelector(".bg-white\\/95");
@@ -576,9 +551,7 @@ describe("FooterModal", () => {
 
   describe("edge cases", () => {
     it("should handle isOpen changing from true to false", () => {
-      const { rerender } = renderWithTheme(
-        <FooterModal {...defaultProps} isOpen={true} />,
-      );
+      const { rerender } = renderWithTheme(<FooterModal {...defaultProps} isOpen={true} />);
       expect(screen.getByText("Test Modal Title")).toBeInTheDocument();
 
       rerender(
@@ -590,9 +563,7 @@ describe("FooterModal", () => {
     });
 
     it("should handle isOpen changing from false to true", () => {
-      const { rerender } = renderWithTheme(
-        <FooterModal {...defaultProps} isOpen={false} />,
-      );
+      const { rerender } = renderWithTheme(<FooterModal {...defaultProps} isOpen={false} />);
       expect(screen.queryByText("Test Modal Title")).not.toBeInTheDocument();
 
       rerender(
@@ -605,9 +576,7 @@ describe("FooterModal", () => {
 
     it("should handle rapid open/close", async () => {
       const user = userEvent.setup();
-      const { container, rerender } = renderWithTheme(
-        <FooterModal {...defaultProps} isOpen={true} />,
-      );
+      const { container } = renderWithTheme(<FooterModal {...defaultProps} isOpen={true} />);
 
       const closeButton = container.querySelector("button");
       await user.click(closeButton);
@@ -645,7 +614,7 @@ describe("FooterModal", () => {
 
   describe("event propagation", () => {
     it("should stop propagation when clicking inside modal", () => {
-      const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
+      renderWithTheme(<FooterModal {...defaultProps} />);
 
       // Click on the modal content area
       const modalContent = screen.getByText("Test modal content");

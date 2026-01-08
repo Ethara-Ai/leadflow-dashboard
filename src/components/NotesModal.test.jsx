@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import NotesModal from "./NotesModal";
 import ThemeProvider from "../hooks/ThemeProvider";
@@ -52,12 +52,7 @@ vi.mock("framer-motion", () => ({
       </div>
     ),
     button: ({ children, className, onClick, disabled, ...props }) => (
-      <button
-        className={className}
-        onClick={onClick}
-        disabled={disabled}
-        {...props}
-      >
+      <button className={className} onClick={onClick} disabled={disabled} {...props}>
         {children}
       </button>
     ),
@@ -121,9 +116,7 @@ describe("NotesModal", () => {
     it("should start in add mode by default", () => {
       renderWithTheme(<NotesModal {...defaultProps} />);
       expect(screen.getByText("Lead Note")).toBeInTheDocument();
-      expect(
-        screen.getByPlaceholderText(/Enter your lead note/),
-      ).toBeInTheDocument();
+      expect(screen.getByPlaceholderText(/Enter your lead note/)).toBeInTheDocument();
     });
 
     it("should switch to view mode when View Notes is clicked", async () => {
@@ -134,11 +127,7 @@ describe("NotesModal", () => {
       await user.click(viewButton);
 
       // Should show notes list
-      expect(
-        screen.getByText(
-          "Lion enclosure: Male lion showing increased appetite",
-        ),
-      ).toBeInTheDocument();
+      expect(screen.getByText("Lion enclosure: Male lion showing increased appetite")).toBeInTheDocument();
     });
 
     it("should switch back to add mode when Add Note is clicked", async () => {
@@ -210,9 +199,7 @@ describe("NotesModal", () => {
       const saveButton = screen.getByText("Save Note");
       await user.click(saveButton);
 
-      expect(defaultProps.onSaveNote).toHaveBeenCalledWith(
-        "New observation note",
-      );
+      expect(defaultProps.onSaveNote).toHaveBeenCalledWith("New observation note");
     });
 
     it("should switch to view mode after saving a note", async () => {
@@ -293,21 +280,9 @@ describe("NotesModal", () => {
 
       await user.click(screen.getByText(/View Notes/));
 
-      expect(
-        screen.getByText(
-          "Lion enclosure: Male lion showing increased appetite",
-        ),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(
-          "Penguin habitat: Water filtration maintenance scheduled",
-        ),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(
-          "Gorilla section: New enrichment activities working well",
-        ),
-      ).toBeInTheDocument();
+      expect(screen.getByText("Lion enclosure: Male lion showing increased appetite")).toBeInTheDocument();
+      expect(screen.getByText("Penguin habitat: Water filtration maintenance scheduled")).toBeInTheDocument();
+      expect(screen.getByText("Gorilla section: New enrichment activities working well")).toBeInTheDocument();
     });
 
     it("should display note timestamps", async () => {
@@ -343,11 +318,7 @@ describe("NotesModal", () => {
         expect(defaultProps.onDeleteNote).toHaveBeenCalledWith(1);
       } else {
         // If we can't find the button, the test should still verify the notes are displayed
-        expect(
-          screen.getByText(
-            "Lion enclosure: Male lion showing increased appetite",
-          ),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Lion enclosure: Male lion showing increased appetite")).toBeInTheDocument();
       }
     });
 
@@ -376,10 +347,7 @@ describe("NotesModal", () => {
       // Find the close button in header
       const buttons = container.querySelectorAll("button");
       const closeButton = Array.from(buttons).find(
-        (btn) =>
-          btn.querySelector("svg") &&
-          !btn.textContent.includes("Note") &&
-          !btn.textContent.includes("View"),
+        (btn) => btn.querySelector("svg") && !btn.textContent.includes("Note") && !btn.textContent.includes("View"),
       );
 
       if (closeButton) {
@@ -462,19 +430,13 @@ describe("NotesModal", () => {
 
   describe("darkMode override prop", () => {
     it("should use darkMode override when provided (true)", () => {
-      const { container } = renderWithTheme(
-        <NotesModal {...defaultProps} darkMode={true} />,
-        { darkMode: false },
-      );
+      const { container } = renderWithTheme(<NotesModal {...defaultProps} darkMode={true} />, { darkMode: false });
       const modal = container.querySelector(".bg-slate-800\\/95");
       expect(modal).toBeInTheDocument();
     });
 
     it("should use darkMode override when provided (false)", () => {
-      const { container } = renderWithTheme(
-        <NotesModal {...defaultProps} darkMode={false} />,
-        { darkMode: true },
-      );
+      const { container } = renderWithTheme(<NotesModal {...defaultProps} darkMode={false} />, { darkMode: true });
       const modal = container.querySelector(".bg-white\\/95");
       expect(modal).toBeInTheDocument();
     });
@@ -613,9 +575,7 @@ describe("NotesModal", () => {
 
   describe("backward compatibility (outside ThemeProvider)", () => {
     it("should render without ThemeProvider using darkMode prop", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       render(<NotesModal {...defaultProps} darkMode={true} />);
       expect(screen.getByText("Lead Notes")).toBeInTheDocument();
@@ -624,9 +584,7 @@ describe("NotesModal", () => {
     });
 
     it("should default to light mode when outside ThemeProvider without darkMode prop", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       const { container } = render(<NotesModal {...defaultProps} />);
       const modal = container.querySelector(".bg-white\\/95");
@@ -644,12 +602,8 @@ describe("NotesModal", () => {
     it("should handle notes with very long content", async () => {
       const user = userEvent.setup();
       const longContent = "A".repeat(500);
-      const notesWithLongContent = [
-        { id: 1, content: longContent, timestamp: "1/1/2025, 10:00:00 AM" },
-      ];
-      renderWithTheme(
-        <NotesModal {...defaultProps} notes={notesWithLongContent} />,
-      );
+      const notesWithLongContent = [{ id: 1, content: longContent, timestamp: "1/1/2025, 10:00:00 AM" }];
+      renderWithTheme(<NotesModal {...defaultProps} notes={notesWithLongContent} />);
 
       await user.click(screen.getByText(/View Notes/));
       expect(screen.getByText(longContent)).toBeInTheDocument();
@@ -657,23 +611,16 @@ describe("NotesModal", () => {
 
     it("should handle notes with special characters", async () => {
       const user = userEvent.setup();
-      const specialContent =
-        "Note: <script>test</script> & \"quotes\" 'apostrophe'";
-      const notesWithSpecialChars = [
-        { id: 1, content: specialContent, timestamp: "1/1/2025, 10:00:00 AM" },
-      ];
-      renderWithTheme(
-        <NotesModal {...defaultProps} notes={notesWithSpecialChars} />,
-      );
+      const specialContent = "Note: <script>test</script> & \"quotes\" 'apostrophe'";
+      const notesWithSpecialChars = [{ id: 1, content: specialContent, timestamp: "1/1/2025, 10:00:00 AM" }];
+      renderWithTheme(<NotesModal {...defaultProps} notes={notesWithSpecialChars} />);
 
       await user.click(screen.getByText(/View Notes/));
       expect(screen.getByText(specialContent)).toBeInTheDocument();
     });
 
     it("should handle isOpen changing from true to false", () => {
-      const { rerender } = renderWithTheme(
-        <NotesModal {...defaultProps} isOpen={true} />,
-      );
+      const { rerender } = renderWithTheme(<NotesModal {...defaultProps} isOpen={true} />);
       expect(screen.getByText("Lead Notes")).toBeInTheDocument();
 
       rerender(

@@ -50,47 +50,24 @@ vi.mock("framer-motion", () => ({
       children,
       className,
       onClick,
-      variants,
-      whileHover,
-      initial,
-      animate,
-      exit,
-      transition,
+      _variants,
+      _whileHover,
+      _initial,
+      _animate,
+      _exit,
+      _transition,
       ...rest
     }) => (
       <div className={className} onClick={onClick} {...rest}>
         {children}
       </div>
     ),
-    button: ({
-      children,
-      className,
-      onClick,
-      disabled,
-      whileHover,
-      whileTap,
-      style,
-      ...rest
-    }) => (
-      <button
-        className={className}
-        onClick={onClick}
-        disabled={disabled}
-        style={style}
-        {...rest}
-      >
+    button: ({ children, className, onClick, disabled, _whileHover, _whileTap, style, ...rest }) => (
+      <button className={className} onClick={onClick} disabled={disabled} style={style} {...rest}>
         {children}
       </button>
     ),
-    article: ({
-      children,
-      className,
-      initial,
-      animate,
-      exit,
-      transition,
-      ...rest
-    }) => (
+    article: ({ children, className, _initial, _animate, _exit, _transition, ...rest }) => (
       <article className={className} {...rest}>
         {children}
       </article>
@@ -130,15 +107,9 @@ describe("AlertsPanel", () => {
 
     it("should render all alerts in the list", () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      expect(
-        screen.getByText("Temperature alert in elephant enclosure"),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("Feeding completed for primates"),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("Low stock alert: Vitamin supplements"),
-      ).toBeInTheDocument();
+      expect(screen.getByText("Temperature alert in elephant enclosure")).toBeInTheDocument();
+      expect(screen.getByText("Feeding completed for primates")).toBeInTheDocument();
+      expect(screen.getByText("Low stock alert: Vitamin supplements")).toBeInTheDocument();
     });
   });
 
@@ -154,15 +125,11 @@ describe("AlertsPanel", () => {
 
     it("should show encouraging message when no alerts", () => {
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
-      expect(
-        screen.getByText("All leads are being properly managed!"),
-      ).toBeInTheDocument();
+      expect(screen.getByText("All leads are being properly managed!")).toBeInTheDocument();
     });
 
     it("should show Bell icon in empty state", () => {
-      const { container } = renderWithTheme(
-        <AlertsPanel {...defaultProps} alerts={[]} />,
-      );
+      const { container } = renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
       expect(container.querySelector("svg")).toBeInTheDocument();
     });
 
@@ -186,10 +153,7 @@ describe("AlertsPanel", () => {
       const { rerender } = renderWithTheme(<AlertsPanel {...defaultProps} />);
       expect(screen.getByText("3")).toBeInTheDocument();
 
-      const newAlerts = [
-        ...mockAlerts,
-        { id: 4, message: "New alert", type: "info", time: "now" },
-      ];
+      const newAlerts = [...mockAlerts, { id: 4, message: "New alert", type: "info", time: "now" }];
       rerender(
         <ThemeProvider defaultDarkMode={false}>
           <AlertsPanel {...defaultProps} alerts={newAlerts} />
@@ -366,9 +330,7 @@ describe("AlertsPanel", () => {
 
     it("should have rounded corners", () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />);
-      const roundedElement = container.querySelector(
-        ".rounded-xl, .sm\\:rounded-2xl",
-      );
+      const roundedElement = container.querySelector(".rounded-xl, .sm\\:rounded-2xl");
       expect(roundedElement).toBeInTheDocument();
     });
 
@@ -423,9 +385,7 @@ describe("AlertsPanel", () => {
 
   describe("backward compatibility (outside ThemeProvider)", () => {
     it("should render without ThemeProvider using darkMode prop", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       render(<AlertsPanel {...defaultProps} darkMode={true} />);
       expect(screen.getByText("Lead Alerts")).toBeInTheDocument();
@@ -434,9 +394,7 @@ describe("AlertsPanel", () => {
     });
 
     it("should default to light mode when outside ThemeProvider without darkMode prop", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       render(<AlertsPanel {...defaultProps} />);
       const heading = screen.getByText("Lead Alerts");
@@ -477,31 +435,20 @@ describe("AlertsPanel", () => {
 
     it("should handle alerts with very long messages", () => {
       const longMessage = "A".repeat(500);
-      const alertsWithLongMessage = [
-        { id: 1, message: longMessage, type: "warning", time: "now" },
-      ];
-      renderWithTheme(
-        <AlertsPanel {...defaultProps} alerts={alertsWithLongMessage} />,
-      );
+      const alertsWithLongMessage = [{ id: 1, message: longMessage, type: "warning", time: "now" }];
+      renderWithTheme(<AlertsPanel {...defaultProps} alerts={alertsWithLongMessage} />);
       expect(screen.getByText(longMessage)).toBeInTheDocument();
     });
 
     it("should handle alerts with special characters", () => {
-      const specialMessage =
-        '<script>alert("xss")</script> & "quotes" \'single\' <tag>';
-      const alertsWithSpecialChars = [
-        { id: 1, message: specialMessage, type: "info", time: "now" },
-      ];
-      renderWithTheme(
-        <AlertsPanel {...defaultProps} alerts={alertsWithSpecialChars} />,
-      );
+      const specialMessage = '<script>alert("xss")</script> & "quotes" \'single\' <tag>';
+      const alertsWithSpecialChars = [{ id: 1, message: specialMessage, type: "info", time: "now" }];
+      renderWithTheme(<AlertsPanel {...defaultProps} alerts={alertsWithSpecialChars} />);
       expect(screen.getByText(specialMessage)).toBeInTheDocument();
     });
 
     it("should handle undefined alerts gracefully", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       // This should either throw or handle gracefully
       expect(() => {
@@ -525,9 +472,7 @@ describe("AlertsPanel", () => {
     });
 
     it("should animate empty state icon", () => {
-      const { container } = renderWithTheme(
-        <AlertsPanel {...defaultProps} alerts={[]} />,
-      );
+      const { container } = renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
       // The bell icon in empty state should be rendered
       const icons = container.querySelectorAll("svg");
       expect(icons.length).toBeGreaterThan(0);
