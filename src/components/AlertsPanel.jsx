@@ -57,13 +57,12 @@ const AlertsPanel = memo(function AlertsPanel({
 
         {/* Alert Modal Trigger Button */}
         <motion.button
-          className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 ${alertButtonClasses}`}
+          className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${alertButtonClasses}`}
           onClick={onOpenModal}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           style={{ fontFamily }}
           aria-label={`${alerts.length} alerts. Click to manage alerts.`}
-          disabled={true}
         >
           <Bell className="w-3.5 h-3.5 sm:w-4 sm:h-4" aria-hidden="true" />
           <span className="font-bold">{alerts.length}</span>
