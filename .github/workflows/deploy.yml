@@ -3,13 +3,13 @@ name: Deploy to Production
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
+  workflow_dispatch:  # Manual trigger button
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Deploy via SSH
@@ -18,7 +18,4 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/ubuntu/ethara-ai-prod/zoolab-dashboard
-            git pull origin main
-            docker compose up -d --build
+          script: sudo /home/ubuntu/ethara-ai-prod/zoolab-dashboard/deploy.sh
