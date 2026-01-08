@@ -6,10 +6,19 @@
   "type": "module",
   "author": "LeadFlow",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ethara-AI/zoolab-dashboard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ethara-AI/zoolab-dashboard/issues"
+  },
+  "homepage": "https://components.ethara.ai/zoolab-dashboard",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
