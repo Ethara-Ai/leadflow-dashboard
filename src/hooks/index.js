@@ -29,3 +29,4 @@ export { default as useNotes } from "./useNotes.js";
 // -----------------------------------------------------------------------------
 export { default as useModals, MODAL_IDS } from "./useModals.js";
 export { default as useChartPeriods, TIME_PERIODS, CHART_IDS } from "./useChartPeriods.js";
+export { default as useScrollLock } from "./useScrollLock.js";

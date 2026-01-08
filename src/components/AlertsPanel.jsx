@@ -15,11 +15,7 @@ import AlertItem from "./AlertItem";
  * @param {function} props.onOpenModal - Callback when the alerts button is clicked to open modal
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const AlertsPanel = memo(function AlertsPanel({
-  alerts,
-  onOpenModal,
-  darkMode: darkModeOverride,
-}) {
+const AlertsPanel = memo(function AlertsPanel({ alerts, onOpenModal, darkMode: darkModeOverride }) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
@@ -48,10 +44,7 @@ const AlertsPanel = memo(function AlertsPanel({
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <h3
-          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
-          style={{ fontFamily }}
-        >
+        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
           Lead Alerts
         </h3>
 
@@ -95,21 +88,12 @@ const AlertsPanel = memo(function AlertsPanel({
               delay: 0.2,
             }}
           >
-            <Bell
-              className={`w-6 h-6 sm:w-8 sm:h-8 ${emptyIconClasses}`}
-              aria-hidden="true"
-            />
+            <Bell className={`w-6 h-6 sm:w-8 sm:h-8 ${emptyIconClasses}`} aria-hidden="true" />
           </motion.div>
-          <p
-            className={`mt-3 sm:mt-4 text-sm sm:text-base font-medium ${emptyTextClasses}`}
-            style={{ fontFamily }}
-          >
+          <p className={`mt-3 sm:mt-4 text-sm sm:text-base font-medium ${emptyTextClasses}`} style={{ fontFamily }}>
             No current alerts
           </p>
-          <p
-            className={`mt-1 text-xs sm:text-sm ${emptySubtextClasses}`}
-            style={{ fontFamily }}
-          >
+          <p className={`mt-1 text-xs sm:text-sm ${emptySubtextClasses}`} style={{ fontFamily }}>
             All leads are being properly managed!
           </p>
         </div>
@@ -123,7 +107,7 @@ AlertsPanel.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       message: PropTypes.string.isRequired,
-      type: PropTypes.oneOf(["info", "warning", "error"]).isRequired,
+      type: PropTypes.oneOf(["info", "warning", "error", "success"]).isRequired,
       time: PropTypes.string.isRequired,
     }),
   ).isRequired,

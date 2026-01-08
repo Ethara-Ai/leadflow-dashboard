@@ -149,14 +149,6 @@ const useLeadData = ({ onNewAlert, autoRefresh = false, refreshInterval = DEFAUL
     };
   }, [autoRefresh, refreshInterval, refreshData]);
 
-  // Transform lead data to backward-compatible format
-  const zooData = {
-    population: leadData.totalLeads,
-    temperature: leadData.callsMade,
-    humidity: leadData.meetingsScheduled,
-    lastUpdated: leadData.lastUpdated,
-  };
-
   return {
     // Primary data
     leadData,
@@ -169,10 +161,6 @@ const useLeadData = ({ onNewAlert, autoRefresh = false, refreshInterval = DEFAUL
     resetData,
     clearError,
     setData,
-
-    // Backward compatibility alias
-    // Maps lead terminology to the original "zoo" terminology
-    zooData,
   };
 };
 

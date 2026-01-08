@@ -1,17 +1,7 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import {
-  ResponsiveContainer,
-  ComposedChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Area,
-  Bar,
-} from "recharts";
+import { ResponsiveContainer, ComposedChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Area, Bar } from "recharts";
 import { cardVariants, fontFamily } from "../constants";
 import useThemeSafe from "../hooks/useThemeSafe";
 import CustomTooltip from "./CustomTooltip";
@@ -28,7 +18,7 @@ import {
 } from "../chartUtils";
 
 /**
- * AnimalActivityChart Component
+ * LeadActivityChart Component
  * Displays lead activity data as a composed chart with area and bar elements.
  *
  * @param {Object} props - Component props
@@ -37,7 +27,7 @@ import {
  * @param {function} props.setTimePeriod - Callback when time period changes
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const AnimalActivityChart = memo(function AnimalActivityChart({
+const LeadActivityChart = memo(function LeadActivityChart({
   data,
   timePeriod,
   setTimePeriod,
@@ -65,16 +55,10 @@ const AnimalActivityChart = memo(function AnimalActivityChart({
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <h3
-          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
-          style={{ fontFamily }}
-        >
+        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
           Lead Activity
         </h3>
-        <TimePeriodButtons
-          currentPeriod={timePeriod}
-          onPeriodChange={setTimePeriod}
-        />
+        <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
       </div>
 
       {/* Chart Container */}
@@ -99,16 +83,8 @@ const AnimalActivityChart = memo(function AnimalActivityChart({
                 <stop offset="95%" stopColor={primaryColor} stopOpacity={0.2} />
               </linearGradient>
               <linearGradient id="colorCalls" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor={secondaryColor}
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor={secondaryColor}
-                  stopOpacity={0.2}
-                />
+                <stop offset="5%" stopColor={secondaryColor} stopOpacity={0.8} />
+                <stop offset="95%" stopColor={secondaryColor} stopOpacity={0.2} />
               </linearGradient>
             </defs>
             <CartesianGrid {...gridStyles} />
@@ -131,10 +107,7 @@ const AnimalActivityChart = memo(function AnimalActivityChart({
               width={40}
               axisLine={axisStyles.axisLine}
             />
-            <Tooltip
-              content={(props) => <CustomTooltip {...props} />}
-              cursor={cursorStyles}
-            />
+            <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={cursorStyles} />
             <Legend
               content={(props) => <ChartLegend {...props} />}
               wrapperStyle={{
@@ -165,7 +138,7 @@ const AnimalActivityChart = memo(function AnimalActivityChart({
   );
 });
 
-AnimalActivityChart.propTypes = {
+LeadActivityChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -178,4 +151,4 @@ AnimalActivityChart.propTypes = {
   darkMode: PropTypes.bool,
 };
 
-export default AnimalActivityChart;
+export default LeadActivityChart;

@@ -9,7 +9,7 @@ import TimePeriodButtons from "./TimePeriodButtons";
 import { getChartCardClasses, getChartTitleClasses } from "../chartUtils";
 
 /**
- * DietDistributionChart Component
+ * LeadSourceChart Component
  * Displays lead source distribution data as a pie chart with responsive design.
  *
  * @param {Object} props - Component props
@@ -18,12 +18,7 @@ import { getChartCardClasses, getChartTitleClasses } from "../chartUtils";
  * @param {function} props.setTimePeriod - Callback when time period changes
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const DietDistributionChart = memo(function DietDistributionChart({
-  data,
-  timePeriod,
-  setTimePeriod,
-  darkMode: darkModeOverride,
-}) {
+const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTimePeriod, darkMode: darkModeOverride }) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
@@ -68,16 +63,10 @@ const DietDistributionChart = memo(function DietDistributionChart({
     >
       {/* Header - Title first, then time period below */}
       <div className="flex flex-col items-center mb-3">
-        <h3
-          className={`text-lg sm:text-xl font-bold ${titleClasses} mb-2`}
-          style={{ fontFamily }}
-        >
+        <h3 className={`text-lg sm:text-xl font-bold ${titleClasses} mb-2`} style={{ fontFamily }}>
           Lead Source Distribution
         </h3>
-        <TimePeriodButtons
-          currentPeriod={timePeriod}
-          onPeriodChange={setTimePeriod}
-        />
+        <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
       </div>
 
       {/* Pie Chart - Centered without external labels */}
@@ -131,26 +120,15 @@ const DietDistributionChart = memo(function DietDistributionChart({
       </div>
 
       {/* Legend - Always visible with complete names and percentages */}
-      <div
-        className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2"
-        role="list"
-        aria-label="Lead source distribution legend"
-      >
+      <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2" role="list" aria-label="Lead source distribution legend">
         {data.map((entry, index) => (
-          <div
-            key={entry.name}
-            className="flex items-center gap-2 min-w-0"
-            role="listitem"
-          >
+          <div key={entry.name} className="flex items-center gap-2 min-w-0" role="listitem">
             <span
               className="w-3 h-3 rounded-full shrink-0"
               style={{ backgroundColor: COLORS[index % COLORS.length] }}
               aria-hidden="true"
             />
-            <span
-              className={`text-xs flex-1 ${isDark ? "text-slate-300" : "text-slate-600"}`}
-              style={{ fontFamily }}
-            >
+            <span className={`text-xs flex-1 ${isDark ? "text-slate-300" : "text-slate-600"}`} style={{ fontFamily }}>
               {entry.name}
             </span>
             <span
@@ -166,7 +144,7 @@ const DietDistributionChart = memo(function DietDistributionChart({
   );
 });
 
-DietDistributionChart.propTypes = {
+LeadSourceChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -178,4 +156,4 @@ DietDistributionChart.propTypes = {
   darkMode: PropTypes.bool,
 };
 
-export default DietDistributionChart;
+export default LeadSourceChart;

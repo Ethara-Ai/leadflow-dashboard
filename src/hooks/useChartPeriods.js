@@ -33,31 +33,35 @@ export const CHART_IDS = {
 };
 
 /**
+ * Static data map for chart data lookup
+ * Moved outside function to avoid recreation on every call
+ */
+const CHART_DATA_MAP = {
+  [CHART_IDS.ACTIVITY]: {
+    [TIME_PERIODS.WEEK]: activityWeekData,
+    [TIME_PERIODS.MONTH]: activityMonthData,
+    [TIME_PERIODS.YEAR]: activityYearData,
+  },
+  [CHART_IDS.CONVERSION]: {
+    [TIME_PERIODS.WEEK]: conversionWeekData,
+    [TIME_PERIODS.MONTH]: conversionMonthData,
+    [TIME_PERIODS.YEAR]: conversionYearData,
+  },
+  [CHART_IDS.SOURCE]: {
+    [TIME_PERIODS.WEEK]: sourceWeekData,
+    [TIME_PERIODS.MONTH]: sourceMonthData,
+    [TIME_PERIODS.YEAR]: sourceYearData,
+  },
+};
+
+/**
  * Get data for a specific chart and time period
  * @param {string} chartId - The chart identifier
  * @param {string} period - The time period
  * @returns {Array} The data for the specified chart and period
  */
 const getChartData = (chartId, period) => {
-  const dataMap = {
-    [CHART_IDS.ACTIVITY]: {
-      [TIME_PERIODS.WEEK]: activityWeekData,
-      [TIME_PERIODS.MONTH]: activityMonthData,
-      [TIME_PERIODS.YEAR]: activityYearData,
-    },
-    [CHART_IDS.CONVERSION]: {
-      [TIME_PERIODS.WEEK]: conversionWeekData,
-      [TIME_PERIODS.MONTH]: conversionMonthData,
-      [TIME_PERIODS.YEAR]: conversionYearData,
-    },
-    [CHART_IDS.SOURCE]: {
-      [TIME_PERIODS.WEEK]: sourceWeekData,
-      [TIME_PERIODS.MONTH]: sourceMonthData,
-      [TIME_PERIODS.YEAR]: sourceYearData,
-    },
-  };
-
-  return dataMap[chartId]?.[period] || dataMap[chartId]?.[TIME_PERIODS.WEEK] || [];
+  return CHART_DATA_MAP[chartId]?.[period] || CHART_DATA_MAP[chartId]?.[TIME_PERIODS.WEEK] || [];
 };
 
 /**

@@ -17,9 +17,9 @@ const renderWithTheme = (ui, { darkMode = false } = {}) => {
 };
 
 const mockLeadData = {
-  population: 847,
-  temperature: 342,
-  humidity: 67,
+  totalLeads: 847,
+  callsMade: 342,
+  meetingsScheduled: 67,
   lastUpdated: "1/1/2025, 10:00:00 AM",
 };
 
@@ -34,7 +34,7 @@ const mockActivityData = [
 ];
 
 const defaultProps = {
-  zooData: mockLeadData,
+  leadData: mockLeadData,
   activityData: mockActivityData,
 };
 
@@ -235,19 +235,13 @@ describe("StatCards", () => {
 
   describe("darkMode override prop", () => {
     it("should use darkMode override when provided (true)", () => {
-      const { container } = renderWithTheme(
-        <StatCards {...defaultProps} darkMode={true} />,
-        { darkMode: false },
-      );
+      const { container } = renderWithTheme(<StatCards {...defaultProps} darkMode={true} />, { darkMode: false });
       const darkAccent = container.querySelector(".bg-emerald-900\\/40");
       expect(darkAccent).toBeInTheDocument();
     });
 
     it("should use darkMode override when provided (false)", () => {
-      const { container } = renderWithTheme(
-        <StatCards {...defaultProps} darkMode={false} />,
-        { darkMode: true },
-      );
+      const { container } = renderWithTheme(<StatCards {...defaultProps} darkMode={false} />, { darkMode: true });
       const lightAccent = container.querySelector(".bg-emerald-100");
       expect(lightAccent).toBeInTheDocument();
     });
@@ -271,9 +265,7 @@ describe("StatCards", () => {
         { name: "Mon", leads: 100, callsCompleted: 10 },
         { name: "Tue", leads: 200, callsCompleted: 20 },
       ];
-      renderWithTheme(
-        <StatCards {...defaultProps} activityData={customActivityData} />,
-      );
+      renderWithTheme(<StatCards {...defaultProps} activityData={customActivityData} />);
       // 100 + 200 = 300 leads, displayed as conversion rate percentage
       expect(screen.getByText("300%")).toBeInTheDocument();
     });
@@ -285,31 +277,27 @@ describe("StatCards", () => {
     });
 
     it("should handle single activity data point", () => {
-      const singleActivityData = [
-        { name: "Mon", leads: 150, callsCompleted: 15 },
-      ];
-      renderWithTheme(
-        <StatCards {...defaultProps} activityData={singleActivityData} />,
-      );
+      const singleActivityData = [{ name: "Mon", leads: 150, callsCompleted: 15 }];
+      renderWithTheme(<StatCards {...defaultProps} activityData={singleActivityData} />);
       // 150 leads total becomes the conversion rate percentage
       expect(screen.getByText("150%")).toBeInTheDocument();
     });
 
     it("should display correct total leads", () => {
-      const customLeadData = { ...mockLeadData, population: 1234 };
-      renderWithTheme(<StatCards {...defaultProps} zooData={customLeadData} />);
+      const customLeadData = { ...mockLeadData, totalLeads: 1234 };
+      renderWithTheme(<StatCards {...defaultProps} leadData={customLeadData} />);
       expect(screen.getByText("1234")).toBeInTheDocument();
     });
 
     it("should display correct calls made", () => {
-      const customLeadData = { ...mockLeadData, temperature: 400 };
-      renderWithTheme(<StatCards {...defaultProps} zooData={customLeadData} />);
+      const customLeadData = { ...mockLeadData, callsMade: 400 };
+      renderWithTheme(<StatCards {...defaultProps} leadData={customLeadData} />);
       expect(screen.getByText("400")).toBeInTheDocument();
     });
 
     it("should display correct meetings scheduled", () => {
-      const customLeadData = { ...mockLeadData, humidity: 75 };
-      renderWithTheme(<StatCards {...defaultProps} zooData={customLeadData} />);
+      const customLeadData = { ...mockLeadData, meetingsScheduled: 75 };
+      renderWithTheme(<StatCards {...defaultProps} leadData={customLeadData} />);
       expect(screen.getByText("75")).toBeInTheDocument();
     });
   });
@@ -380,9 +368,7 @@ describe("StatCards", () => {
 
   describe("backward compatibility (outside ThemeProvider)", () => {
     it("should render without ThemeProvider using darkMode prop", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       render(<StatCards {...defaultProps} darkMode={true} />);
       expect(screen.getByText("Total Leads")).toBeInTheDocument();
@@ -391,9 +377,7 @@ describe("StatCards", () => {
     });
 
     it("should default to light mode when outside ThemeProvider without darkMode prop", () => {
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       const { container } = render(<StatCards {...defaultProps} />);
       const lightAccent = container.querySelector(".bg-emerald-100");
@@ -409,42 +393,42 @@ describe("StatCards", () => {
 
   describe("edge cases", () => {
     it("should handle zero total leads", () => {
-      const customLeadData = { ...mockLeadData, population: 0 };
-      renderWithTheme(<StatCards {...defaultProps} zooData={customLeadData} />);
+      const customLeadData = { ...mockLeadData, totalLeads: 0 };
+      renderWithTheme(<StatCards {...defaultProps} leadData={customLeadData} />);
       // Should display 0
       const zeros = screen.getAllByText("0");
       expect(zeros.length).toBeGreaterThan(0);
     });
 
     it("should handle zero calls made", () => {
-      const customLeadData = { ...mockLeadData, temperature: 0 };
-      renderWithTheme(<StatCards {...defaultProps} zooData={customLeadData} />);
+      const customLeadData = { ...mockLeadData, callsMade: 0 };
+      renderWithTheme(<StatCards {...defaultProps} leadData={customLeadData} />);
       const zeros = screen.getAllByText("0");
       expect(zeros.length).toBeGreaterThan(0);
     });
 
     it("should handle zero meetings scheduled", () => {
-      const customLeadData = { ...mockLeadData, humidity: 0 };
-      renderWithTheme(<StatCards {...defaultProps} zooData={customLeadData} />);
+      const customLeadData = { ...mockLeadData, meetingsScheduled: 0 };
+      renderWithTheme(<StatCards {...defaultProps} leadData={customLeadData} />);
       const zeros = screen.getAllByText("0");
       expect(zeros.length).toBeGreaterThan(0);
     });
 
     it("should handle high meetings count", () => {
-      const customLeadData = { ...mockLeadData, humidity: 100 };
-      renderWithTheme(<StatCards {...defaultProps} zooData={customLeadData} />);
+      const customLeadData = { ...mockLeadData, meetingsScheduled: 100 };
+      renderWithTheme(<StatCards {...defaultProps} leadData={customLeadData} />);
       expect(screen.getByText("100")).toBeInTheDocument();
     });
 
     it("should handle large total leads numbers", () => {
-      const customLeadData = { ...mockLeadData, population: 999999 };
-      renderWithTheme(<StatCards {...defaultProps} zooData={customLeadData} />);
+      const customLeadData = { ...mockLeadData, totalLeads: 999999 };
+      renderWithTheme(<StatCards {...defaultProps} leadData={customLeadData} />);
       expect(screen.getByText("999999")).toBeInTheDocument();
     });
 
     it("should handle large calls made numbers", () => {
-      const customLeadData = { ...mockLeadData, temperature: 5000 };
-      renderWithTheme(<StatCards {...defaultProps} zooData={customLeadData} />);
+      const customLeadData = { ...mockLeadData, callsMade: 5000 };
+      renderWithTheme(<StatCards {...defaultProps} leadData={customLeadData} />);
       expect(screen.getByText("5000")).toBeInTheDocument();
     });
   });
@@ -488,10 +472,10 @@ describe("StatCards", () => {
       const { rerender } = renderWithTheme(<StatCards {...defaultProps} />);
       expect(screen.getByText("847")).toBeInTheDocument();
 
-      const newLeadData = { ...mockLeadData, population: 900 };
+      const newLeadData = { ...mockLeadData, totalLeads: 900 };
       rerender(
         <ThemeProvider defaultDarkMode={false}>
-          <StatCards {...defaultProps} zooData={newLeadData} />
+          <StatCards {...defaultProps} leadData={newLeadData} />
         </ThemeProvider>,
       );
       expect(screen.getByText("900")).toBeInTheDocument();

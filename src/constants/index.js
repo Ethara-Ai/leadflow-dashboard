@@ -62,6 +62,7 @@ export {
 export {
   // Lead Data
   initialLeadData,
+  initialZooData,
   // Notes
   initialNotes,
   // Alerts
@@ -107,15 +108,3 @@ export const MAX_NOTES = 100;
 
 /** Maximum character length for notes */
 export const MAX_NOTE_LENGTH = 1000;
-
-// -----------------------------------------------------------------------------
-// Backward Compatibility Aliases
-// -----------------------------------------------------------------------------
-
-/** @deprecated Use initialLeadData instead */
-export const initialZooData = {
-  population: 847,
-  temperature: 342,
-  humidity: 67,
-  lastUpdated: new Date().toLocaleString(),
-};

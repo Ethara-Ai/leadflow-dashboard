@@ -25,15 +25,11 @@ const getSubValueVariant = (subValue) => {
  * Uses theme context for dark mode styling.
  *
  * @param {Object} props - Component props
- * @param {Object} props.zooData - Lead statistics data (total leads, calls, meetings, conversion rate)
+ * @param {Object} props.leadData - Lead statistics data (totalLeads, callsMade, meetingsScheduled)
  * @param {Array} props.activityData - Activity data for calculating totals
  * @param {boolean} [props.darkMode] - Optional override for dark mode (backward compatibility)
  */
-const StatCards = memo(function StatCards({
-  zooData,
-  activityData,
-  darkMode: darkModeOverride,
-}) {
+const StatCards = memo(function StatCards({ leadData, activityData, darkMode: darkModeOverride }) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
@@ -42,33 +38,27 @@ const StatCards = memo(function StatCards({
   const stats = [
     {
       title: "Total Leads",
-      value: zooData.population,
+      value: leadData.totalLeads,
       icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" />,
       subValue: "+24",
       subText: "new this week",
-      accent: isDark
-        ? "bg-emerald-900/40 text-emerald-400"
-        : "bg-emerald-100 text-emerald-600",
+      accent: isDark ? "bg-emerald-900/40 text-emerald-400" : "bg-emerald-100 text-emerald-600",
     },
     {
       title: "Calls Made",
-      value: zooData.temperature,
+      value: leadData.callsMade,
       icon: <Phone className="w-4 h-4 sm:w-5 sm:h-5" />,
       subValue: "+18",
       subText: "vs yesterday",
-      accent: isDark
-        ? "bg-amber-900/40 text-amber-400"
-        : "bg-amber-100 text-amber-600",
+      accent: isDark ? "bg-amber-900/40 text-amber-400" : "bg-amber-100 text-amber-600",
     },
     {
       title: "Meetings",
-      value: `${zooData.humidity}`,
+      value: `${leadData.meetingsScheduled}`,
       icon: <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />,
       subValue: "+5",
       subText: "scheduled",
-      accent: isDark
-        ? "bg-cyan-900/40 text-cyan-400"
-        : "bg-cyan-100 text-cyan-600",
+      accent: isDark ? "bg-cyan-900/40 text-cyan-400" : "bg-cyan-100 text-cyan-600",
     },
     {
       title: "Conversion Rate",
@@ -76,9 +66,7 @@ const StatCards = memo(function StatCards({
       icon: <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />,
       subValue: "+3.2%",
       subText: "from meetings",
-      accent: isDark
-        ? "bg-blue-900/40 text-blue-400"
-        : "bg-blue-100 text-blue-600",
+      accent: isDark ? "bg-blue-900/40 text-blue-400" : "bg-blue-100 text-blue-600",
     },
   ];
 

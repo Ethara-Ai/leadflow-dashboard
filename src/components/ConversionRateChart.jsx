@@ -1,16 +1,7 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import {
-  ResponsiveContainer,
-  LineChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Line,
-} from "recharts";
+import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from "recharts";
 import { cardVariants, fontFamily } from "../constants";
 import useThemeSafe from "../hooks/useThemeSafe";
 import { formatEfficiency } from "../utils";
@@ -37,7 +28,7 @@ import {
  * @param {function} props.setTimePeriod - Callback when time period changes
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const FeedingEfficiencyChart = memo(function ConversionRateChart({
+const ConversionRateChart = memo(function ConversionRateChart({
   data,
   timePeriod,
   setTimePeriod,
@@ -64,16 +55,10 @@ const FeedingEfficiencyChart = memo(function ConversionRateChart({
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <h3
-          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
-          style={{ fontFamily }}
-        >
+        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
           Conversion Rate
         </h3>
-        <TimePeriodButtons
-          currentPeriod={timePeriod}
-          onPeriodChange={setTimePeriod}
-        />
+        <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
       </div>
 
       {/* Chart Container */}
@@ -116,10 +101,7 @@ const FeedingEfficiencyChart = memo(function ConversionRateChart({
             <Tooltip
               content={(props) => <CustomTooltip {...props} />}
               cursor={cursorStyles}
-              formatter={(value) => [
-                formatEfficiency(value),
-                "Conversion Rate",
-              ]}
+              formatter={(value) => [formatEfficiency(value), "Conversion Rate"]}
             />
             <Legend
               content={(props) => <ChartLegend {...props} />}
@@ -143,7 +125,7 @@ const FeedingEfficiencyChart = memo(function ConversionRateChart({
   );
 });
 
-FeedingEfficiencyChart.propTypes = {
+ConversionRateChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -155,4 +137,4 @@ FeedingEfficiencyChart.propTypes = {
   darkMode: PropTypes.bool,
 };
 
-export default FeedingEfficiencyChart;
+export default ConversionRateChart;

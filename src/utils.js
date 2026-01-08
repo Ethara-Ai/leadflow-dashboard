@@ -205,13 +205,13 @@ export const getAlertType = (message) => {
  * @param {string} filename - Name of the file to download
  */
 export const exportToCSV = (data, filename) => {
-  const { zooData: leadData, activityData, feedingData: conversionData, dietData: sourceData, alerts } = data;
+  const { leadData, activityData, feedingData: conversionData, dietData: sourceData, alerts } = data;
 
   const csvData = [
     ["Metric", "Value", "Type"],
-    ["Total Leads", leadData?.population ?? "", "Lead Stats"],
-    ["Calls Made", leadData?.temperature ?? "", "Activity"],
-    ["Meetings Scheduled", leadData?.humidity ?? "", "Activity"],
+    ["Total Leads", leadData?.totalLeads ?? "", "Lead Stats"],
+    ["Calls Made", leadData?.callsMade ?? "", "Activity"],
+    ["Meetings Scheduled", leadData?.meetingsScheduled ?? "", "Activity"],
     ["Last Updated", leadData?.lastUpdated ?? "", "System"],
     [""],
     ["Lead Activity Data"],

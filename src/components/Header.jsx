@@ -1,18 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Zap,
-  Sun,
-  Moon,
-  RotateCcw,
-  StickyNote,
-  Menu,
-  Download,
-  FileText,
-  FileDown,
-} from "lucide-react";
+import { Zap, Sun, Moon, RotateCcw, StickyNote, Menu, Download, FileText, FileDown } from "lucide-react";
 import { dropdownVariants, fontFamily } from "../constants";
 import useThemeSafe from "../hooks/useThemeSafe";
+import useScrollLock from "../hooks/useScrollLock";
 
 /**
  * Header Component
@@ -40,34 +31,7 @@ const Header = ({
   const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
 
   // Prevent background scroll when hamburger menu is open on mobile/tablet
-  useEffect(() => {
-    if (isHamburgerMenuOpen) {
-      // Only apply on mobile/tablet devices (lg breakpoint is 1024px)
-      const isMobileOrTablet = window.innerWidth < 1024;
-      if (isMobileOrTablet) {
-        document.body.style.overflow = "hidden";
-        document.body.style.position = "fixed";
-        document.body.style.width = "100%";
-        document.body.style.top = `-${window.scrollY}px`;
-      }
-    } else {
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-      document.body.style.top = "";
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      }
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-      document.body.style.top = "";
-    };
-  }, [isHamburgerMenuOpen]);
+  useScrollLock(isHamburgerMenuOpen, { mobileOnly: true, mobileBreakpoint: 1024 });
 
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
@@ -104,14 +68,8 @@ const Header = ({
           onKeyDown={handleLogoKeyDown}
           aria-label="Reload page"
         >
-          <div
-            className={`p-2 sm:p-2.5 md:p-3 rounded-xl sm:rounded-2xl ${
-              isDark ? "bg-blue-900/30" : "bg-blue-100"
-            }`}
-          >
-            <Zap
-              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${isDark ? "text-blue-400" : "text-blue-600"}`}
-            />
+          <div className={`p-2 sm:p-2.5 md:p-3 rounded-xl sm:rounded-2xl ${isDark ? "bg-blue-900/30" : "bg-blue-100"}`}>
+            <Zap className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${isDark ? "text-blue-400" : "text-blue-600"}`} />
           </div>
           <div className="flex flex-col justify-center h-full">
             <h1
@@ -162,16 +120,10 @@ const Header = ({
             {isHamburgerMenuOpen && (
               <>
                 {/* Backdrop to close menu when clicking outside */}
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setIsHamburgerMenuOpen(false)}
-                  aria-hidden="true"
-                />
+                <div className="fixed inset-0 z-40" onClick={() => setIsHamburgerMenuOpen(false)} aria-hidden="true" />
                 <motion.div
                   className={`absolute right-0 mt-2 w-56 ${
-                    isDark
-                      ? "bg-slate-800/95 border-slate-700"
-                      : "bg-white/95 border-slate-300"
+                    isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"
                   } backdrop-blur-md rounded-xl border shadow-xl overflow-hidden z-50`}
                   initial="closed"
                   animate="open"
@@ -188,20 +140,14 @@ const Header = ({
                         setIsHamburgerMenuOpen(false);
                       }}
                       className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100"
+                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       style={{ fontFamily }}
                       role="menuitem"
                     >
-                      {isDark ? (
-                        <Sun className="w-4 h-4 text-yellow-400" />
-                      ) : (
-                        <Moon className="w-4 h-4" />
-                      )}
+                      {isDark ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4" />}
                       {isDark ? "Light Mode" : "Dark Mode"}
                     </motion.button>
 
@@ -213,9 +159,7 @@ const Header = ({
                       }}
                       disabled={isLoading}
                       className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100"
+                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -235,9 +179,7 @@ const Header = ({
                         setIsHamburgerMenuOpen(false);
                       }}
                       className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100"
+                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -255,9 +197,7 @@ const Header = ({
                         setIsHamburgerMenuOpen(false);
                       }}
                       className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100"
+                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -275,9 +215,7 @@ const Header = ({
                         setIsHamburgerMenuOpen(false);
                       }}
                       className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-3 cursor-pointer ${
-                        isDark
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100"
+                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -305,11 +243,7 @@ const Header = ({
           whileTap={{ scale: 0.95 }}
           aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         >
-          {isDark ? (
-            <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
-          ) : (
-            <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
-          )}
+          {isDark ? <Sun className="w-4 h-4 sm:w-5 sm:h-5" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5" />}
         </motion.button>
 
         {/* Refresh Button */}
@@ -323,9 +257,7 @@ const Header = ({
           disabled={isLoading}
           aria-label="Refresh data"
         >
-          <RotateCcw
-            className={`w-4 h-4 sm:w-5 sm:h-5 ${isLoading ? "animate-spin" : ""}`}
-          />
+          <RotateCcw className={`w-4 h-4 sm:w-5 sm:h-5 ${isLoading ? "animate-spin" : ""}`} />
         </motion.button>
 
         {/* Notes Button */}
@@ -361,16 +293,10 @@ const Header = ({
             {isMobileMenuOpen && (
               <>
                 {/* Backdrop to close menu when clicking outside */}
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  aria-hidden="true"
-                />
+                <div className="fixed inset-0 z-40" onClick={() => setIsMobileMenuOpen(false)} aria-hidden="true" />
                 <motion.div
                   className={`absolute right-0 mt-2 w-48 sm:w-56 ${
-                    isDark
-                      ? "bg-slate-800/95 border-slate-700"
-                      : "bg-white/95 border-slate-300"
+                    isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"
                   } backdrop-blur-md rounded-lg sm:rounded-xl border shadow-xl overflow-hidden z-50`}
                   initial="closed"
                   animate="open"
@@ -386,9 +312,7 @@ const Header = ({
                         setIsMobileMenuOpen(false);
                       }}
                       className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 sm:gap-3 cursor-pointer ${
-                        isDark
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100"
+                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -404,9 +328,7 @@ const Header = ({
                         setIsMobileMenuOpen(false);
                       }}
                       className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 sm:gap-3 cursor-pointer ${
-                        isDark
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100"
+                        isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}

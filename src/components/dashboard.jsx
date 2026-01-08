@@ -14,9 +14,9 @@ import useChartPeriods from "../hooks/useChartPeriods";
 // Components
 import Header from "./Header";
 import StatCards from "./StatCards";
-import AnimalActivityChart from "./AnimalActivityChart";
-import FeedingEfficiencyChart from "./FeedingEfficiencyChart";
-import DietDistributionChart from "./DietDistributionChart";
+import LeadActivityChart from "./LeadActivityChart.jsx";
+import ConversionRateChart from "./ConversionRateChart.jsx";
+import LeadSourceChart from "./LeadSourceChart.jsx";
 import AlertsPanel from "./AlertsPanel";
 import MeetingScheduleCard from "./MeetingScheduleCard";
 import RecentLeadActivities from "./RecentLeadActivities";
@@ -69,19 +69,19 @@ const ChartSection = memo(function ChartSection({
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* Lead Activity Chart with Error Boundary */}
           <ChartErrorBoundary chartName="Lead Activity" isDark={isDark} height="320px">
-            <AnimalActivityChart data={activityData} timePeriod={activityPeriod} setTimePeriod={setActivityPeriod} />
+            <LeadActivityChart data={activityData} timePeriod={activityPeriod} setTimePeriod={setActivityPeriod} />
           </ChartErrorBoundary>
 
           {/* Conversion Rate Chart with Error Boundary */}
           <ChartErrorBoundary chartName="Conversion Rate" isDark={isDark} height="320px">
-            <FeedingEfficiencyChart data={feedingData} timePeriod={feedingPeriod} setTimePeriod={setFeedingPeriod} />
+            <ConversionRateChart data={feedingData} timePeriod={feedingPeriod} setTimePeriod={setFeedingPeriod} />
           </ChartErrorBoundary>
         </div>
 
         <div className="space-y-4 sm:space-y-6">
           {/* Lead Source Distribution Chart with Error Boundary */}
           <ChartErrorBoundary chartName="Lead Sources" isDark={isDark} height="320px">
-            <DietDistributionChart data={dietData} timePeriod={dietPeriod} setTimePeriod={setDietPeriod} />
+            <LeadSourceChart data={dietData} timePeriod={dietPeriod} setTimePeriod={setDietPeriod} />
           </ChartErrorBoundary>
 
           {/* Alerts Panel */}
@@ -140,12 +140,7 @@ const DashboardContent = () => {
   );
 
   // Lead data management with API integration
-  const {
-    zooData: leadData,
-    isLoading,
-    error,
-    refreshData,
-  } = useLeadData({
+  const { leadData, isLoading, error, refreshData } = useLeadData({
     onNewAlert: handleNewAlert,
   });
 
@@ -170,35 +165,13 @@ const DashboardContent = () => {
     setIsMounted(true);
   }, []);
 
-  // Event handlers - memoized to prevent unnecessary re-renders
-  const handleAddAlert = useCallback(
-    (message) => {
-      addAlert(message);
-    },
-    [addAlert],
-  );
-
-  const handleClearAlerts = useCallback(() => {
-    clearAlerts();
-  }, [clearAlerts]);
-
-  const handleSaveNote = useCallback(
-    (content) => {
-      addNote(content);
-    },
-    [addNote],
-  );
-
-  const handleDeleteNote = useCallback(
-    (noteId) => {
-      deleteNote(noteId);
-    },
-    [deleteNote],
-  );
+  // Event handlers
+  // Note: addAlert, clearAlerts, addNote, deleteNote are already stable from their hooks,
+  // so we pass them directly instead of wrapping in useCallback
 
   const handleExportCSV = useCallback(() => {
     const data = {
-      zooData: leadData,
+      leadData,
       activityData,
       feedingData,
       dietData,
@@ -211,9 +184,9 @@ const DashboardContent = () => {
     const data = {
       timestamp: new Date().toISOString(),
       leadMetrics: {
-        totalLeads: leadData.population,
-        callsMade: leadData.temperature,
-        meetingsScheduled: leadData.humidity,
+        totalLeads: leadData.totalLeads,
+        callsMade: leadData.callsMade,
+        meetingsScheduled: leadData.meetingsScheduled,
         lastUpdated: leadData.lastUpdated,
       },
       activityData,
@@ -276,7 +249,7 @@ const DashboardContent = () => {
             animate="visible"
           >
             {/* Statistics Cards */}
-            <StatCards zooData={leadData} activityData={activityWeekData} />
+            <StatCards leadData={leadData} activityData={activityWeekData} />
 
             {/* Charts Section with Error Boundaries */}
             <ChartSection
@@ -321,8 +294,8 @@ const DashboardContent = () => {
         isOpen={isNotesOpen}
         onClose={closeNotes}
         notes={notes}
-        onSaveNote={handleSaveNote}
-        onDeleteNote={handleDeleteNote}
+        onSaveNote={addNote}
+        onDeleteNote={deleteNote}
       />
 
       <FooterModal isOpen={isProductModalOpen} onClose={closeProductModal} title="Product Information">
@@ -341,8 +314,8 @@ const DashboardContent = () => {
         isOpen={isAlertsModalOpen}
         onClose={closeAlertsModal}
         alerts={alerts}
-        onAddAlert={handleAddAlert}
-        onClearAlerts={handleClearAlerts}
+        onAddAlert={addAlert}
+        onClearAlerts={clearAlerts}
       />
     </div>
   );

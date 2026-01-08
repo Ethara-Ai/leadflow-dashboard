@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
 import { AlertTriangle, RefreshCcw } from "lucide-react";
 import { fontFamily } from "../constants";
 
@@ -127,5 +128,20 @@ class ErrorBoundary extends Component {
     return children;
   }
 }
+
+ErrorBoundary.propTypes = {
+  /** Child components to render */
+  children: PropTypes.node.isRequired,
+  /** Custom fallback element to render on error */
+  fallback: PropTypes.node,
+  /** Custom fallback component to render on error (receives error and resetErrorBoundary props) */
+  FallbackComponent: PropTypes.elementType,
+  /** Whether to show error details (useful in development) */
+  showDetails: PropTypes.bool,
+  /** Callback function called when an error is caught */
+  onError: PropTypes.func,
+  /** Callback function called when the error boundary is reset */
+  onReset: PropTypes.func,
+};
 
 export default ErrorBoundary;

@@ -1,7 +1,7 @@
 {
   "name": "leadflow-dashboard",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Professional Lead Generation and Management Platform - A modern dashboard for sales teams, marketing professionals, and business development specialists.",
   "type": "module",
   "author": "LeadFlow",

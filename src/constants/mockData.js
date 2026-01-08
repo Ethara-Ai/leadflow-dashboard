@@ -13,6 +13,14 @@ export const initialLeadData = {
   lastUpdated: new Date().toLocaleString(),
 };
 
+// Backward compatibility alias for initialLeadData with zoo-themed property names
+export const initialZooData = {
+  population: initialLeadData.totalLeads,
+  temperature: initialLeadData.callsMade,
+  humidity: initialLeadData.meetingsScheduled,
+  lastUpdated: initialLeadData.lastUpdated,
+};
+
 // -----------------------------------------------------------------------------
 // Initial Notes
 // -----------------------------------------------------------------------------
@@ -20,14 +28,12 @@ export const initialLeadData = {
 export const initialNotes = [
   {
     id: 1,
-    content:
-      "High-priority lead from TechCorp showing strong interest in enterprise plan - follow up by Friday",
+    content: "High-priority lead from TechCorp showing strong interest in enterprise plan - follow up by Friday",
     timestamp: new Date(Date.now() - 86400000).toLocaleString(),
   },
   {
     id: 2,
-    content:
-      "Q4 campaign performing well - conversion rate up 15% compared to last quarter",
+    content: "Q4 campaign performing well - conversion rate up 15% compared to last quarter",
     timestamp: new Date(Date.now() - 172800000).toLocaleString(),
   },
 ];
