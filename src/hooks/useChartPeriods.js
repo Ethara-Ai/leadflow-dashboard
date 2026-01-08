@@ -1,32 +1,35 @@
+// =============================================================================
+// LEADFLOW DASHBOARD - USE CHART PERIODS HOOK
+// Custom hook for managing chart time period states
+// =============================================================================
+
 import { useState, useMemo, useCallback } from "react";
 import {
   activityWeekData,
   activityMonthData,
   activityYearData,
-  feedingWeekData,
-  feedingMonthData,
-  feedingYearData,
-  dietWeekData,
-  dietMonthData,
-  dietYearData,
-} from "../constants";
+  conversionWeekData,
+  conversionMonthData,
+  conversionYearData,
+  sourceWeekData,
+  sourceMonthData,
+  sourceYearData,
+  TIME_PERIODS,
+} from "../constants/index.js";
 
-/**
- * Valid time period values
- */
-export const TIME_PERIODS = {
-  WEEK: "week",
-  MONTH: "month",
-  YEAR: "year",
-};
+// Re-export TIME_PERIODS for convenience
+export { TIME_PERIODS };
 
 /**
  * Chart identifiers
  */
 export const CHART_IDS = {
   ACTIVITY: "activity",
-  FEEDING: "feeding",
-  DIET: "diet",
+  CONVERSION: "conversion",
+  SOURCE: "source",
+  // Backward compatibility aliases
+  FEEDING: "conversion",
+  DIET: "source",
 };
 
 /**
@@ -42,15 +45,15 @@ const getChartData = (chartId, period) => {
       [TIME_PERIODS.MONTH]: activityMonthData,
       [TIME_PERIODS.YEAR]: activityYearData,
     },
-    [CHART_IDS.FEEDING]: {
-      [TIME_PERIODS.WEEK]: feedingWeekData,
-      [TIME_PERIODS.MONTH]: feedingMonthData,
-      [TIME_PERIODS.YEAR]: feedingYearData,
+    [CHART_IDS.CONVERSION]: {
+      [TIME_PERIODS.WEEK]: conversionWeekData,
+      [TIME_PERIODS.MONTH]: conversionMonthData,
+      [TIME_PERIODS.YEAR]: conversionYearData,
     },
-    [CHART_IDS.DIET]: {
-      [TIME_PERIODS.WEEK]: dietWeekData,
-      [TIME_PERIODS.MONTH]: dietMonthData,
-      [TIME_PERIODS.YEAR]: dietYearData,
+    [CHART_IDS.SOURCE]: {
+      [TIME_PERIODS.WEEK]: sourceWeekData,
+      [TIME_PERIODS.MONTH]: sourceMonthData,
+      [TIME_PERIODS.YEAR]: sourceYearData,
     },
   };
 
@@ -68,8 +71,8 @@ const getChartData = (chartId, period) => {
 const useChartPeriods = ({ defaultPeriod = TIME_PERIODS.WEEK } = {}) => {
   // Individual time period states for each chart
   const [activityPeriod, setActivityPeriod] = useState(defaultPeriod);
-  const [feedingPeriod, setFeedingPeriod] = useState(defaultPeriod);
-  const [dietPeriod, setDietPeriod] = useState(defaultPeriod);
+  const [conversionPeriod, setConversionPeriod] = useState(defaultPeriod);
+  const [sourcePeriod, setSourcePeriod] = useState(defaultPeriod);
 
   /**
    * Set all charts to the same time period
@@ -78,8 +81,8 @@ const useChartPeriods = ({ defaultPeriod = TIME_PERIODS.WEEK } = {}) => {
   const setAllPeriods = useCallback((period) => {
     if (Object.values(TIME_PERIODS).includes(period)) {
       setActivityPeriod(period);
-      setFeedingPeriod(period);
-      setDietPeriod(period);
+      setConversionPeriod(period);
+      setSourcePeriod(period);
     }
   }, []);
 
@@ -88,8 +91,8 @@ const useChartPeriods = ({ defaultPeriod = TIME_PERIODS.WEEK } = {}) => {
    */
   const resetPeriods = useCallback(() => {
     setActivityPeriod(defaultPeriod);
-    setFeedingPeriod(defaultPeriod);
-    setDietPeriod(defaultPeriod);
+    setConversionPeriod(defaultPeriod);
+    setSourcePeriod(defaultPeriod);
   }, [defaultPeriod]);
 
   /**
@@ -97,48 +100,41 @@ const useChartPeriods = ({ defaultPeriod = TIME_PERIODS.WEEK } = {}) => {
    * @param {string} chartId - The chart identifier
    * @returns {function} The setter function for that chart
    */
-  const getPeriodSetter = useCallback(
-    (chartId) => {
-      switch (chartId) {
-        case CHART_IDS.ACTIVITY:
-          return setActivityPeriod;
-        case CHART_IDS.FEEDING:
-          return setFeedingPeriod;
-        case CHART_IDS.DIET:
-          return setDietPeriod;
-        default:
-          return () => {};
-      }
-    },
-    []
-  );
+  const getPeriodSetter = useCallback((chartId) => {
+    switch (chartId) {
+      case CHART_IDS.ACTIVITY:
+        return setActivityPeriod;
+      case CHART_IDS.CONVERSION:
+      case CHART_IDS.FEEDING: // backward compatibility
+        return setConversionPeriod;
+      case CHART_IDS.SOURCE:
+      case CHART_IDS.DIET: // backward compatibility
+        return setSourcePeriod;
+      default:
+        return () => {};
+    }
+  }, []);
 
   // Memoized data for each chart based on current period
-  const activityData = useMemo(
-    () => getChartData(CHART_IDS.ACTIVITY, activityPeriod),
-    [activityPeriod]
-  );
+  const activityData = useMemo(() => getChartData(CHART_IDS.ACTIVITY, activityPeriod), [activityPeriod]);
 
-  const feedingData = useMemo(
-    () => getChartData(CHART_IDS.FEEDING, feedingPeriod),
-    [feedingPeriod]
-  );
+  const conversionData = useMemo(() => getChartData(CHART_IDS.CONVERSION, conversionPeriod), [conversionPeriod]);
 
-  const dietData = useMemo(() => getChartData(CHART_IDS.DIET, dietPeriod), [dietPeriod]);
+  const sourceData = useMemo(() => getChartData(CHART_IDS.SOURCE, sourcePeriod), [sourcePeriod]);
 
   // Check if all periods are synchronized
-  const arePeriodsSync = activityPeriod === feedingPeriod && feedingPeriod === dietPeriod;
+  const arePeriodsSync = activityPeriod === conversionPeriod && conversionPeriod === sourcePeriod;
 
   return {
     // Individual period states
     activityPeriod,
-    feedingPeriod,
-    dietPeriod,
+    conversionPeriod,
+    sourcePeriod,
 
     // Individual setters
     setActivityPeriod,
-    setFeedingPeriod,
-    setDietPeriod,
+    setConversionPeriod,
+    setSourcePeriod,
 
     // Bulk operations
     setAllPeriods,
@@ -149,19 +145,29 @@ const useChartPeriods = ({ defaultPeriod = TIME_PERIODS.WEEK } = {}) => {
 
     // Computed data (memoized)
     activityData,
-    feedingData,
-    dietData,
+    conversionData,
+    sourceData,
 
     // Status
     arePeriodsSync,
 
-    // Backward compatibility aliases
+    // Backward compatibility aliases for "feeding" terminology
+    feedingPeriod: conversionPeriod,
+    setFeedingPeriod: setConversionPeriod,
+    feedingData: conversionData,
+
+    // Backward compatibility aliases for "diet" terminology
+    dietPeriod: sourcePeriod,
+    setDietPeriod: setSourcePeriod,
+    dietData: sourceData,
+
+    // Legacy aliases
     timePeriod: activityPeriod,
     setTimePeriod: setActivityPeriod,
-    foragingTimePeriod: feedingPeriod,
-    setForagingTimePeriod: setFeedingPeriod,
-    foodTimePeriod: dietPeriod,
-    setFoodTimePeriod: setDietPeriod,
+    foragingTimePeriod: conversionPeriod,
+    setForagingTimePeriod: setConversionPeriod,
+    foodTimePeriod: sourcePeriod,
+    setFoodTimePeriod: setSourcePeriod,
   };
 };
 

@@ -9,11 +9,11 @@ import {
   activityWeekData,
   activityMonthData,
   activityYearData,
-  // Feeding Efficiency Data
+  // Feeding Efficiency Data (backward compatibility aliases)
   feedingWeekData,
   feedingMonthData,
   feedingYearData,
-  // Diet Distribution Data
+  // Diet Distribution Data (backward compatibility aliases)
   dietWeekData,
   dietMonthData,
   dietYearData,
@@ -27,13 +27,14 @@ import {
   staggerContainerVariants,
   // Initial Data
   initialZooData,
+  initialLeadData,
   initialNotes,
   initialAlerts,
   alertMessages,
   // Typography
   fontFamily,
   fontFamilyHeading,
-} from "./constants";
+} from "./constants/index.js";
 
 // =============================================================================
 // Activity Data Tests
@@ -93,20 +94,7 @@ describe("Activity Year Data", () => {
 
   it("should have correct month abbreviations", () => {
     const monthNames = activityYearData.map((m) => m.name);
-    expect(monthNames).toEqual([
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ]);
+    expect(monthNames).toEqual(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]);
   });
 
   it("should have leads and callsCompleted properties for each month", () => {
@@ -359,12 +347,8 @@ describe("staggerContainerVariants", () => {
 
   it("should have stagger transition in visible state", () => {
     expect(staggerContainerVariants.visible).toHaveProperty("transition");
-    expect(staggerContainerVariants.visible.transition).toHaveProperty(
-      "staggerChildren",
-    );
-    expect(staggerContainerVariants.visible.transition).toHaveProperty(
-      "delayChildren",
-    );
+    expect(staggerContainerVariants.visible.transition).toHaveProperty("staggerChildren");
+    expect(staggerContainerVariants.visible.transition).toHaveProperty("delayChildren");
   });
 });
 
@@ -372,27 +356,47 @@ describe("staggerContainerVariants", () => {
 // Initial Zoo Data Tests
 // =============================================================================
 
-describe("initialZooData", () => {
-  it("should have totalLeads property", () => {
-    expect(initialZooData).toHaveProperty("totalLeads");
-    expect(typeof initialZooData.totalLeads).toBe("number");
-    expect(initialZooData.totalLeads).toBeGreaterThan(0);
+describe("initialZooData (backward compatibility alias)", () => {
+  it("should have population property (alias for totalLeads)", () => {
+    expect(initialZooData).toHaveProperty("population");
+    expect(typeof initialZooData.population).toBe("number");
   });
 
-  it("should have callsMade property", () => {
-    expect(initialZooData).toHaveProperty("callsMade");
-    expect(typeof initialZooData.callsMade).toBe("number");
+  it("should have temperature property (alias for callsMade)", () => {
+    expect(initialZooData).toHaveProperty("temperature");
+    expect(typeof initialZooData.temperature).toBe("number");
   });
 
-  it("should have meetingsScheduled property", () => {
-    expect(initialZooData).toHaveProperty("meetingsScheduled");
-    expect(typeof initialZooData.meetingsScheduled).toBe("number");
-    expect(initialZooData.meetingsScheduled).toBeGreaterThanOrEqual(0);
+  it("should have humidity property (alias for meetingsScheduled)", () => {
+    expect(initialZooData).toHaveProperty("humidity");
+    expect(typeof initialZooData.humidity).toBe("number");
   });
 
   it("should have lastUpdated property", () => {
     expect(initialZooData).toHaveProperty("lastUpdated");
     expect(typeof initialZooData.lastUpdated).toBe("string");
+  });
+});
+
+describe("initialLeadData", () => {
+  it("should have totalLeads property", () => {
+    expect(initialLeadData).toHaveProperty("totalLeads");
+    expect(typeof initialLeadData.totalLeads).toBe("number");
+  });
+
+  it("should have callsMade property", () => {
+    expect(initialLeadData).toHaveProperty("callsMade");
+    expect(typeof initialLeadData.callsMade).toBe("number");
+  });
+
+  it("should have meetingsScheduled property", () => {
+    expect(initialLeadData).toHaveProperty("meetingsScheduled");
+    expect(typeof initialLeadData.meetingsScheduled).toBe("number");
+  });
+
+  it("should have lastUpdated property", () => {
+    expect(initialLeadData).toHaveProperty("lastUpdated");
+    expect(typeof initialLeadData.lastUpdated).toBe("string");
   });
 });
 

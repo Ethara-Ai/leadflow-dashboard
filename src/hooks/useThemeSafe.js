@@ -1,3 +1,8 @@
+// =============================================================================
+// LEADFLOW DASHBOARD - USE THEME SAFE HOOK
+// Safe theme hook that handles cases where ThemeProvider is not available
+// =============================================================================
+
 import { useContext } from "react";
 import { ThemeContext } from "./ThemeContext.js";
 
@@ -31,14 +36,19 @@ const useThemeSafe = (darkModeOverride) => {
   }
 
   // Fallback when used outside ThemeProvider
+  // Only warn in development to avoid console noise in production
   return {
     isDark: false,
     darkMode: false,
     toggleTheme: () => {
-      console.warn("useThemeSafe: toggleTheme called outside of ThemeProvider");
+      if (import.meta.env.DEV) {
+        console.warn("useThemeSafe: toggleTheme called outside of ThemeProvider");
+      }
     },
     setDarkMode: () => {
-      console.warn("useThemeSafe: setDarkMode called outside of ThemeProvider");
+      if (import.meta.env.DEV) {
+        console.warn("useThemeSafe: setDarkMode called outside of ThemeProvider");
+      }
     },
   };
 };

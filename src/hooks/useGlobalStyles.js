@@ -1,3 +1,8 @@
+// =============================================================================
+// LEADFLOW DASHBOARD - USE GLOBAL STYLES HOOK
+// Custom hook for injecting global styles into the document head
+// =============================================================================
+
 import { useEffect } from "react";
 
 const THEME_STYLES_ID = "leadflow-theme-styles";
@@ -67,6 +72,15 @@ const generateScrollbarStyles = (isDark) => `
   .custom-scroll::-webkit-scrollbar-thumb:hover {
     background: ${isDark ? "#64748b" : "#94a3b8"};
   }
+
+  .hidden-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .hidden-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 /**
@@ -79,7 +93,6 @@ const generateScrollbarStyles = (isDark) => `
  * @param {boolean} darkMode - Whether dark mode is enabled
  */
 const useGlobalStyles = (darkMode) => {
-  // Update theme-dependent styles when dark mode changes
   useEffect(() => {
     let styleElement = document.getElementById(THEME_STYLES_ID);
 
@@ -91,9 +104,8 @@ const useGlobalStyles = (darkMode) => {
 
     styleElement.textContent = generateScrollbarStyles(darkMode);
 
-    // Cleanup function - we intentionally don't remove the style element
+    // No cleanup needed - we intentionally keep the style element
     // to avoid flicker during re-renders. It will be updated on next render.
-    return () => {};
   }, [darkMode]);
 };
 

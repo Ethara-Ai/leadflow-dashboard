@@ -1,16 +1,41 @@
+// =============================================================================
+// LEADFLOW DASHBOARD - USE ALERTS HOOK
+// Custom hook for managing alerts state
+// =============================================================================
+
 import { useState, useCallback } from "react";
-import { initialAlerts } from "../constants";
+import { initialAlerts, MAX_ALERTS, ALERT_TYPES } from "../constants/index.js";
 
 /**
  * Custom hook for managing alerts state
  *
  * @param {Object} options - Hook options
  * @param {Array} [options.initialState] - Initial alerts array (defaults to initialAlerts from constants)
- * @param {number} [options.maxAlerts=5] - Maximum number of alerts to keep
+ * @param {number} [options.maxAlerts] - Maximum number of alerts to keep (defaults to MAX_ALERTS)
  * @returns {Object} Alerts state and handlers
  */
-const useAlerts = ({ initialState = initialAlerts, maxAlerts = 5 } = {}) => {
+const useAlerts = ({ initialState = initialAlerts, maxAlerts = MAX_ALERTS } = {}) => {
   const [alerts, setAlerts] = useState(initialState);
+
+  /**
+   * Determine alert type based on message content
+   * @param {string} message - Alert message
+   * @returns {string} Alert type
+   */
+  const getAlertTypeFromMessage = useCallback((message) => {
+    const lowerMessage = message.toLowerCase();
+
+    if (lowerMessage.includes("warning") || lowerMessage.includes("pending") || lowerMessage.includes("requires")) {
+      return ALERT_TYPES.WARNING;
+    }
+    if (lowerMessage.includes("error") || lowerMessage.includes("failed")) {
+      return ALERT_TYPES.ERROR;
+    }
+    if (lowerMessage.includes("success") || lowerMessage.includes("completed") || lowerMessage.includes("achieved")) {
+      return ALERT_TYPES.SUCCESS;
+    }
+    return ALERT_TYPES.INFO;
+  }, []);
 
   /**
    * Add a new alert to the list
@@ -21,34 +46,27 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = 5 } = {}) => {
       let newAlert;
 
       if (typeof alertOrMessage === "string") {
-        // Determine alert type based on message content
         const message = alertOrMessage;
-        let alertType = "info";
-
-        if (message.toLowerCase().includes("warning")) {
-          alertType = "warning";
-        } else if (message.toLowerCase().includes("error")) {
-          alertType = "error";
-        }
-
         newAlert = {
           id: Date.now(),
           message,
-          type: alertType,
+          type: getAlertTypeFromMessage(message),
           time: "Just now",
+          timestamp: new Date().toISOString(),
         };
       } else {
         // Use provided alert object, ensuring it has an id
         newAlert = {
           id: Date.now(),
           time: "Just now",
+          timestamp: new Date().toISOString(),
           ...alertOrMessage,
         };
       }
 
       setAlerts((prev) => [newAlert, ...prev].slice(0, maxAlerts));
     },
-    [maxAlerts]
+    [maxAlerts, getAlertTypeFromMessage],
   );
 
   /**
@@ -64,9 +82,7 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = 5 } = {}) => {
    * @param {number|string} alertId - ID of the alert to dismiss
    */
   const dismissAlert = useCallback((alertId) => {
-    setAlerts((prev) =>
-      prev.map((alert) => (alert.id === alertId ? { ...alert, dismissed: true } : alert))
-    );
+    setAlerts((prev) => prev.map((alert) => (alert.id === alertId ? { ...alert, dismissed: true } : alert)));
   }, []);
 
   /**
@@ -93,16 +109,49 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = 5 } = {}) => {
    */
   const activeAlerts = alerts.filter((alert) => !alert.dismissed);
 
+  /**
+   * Get alerts by type
+   * @param {string} type - Alert type to filter by
+   * @returns {Array} Alerts of the specified type
+   */
+  const getAlertsByType = useCallback(
+    (type) => {
+      return alerts.filter((alert) => alert.type === type && !alert.dismissed);
+    },
+    [alerts],
+  );
+
+  /**
+   * Check if there are any warning alerts
+   */
+  const hasWarnings = alerts.some((alert) => alert.type === ALERT_TYPES.WARNING && !alert.dismissed);
+
+  /**
+   * Check if there are any error alerts
+   */
+  const hasErrors = alerts.some((alert) => alert.type === ALERT_TYPES.ERROR && !alert.dismissed);
+
   return {
+    // State
     alerts,
     activeAlerts,
     activeAlertCount,
     alertCount: alerts.length,
+
+    // Type checks
+    hasWarnings,
+    hasErrors,
+
+    // Actions
     addAlert,
     removeAlert,
     dismissAlert,
     clearAlerts,
     resetAlerts,
+    getAlertsByType,
+
+    // Utilities
+    getAlertTypeFromMessage,
   };
 };
 

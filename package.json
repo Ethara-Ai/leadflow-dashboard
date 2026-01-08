@@ -8,12 +8,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ethara-AI/zoolab-dashboard.git"
+    "url": "https://github.com/Ethara-AI/leadflow-dashboard.git"
   },
   "bugs": {
-    "url": "https://github.com/Ethara-AI/zoolab-dashboard/issues"
+    "url": "https://github.com/Ethara-AI/leadflow-dashboard/issues"
   },
-  "homepage": "https://components.ethara.ai/zoolab-dashboard",
+  "homepage": "https://components.ethara.ai/leadflow-dashboard",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

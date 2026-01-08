@@ -8,7 +8,7 @@ import ThemeProvider from "../hooks/ThemeProvider";
 import useLeadData from "../hooks/useLeadData";
 import useAlerts from "../hooks/useAlerts";
 import useNotes from "../hooks/useNotes";
-import useModals, { MODAL_IDS } from "../hooks/useModals";
+import useModals from "../hooks/useModals";
 import useChartPeriods from "../hooks/useChartPeriods";
 
 // Components
@@ -31,19 +31,23 @@ import ProductModalContent from "./ProductModalContent";
 import ResourcesModalContent from "./ResourcesModalContent";
 import CompanyModalContent from "./CompanyModalContent";
 import ErrorBoundary from "./ErrorBoundary";
+import { ChartErrorBoundary } from "./charts/index.js";
 
-// Constants and Utils
+// Constants - using new modular structure
 import {
   staggerContainerVariants,
   fontFamily,
   activityWeekData,
   initialMeetings,
   initialActivities,
-} from "../constants";
+} from "../constants/index.js";
+
+// Utils
 import { exportToCSV, exportToJSON, generateExportFilename } from "../utils";
 
 /**
- * Memoized chart section to prevent unnecessary re-renders
+ * Memoized chart section with error boundaries around each chart
+ * Prevents individual chart failures from crashing the entire dashboard
  */
 const ChartSection = memo(function ChartSection({
   activityData,
@@ -57,33 +61,35 @@ const ChartSection = memo(function ChartSection({
   setDietPeriod,
   alerts,
   onOpenAlertsModal,
+  isDark,
 }) {
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-          <AnimalActivityChart
-            data={activityData}
-            timePeriod={activityPeriod}
-            setTimePeriod={setActivityPeriod}
-          />
-          <FeedingEfficiencyChart
-            data={feedingData}
-            timePeriod={feedingPeriod}
-            setTimePeriod={setFeedingPeriod}
-          />
+          {/* Lead Activity Chart with Error Boundary */}
+          <ChartErrorBoundary chartName="Lead Activity" isDark={isDark} height="320px">
+            <AnimalActivityChart data={activityData} timePeriod={activityPeriod} setTimePeriod={setActivityPeriod} />
+          </ChartErrorBoundary>
+
+          {/* Conversion Rate Chart with Error Boundary */}
+          <ChartErrorBoundary chartName="Conversion Rate" isDark={isDark} height="320px">
+            <FeedingEfficiencyChart data={feedingData} timePeriod={feedingPeriod} setTimePeriod={setFeedingPeriod} />
+          </ChartErrorBoundary>
         </div>
+
         <div className="space-y-4 sm:space-y-6">
-          <DietDistributionChart
-            data={dietData}
-            timePeriod={dietPeriod}
-            setTimePeriod={setDietPeriod}
-          />
+          {/* Lead Source Distribution Chart with Error Boundary */}
+          <ChartErrorBoundary chartName="Lead Sources" isDark={isDark} height="320px">
+            <DietDistributionChart data={dietData} timePeriod={dietPeriod} setTimePeriod={setDietPeriod} />
+          </ChartErrorBoundary>
+
+          {/* Alerts Panel */}
           <AlertsPanel alerts={alerts} onOpenModal={onOpenAlertsModal} />
         </div>
       </div>
 
-      {/* New Cards Section */}
+      {/* Cards Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
         <MeetingScheduleCard meetings={initialMeetings} />
         <RecentLeadActivities activities={initialActivities} />
@@ -125,7 +131,7 @@ const DashboardContent = () => {
     closeAlertsModal,
   } = useModals();
 
-  // Handle new alerts from zoo data refresh
+  // Handle new alerts from lead data refresh
   const handleNewAlert = useCallback(
     (alert) => {
       addAlert(alert);
@@ -133,10 +139,17 @@ const DashboardContent = () => {
     [addAlert],
   );
 
-  const { zooData, isLoading, error, refreshData } = useLeadData({
+  // Lead data management with API integration
+  const {
+    zooData: leadData,
+    isLoading,
+    error,
+    refreshData,
+  } = useLeadData({
     onNewAlert: handleNewAlert,
   });
 
+  // Chart time periods management
   const {
     activityPeriod,
     setActivityPeriod,
@@ -149,7 +162,7 @@ const DashboardContent = () => {
     dietData,
   } = useChartPeriods();
 
-  // Apply global styles
+  // Apply global styles (scrollbars, etc.)
   useGlobalStyles(darkMode);
 
   // Use useLayoutEffect for mount detection to avoid flash of empty content
@@ -157,7 +170,7 @@ const DashboardContent = () => {
     setIsMounted(true);
   }, []);
 
-  // Event handlers
+  // Event handlers - memoized to prevent unnecessary re-renders
   const handleAddAlert = useCallback(
     (message) => {
       addAlert(message);
@@ -185,33 +198,38 @@ const DashboardContent = () => {
 
   const handleExportCSV = useCallback(() => {
     const data = {
-      zooData,
+      zooData: leadData,
       activityData,
       feedingData,
       dietData,
       alerts,
     };
     exportToCSV(data, generateExportFilename("csv"));
-  }, [zooData, activityData, feedingData, dietData, alerts]);
+  }, [leadData, activityData, feedingData, dietData, alerts]);
 
   const handleExportJSON = useCallback(() => {
     const data = {
       timestamp: new Date().toISOString(),
-      zooMetrics: zooData,
+      leadMetrics: {
+        totalLeads: leadData.population,
+        callsMade: leadData.temperature,
+        meetingsScheduled: leadData.humidity,
+        lastUpdated: leadData.lastUpdated,
+      },
       activityData,
-      feedingEfficiency: feedingData,
-      dietDistribution: dietData,
+      conversionRate: feedingData,
+      leadSources: dietData,
       alerts: alerts.filter((alert) => !alert.dismissed),
       notes,
     };
     exportToJSON(data, generateExportFilename("json"));
-  }, [zooData, activityData, feedingData, dietData, alerts, notes]);
+  }, [leadData, activityData, feedingData, dietData, alerts, notes]);
 
   const handleCloseWelcome = useCallback(() => {
     setShowWelcomeMessage(false);
   }, []);
 
-  // Don't render until mounted
+  // Don't render until mounted (prevents hydration issues)
   if (!isMounted) {
     return null;
   }
@@ -229,6 +247,7 @@ const DashboardContent = () => {
       }}
     >
       <div className="max-w-7xl mx-auto p-4 sm:p-8">
+        {/* Header with controls */}
         <Header
           isLoading={isLoading}
           onToggleDarkMode={toggleTheme}
@@ -238,17 +257,15 @@ const DashboardContent = () => {
           onExportJSON={handleExportJSON}
         />
 
+        {/* Welcome Message (dismissible) */}
         <AnimatePresence>
-          {showWelcomeMessage && (
-            <WelcomeMessage
-              show={showWelcomeMessage}
-              onClose={handleCloseWelcome}
-            />
-          )}
+          {showWelcomeMessage && <WelcomeMessage show={showWelcomeMessage} onClose={handleCloseWelcome} />}
         </AnimatePresence>
 
+        {/* Error Display */}
         <ErrorMessage error={error} />
 
+        {/* Main Content */}
         {isLoading ? (
           <LoadingSkeleton />
         ) : (
@@ -258,8 +275,10 @@ const DashboardContent = () => {
             initial="hidden"
             animate="visible"
           >
-            <StatCards zooData={zooData} activityData={activityWeekData} />
+            {/* Statistics Cards */}
+            <StatCards zooData={leadData} activityData={activityWeekData} />
 
+            {/* Charts Section with Error Boundaries */}
             <ChartSection
               activityData={activityData}
               activityPeriod={activityPeriod}
@@ -272,8 +291,10 @@ const DashboardContent = () => {
               setDietPeriod={setDietPeriod}
               alerts={alerts}
               onOpenAlertsModal={openAlertsModal}
+              isDark={darkMode}
             />
 
+            {/* Last Updated Footer */}
             <motion.div
               className={`mt-12 text-center text-sm ${darkMode ? "text-slate-500" : "text-slate-400"}`}
               initial={{ opacity: 0 }}
@@ -281,13 +302,14 @@ const DashboardContent = () => {
               transition={{ delay: 0.8, duration: 0.5 }}
             >
               <p className="font-medium" style={{ fontFamily }}>
-                Last updated: {zooData.lastUpdated}
+                Last updated: {leadData.lastUpdated}
               </p>
             </motion.div>
           </motion.div>
         )}
       </div>
 
+      {/* Footer */}
       <Footer
         onOpenProductModal={openProductModal}
         onOpenResourcesModal={openResourcesModal}
@@ -303,27 +325,15 @@ const DashboardContent = () => {
         onDeleteNote={handleDeleteNote}
       />
 
-      <FooterModal
-        isOpen={isProductModalOpen}
-        onClose={closeProductModal}
-        title="Product Information"
-      >
+      <FooterModal isOpen={isProductModalOpen} onClose={closeProductModal} title="Product Information">
         <ProductModalContent />
       </FooterModal>
 
-      <FooterModal
-        isOpen={isResourcesModalOpen}
-        onClose={closeResourcesModal}
-        title="Resources & Community"
-      >
+      <FooterModal isOpen={isResourcesModalOpen} onClose={closeResourcesModal} title="Resources & Community">
         <ResourcesModalContent />
       </FooterModal>
 
-      <FooterModal
-        isOpen={isCompanyModalOpen}
-        onClose={closeCompanyModal}
-        title="Company & Legal"
-      >
+      <FooterModal isOpen={isCompanyModalOpen} onClose={closeCompanyModal} title="Company & Legal">
         <CompanyModalContent />
       </FooterModal>
 
