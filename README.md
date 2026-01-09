@@ -53,8 +53,8 @@ A modern, responsive dashboard for sales teams, marketing professionals, and bus
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Ethara-AI/zoolab-dashboard.git
-   cd zoolab-dashboard
+   git clone https://github.com/Ethara-AI/leadflow-dashboard.git
+   cd leadflow-dashboard
    ```
 
 2. **Install dependencies**
@@ -349,7 +349,7 @@ Container component managing all modal states and rendering.
 
 ## Theme System
 
-ZooLab uses a centralized theme management system via React Context.
+leadflow uses a centralized theme management system via React Context.
 
 ### Theme Provider
 
@@ -381,7 +381,7 @@ const MyComponent = () => {
 
 ### Theme Persistence
 
-Theme preferences are automatically persisted to `localStorage` under the key `zoolab-theme`.
+Theme preferences are automatically persisted to `localStorage` under the key `leadflow-theme`.
 
 ---
 
@@ -415,7 +415,7 @@ Theme preferences are automatically persisted to `localStorage` under the key `z
 ## Project Structure
 
 ```
-zoolab-dashboard/
+leadflow-dashboard/
 ├── .github/               # GitHub configuration
 │   └── workflows/         # CI/CD workflows
 ├── public/                # Static assets
@@ -519,7 +519,7 @@ zoolab-dashboard/
 
 ## Mobile and Tablet Support
 
-ZooLab Dashboard is fully optimized for mobile and tablet devices:
+LeadFlow Dashboard is fully optimized for mobile and tablet devices:
 
 - **Hamburger Menu** - All action buttons consolidated into a single menu on small screens
 - **Responsive Modals** - Modals adjust to viewport with proper scrolling and safe area support
@@ -532,7 +532,7 @@ ZooLab Dashboard is fully optimized for mobile and tablet devices:
 
 ## Testing
 
-ZooLab uses Vitest with React Testing Library for unit and integration testing.
+LeadFlow uses Vitest with React Testing Library for unit and integration testing.
 
 ### Running Tests
 
@@ -565,7 +565,7 @@ We welcome contributions from the community! Here is how you can help:
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally
    ```bash
-   git clone https://github.com/your-username/zoolab-dashboard.git
+   git clone https://github.com/your-username/leadflow-dashboard.git
    ```
 3. **Create a feature branch**
    ```bash
@@ -645,12 +645,12 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## Links
 
-- **Homepage**: [https://components.ethara.ai/zoolab-dashboard](https://components.ethara.ai/zoolab-dashboard)
-- **Repository**: [https://github.com/Ethara-AI/zoolab-dashboard](https://github.com/Ethara-AI/zoolab-dashboard)
-- **Issues**: [https://github.com/Ethara-AI/zoolab-dashboard/issues](https://github.com/Ethara-AI/zoolab-dashboard/issues)
+- **Homepage**: [https://components.ethara.ai/leadflow-dashboard](https://components.ethara.ai/leadflow-dashboard)
+- **Repository**: [https://github.com/Ethara-AI/leadflow-dashboard](https://github.com/Ethara-AI/leadflow-dashboard)
+- **Issues**: [https://github.com/Ethara-AI/leadflow-dashboard/issues](https://github.com/Ethara-AI/leadflow-dashboard/issues)
 
 ---
 
 Built for sales and business development professionals.
 
-**Copyright 2026 ZooLab. All rights reserved.**
+**Copyright 2026 LeadFlow. All rights reserved.**
