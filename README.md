@@ -1,4 +1,4 @@
-# ZooLab Dashboard
+# LeadFlow Dashboard
 
 **Professional Lead Generation and Management Platform**
 
