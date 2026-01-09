@@ -48,7 +48,7 @@ const TimePeriodButtons = memo(function TimePeriodButtons({
               isSelected
                 ? 'bg-blue-600 text-white shadow-lg'
                 : isDark
-                  ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                  ? 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-700/50'
                   : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100'
             }`}
             onClick={() => onPeriodChange(period)}

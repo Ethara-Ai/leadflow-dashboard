@@ -1,5 +1,135 @@
 @import 'tailwindcss';
 
+/* ==========================================
+   Dark Mode Theme - Pure Blackish/Neutral Colors
+   ========================================== */
+
+/* Override slate colors with neutral/zinc dark colors for dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-primary: #0a0a0a;
+    --color-bg-secondary: #141414;
+    --color-bg-tertiary: #1f1f1f;
+    --color-bg-elevated: #262626;
+    --color-border: #2e2e2e;
+    --color-border-subtle: #1f1f1f;
+    --color-text-primary: #fafafa;
+    --color-text-secondary: #a3a3a3;
+    --color-text-muted: #737373;
+    --color-accent: #3b82f6;
+    --color-accent-muted: rgba(59, 130, 246, 0.15);
+  }
+}
+
+/* Dark mode color overrides - pure blackish appearance */
+.dark,
+[data-theme='dark'] {
+  --tw-bg-opacity: 1;
+  color-scheme: dark;
+}
+
+/* Custom dark theme utilities */
+@layer utilities {
+  /* Dark card backgrounds - pure black gradient */
+  .dark-card {
+    background: linear-gradient(145deg, #141414 0%, #0a0a0a 100%);
+    border-color: rgba(46, 46, 46, 0.5);
+  }
+
+  /* Dark glassmorphism effect - deeper black */
+  .dark-glass {
+    background: rgba(10, 10, 10, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  /* Subtle dark gradient overlay */
+  .dark-gradient-overlay {
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0.9) 100%);
+  }
+
+  /* Elevated dark surface */
+  .dark-elevated {
+    background: linear-gradient(145deg, #1a1a1a 0%, #141414 100%);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Override Tailwind slate colors in dark mode context */
+@layer base {
+  /* Dark mode body styling - pure black */
+  .dark body,
+  body.dark {
+    background-color: #0a0a0a;
+    color: #fafafa;
+  }
+
+  /* Override slate-800 backgrounds to neutral/zinc */
+  .dark .bg-slate-800,
+  .dark .bg-slate-800\/80,
+  .dark .bg-slate-800\/95 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(20 20 20 / var(--tw-bg-opacity)) !important;
+  }
+
+  .dark .bg-slate-900,
+  .dark .bg-slate-900\/50,
+  .dark .bg-slate-900\/80 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(10 10 10 / var(--tw-bg-opacity)) !important;
+  }
+
+  .dark .bg-slate-700,
+  .dark .bg-slate-700\/50,
+  .dark .bg-slate-700\/30 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(32 32 32 / var(--tw-bg-opacity)) !important;
+  }
+
+  /* Override slate borders to neutral */
+  .dark .border-slate-700,
+  .dark .border-slate-600,
+  .dark .border-slate-600\/50 {
+    --tw-border-opacity: 1;
+    border-color: rgb(38 38 38 / var(--tw-border-opacity)) !important;
+  }
+
+  /* Override slate text colors for better contrast */
+  .dark .text-slate-200 {
+    --tw-text-opacity: 1;
+    color: rgb(245 245 245 / var(--tw-text-opacity)) !important;
+  }
+
+  .dark .text-slate-300 {
+    --tw-text-opacity: 1;
+    color: rgb(212 212 212 / var(--tw-text-opacity)) !important;
+  }
+
+  .dark .text-slate-400 {
+    --tw-text-opacity: 1;
+    color: rgb(163 163 163 / var(--tw-text-opacity)) !important;
+  }
+
+  .dark .text-slate-500 {
+    --tw-text-opacity: 1;
+    color: rgb(115 115 115 / var(--tw-text-opacity)) !important;
+  }
+
+  /* Override hover states */
+  .dark .hover\:bg-slate-700:hover {
+    background-color: rgb(38 38 38) !important;
+  }
+
+  .dark .hover\:bg-slate-600:hover {
+    background-color: rgb(46 46 46) !important;
+  }
+
+  /* Ring colors for dark mode */
+  .dark .ring-slate-500\/10 {
+    --tw-ring-color: rgb(82 82 82 / 0.1) !important;
+  }
+}
+
 /* Hidden scrollbar utility */
 .hidden-scrollbar {
   scrollbar-width: none;
@@ -30,6 +160,22 @@
 
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   background-color: rgba(148, 163, 184, 0.5);
+}
+
+/* Dark mode scrollbar - neutral colors */
+.dark .custom-scroll::-webkit-scrollbar-thumb,
+[data-theme='dark'] .custom-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(82, 82, 82, 0.5);
+}
+
+.dark .custom-scroll::-webkit-scrollbar-thumb:hover,
+[data-theme='dark'] .custom-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(82, 82, 82, 0.7);
+}
+
+.dark .custom-scroll::-webkit-scrollbar-track,
+[data-theme='dark'] .custom-scroll::-webkit-scrollbar-track {
+  background-color: rgba(23, 23, 23, 0.5);
 }
 
 /* Pie chart tooltip containment for small devices */
@@ -230,4 +376,194 @@
       padding-right: env(safe-area-inset-right);
     }
   }
+}
+
+/* ==========================================
+   Enhanced Dark Mode Visual Styles
+   ========================================== */
+
+/* Dark mode card hover effects - deeper shadows */
+.dark .hover\:shadow-2xl:hover,
+[data-theme='dark'] .hover\:shadow-2xl:hover {
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(38, 38, 38, 0.5),
+    0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode gradient backgrounds - pure black tones */
+.dark .bg-linear-to-br,
+[data-theme='dark'] .bg-linear-to-br {
+  --tw-gradient-from: #0a0a0a;
+  --tw-gradient-via: #121212;
+  --tw-gradient-to: #0a0a0a;
+}
+
+/* Dark mode input focus rings - subtle blue glow */
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus,
+[data-theme='dark'] input:focus,
+[data-theme='dark'] textarea:focus,
+[data-theme='dark'] select:focus {
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 246, 0.25),
+    0 0 12px rgba(59, 130, 246, 0.1);
+}
+
+/* Dark mode button hover states - smoother transitions */
+.dark button:hover:not(:disabled),
+[data-theme='dark'] button:hover:not(:disabled) {
+  transition: all 0.2s ease;
+}
+
+/* Accent glow effects for dark mode - subtle blue accent */
+.dark .accent-glow {
+  box-shadow:
+    0 0 20px rgba(59, 130, 246, 0.12),
+    0 0 40px rgba(59, 130, 246, 0.06);
+}
+
+/* Dark mode modal backdrop - deeper black */
+.dark .modal-backdrop {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* Dark mode tooltip styling - blackish */
+.dark .recharts-tooltip-wrapper > div,
+[data-theme='dark'] .recharts-tooltip-wrapper > div {
+  background: #141414 !important;
+  border-color: #262626 !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Chart grid lines in dark mode - subtle */
+.dark .recharts-cartesian-grid line,
+[data-theme='dark'] .recharts-cartesian-grid line {
+  stroke: #1f1f1f;
+}
+
+/* Chart axis lines in dark mode */
+.dark .recharts-cartesian-axis line,
+[data-theme='dark'] .recharts-cartesian-axis line {
+  stroke: #262626;
+}
+
+/* Dark mode selection highlight - blue accent */
+.dark ::selection {
+  background-color: rgba(59, 130, 246, 0.35);
+  color: #fafafa;
+}
+
+/* Dark mode focus visible outline */
+.dark :focus-visible,
+[data-theme='dark'] :focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* ==========================================
+   Dark Mode Component Overrides
+   ========================================== */
+
+/* Card backgrounds - deeper black with subtle border */
+.dark [class*='bg-slate-800/80'],
+[data-theme='dark'] [class*='bg-slate-800/80'] {
+  background: rgba(20, 20, 20, 0.85) !important;
+  border-color: rgba(38, 38, 38, 0.6) !important;
+}
+
+/* Dropdown and popover backgrounds */
+.dark [class*='bg-slate-800']:not([class*='hover:']),
+[data-theme='dark'] [class*='bg-slate-800']:not([class*='hover:']) {
+  background-color: #141414 !important;
+}
+
+/* Input field backgrounds */
+.dark [class*='bg-slate-700/50'],
+[data-theme='dark'] [class*='bg-slate-700/50'] {
+  background-color: rgba(26, 26, 26, 0.7) !important;
+}
+
+/* Subtle dividers and separators */
+.dark hr,
+.dark [class*='border-slate'],
+[data-theme='dark'] hr,
+[data-theme='dark'] [class*='border-slate'] {
+  border-color: #262626;
+}
+
+/* Badge and chip backgrounds */
+.dark [class*='bg-slate-700']:not([class*='hover:']),
+[data-theme='dark'] [class*='bg-slate-700']:not([class*='hover:']) {
+  background-color: #1f1f1f !important;
+}
+
+/* Skeleton loading states */
+.dark .animate-pulse,
+[data-theme='dark'] .animate-pulse {
+  background: linear-gradient(90deg, #141414 0%, #1f1f1f 50%, #141414 100%);
+  background-size: 200% 100%;
+}
+
+/* ==========================================
+   Dark Mode Accent Colors - Refined
+   ========================================== */
+
+/* Blue accents - slightly more vibrant for dark mode */
+.dark .bg-blue-900\/40,
+[data-theme='dark'] .bg-blue-900\/40 {
+  background-color: rgba(30, 64, 175, 0.35) !important;
+}
+
+.dark .bg-blue-600,
+[data-theme='dark'] .bg-blue-600 {
+  background-color: #2563eb !important;
+}
+
+/* Green/Emerald accents */
+.dark .bg-emerald-900\/40,
+[data-theme='dark'] .bg-emerald-900\/40 {
+  background-color: rgba(6, 78, 59, 0.35) !important;
+}
+
+/* Amber/Warning accents */
+.dark .bg-amber-900\/40,
+[data-theme='dark'] .bg-amber-900\/40 {
+  background-color: rgba(120, 53, 15, 0.35) !important;
+}
+
+/* Red/Error accents */
+.dark .bg-red-900\/40,
+[data-theme='dark'] .bg-red-900\/40 {
+  background-color: rgba(127, 29, 29, 0.35) !important;
+}
+
+/* ==========================================
+   Smooth Transitions for Theme Switching
+   ========================================== */
+
+/* Smooth color transitions when switching themes */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-timing-function: ease-in-out;
+  transition-duration: 150ms;
+}
+
+/* Disable transitions for animations to prevent jank */
+.animate-pulse,
+.animate-spin,
+.animate-bounce,
+[class*='transition-'] {
+  transition-property: none;
+}
+
+/* Re-enable specific transitions */
+[class*='transition-all'],
+[class*='transition-colors'],
+[class*='transition-opacity'],
+[class*='transition-transform'] {
+  transition-property: all;
 }

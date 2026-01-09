@@ -106,6 +106,28 @@ export const alertMessages = [
 ];
 
 // -----------------------------------------------------------------------------
+// Existing Clients Data
+// -----------------------------------------------------------------------------
+
+export const existingClients = [
+  { id: 1, name: 'Alpha Industries', email: 'contact@alphaindustries.com' },
+  { id: 2, name: 'Beta Corp', email: 'sales@betacorp.com' },
+  { id: 3, name: 'Gamma LLC', email: 'info@gammallc.com' },
+  { id: 4, name: 'Delta Systems', email: 'business@deltasystems.com' },
+  { id: 5, name: 'Epsilon Tech', email: 'hello@epsilontech.com' },
+  { id: 6, name: 'Zeta Holdings', email: 'contact@zetaholdings.com' },
+  { id: 7, name: 'Eta Partners', email: 'partners@etapartners.com' },
+  { id: 8, name: 'Theta Group', email: 'info@thetagroup.com' },
+  { id: 9, name: 'Iota Solutions', email: 'sales@iotasolutions.com' },
+  { id: 10, name: 'Kappa Inc', email: 'contact@kappainc.com' },
+  { id: 11, name: 'Lambda Corp', email: 'business@lambdacorp.com' },
+  { id: 12, name: 'Mu Enterprises', email: 'info@muenterprises.com' },
+  { id: 13, name: 'Nu Technologies', email: 'hello@nutech.com' },
+  { id: 14, name: 'Xi Dynamics', email: 'sales@xidynamics.com' },
+  { id: 15, name: 'Omicron Labs', email: 'contact@omicronlabs.com' },
+];
+
+// -----------------------------------------------------------------------------
 // Meeting Schedule Data
 // -----------------------------------------------------------------------------
 

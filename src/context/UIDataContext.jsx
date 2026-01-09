@@ -3,33 +3,14 @@
 // Focused context for UI mock data management (meetings, activities, etc.)
 // =============================================================================
 
-import { createContext, useContext, useMemo, useState, useCallback } from "react";
-import PropTypes from "prop-types";
-import {
-  initialMeetings,
-  initialActivities,
-  activityWeekData,
-} from "../constants/index.js";
+import { createContext, useMemo, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { initialMeetings, initialActivities, activityWeekData } from '../constants/index.js';
 
 /**
  * UI Data Context
  */
 const UIDataContext = createContext(undefined);
-
-/**
- * Custom hook to access UI data context
- * @returns {Object} UI data context value
- * @throws {Error} If used outside of UIDataProvider
- */
-export const useUIDataContext = () => {
-  const context = useContext(UIDataContext);
-
-  if (context === undefined) {
-    throw new Error("useUIDataContext must be used within a UIDataProvider");
-  }
-
-  return context;
-};
 
 /**
  * UI Data Provider Component
@@ -48,19 +29,13 @@ export const UIDataProvider = ({
   weekData: initialWeekData,
 }) => {
   // State for meetings
-  const [meetings, setMeetings] = useState(
-    initialMeetingsData || initialMeetings
-  );
+  const [meetings, setMeetings] = useState(initialMeetingsData || initialMeetings);
 
   // State for activities
-  const [activities, setActivities] = useState(
-    initialActivitiesData || initialActivities
-  );
+  const [activities, setActivities] = useState(initialActivitiesData || initialActivities);
 
   // State for activity week data
-  const [activityData, setActivityData] = useState(
-    initialWeekData || activityWeekData
-  );
+  const [activityData, setActivityData] = useState(initialWeekData || activityWeekData);
 
   /**
    * Add a new meeting
@@ -89,9 +64,7 @@ export const UIDataProvider = ({
    * @param {Object} updates - Fields to update
    */
   const updateMeeting = useCallback((meetingId, updates) => {
-    setMeetings((prev) =>
-      prev.map((m) => (m.id === meetingId ? { ...m, ...updates } : m))
-    );
+    setMeetings((prev) => prev.map((m) => (m.id === meetingId ? { ...m, ...updates } : m)));
   }, []);
 
   /**
@@ -101,7 +74,7 @@ export const UIDataProvider = ({
   const addActivity = useCallback((activity) => {
     const newActivity = {
       id: Date.now(),
-      timestamp: "Just now",
+      timestamp: 'Just now',
       ...activity,
     };
     setActivities((prev) => [newActivity, ...prev]);
@@ -246,11 +219,7 @@ export const UIDataProvider = ({
     ]
   );
 
-  return (
-    <UIDataContext.Provider value={value}>
-      {children}
-    </UIDataContext.Provider>
-  );
+  return <UIDataContext.Provider value={value}>{children}</UIDataContext.Provider>;
 };
 
 UIDataProvider.propTypes = {

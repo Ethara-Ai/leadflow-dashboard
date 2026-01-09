@@ -90,11 +90,13 @@ const FooterModal = memo(function FooterModal({
   const descriptionId = `footer-modal-description-${title?.toLowerCase().replace(/\s+/g, '-') || 'default'}`;
 
   // Theme-based classes
-  const modalClasses = isDark ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-300';
-  const headerBorderClasses = isDark ? 'border-slate-700' : 'border-slate-200';
-  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const modalClasses = isDark
+    ? 'bg-neutral-900/95 border-neutral-700'
+    : 'bg-white/95 border-slate-300';
+  const headerBorderClasses = isDark ? 'border-neutral-700' : 'border-slate-200';
+  const titleClasses = isDark ? 'text-neutral-100' : 'text-slate-700';
   const closeButtonClasses = isDark
-    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+    ? 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-700/50'
     : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200';
 
   return (

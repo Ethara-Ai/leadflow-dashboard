@@ -3,19 +3,24 @@
 // Composed context that integrates all focused contexts
 // =============================================================================
 
-import { createContext, useContext, useMemo, useCallback } from "react";
-import PropTypes from "prop-types";
+import { createContext, useMemo, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
-// Import focused context providers and hooks
-import { LeadDataProvider, useLeadDataContext } from "./LeadDataContext.jsx";
-import { AlertsProvider, useAlertsContext } from "./AlertsContext.jsx";
-import { NotesProvider, useNotesContext } from "./NotesContext.jsx";
-import { ModalsProvider, useModalsContext } from "./ModalsContext.jsx";
-import {
-  ChartPeriodsProvider,
-  useChartPeriodsContext,
-} from "./ChartPeriodsContext.jsx";
-import { UIDataProvider, useUIDataContext } from "./UIDataContext.jsx";
+// Import focused context providers
+import { LeadDataProvider } from './LeadDataContext.jsx';
+import { AlertsProvider } from './AlertsContext.jsx';
+import { NotesProvider } from './NotesContext.jsx';
+import { ModalsProvider } from './ModalsContext.jsx';
+import { ChartPeriodsProvider } from './ChartPeriodsContext.jsx';
+import { UIDataProvider } from './UIDataContext.jsx';
+
+// Import hooks from separate files
+import { useLeadDataContext } from './hooks/useLeadDataContext.js';
+import { useAlertsContext } from './hooks/useAlertsContext.js';
+import { useNotesContext } from './hooks/useNotesContext.js';
+import { useModalsContext } from './hooks/useModalsContext.js';
+import { useChartPeriodsContext } from './hooks/useChartPeriodsContext.js';
+import { useUIDataContext } from './hooks/useUIDataContext.js';
 
 // Import utilities
 import { exportToCSV, exportToJSON, generateExportFilename } from '../utils.js';
@@ -25,25 +30,6 @@ import { exportToCSV, exportToJSON, generateExportFilename } from '../utils.js';
  * Provides a unified interface to all dashboard state
  */
 const DashboardContext = createContext(undefined);
-
-/**
- * Custom hook to access the unified dashboard context
- * This provides backward compatibility and a convenient way to access all state
- *
- * @returns {Object} Unified dashboard context value
- * @throws {Error} If used outside of DashboardProvider
- */
-export const useDashboardContext = () => {
-  const context = useContext(DashboardContext);
-
-  if (context === undefined) {
-    throw new Error(
-      "useDashboardContext must be used within a DashboardProvider",
-    );
-  }
-
-  return context;
-};
 
 /**
  * Inner Dashboard Provider Component
@@ -69,7 +55,7 @@ const DashboardInnerProvider = ({ children }) => {
       sourceData: chartPeriodsCtx.sourceData,
       alerts: alertsCtx.alerts,
     };
-    exportToCSV(data, generateExportFilename("csv"));
+    exportToCSV(data, generateExportFilename('csv'));
   }, [
     leadDataCtx.leadData,
     chartPeriodsCtx.activityData,
@@ -93,7 +79,7 @@ const DashboardInnerProvider = ({ children }) => {
       alerts: alertsCtx.alerts.filter((alert) => !alert.dismissed),
       notes: notesCtx.notes,
     };
-    exportToJSON(data, generateExportFilename("json"));
+    exportToJSON(data, generateExportFilename('json'));
   }, [
     leadDataCtx.leadData,
     chartPeriodsCtx.activityData,
@@ -240,11 +226,7 @@ const DashboardInnerProvider = ({ children }) => {
     ]
   );
 
-  return (
-    <DashboardContext.Provider value={value}>
-      {children}
-    </DashboardContext.Provider>
-  );
+  return <DashboardContext.Provider value={value}>{children}</DashboardContext.Provider>;
 };
 
 DashboardInnerProvider.propTypes = {
@@ -294,18 +276,6 @@ LeadDataProviderWithAlerts.propTypes = {
 
 DashboardProvider.propTypes = {
   children: PropTypes.node.isRequired,
-};
-
-// =============================================================================
-// Re-export focused context hooks for direct access
-// =============================================================================
-export {
-  useLeadDataContext,
-  useAlertsContext,
-  useNotesContext,
-  useModalsContext,
-  useChartPeriodsContext,
-  useUIDataContext,
 };
 
 export default DashboardContext;

@@ -3,29 +3,14 @@
 // Focused context for notes state management
 // =============================================================================
 
-import { createContext, useContext, useMemo } from "react";
-import PropTypes from "prop-types";
-import useNotes from "../hooks/useNotes.js";
+import { createContext, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import useNotes from '../hooks/useNotes.js';
 
 /**
  * Notes Context
  */
 const NotesContext = createContext(undefined);
-
-/**
- * Custom hook to access notes context
- * @returns {Object} Notes context value
- * @throws {Error} If used outside of NotesProvider
- */
-export const useNotesContext = () => {
-  const context = useContext(NotesContext);
-
-  if (context === undefined) {
-    throw new Error("useNotesContext must be used within a NotesProvider");
-  }
-
-  return context;
-};
 
 /**
  * Notes Provider Component
@@ -37,12 +22,7 @@ export const useNotesContext = () => {
  * @param {number} [props.maxNotes] - Maximum number of notes to keep
  * @param {number} [props.maxNoteLength] - Maximum character length for notes
  */
-export const NotesProvider = ({
-  children,
-  initialState,
-  maxNotes,
-  maxNoteLength,
-}) => {
+export const NotesProvider = ({ children, initialState, maxNotes, maxNoteLength }) => {
   const {
     notes,
     noteCount,
@@ -111,11 +91,7 @@ export const NotesProvider = ({
     ]
   );
 
-  return (
-    <NotesContext.Provider value={value}>
-      {children}
-    </NotesContext.Provider>
-  );
+  return <NotesContext.Provider value={value}>{children}</NotesContext.Provider>;
 };
 
 NotesProvider.propTypes = {

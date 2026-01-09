@@ -78,7 +78,7 @@ const DashboardCharts = memo(function DashboardCharts() {
         </ChartErrorBoundary>
 
         {/* Alerts Panel */}
-        <AlertsPanel alerts={alerts} onOpenModal={openAlertsModal} />
+        <AlertsPanel alerts={alerts} onAddAlert={openAlertsModal} />
       </div>
     </div>
   );

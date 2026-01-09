@@ -10,9 +10,11 @@ import {
   ChevronLeft,
   ChevronRight,
   List,
+  Plus,
 } from 'lucide-react';
 import { cardVariants, fontFamily } from '../constants';
 import useThemeSafe from '../hooks/useThemeSafe';
+import CreateMeetingModal from './CreateMeetingModal';
 
 /**
  * MeetingScheduleCard Component
@@ -25,11 +27,13 @@ import useThemeSafe from '../hooks/useThemeSafe';
 const MeetingScheduleCard = memo(function MeetingScheduleCard({
   meetings = [],
   darkMode: darkModeOverride,
+  onCreateMeeting,
 }) {
   const { isDark } = useThemeSafe(darkModeOverride);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState('calendar'); // "calendar" or "list"
   const [selectedDay, setSelectedDay] = useState(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   // Get calendar data for current month
   const year = currentDate.getFullYear();
@@ -101,9 +105,9 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
 
   // Theme classes
   const cardClasses = isDark
-    ? 'bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10'
+    ? 'bg-zinc-900/90 border-zinc-700/50 shadow-2xl shadow-black/60 ring-1 ring-zinc-600/10'
     : 'bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10';
-  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const titleClasses = isDark ? 'text-zinc-200' : 'text-slate-700';
 
   // Meeting type icons
   const getMeetingIcon = (type) => {
@@ -123,13 +127,13 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
   const getMeetingColor = (type) => {
     switch (type) {
       case 'video':
-        return isDark ? 'bg-blue-900/40 text-blue-400' : 'bg-blue-100 text-blue-600';
+        return isDark ? 'bg-blue-950/60 text-blue-400' : 'bg-blue-100 text-blue-600';
       case 'phone':
-        return isDark ? 'bg-emerald-900/40 text-emerald-400' : 'bg-emerald-100 text-emerald-600';
+        return isDark ? 'bg-emerald-950/60 text-emerald-400' : 'bg-emerald-100 text-emerald-600';
       case 'in-person':
-        return isDark ? 'bg-purple-900/40 text-purple-400' : 'bg-purple-100 text-purple-600';
+        return isDark ? 'bg-purple-950/60 text-purple-400' : 'bg-purple-100 text-purple-600';
       default:
-        return isDark ? 'bg-slate-700 text-slate-300' : 'bg-slate-100 text-slate-600';
+        return isDark ? 'bg-zinc-800 text-zinc-300' : 'bg-slate-100 text-slate-600';
     }
   };
 
@@ -146,7 +150,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div className={`p-2 rounded-lg ${isDark ? 'bg-blue-900/40' : 'bg-blue-100'}`}>
+          <div className={`p-2 rounded-lg ${isDark ? 'bg-blue-950/60' : 'bg-blue-100'}`}>
             <Calendar className={`w-4 h-4 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
           </div>
           <h3 className={`text-base sm:text-lg font-bold ${titleClasses}`} style={{ fontFamily }}>
@@ -154,49 +158,80 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
           </h3>
         </div>
 
-        {/* Toggle Buttons */}
-        <div
-          className={`flex items-center gap-1 p-1 rounded-lg ${isDark ? 'bg-slate-700/50' : 'bg-slate-100'}`}
-        >
+        {/* Add Meeting and Toggle Buttons */}
+        <div className="flex items-center gap-2">
+          {/* Add Meeting Button */}
           <motion.button
-            onClick={() => setViewMode('calendar')}
-            className={`p-2 rounded-md transition-all duration-200 cursor-pointer ${
-              viewMode === 'calendar'
-                ? isDark
-                  ? 'bg-blue-900/60 text-blue-400 shadow-md'
-                  : 'bg-white text-blue-600 shadow-md'
-                : isDark
-                  ? 'text-slate-400 hover:text-slate-200'
-                  : 'text-slate-600 hover:text-slate-800'
+            onClick={() => setIsCreateModalOpen(true)}
+            className={`p-2 rounded-lg transition-all duration-200 cursor-pointer ${
+              isDark
+                ? 'bg-blue-950/60 text-blue-400 hover:bg-blue-950/80'
+                : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            aria-label="Calendar view"
+            aria-label="Create new meeting"
           >
-            <Calendar className="w-4 h-4" />
+            <Plus className="w-4 h-4" />
           </motion.button>
-          <motion.button
-            onClick={() => setViewMode('list')}
-            className={`p-2 rounded-md transition-all duration-200 cursor-pointer ${
-              viewMode === 'list'
-                ? isDark
-                  ? 'bg-blue-900/60 text-blue-400 shadow-md'
-                  : 'bg-white text-blue-600 shadow-md'
-                : isDark
-                  ? 'text-slate-400 hover:text-slate-200'
-                  : 'text-slate-600 hover:text-slate-800'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            aria-label="List view"
+
+          {/* Toggle Buttons */}
+          <div
+            className={`flex items-center gap-1 p-1 rounded-lg ${isDark ? 'bg-zinc-800/50' : 'bg-slate-100'}`}
           >
-            <List className="w-4 h-4" />
-          </motion.button>
+            <motion.button
+              onClick={() => setViewMode('calendar')}
+              className={`p-2 rounded-md transition-all duration-200 cursor-pointer ${
+                viewMode === 'calendar'
+                  ? isDark
+                    ? 'bg-blue-950/80 text-blue-400 shadow-md'
+                    : 'bg-white text-blue-600 shadow-md'
+                  : isDark
+                    ? 'text-zinc-400 hover:text-zinc-200'
+                    : 'text-slate-600 hover:text-slate-800'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="Calendar view"
+            >
+              <Calendar className="w-4 h-4" />
+            </motion.button>
+            <motion.button
+              onClick={() => setViewMode('list')}
+              className={`p-2 rounded-md transition-all duration-200 cursor-pointer ${
+                viewMode === 'list'
+                  ? isDark
+                    ? 'bg-blue-950/80 text-blue-400 shadow-md'
+                    : 'bg-white text-blue-600 shadow-md'
+                  : isDark
+                    ? 'text-zinc-400 hover:text-zinc-200'
+                    : 'text-slate-600 hover:text-slate-800'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="List view"
+            >
+              <List className="w-4 h-4" />
+            </motion.button>
+          </div>
         </div>
       </div>
 
+      {/* Create Meeting Modal */}
+      <CreateMeetingModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onCreateMeeting={(meeting) => {
+          if (onCreateMeeting) {
+            onCreateMeeting(meeting);
+          }
+          setIsCreateModalOpen(false);
+        }}
+        darkMode={isDark}
+      />
+
       {/* Content Area with responsive height */}
-      <div className="flex-1 min-h-[280px] min-[634px]:min-h-0 overflow-hidden relative">
+      <div className="flex-1 min-h-70 min-[634px]:min-h-0 overflow-hidden relative">
         {viewMode === 'calendar' ? (
           /* Calendar View - Fully visible without scrolling */
           <div className="h-full flex flex-col">
@@ -206,7 +241,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                 onClick={prevMonth}
                 className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                   isDark
-                    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                    ? 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50'
                     : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
                 }`}
                 whileHover={{ scale: 1.1 }}
@@ -216,7 +251,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                 <ChevronLeft className="w-4 h-4" />
               </motion.button>
               <span
-                className={`text-sm font-semibold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}
+                className={`text-xs sm:text-sm font-semibold ${isDark ? 'text-zinc-200' : 'text-slate-700'}`}
                 style={{ fontFamily }}
               >
                 {currentDate.toLocaleString('default', {
@@ -228,7 +263,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                 onClick={nextMonth}
                 className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                   isDark
-                    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                    ? 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50'
                     : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
                 }`}
                 whileHover={{ scale: 1.1 }}
@@ -340,14 +375,14 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                           <div
                             className={`mt-2 p-3 rounded-lg border ${
                               isDark
-                                ? 'bg-slate-700/50 border-slate-600/50'
+                                ? 'bg-zinc-800/50 border-zinc-700/50'
                                 : 'bg-slate-50 border-slate-200'
                             }`}
                           >
                             <div className="flex items-center justify-between mb-2">
                               <p
                                 className={`text-xs font-bold ${
-                                  isDark ? 'text-slate-200' : 'text-slate-700'
+                                  isDark ? 'text-zinc-200' : 'text-slate-700'
                                 }`}
                                 style={{ fontFamily }}
                               >
@@ -360,9 +395,9 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                               </p>
                               <motion.button
                                 onClick={() => setSelectedDay(null)}
-                                className={`p-1 rounded-md ${
+                                className={`p-1 rounded-md cursor-pointer ${
                                   isDark
-                                    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-600/50'
+                                    ? 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-600/50'
                                     : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200'
                                 }`}
                                 whileHover={{ scale: 1.1 }}
@@ -376,7 +411,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                                 <div
                                   key={meeting.id}
                                   className={`flex items-start gap-2 p-2 rounded-md ${
-                                    isDark ? 'bg-slate-800/50' : 'bg-white'
+                                    isDark ? 'bg-zinc-900/50' : 'bg-white'
                                   }`}
                                 >
                                   <div
@@ -394,7 +429,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                                       {meeting.title}
                                     </p>
                                     <p
-                                      className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+                                      className={`text-[11px] ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
                                       style={{ fontFamily }}
                                     >
                                       {meeting.client}
@@ -402,10 +437,10 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                                     <div className="flex items-center gap-2 mt-1">
                                       <div className="flex items-center gap-1">
                                         <Clock
-                                          className={`w-3 h-3 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}
+                                          className={`w-3 h-3 ${isDark ? 'text-zinc-500' : 'text-slate-400'}`}
                                         />
                                         <span
-                                          className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+                                          className={`text-[11px] ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
                                           style={{ fontFamily }}
                                         >
                                           {meeting.time}
@@ -443,7 +478,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                     key={meeting.id}
                     className={`p-2.5 rounded-lg border ${
                       isDark
-                        ? 'bg-slate-700/30 border-slate-600/30'
+                        ? 'bg-zinc-800/30 border-zinc-700/30'
                         : 'bg-slate-50 border-slate-200/50'
                     } transition-all duration-200 hover:shadow-md`}
                     initial={{ opacity: 0, y: 10 }}
@@ -473,10 +508,10 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                         <div className="flex items-center gap-3 mt-1">
                           <div className="flex items-center gap-1">
                             <Clock
-                              className={`w-3 h-3 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}
+                              className={`w-3 h-3 ${isDark ? 'text-zinc-500' : 'text-slate-400'}`}
                             />
                             <span
-                              className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+                              className={`text-[11px] ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
                               style={{ fontFamily }}
                             >
                               {meeting.time}
@@ -499,10 +534,10 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
             ) : (
               <div className="flex flex-col items-center justify-center h-full">
                 <Calendar
-                  className={`w-10 h-10 mx-auto mb-2 ${isDark ? 'text-slate-600' : 'text-slate-400'}`}
+                  className={`w-10 h-10 mx-auto mb-2 ${isDark ? 'text-zinc-600' : 'text-slate-400'}`}
                 />
                 <p
-                  className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+                  className={`text-sm ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
                   style={{ fontFamily }}
                 >
                   No upcoming meetings
@@ -514,9 +549,9 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
       </div>
 
       {/* Footer - Total meetings count */}
-      <div className={`mt-3 pt-2.5 border-t ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+      <div className={`mt-3 pt-2.5 border-t ${isDark ? 'border-zinc-700' : 'border-slate-200'}`}>
         <p
-          className={`text-[10px] text-center ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+          className={`text-[10px] text-center ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
           style={{ fontFamily }}
         >
           {currentMonthMeetings.length} {currentMonthMeetings.length === 1 ? 'meeting' : 'meetings'}{' '}
@@ -540,6 +575,7 @@ MeetingScheduleCard.propTypes = {
     })
   ),
   darkMode: PropTypes.bool,
+  onCreateMeeting: PropTypes.func,
 };
 
 export default MeetingScheduleCard;

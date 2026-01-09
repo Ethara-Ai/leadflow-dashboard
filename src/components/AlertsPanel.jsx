@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bell } from 'lucide-react';
+import { Bell, Plus } from 'lucide-react';
 import { cardVariants, fontFamily } from '../constants';
 import useThemeSafe from '../hooks/useThemeSafe';
 import AlertItem from './AlertItem';
@@ -12,29 +12,32 @@ import AlertItem from './AlertItem';
  *
  * @param {Object} props - Component props
  * @param {Array} props.alerts - Array of alert objects
- * @param {function} props.onOpenModal - Callback when the alerts button is clicked to open modal
+ * @param {function} props.onAddAlert - Callback when the add alert button is clicked to open modal
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const AlertsPanel = memo(function AlertsPanel({ alerts, onOpenModal, darkMode: darkModeOverride }) {
+const AlertsPanel = memo(function AlertsPanel({ alerts, onAddAlert, darkMode: darkModeOverride }) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
   // Theme-based classes
   const cardClasses = isDark
-    ? 'bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10'
+    ? 'bg-zinc-900/90 border-zinc-700/50 shadow-2xl shadow-black/60 ring-1 ring-zinc-600/10'
     : 'bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10';
-  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
-  const alertButtonClasses =
+  const titleClasses = isDark ? 'text-zinc-200' : 'text-slate-700';
+  const countBadgeClasses =
     alerts.length > 0
       ? isDark
-        ? 'bg-amber-900/40 text-amber-300 shadow-lg'
-        : 'bg-amber-100 text-amber-700 shadow-lg'
+        ? 'bg-zinc-800/60 text-amber-400'
+        : 'bg-slate-100 text-amber-600'
       : isDark
-        ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
-        : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100';
-  const emptyIconClasses = isDark ? 'text-slate-500' : 'text-slate-400';
-  const emptyTextClasses = isDark ? 'text-slate-400' : 'text-slate-600';
-  const emptySubtextClasses = isDark ? 'text-slate-500' : 'text-slate-500';
+        ? 'bg-zinc-800/40 text-zinc-500'
+        : 'bg-slate-100 text-slate-400';
+  const addButtonClasses = isDark
+    ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40'
+    : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50';
+  const emptyIconClasses = isDark ? 'text-zinc-500' : 'text-slate-400';
+  const emptyTextClasses = isDark ? 'text-zinc-400' : 'text-slate-600';
+  const emptySubtextClasses = isDark ? 'text-zinc-500' : 'text-slate-500';
 
   return (
     <motion.div
@@ -51,18 +54,28 @@ const AlertsPanel = memo(function AlertsPanel({ alerts, onOpenModal, darkMode: d
           Lead Alerts
         </h3>
 
-        {/* Alert Modal Trigger Button */}
-        <motion.button
-          className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${alertButtonClasses}`}
-          onClick={onOpenModal}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{ fontFamily }}
-          aria-label={`${alerts.length} alerts. Click to manage alerts.`}
-        >
-          <Bell className="w-3.5 h-3.5 sm:w-4 sm:h-4" aria-hidden="true" />
-          <span className="font-bold">{alerts.length}</span>
-        </motion.button>
+        {/* Right side buttons */}
+        <div className="flex items-center gap-2">
+          {/* Alert Count Badge (static display) */}
+          <span
+            className={`inline-flex items-center justify-center min-w-6 sm:min-w-7 px-2 py-0.5 rounded-full text-xs sm:text-sm font-semibold tabular-nums ${countBadgeClasses}`}
+            style={{ fontFamily }}
+            aria-label={`${alerts.length} alerts`}
+          >
+            {alerts.length}
+          </span>
+
+          {/* Add Alert Button */}
+          <motion.button
+            className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full transition-all duration-200 cursor-pointer ${addButtonClasses}`}
+            onClick={onAddAlert}
+            whileHover={{ scale: 1.08, y: -1 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Add custom alert"
+          >
+            <Plus className="w-4 h-4 sm:w-4.5 sm:h-4.5" strokeWidth={2.5} aria-hidden="true" />
+          </motion.button>
+        </div>
       </div>
 
       {/* Alerts List */}
@@ -117,7 +130,7 @@ AlertsPanel.propTypes = {
       time: PropTypes.string.isRequired,
     })
   ).isRequired,
-  onOpenModal: PropTypes.func.isRequired,
+  onAddAlert: PropTypes.func.isRequired,
   darkMode: PropTypes.bool,
 };
 

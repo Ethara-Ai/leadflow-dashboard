@@ -59,6 +59,8 @@ export {
   ALERT_TYPES,
   initialAlerts,
   alertMessages,
+  // Clients
+  existingClients,
   // Meetings
   MEETING_TYPES,
   initialMeetings,
@@ -98,3 +100,14 @@ export const MAX_NOTES = 100;
 
 /** Maximum character length for notes */
 export const MAX_NOTE_LENGTH = 1000;
+
+// -----------------------------------------------------------------------------
+// Stats Configuration
+// -----------------------------------------------------------------------------
+export {
+  STAT_ACCENTS,
+  getAccentClasses,
+  DEFAULT_STATS_CONFIG,
+  getSubValueVariant,
+  STAT_ICON_NAMES,
+} from './statsConfig.js';

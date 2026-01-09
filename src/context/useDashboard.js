@@ -3,15 +3,16 @@
 // Custom hook for accessing dashboard context with backward compatibility
 // =============================================================================
 
-import { useContext } from "react";
-import DashboardContext, {
+import { useContext } from 'react';
+import DashboardContext from './DashboardContext.jsx';
+import {
   useLeadDataContext,
   useAlertsContext,
   useNotesContext,
   useModalsContext,
   useChartPeriodsContext,
   useUIDataContext,
-} from "./DashboardContext.jsx";
+} from './hooks/index.js';
 
 /**
  * Custom hook to access the unified dashboard context
@@ -41,8 +42,8 @@ const useDashboard = () => {
 
   if (context === undefined) {
     throw new Error(
-      "useDashboard must be used within a DashboardProvider. " +
-        "Make sure your component is wrapped with <DashboardProvider>.",
+      'useDashboard must be used within a DashboardProvider. ' +
+        'Make sure your component is wrapped with <DashboardProvider>.'
     );
   }
 

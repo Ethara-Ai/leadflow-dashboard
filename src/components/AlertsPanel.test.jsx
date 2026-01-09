@@ -40,7 +40,7 @@ const mockAlerts = [
 
 const defaultProps = {
   alerts: mockAlerts,
-  onOpenModal: vi.fn(),
+  onAddAlert: vi.fn(),
 };
 
 // Mock framer-motion to simplify testing
@@ -104,9 +104,14 @@ describe('AlertsPanel', () => {
       expect(screen.getByText('Lead Alerts')).toBeInTheDocument();
     });
 
-    it('should render the alert count button', () => {
+    it('should render the alert count badge', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
       expect(screen.getByText('3')).toBeInTheDocument();
+    });
+
+    it('should render the add alert button', () => {
+      renderWithTheme(<AlertsPanel {...defaultProps} />);
+      expect(screen.getByLabelText('Add custom alert')).toBeInTheDocument();
     });
 
     it('should render the Bell icon', () => {
@@ -171,18 +176,18 @@ describe('AlertsPanel', () => {
       expect(screen.getByText('4')).toBeInTheDocument();
     });
 
-    it('should have amber styling when alerts exist', () => {
+    it('should have amber text color when alerts exist', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />, { darkMode: false });
-      const button = screen.getByLabelText(/3 alerts/);
-      expect(button).toHaveClass('bg-amber-100');
+      const badge = screen.getByLabelText('3 alerts');
+      expect(badge).toHaveClass('text-amber-600');
     });
 
-    it('should not have amber styling when no alerts', () => {
+    it('should not have amber text color when no alerts', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />, {
         darkMode: false,
       });
-      const button = screen.getByLabelText(/0 alerts/);
-      expect(button).not.toHaveClass('bg-amber-100');
+      const badge = screen.getByLabelText('0 alerts');
+      expect(badge).not.toHaveClass('text-amber-600');
     });
   });
 
@@ -190,31 +195,37 @@ describe('AlertsPanel', () => {
   // Modal Trigger Tests
   // ===========================================================================
 
-  describe('modal trigger', () => {
-    it('should call onOpenModal when button is clicked', async () => {
+  describe('add alert button', () => {
+    it('should call onAddAlert when add button is clicked', async () => {
       const user = userEvent.setup();
       renderWithTheme(<AlertsPanel {...defaultProps} />);
 
-      const button = screen.getByLabelText(/3 alerts/);
+      const button = screen.getByLabelText('Add custom alert');
       await user.click(button);
 
-      expect(defaultProps.onOpenModal).toHaveBeenCalledTimes(1);
+      expect(defaultProps.onAddAlert).toHaveBeenCalledTimes(1);
     });
 
-    it('should call onOpenModal on empty state button click', async () => {
+    it('should call onAddAlert on empty state add button click', async () => {
       const user = userEvent.setup();
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
 
-      const button = screen.getByLabelText(/0 alerts/);
+      const button = screen.getByLabelText('Add custom alert');
       await user.click(button);
 
-      expect(defaultProps.onOpenModal).toHaveBeenCalledTimes(1);
+      expect(defaultProps.onAddAlert).toHaveBeenCalledTimes(1);
     });
 
-    it('should have correct aria-label on button', () => {
+    it('should have correct aria-label on add button', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      const button = screen.getByLabelText('3 alerts. Click to manage alerts.');
+      const button = screen.getByLabelText('Add custom alert');
       expect(button).toBeInTheDocument();
+    });
+
+    it('should have cursor-pointer class on add button', () => {
+      renderWithTheme(<AlertsPanel {...defaultProps} />);
+      const button = screen.getByLabelText('Add custom alert');
+      expect(button).toHaveClass('cursor-pointer');
     });
   });
 
@@ -228,7 +239,7 @@ describe('AlertsPanel', () => {
         darkMode: true,
       });
       const card = container.firstChild;
-      expect(card).toHaveClass('bg-slate-800/80');
+      expect(card).toHaveClass('bg-zinc-900/90');
     });
 
     it('should apply light theme card classes in light mode', () => {
@@ -242,7 +253,7 @@ describe('AlertsPanel', () => {
     it('should apply dark theme heading color in dark mode', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />, { darkMode: true });
       const heading = screen.getByText('Lead Alerts');
-      expect(heading).toHaveClass('text-slate-200');
+      expect(heading).toHaveClass('text-zinc-200');
     });
 
     it('should apply light theme heading color in light mode', () => {
@@ -251,10 +262,10 @@ describe('AlertsPanel', () => {
       expect(heading).toHaveClass('text-slate-700');
     });
 
-    it('should apply dark theme button styling with alerts in dark mode', () => {
+    it('should apply dark theme badge styling with alerts in dark mode', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />, { darkMode: true });
-      const button = screen.getByLabelText(/3 alerts/);
-      expect(button).toHaveClass('bg-amber-900/40');
+      const badge = screen.getByLabelText('3 alerts');
+      expect(badge).toHaveClass('bg-zinc-800/60');
     });
 
     it('should apply dark theme empty state text in dark mode', () => {
@@ -262,7 +273,7 @@ describe('AlertsPanel', () => {
         darkMode: true,
       });
       const emptyText = screen.getByText('No current alerts');
-      expect(emptyText).toHaveClass('text-slate-400');
+      expect(emptyText).toHaveClass('text-zinc-400');
     });
 
     it('should apply light theme empty state text in light mode', () => {
@@ -284,7 +295,7 @@ describe('AlertsPanel', () => {
         darkMode: false,
       });
       const heading = screen.getByText('Lead Alerts');
-      expect(heading).toHaveClass('text-slate-200');
+      expect(heading).toHaveClass('text-zinc-200');
     });
 
     it('should use darkMode override when provided (false)', () => {
@@ -298,7 +309,7 @@ describe('AlertsPanel', () => {
     it('should use context value when darkMode override is undefined', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />, { darkMode: true });
       const heading = screen.getByText('Lead Alerts');
-      expect(heading).toHaveClass('text-slate-200');
+      expect(heading).toHaveClass('text-zinc-200');
     });
   });
 
@@ -313,10 +324,16 @@ describe('AlertsPanel', () => {
       expect(heading.tagName).toBe('H3');
     });
 
-    it('should have clickable button for modal trigger', () => {
+    it('should have clickable button for add alert', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      const button = screen.getByLabelText(/3 alerts/);
+      const button = screen.getByLabelText('Add custom alert');
       expect(button.tagName).toBe('BUTTON');
+    });
+
+    it('should have alert count badge as span (non-clickable)', () => {
+      renderWithTheme(<AlertsPanel {...defaultProps} />);
+      const badge = screen.getByLabelText('3 alerts');
+      expect(badge.tagName).toBe('SPAN');
     });
 
     it('should render alerts as accessible content', () => {
@@ -381,10 +398,10 @@ describe('AlertsPanel', () => {
       expect(heading).toHaveClass('md:text-xl');
     });
 
-    it('should have responsive button padding', () => {
+    it('should have responsive button sizing', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      const button = screen.getByLabelText(/3 alerts/);
-      expect(button).toHaveClass('px-2.5', 'sm:px-4');
+      const button = screen.getByLabelText('Add custom alert');
+      expect(button).toHaveClass('w-7', 'h-7', 'sm:w-8', 'sm:h-8');
     });
   });
 
@@ -422,12 +439,12 @@ describe('AlertsPanel', () => {
       const user = userEvent.setup();
       renderWithTheme(<AlertsPanel {...defaultProps} />);
 
-      const button = screen.getByLabelText(/3 alerts/);
+      const button = screen.getByLabelText('Add custom alert');
       await user.click(button);
       await user.click(button);
       await user.click(button);
 
-      expect(defaultProps.onOpenModal).toHaveBeenCalledTimes(3);
+      expect(defaultProps.onAddAlert).toHaveBeenCalledTimes(3);
       expect(screen.getByText('Lead Alerts')).toBeInTheDocument();
     });
 

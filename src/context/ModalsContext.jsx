@@ -3,29 +3,14 @@
 // Focused context for modals state management
 // =============================================================================
 
-import { createContext, useContext, useMemo } from "react";
-import PropTypes from "prop-types";
-import useModals, { MODAL_IDS } from "../hooks/useModals.js";
+import { createContext, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import useModals, { MODAL_IDS } from '../hooks/useModals.js';
 
 /**
  * Modals Context
  */
 const ModalsContext = createContext(undefined);
-
-/**
- * Custom hook to access modals context
- * @returns {Object} Modals context value
- * @throws {Error} If used outside of ModalsProvider
- */
-export const useModalsContext = () => {
-  const context = useContext(ModalsContext);
-
-  if (context === undefined) {
-    throw new Error("useModalsContext must be used within a ModalsProvider");
-  }
-
-  return context;
-};
 
 /**
  * Modals Provider Component
@@ -36,11 +21,7 @@ export const useModalsContext = () => {
  * @param {boolean} [props.allowMultiple=false] - Allow multiple modals to be open at once
  * @param {boolean} [props.lockScroll=true] - Lock body scroll when modal is open
  */
-export const ModalsProvider = ({
-  children,
-  allowMultiple = false,
-  lockScroll = true,
-}) => {
+export const ModalsProvider = ({ children, allowMultiple = false, lockScroll = true }) => {
   const {
     // Generic API
     openModal,
@@ -136,11 +117,7 @@ export const ModalsProvider = ({
     ]
   );
 
-  return (
-    <ModalsContext.Provider value={value}>
-      {children}
-    </ModalsContext.Provider>
-  );
+  return <ModalsContext.Provider value={value}>{children}</ModalsContext.Provider>;
 };
 
 ModalsProvider.propTypes = {

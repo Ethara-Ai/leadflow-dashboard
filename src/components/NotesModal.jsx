@@ -10,10 +10,12 @@ import useThemeSafe from '../hooks/useThemeSafe';
  * Displays a single note with timestamp and delete option.
  */
 const NoteItem = memo(function NoteItem({ note, onDelete, isDark }) {
-  const cardClasses = isDark ? 'bg-slate-700/30 border-slate-600' : 'bg-slate-50 border-slate-200';
-  const textClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const cardClasses = isDark
+    ? 'bg-neutral-800/40 border-neutral-700'
+    : 'bg-slate-50 border-slate-200';
+  const textClasses = isDark ? 'text-neutral-200' : 'text-slate-700';
   const deleteButtonClasses = isDark
-    ? 'text-slate-400 hover:text-red-400'
+    ? 'text-neutral-400 hover:text-red-400'
     : 'text-slate-500 hover:text-red-500';
 
   return (
@@ -91,7 +93,7 @@ const AddNoteForm = memo(function AddNoteForm({ onSave, isDark }) {
 
   const labelClasses = isDark ? 'text-slate-300' : 'text-slate-700';
   const inputClasses = isDark
-    ? 'bg-slate-700/50 border-slate-600 text-slate-200 placeholder-slate-400 focus:border-blue-500'
+    ? 'bg-neutral-800/50 border-neutral-700 text-neutral-200 placeholder-neutral-500 focus:border-blue-500'
     : 'bg-slate-50 border-slate-300 text-slate-700 placeholder-slate-500 focus:border-blue-500';
   const disabledButtonClasses = isDark
     ? 'bg-slate-700 text-slate-500'
@@ -293,11 +295,13 @@ const NotesModal = memo(function NotesModal({
   };
 
   // Theme-based classes
-  const modalClasses = isDark ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-300';
-  const headerBorderClasses = isDark ? 'border-slate-700' : 'border-slate-200';
-  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const modalClasses = isDark
+    ? 'bg-neutral-900/95 border-neutral-700'
+    : 'bg-white/95 border-slate-300';
+  const headerBorderClasses = isDark ? 'border-neutral-700' : 'border-slate-200';
+  const titleClasses = isDark ? 'text-neutral-100' : 'text-slate-700';
   const closeButtonClasses = isDark
-    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+    ? 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-700/50'
     : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200';
 
   // Mode button classes helper
@@ -307,7 +311,7 @@ const NotesModal = memo(function NotesModal({
       return 'bg-blue-600 text-white shadow-lg';
     }
     return isDark
-      ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+      ? 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-700/50'
       : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100';
   };
 

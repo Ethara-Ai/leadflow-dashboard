@@ -62,8 +62,8 @@ const AlertItem = memo(function AlertItem({ alert, darkMode: darkModeOverride })
   // Theme-based classes
   const bgClasses = isDark ? alertConfig.darkBg : alertConfig.lightBg;
   const iconClasses = isDark ? alertConfig.darkIcon : alertConfig.lightIcon;
-  const textClasses = isDark ? 'text-slate-200' : 'text-slate-700';
-  const timeClasses = isDark ? 'text-slate-400' : 'text-slate-500';
+  const textClasses = isDark ? 'text-neutral-200' : 'text-slate-700';
+  const timeClasses = isDark ? 'text-neutral-400' : 'text-slate-500';
 
   return (
     <motion.article

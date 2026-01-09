@@ -3,29 +3,14 @@
 // Focused context for alerts state management
 // =============================================================================
 
-import { createContext, useContext, useMemo } from "react";
-import PropTypes from "prop-types";
-import useAlerts from "../hooks/useAlerts.js";
+import { createContext, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import useAlerts from '../hooks/useAlerts.js';
 
 /**
  * Alerts Context
  */
 const AlertsContext = createContext(undefined);
-
-/**
- * Custom hook to access alerts context
- * @returns {Object} Alerts context value
- * @throws {Error} If used outside of AlertsProvider
- */
-export const useAlertsContext = () => {
-  const context = useContext(AlertsContext);
-
-  if (context === undefined) {
-    throw new Error("useAlertsContext must be used within an AlertsProvider");
-  }
-
-  return context;
-};
 
 /**
  * Alerts Provider Component
@@ -36,11 +21,7 @@ export const useAlertsContext = () => {
  * @param {Array} [props.initialState] - Initial alerts array
  * @param {number} [props.maxAlerts] - Maximum number of alerts to keep
  */
-export const AlertsProvider = ({
-  children,
-  initialState,
-  maxAlerts,
-}) => {
+export const AlertsProvider = ({ children, initialState, maxAlerts }) => {
   const {
     alerts,
     activeAlerts,
@@ -95,11 +76,7 @@ export const AlertsProvider = ({
     ]
   );
 
-  return (
-    <AlertsContext.Provider value={value}>
-      {children}
-    </AlertsContext.Provider>
-  );
+  return <AlertsContext.Provider value={value}>{children}</AlertsContext.Provider>;
 };
 
 AlertsProvider.propTypes = {

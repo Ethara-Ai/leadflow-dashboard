@@ -118,31 +118,31 @@ const AlertsModal = memo(function AlertsModal({
   const descriptionId = 'alerts-modal-description';
 
   // Theme-based classes
-  const modalClasses = isDark ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-300';
-  const headerBorderClasses = isDark ? 'border-slate-700' : 'border-slate-200';
-  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const modalClasses = isDark ? 'bg-zinc-900/95 border-zinc-700' : 'bg-white/95 border-slate-300';
+  const headerBorderClasses = isDark ? 'border-zinc-700' : 'border-slate-200';
+  const titleClasses = isDark ? 'text-zinc-200' : 'text-slate-700';
   const closeButtonClasses = isDark
-    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+    ? 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50'
     : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200';
   const inputClasses = isDark
-    ? 'bg-slate-700 border-slate-600 text-slate-200 placeholder-slate-400 focus:border-blue-500'
+    ? 'bg-zinc-800 border-zinc-700 text-zinc-200 placeholder-zinc-500 focus:border-blue-500'
     : 'bg-slate-50 border-slate-300 text-slate-700 placeholder-slate-500 focus:border-blue-500';
   const buttonClasses = isDark
-    ? 'text-slate-400 hover:text-slate-200'
-    : 'text-slate-600 hover:text-slate-800';
-  const emptyIconClasses = isDark ? 'text-slate-500' : 'text-slate-400';
-  const emptyTextClasses = isDark ? 'text-slate-400' : 'text-slate-600';
-  const emptySubtextClasses = isDark ? 'text-slate-500' : 'text-slate-500';
+    ? 'text-zinc-400 hover:text-white hover:bg-zinc-700'
+    : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100';
+  const emptyIconClasses = isDark ? 'text-zinc-500' : 'text-slate-400';
+  const emptyTextClasses = isDark ? 'text-zinc-400' : 'text-slate-600';
+  const emptySubtextClasses = isDark ? 'text-zinc-500' : 'text-slate-500';
   const disabledButtonClasses = isDark
-    ? 'bg-slate-700 text-slate-500'
+    ? 'bg-zinc-800 text-zinc-500'
     : 'bg-slate-200 text-slate-400';
   const countBadgeClasses =
     alerts.length > 0
       ? isDark
-        ? 'bg-amber-900/40 text-amber-300'
+        ? 'bg-amber-950/60 text-amber-300'
         : 'bg-amber-100 text-amber-700'
       : isDark
-        ? 'bg-slate-700 text-slate-400'
+        ? 'bg-zinc-800 text-zinc-400'
         : 'bg-slate-200 text-slate-500';
 
   return (
@@ -192,7 +192,7 @@ const AlertsModal = memo(function AlertsModal({
                   {alerts.length > 0 && (
                     <button
                       onClick={handleClearAlerts}
-                      className={`text-xs font-medium cursor-pointer ${buttonClasses} transition-colors px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700`}
+                      className={`text-xs font-medium cursor-pointer ${buttonClasses} transition-colors px-2 py-1 rounded-md`}
                       style={{ fontFamily }}
                       aria-label="Clear all alerts"
                     >

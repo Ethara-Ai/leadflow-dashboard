@@ -3,29 +3,14 @@
 // Focused context for lead data state management
 // =============================================================================
 
-import { createContext, useContext, useMemo } from "react";
-import PropTypes from "prop-types";
-import useLeadData from "../hooks/useLeadData.js";
+import { createContext, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import useLeadData from '../hooks/useLeadData.js';
 
 /**
  * Lead Data Context
  */
 const LeadDataContext = createContext(undefined);
-
-/**
- * Custom hook to access lead data context
- * @returns {Object} Lead data context value
- * @throws {Error} If used outside of LeadDataProvider
- */
-export const useLeadDataContext = () => {
-  const context = useContext(LeadDataContext);
-
-  if (context === undefined) {
-    throw new Error("useLeadDataContext must be used within a LeadDataProvider");
-  }
-
-  return context;
-};
 
 /**
  * Lead Data Provider Component
@@ -43,20 +28,12 @@ export const LeadDataProvider = ({
   autoRefresh = false,
   refreshInterval,
 }) => {
-  const {
-    leadData,
-    isLoading,
-    error,
-    lastRefreshed,
-    refreshData,
-    resetData,
-    clearError,
-    setData,
-  } = useLeadData({
-    onNewAlert,
-    autoRefresh,
-    refreshInterval,
-  });
+  const { leadData, isLoading, error, lastRefreshed, refreshData, resetData, clearError, setData } =
+    useLeadData({
+      onNewAlert,
+      autoRefresh,
+      refreshInterval,
+    });
 
   const value = useMemo(
     () => ({
@@ -72,23 +49,10 @@ export const LeadDataProvider = ({
       clearError,
       setData,
     }),
-    [
-      leadData,
-      isLoading,
-      error,
-      lastRefreshed,
-      refreshData,
-      resetData,
-      clearError,
-      setData,
-    ]
+    [leadData, isLoading, error, lastRefreshed, refreshData, resetData, clearError, setData]
   );
 
-  return (
-    <LeadDataContext.Provider value={value}>
-      {children}
-    </LeadDataContext.Provider>
-  );
+  return <LeadDataContext.Provider value={value}>{children}</LeadDataContext.Provider>;
 };
 
 LeadDataProvider.propTypes = {

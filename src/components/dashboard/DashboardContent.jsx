@@ -3,22 +3,22 @@
 // Main content area component that orchestrates the dashboard layout
 // =============================================================================
 
-import { memo, useState, useCallback, useLayoutEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useDashboard } from "../../context/index.js";
-import useTheme from "../../hooks/useTheme.jsx";
-import useGlobalStyles from "../../hooks/useGlobalStyles.js";
-import DashboardHeader from "./DashboardHeader.jsx";
-import DashboardCharts from "./DashboardCharts.jsx";
-import DashboardModals from "./DashboardModals.jsx";
-import StatCards from "../StatCards.jsx";
-import MeetingScheduleCard from "../MeetingScheduleCard.jsx";
-import RecentLeadActivities from "../RecentLeadActivities.jsx";
-import WelcomeMessage from "../WelcomeMessage.jsx";
-import ErrorMessage from "../ErrorMessage.jsx";
-import LoadingSkeleton from "../LoadingSkeleton.jsx";
-import Footer from "../Footer.jsx";
-import { staggerContainerVariants, fontFamily } from "../../constants/index.js";
+import { memo, useState, useCallback, useLayoutEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useDashboard } from '../../context/index.js';
+import useTheme from '../../hooks/useTheme.jsx';
+import useGlobalStyles from '../../hooks/useGlobalStyles.js';
+import DashboardHeader from './DashboardHeader.jsx';
+import DashboardCharts from './DashboardCharts.jsx';
+import DashboardModals from './DashboardModals.jsx';
+import StatCards from '../StatCards.jsx';
+import MeetingScheduleCard from '../MeetingScheduleCard.jsx';
+import RecentLeadActivities from '../RecentLeadActivities.jsx';
+import WelcomeMessage from '../WelcomeMessage.jsx';
+import ErrorMessage from '../ErrorMessage.jsx';
+import LoadingSkeleton from '../LoadingSkeleton.jsx';
+import Footer from '../Footer.jsx';
+import { staggerContainerVariants, fontFamily } from '../../constants/index.js';
 
 /**
  * DashboardContent Component
@@ -52,6 +52,7 @@ const DashboardContent = memo(function DashboardContent() {
     meetings,
     activities,
     uiActivityData,
+    addMeeting,
 
     // Modal handlers
     openProductModal,
@@ -81,7 +82,7 @@ const DashboardContent = memo(function DashboardContent() {
     <div
       className={`min-h-screen transition-all duration-300 overflow-x-hidden overflow-y-auto ${
         isDark
-          ? 'bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white'
+          ? 'bg-linear-to-br from-neutral-950 via-black to-neutral-950 text-neutral-50'
           : 'bg-linear-to-br from-slate-50 via-white to-slate-50 text-slate-900'
       }`}
       style={{
@@ -96,10 +97,7 @@ const DashboardContent = memo(function DashboardContent() {
         {/* Welcome Message (dismissible) */}
         <AnimatePresence>
           {showWelcomeMessage && (
-            <WelcomeMessage
-              show={showWelcomeMessage}
-              onClose={handleCloseWelcome}
-            />
+            <WelcomeMessage show={showWelcomeMessage} onClose={handleCloseWelcome} />
           )}
         </AnimatePresence>
 
@@ -124,15 +122,13 @@ const DashboardContent = memo(function DashboardContent() {
 
             {/* Cards Section - data from context */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
-              <MeetingScheduleCard meetings={meetings} />
+              <MeetingScheduleCard meetings={meetings} onCreateMeeting={addMeeting} />
               <RecentLeadActivities activities={activities} />
             </div>
 
             {/* Last Updated Footer */}
             <motion.div
-              className={`mt-12 text-center text-sm ${
-                isDark ? "text-slate-500" : "text-slate-400"
-              }`}
+              className={`mt-12 text-center text-sm ${isDark ? 'text-neutral-500' : 'text-slate-400'}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.5 }}

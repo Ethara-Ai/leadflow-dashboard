@@ -31,9 +31,9 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
 
   // Theme classes
   const cardClasses = isDark
-    ? 'bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10'
+    ? 'bg-zinc-900/90 border-zinc-700/50 shadow-2xl shadow-black/60 ring-1 ring-zinc-600/10'
     : 'bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10';
-  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const titleClasses = isDark ? 'text-zinc-200' : 'text-slate-700';
 
   // Activity type icons
   const getActivityIcon = (type) => {
@@ -92,11 +92,11 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
           : 'bg-indigo-100 text-indigo-600 border-indigo-200';
       case 'note':
         return isDark
-          ? 'bg-slate-700 text-slate-300 border-slate-600'
+          ? 'bg-zinc-800 text-zinc-300 border-zinc-700'
           : 'bg-slate-100 text-slate-600 border-slate-200';
       default:
         return isDark
-          ? 'bg-slate-700 text-slate-300 border-slate-600'
+          ? 'bg-zinc-800 text-zinc-300 border-zinc-700'
           : 'bg-slate-100 text-slate-600 border-slate-200';
     }
   };
@@ -114,7 +114,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
           : 'bg-amber-100 text-amber-600 border-amber-200';
       case 'low':
         return isDark
-          ? 'bg-slate-700 text-slate-400 border-slate-600'
+          ? 'bg-zinc-800 text-zinc-400 border-zinc-700'
           : 'bg-slate-100 text-slate-600 border-slate-200';
       default:
         return '';
@@ -139,7 +139,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
         </div>
         <span
           className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-            isDark ? 'bg-slate-700 text-slate-300' : 'bg-slate-100 text-slate-600'
+            isDark ? 'bg-zinc-800 text-zinc-300' : 'bg-slate-100 text-slate-600'
           }`}
           style={{ fontFamily }}
         >
@@ -154,7 +154,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
             {/* Timeline line */}
             <div
               className={`absolute left-5 top-3 bottom-3 w-0.5 ${
-                isDark ? 'bg-slate-700' : 'bg-slate-200'
+                isDark ? 'bg-zinc-700' : 'bg-slate-200'
               }`}
             />
 
@@ -181,7 +181,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                   <motion.div
                     className={`p-2.5 rounded-lg border ${
                       isDark
-                        ? 'bg-slate-700/30 border-slate-600/30 hover:bg-slate-700/50'
+                        ? 'bg-zinc-800/30 border-zinc-700/30 hover:bg-zinc-800/50'
                         : 'bg-slate-50 border-slate-200/50 hover:bg-slate-100'
                     } transition-all duration-200`}
                     whileHover={{ scale: 1.02 }}
@@ -189,7 +189,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                     <div className="flex items-start justify-between gap-2 mb-0.5">
                       <p
                         className={`text-xs font-semibold truncate ${
-                          isDark ? 'text-slate-200' : 'text-slate-800'
+                          isDark ? 'text-zinc-200' : 'text-slate-800'
                         }`}
                         style={{ fontFamily }}
                       >
@@ -208,7 +208,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                     </div>
 
                     <p
-                      className={`text-[11px] mb-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+                      className={`text-[11px] mb-1 ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
                       style={{ fontFamily }}
                     >
                       {activity.description}
@@ -234,7 +234,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                     {activity.amount && (
                       <div
                         className={`mt-1.5 pt-1.5 border-t ${
-                          isDark ? 'border-slate-600/30' : 'border-slate-200'
+                          isDark ? 'border-zinc-700/30' : 'border-slate-200'
                         }`}
                       >
                         <span
@@ -254,11 +254,11 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full">
-            <div className={`p-4 rounded-full mb-3 ${isDark ? 'bg-slate-700/30' : 'bg-slate-100'}`}>
-              <TrendingUp className={`w-8 h-8 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
+            <div className={`p-4 rounded-full mb-3 ${isDark ? 'bg-zinc-800/30' : 'bg-slate-100'}`}>
+              <TrendingUp className={`w-8 h-8 ${isDark ? 'text-zinc-600' : 'text-slate-400'}`} />
             </div>
             <p
-              className={`text-sm font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+              className={`text-sm font-medium ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
               style={{ fontFamily }}
             >
               No recent activities

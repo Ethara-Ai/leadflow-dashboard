@@ -1,22 +1,76 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
-import { Users, Phone, Calendar, TrendingUp } from 'lucide-react';
-import { staggerContainerVariants } from '../constants';
+import {
+  Users,
+  Phone,
+  Calendar,
+  TrendingUp,
+  DollarSign,
+  Target,
+  BarChart,
+  Activity,
+} from 'lucide-react';
+import {
+  staggerContainerVariants,
+  DEFAULT_STATS_CONFIG,
+  getAccentClasses,
+  getSubValueVariant,
+} from '../constants';
 import { calculateTotalLeads } from '../utils';
 import useThemeSafe from '../hooks/useThemeSafe';
 import StatCard from './StatCard';
 
 /**
- * Helper function to determine the subValueVariant based on the value
- * This extracts business logic from the presentation component
- * @param {string} subValue - The sub value string (e.g., "+8", "-3%")
- * @returns {"positive"|"negative"|"warning"|"neutral"} - The variant type
+ * Icon mapping - maps icon names to actual components
  */
-const getSubValueVariant = (subValue) => {
-  if (!subValue) return 'neutral';
-  if (subValue.includes('+')) return 'positive';
-  if (subValue.includes('-')) return 'warning';
-  return 'neutral';
+const ICON_MAP = {
+  Users,
+  Phone,
+  Calendar,
+  TrendingUp,
+  DollarSign,
+  Target,
+  BarChart,
+  Activity,
+};
+
+/**
+ * Get icon component by name
+ * @param {string} iconName - Name of the icon
+ * @param {string} className - CSS classes for the icon
+ * @returns {React.ReactNode} Icon component
+ */
+const getIconComponent = (iconName, className = 'w-4 h-4 sm:w-5 sm:h-5') => {
+  const IconComponent = ICON_MAP[iconName];
+  if (!IconComponent) {
+    console.warn(`Icon "${iconName}" not found in ICON_MAP`);
+    return null;
+  }
+  return <IconComponent className={className} />;
+};
+
+/**
+ * Get stat value from lead data
+ * @param {Object} leadData - Lead data object
+ * @param {Object} config - Stat configuration
+ * @param {number} conversionRate - Calculated conversion rate
+ * @returns {string|number} Formatted value
+ */
+const getStatValue = (leadData, config, conversionRate) => {
+  let value;
+
+  if (config.valueKey === 'conversionRate') {
+    value = conversionRate;
+  } else {
+    value = leadData[config.valueKey];
+  }
+
+  if (config.valueFormatter) {
+    return config.valueFormatter(value);
+  }
+
+  return value;
 };
 
 /**
@@ -27,48 +81,34 @@ const getSubValueVariant = (subValue) => {
  * @param {Object} props - Component props
  * @param {Object} props.leadData - Lead statistics data (totalLeads, callsMade, meetingsScheduled)
  * @param {Array} props.activityData - Activity data for calculating totals
+ * @param {Array} [props.statsConfig] - Optional custom stats configuration
  * @param {boolean} [props.darkMode] - Optional override for dark mode (backward compatibility)
  */
-const StatCards = memo(function StatCards({ leadData, activityData, darkMode: darkModeOverride }) {
+const StatCards = memo(function StatCards({
+  leadData,
+  activityData,
+  statsConfig = DEFAULT_STATS_CONFIG,
+  darkMode: darkModeOverride,
+}) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
-  const totalLeads = calculateTotalLeads(activityData);
+  // Calculate conversion rate from activity data
+  const conversionRate = useMemo(() => calculateTotalLeads(activityData), [activityData]);
 
-  const stats = [
-    {
-      title: 'Total Leads',
-      value: leadData.totalLeads,
-      icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: '+24',
-      subText: 'new this week',
-      accent: isDark ? 'bg-emerald-900/40 text-emerald-400' : 'bg-emerald-100 text-emerald-600',
-    },
-    {
-      title: 'Calls Made',
-      value: leadData.callsMade,
-      icon: <Phone className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: '+18',
-      subText: 'vs yesterday',
-      accent: isDark ? 'bg-amber-900/40 text-amber-400' : 'bg-amber-100 text-amber-600',
-    },
-    {
-      title: 'Meetings',
-      value: `${leadData.meetingsScheduled}`,
-      icon: <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: '+5',
-      subText: 'scheduled',
-      accent: isDark ? 'bg-cyan-900/40 text-cyan-400' : 'bg-cyan-100 text-cyan-600',
-    },
-    {
-      title: 'Conversion Rate',
-      value: `${totalLeads}%`,
-      icon: <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: '+3.2%',
-      subText: 'from meetings',
-      accent: isDark ? 'bg-blue-900/40 text-blue-400' : 'bg-blue-100 text-blue-600',
-    },
-  ];
+  // Build stats array from configuration
+  const stats = useMemo(() => {
+    return statsConfig.map((config) => ({
+      key: config.id,
+      title: config.title,
+      value: getStatValue(leadData, config, conversionRate),
+      icon: getIconComponent(config.iconName),
+      subValue: config.subValue,
+      subText: config.subText,
+      accent: getAccentClasses(config.accent, isDark),
+      subValueVariant: getSubValueVariant(config.subValue),
+    }));
+  }, [statsConfig, leadData, conversionRate, isDark]);
 
   return (
     <motion.div
@@ -79,18 +119,40 @@ const StatCards = memo(function StatCards({ leadData, activityData, darkMode: da
     >
       {stats.map((stat) => (
         <StatCard
-          key={stat.title}
+          key={stat.key}
           title={stat.title}
           value={stat.value}
           icon={stat.icon}
           subValue={stat.subValue}
           subText={stat.subText}
           accent={stat.accent}
-          subValueVariant={getSubValueVariant(stat.subValue)}
+          subValueVariant={stat.subValueVariant}
         />
       ))}
     </motion.div>
   );
 });
+
+StatCards.propTypes = {
+  leadData: PropTypes.shape({
+    totalLeads: PropTypes.number,
+    callsMade: PropTypes.number,
+    meetingsScheduled: PropTypes.number,
+  }).isRequired,
+  activityData: PropTypes.array.isRequired,
+  statsConfig: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      iconName: PropTypes.string.isRequired,
+      accent: PropTypes.string.isRequired,
+      valueKey: PropTypes.string.isRequired,
+      subValue: PropTypes.string,
+      subText: PropTypes.string.isRequired,
+      valueFormatter: PropTypes.func,
+    })
+  ),
+  darkMode: PropTypes.bool,
+};
 
 export default StatCards;

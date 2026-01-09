@@ -87,20 +87,20 @@ const Header = memo(function Header({
   const buttonClasses = useMemo(
     () =>
       isDark
-        ? 'bg-slate-800/60 border-slate-700/50 shadow-lg shadow-slate-900/20'
+        ? 'bg-neutral-900/70 border-neutral-700/50 shadow-lg shadow-black/40'
         : 'bg-white/90 border-slate-200/60 shadow-lg shadow-slate-900/10',
     [isDark]
   );
 
   // Memoize menu item classes
   const menuItemClasses = useMemo(
-    () => (isDark ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-700 hover:bg-slate-100'),
+    () => (isDark ? 'text-neutral-300 hover:bg-neutral-700' : 'text-slate-700 hover:bg-slate-100'),
     [isDark]
   );
 
   // Memoize dropdown container classes
   const dropdownClasses = useMemo(
-    () => (isDark ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-300'),
+    () => (isDark ? 'bg-neutral-900/95 border-neutral-700' : 'bg-white/95 border-slate-300'),
     [isDark]
   );
 

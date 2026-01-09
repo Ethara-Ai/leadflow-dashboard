@@ -290,7 +290,7 @@ describe('Header', () => {
     it('should apply dark theme button classes in dark mode', () => {
       renderWithTheme(<Header {...defaultProps} />, { darkMode: true });
       const refreshButton = screen.getByLabelText('Refresh data');
-      expect(refreshButton).toHaveClass('bg-slate-800/60');
+      expect(refreshButton).toHaveClass('bg-neutral-900/70');
     });
 
     it('should apply light theme button classes in light mode', () => {

@@ -43,7 +43,7 @@ const CustomTooltip = memo(function CustomTooltip({
   return (
     <div
       className={`${
-        isDark ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-300'
+        isDark ? 'bg-neutral-900/95 border-neutral-700' : 'bg-white/95 border-slate-300'
       } backdrop-blur-md rounded-lg p-2 sm:p-4 border shadow-xl max-w-37.5 sm:max-w-50 wrap-break-word`}
       style={{
         pointerEvents: 'none',
@@ -54,7 +54,7 @@ const CustomTooltip = memo(function CustomTooltip({
       {label && (
         <p
           className={`font-bold mb-1 sm:mb-2 text-xs sm:text-sm truncate ${
-            isDark ? 'text-slate-200' : 'text-slate-700'
+            isDark ? 'text-neutral-100' : 'text-slate-700'
           }`}
           style={{ fontFamily }}
         >

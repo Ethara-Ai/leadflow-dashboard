@@ -20,9 +20,9 @@ const ProductModalContent = ({ darkMode: darkModeOverride }) => {
   }
 
   // Theme-based classes
-  const headingClasses = isDark ? 'text-slate-200' : 'text-slate-700';
-  const textClasses = isDark ? 'text-slate-400' : 'text-slate-600';
-  const cardClasses = isDark ? 'bg-slate-700/30' : 'bg-slate-50';
+  const headingClasses = isDark ? 'text-neutral-200' : 'text-slate-700';
+  const textClasses = isDark ? 'text-neutral-400' : 'text-slate-600';
+  const cardClasses = isDark ? 'bg-neutral-800/40' : 'bg-slate-50';
 
   return (
     <div className="space-y-6">

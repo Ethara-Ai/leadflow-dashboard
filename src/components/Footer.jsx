@@ -37,17 +37,17 @@ const Footer = memo(function Footer({
   };
 
   // Theme-based classes
-  const headingClasses = isDark ? 'text-slate-200' : 'text-slate-700';
-  const textClasses = isDark ? 'text-slate-400' : 'text-slate-600';
+  const headingClasses = isDark ? 'text-neutral-200' : 'text-slate-700';
+  const textClasses = isDark ? 'text-neutral-400' : 'text-slate-600';
   const linkClasses = isDark
-    ? 'text-slate-400 hover:text-slate-200'
+    ? 'text-neutral-400 hover:text-neutral-200'
     : 'text-slate-600 hover:text-slate-800';
 
   return (
     <footer
       className={`mt-8 sm:mt-12 md:mt-16 border-t transition-all duration-300 ${
         isDark
-          ? 'bg-slate-900/50 border-slate-800 backdrop-blur-lg'
+          ? 'bg-neutral-950/90 border-neutral-800 backdrop-blur-lg'
           : 'bg-white/80 border-slate-200 backdrop-blur-lg'
       }`}
       role="contentinfo"
@@ -65,7 +65,7 @@ const Footer = memo(function Footer({
               aria-label="Reload page"
             >
               <div
-                className={`p-2 sm:p-2.5 md:p-3 rounded-xl ${isDark ? 'bg-blue-900/30' : 'bg-blue-100'}`}
+                className={`p-2 sm:p-2.5 md:p-3 rounded-xl ${isDark ? 'bg-neutral-800/60' : 'bg-blue-100'}`}
               >
                 <Zap
                   className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}
@@ -73,7 +73,7 @@ const Footer = memo(function Footer({
                 />
               </div>
               <span
-                className={`text-lg sm:text-xl md:text-2xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}
+                className={`text-lg sm:text-xl md:text-2xl font-bold ${isDark ? 'text-neutral-100' : 'text-slate-800'}`}
                 style={{ fontFamily: fontFamilyHeading }}
               >
                 LeadFlow
@@ -173,7 +173,7 @@ const Footer = memo(function Footer({
         {/* Bottom Bar */}
         <div
           className={`mt-6 sm:mt-8 md:mt-12 pt-4 sm:pt-6 md:pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 ${
-            isDark ? 'border-slate-800' : 'border-slate-200'
+            isDark ? 'border-neutral-800' : 'border-slate-200'
           }`}
         >
           <p

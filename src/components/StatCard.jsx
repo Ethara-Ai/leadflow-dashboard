@@ -52,7 +52,7 @@ const StatCard = memo(function StatCard({
     <motion.div
       className={`${
         isDark
-          ? 'bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10'
+          ? 'bg-zinc-900/90 border-zinc-700/50 shadow-2xl shadow-black/60 ring-1 ring-zinc-600/10'
           : 'bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10'
       } backdrop-blur-lg rounded-2xl p-5 sm:p-7 md:p-8 border transition-all duration-300 hover:shadow-2xl h-36 sm:h-40 md:h-44 flex flex-col justify-between`}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
@@ -61,7 +61,7 @@ const StatCard = memo(function StatCard({
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0 pr-2">
           <h3
-            className={`text-xs sm:text-sm md:text-base font-bold ${isDark ? 'text-slate-200' : 'text-slate-700'} leading-tight`}
+            className={`text-xs sm:text-sm md:text-base font-bold ${isDark ? 'text-zinc-200' : 'text-slate-700'} leading-tight`}
             style={{ fontFamily }}
           >
             {title}
@@ -74,7 +74,7 @@ const StatCard = memo(function StatCard({
 
       <div className="flex flex-col mt-auto">
         <p
-          className={`text-xl sm:text-4xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-800'} wrap-break-word`}
+          className={`text-xl sm:text-4xl font-bold ${isDark ? 'text-zinc-100' : 'text-slate-800'} wrap-break-word`}
           style={{ fontFamily }}
         >
           {value}
@@ -89,7 +89,7 @@ const StatCard = memo(function StatCard({
             </span>
           )}
           <span
-            className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+            className={`text-xs sm:text-sm ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
             style={{ fontFamily }}
           >
             {subText}

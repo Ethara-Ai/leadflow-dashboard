@@ -32,7 +32,7 @@ export const ChartLegend = memo(function ChartLegend({ payload }) {
             aria-hidden="true"
           />
           <span
-            className={`text-xs sm:text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-600'}`}
+            className={`text-xs sm:text-sm font-medium ${isDark ? 'text-neutral-300' : 'text-slate-600'}`}
             style={{ fontFamily }}
           >
             {entry.value}
@@ -72,7 +72,7 @@ export const XAxisTick = memo(function XAxisTick({ x, y, payload }) {
         y={0}
         dy={12}
         textAnchor="middle"
-        fill={isDark ? '#94a3b8' : '#475569'}
+        fill={isDark ? '#a3a3a3' : '#475569'}
         fontSize={10}
         fontWeight="500"
         fontFamily={fontFamily}

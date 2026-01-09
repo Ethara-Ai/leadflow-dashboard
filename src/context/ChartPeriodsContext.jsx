@@ -3,29 +3,14 @@
 // Focused context for chart periods state management
 // =============================================================================
 
-import { createContext, useContext, useMemo } from "react";
-import PropTypes from "prop-types";
-import useChartPeriods, { TIME_PERIODS, CHART_IDS } from "../hooks/useChartPeriods.js";
+import { createContext, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import useChartPeriods, { TIME_PERIODS, CHART_IDS } from '../hooks/useChartPeriods.js';
 
 /**
  * Chart Periods Context
  */
 const ChartPeriodsContext = createContext(undefined);
-
-/**
- * Custom hook to access chart periods context
- * @returns {Object} Chart periods context value
- * @throws {Error} If used outside of ChartPeriodsProvider
- */
-export const useChartPeriodsContext = () => {
-  const context = useContext(ChartPeriodsContext);
-
-  if (context === undefined) {
-    throw new Error("useChartPeriodsContext must be used within a ChartPeriodsProvider");
-  }
-
-  return context;
-};
 
 /**
  * Chart Periods Provider Component
@@ -35,10 +20,7 @@ export const useChartPeriodsContext = () => {
  * @param {React.ReactNode} props.children - Child components
  * @param {string} [props.defaultPeriod='week'] - Default time period for all charts
  */
-export const ChartPeriodsProvider = ({
-  children,
-  defaultPeriod = TIME_PERIODS.WEEK,
-}) => {
+export const ChartPeriodsProvider = ({ children, defaultPeriod = TIME_PERIODS.WEEK }) => {
   const {
     // Individual period states
     activityPeriod,
@@ -116,11 +98,7 @@ export const ChartPeriodsProvider = ({
     ]
   );
 
-  return (
-    <ChartPeriodsContext.Provider value={value}>
-      {children}
-    </ChartPeriodsContext.Provider>
-  );
+  return <ChartPeriodsContext.Provider value={value}>{children}</ChartPeriodsContext.Provider>;
 };
 
 ChartPeriodsProvider.propTypes = {
