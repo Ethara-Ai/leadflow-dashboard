@@ -17,6 +17,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "format": "prettier --write \"src/**/*.{js,jsx,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,css,json}\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
