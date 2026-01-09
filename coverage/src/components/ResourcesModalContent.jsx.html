@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>16/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -182,8 +182,7 @@
 <a name='L117'></a><a href='#L117'>117</a>
 <a name='L118'></a><a href='#L118'>118</a>
 <a name='L119'></a><a href='#L119'>119</a>
-<a name='L120'></a><a href='#L120'>120</a>
-<a name='L121'></a><a href='#L121'>121</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L120'></a><a href='#L120'>120</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,24 +192,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">53x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -313,23 +311,23 @@ import useTheme from "../hooks/useTheme";
  * @param {Object} props - Component props
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const ResourcesModalContent = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> darkMode: darkModeOverride }) =&gt; {</span>
+const ResourcesModalContent = ({ darkMode: darkModeOverride }) =&gt; {
   // Use theme context with optional override for backward compatibility
-  let isDark = <span class="cstat-no" title="statement not covered" >false;</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const <span class="cstat-no" title="statement not covered" >theme = useTheme();</span>
-<span class="cstat-no" title="statement not covered" >    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;</span>
+  let isDark = false;
+  try {
+    const theme = useTheme();
+    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
   } catch {
     // Fallback if used outside ThemeProvider (backward compatibility)
 <span class="cstat-no" title="statement not covered" >    isDark = darkModeOverride ?? false;</span>
   }
 &nbsp;
   // Theme-based classes
-  const headingClasses = <span class="cstat-no" title="statement not covered" >isDark ? "text-slate-200" : "text-slate-700";</span>
-  const textClasses = <span class="cstat-no" title="statement not covered" >isDark ? "text-slate-400" : "text-slate-600";</span>
-  const cardClasses = <span class="cstat-no" title="statement not covered" >isDark ? "bg-slate-700/30" : "bg-slate-50";</span>
+  const headingClasses = isDark ? "text-slate-200" : "text-slate-700";
+  const textClasses = isDark ? "text-slate-400" : "text-slate-600";
+  const cardClasses = isDark ? "bg-slate-700/30" : "bg-slate-50";
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;div className="space-y-6"&gt;
       &lt;div className="space-y-4"&gt;
         &lt;h4
@@ -344,12 +342,12 @@ const ResourcesModalContent = <span class="cstat-no" title="statement not covere
               className={`font-semibold ${headingClasses}`}
               style={{ fontFamily }}
             &gt;
-              Global Zoolab Network
+              Global Sales Network
             &lt;/h5&gt;
             &lt;p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}&gt;
-              Connect with zoolab staff, veterinarians, and wildlife
-              conservation specialists worldwide. Share best practices and
-              collaborate on animal welfare initiatives.
+              Connect with sales professionals, business development experts,
+              and marketing specialists worldwide. Share best practices and
+              collaborate on lead generation strategies.
             &lt;/p&gt;
           &lt;/div&gt;
           &lt;div className={`p-4 rounded-xl ${cardClasses}`}&gt;
@@ -360,8 +358,8 @@ const ResourcesModalContent = <span class="cstat-no" title="statement not covere
               Discussion Forums
             &lt;/h5&gt;
             &lt;p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}&gt;
-              Active community discussions on animal behavior, enclosure
-              enrichment techniques, veterinary care, and conservation efforts.
+              Active community discussions on sales techniques, lead nurturing
+              strategies, CRM best practices, and conversion optimization.
             &lt;/p&gt;
           &lt;/div&gt;
         &lt;/div&gt;
@@ -388,11 +386,11 @@ const ResourcesModalContent = <span class="cstat-no" title="statement not covere
               }`}
               style={{ fontFamily }}
             &gt;
-              San Diego Zoo Wildlife Alliance
+              TechCorp Enterprise Solutions
             &lt;/h6&gt;
             &lt;p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}&gt;
-              How leading zoos use ZOOLAB for comprehensive animal health
-              tracking and endangered species breeding programs.
+              How leading enterprises use LeadFlow for comprehensive pipeline
+              management and achieved 40% increase in conversion rates.
             &lt;/p&gt;
           &lt;/div&gt;
           &lt;div
@@ -408,12 +406,11 @@ const ResourcesModalContent = <span class="cstat-no" title="statement not covere
               }`}
               style={{ fontFamily }}
             &gt;
-              Wildlife Conservation Projects
+              StartupX Growth Story
             &lt;/h6&gt;
             &lt;p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}&gt;
-              Real-world applications in species reintroduction programs,
-              habitat preservation, and global biodiversity monitoring
-              initiatives.
+              Real-world applications in scaling sales operations, automating
+              lead qualification, and building predictable revenue pipelines.
             &lt;/p&gt;
           &lt;/div&gt;
         &lt;/div&gt;
@@ -430,7 +427,7 @@ export default ResourcesModalContent;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-07T11:41:20.687Z
+                at 2026-01-09T07:03:05.510Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

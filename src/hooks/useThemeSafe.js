@@ -1,56 +1,25 @@
 // =============================================================================
 // LEADFLOW DASHBOARD - USE THEME SAFE HOOK
-// Safe theme hook that handles cases where ThemeProvider is not available
+// Re-exports useThemeSafe from the unified useTheme hook for backward compatibility
 // =============================================================================
 
-import { useContext } from "react";
-import { ThemeContext } from "./ThemeContext.js";
-
 /**
- * Safe theme hook that handles cases where ThemeProvider is not available
- * Eliminates the need for try-catch blocks in every component
+ * @deprecated Use `useTheme` from './useTheme.jsx' instead.
+ * This file is maintained for backward compatibility.
  *
- * @param {boolean} [darkModeOverride] - Optional override for dark mode (for backward compatibility)
- * @returns {Object} Theme context value containing:
- *   - isDark: boolean - Current dark mode state
- *   - darkMode: boolean - Alias for isDark (backward compatibility)
- *   - toggleTheme: function - Toggle between light and dark mode (no-op if no provider)
- *   - setDarkMode: function - Set dark mode to a specific value (no-op if no provider)
+ * The unified useTheme hook now handles both safe and strict modes:
+ * - useTheme() - Safe by default, returns fallback values if no provider
+ * - useTheme({ throwOnMissingProvider: true }) - Strict mode, throws if no provider
+ * - useTheme(darkModeOverride) - Override dark mode value
+ *
+ * @example
+ * // Old way (still works)
+ * import useThemeSafe from './useThemeSafe';
+ * const { isDark } = useThemeSafe();
+ *
+ * // New way (recommended)
+ * import useTheme from './useTheme';
+ * const { isDark } = useTheme();
  */
-const useThemeSafe = (darkModeOverride) => {
-  const context = useContext(ThemeContext);
 
-  // If override is provided, use it regardless of context
-  if (darkModeOverride !== undefined) {
-    return {
-      isDark: darkModeOverride,
-      darkMode: darkModeOverride,
-      toggleTheme: () => {},
-      setDarkMode: () => {},
-    };
-  }
-
-  // If context exists, return it
-  if (context !== undefined) {
-    return context;
-  }
-
-  // Fallback when used outside ThemeProvider
-  // Only warn in development to avoid console noise in production
-  return {
-    isDark: false,
-    darkMode: false,
-    toggleTheme: () => {
-      if (import.meta.env.DEV) {
-        console.warn("useThemeSafe: toggleTheme called outside of ThemeProvider");
-      }
-    },
-    setDarkMode: () => {
-      if (import.meta.env.DEV) {
-        console.warn("useThemeSafe: setDarkMode called outside of ThemeProvider");
-      }
-    },
-  };
-};
-
-export default useThemeSafe;
+export { useThemeSafe as default } from "./useTheme.jsx";

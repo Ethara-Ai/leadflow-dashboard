@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>12/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -204,8 +204,7 @@
 <a name='L139'></a><a href='#L139'>139</a>
 <a name='L140'></a><a href='#L140'>140</a>
 <a name='L141'></a><a href='#L141'>141</a>
-<a name='L142'></a><a href='#L142'>142</a>
-<a name='L143'></a><a href='#L143'>143</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L142'></a><a href='#L142'>142</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -215,24 +214,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-yes">41x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -357,23 +355,23 @@ import useTheme from "../hooks/useTheme";
  * @param {Object} props - Component props
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const CompanyModalContent = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> darkMode: darkModeOverride }) =&gt; {</span>
+const CompanyModalContent = ({ darkMode: darkModeOverride }) =&gt; {
   // Use theme context with optional override for backward compatibility
-  let isDark = <span class="cstat-no" title="statement not covered" >false;</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const <span class="cstat-no" title="statement not covered" >theme = useTheme();</span>
-<span class="cstat-no" title="statement not covered" >    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;</span>
+  let isDark = false;
+  try {
+    const theme = useTheme();
+    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;
   } catch {
     // Fallback if used outside ThemeProvider (backward compatibility)
 <span class="cstat-no" title="statement not covered" >    isDark = darkModeOverride ?? false;</span>
   }
 &nbsp;
   // Theme-based classes
-  const headingClasses = <span class="cstat-no" title="statement not covered" >isDark ? "text-slate-200" : "text-slate-700";</span>
-  const textClasses = <span class="cstat-no" title="statement not covered" >isDark ? "text-slate-400" : "text-slate-600";</span>
-  const cardClasses = <span class="cstat-no" title="statement not covered" >isDark ? "bg-slate-700/30" : "bg-slate-50";</span>
+  const headingClasses = isDark ? "text-slate-200" : "text-slate-700";
+  const textClasses = isDark ? "text-slate-400" : "text-slate-600";
+  const cardClasses = isDark ? "bg-slate-700/30" : "bg-slate-50";
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;div className="space-y-6"&gt;
       {/* Privacy Policy Section */}
       &lt;div className="space-y-4"&gt;
@@ -397,8 +395,7 @@ const CompanyModalContent = <span class="cstat-no" title="statement not covered"
                 style={{ fontFamily }}
               &gt;
                 We employ enterprise-grade encryption and security measures to
-                protect your animal records, veterinary data, and zoo
-                observations.
+                protect your lead records, sales data, and customer information.
               &lt;/p&gt;
             &lt;/div&gt;
             &lt;div&gt;
@@ -412,7 +409,7 @@ const CompanyModalContent = <span class="cstat-no" title="statement not covered"
                 className={`text-sm mt-1 ${textClasses}`}
                 style={{ fontFamily }}
               &gt;
-                Your zoo data belongs to you. We provide tools for easy export
+                Your sales data belongs to you. We provide tools for easy export
                 and maintain strict data portability standards for regulatory
                 compliance.
               &lt;/p&gt;
@@ -442,9 +439,9 @@ const CompanyModalContent = <span class="cstat-no" title="statement not covered"
                 className={`text-sm mt-1 ${textClasses}`}
                 style={{ fontFamily }}
               &gt;
-                Licensed for accredited zoos, wildlife sanctuaries, and
-                conservation organizations. Custom enterprise plans available
-                for large facilities.
+                Licensed for sales teams, marketing agencies, and business
+                development organizations. Custom enterprise plans available for
+                large teams.
               &lt;/p&gt;
             &lt;/div&gt;
             &lt;div&gt;
@@ -452,15 +449,15 @@ const CompanyModalContent = <span class="cstat-no" title="statement not covered"
                 className={`font-medium ${headingClasses}`}
                 style={{ fontFamily }}
               &gt;
-                Animal Welfare Standards
+                Data Compliance Standards
               &lt;/h6&gt;
               &lt;p
                 className={`text-sm mt-1 ${textClasses}`}
                 style={{ fontFamily }}
               &gt;
-                Committed to AZA (Association of Zoos and Aquariums) standards
-                and promoting responsible animal care, welfare, and conservation
-                practices.
+                Committed to GDPR, CCPA, and SOC 2 compliance standards,
+                ensuring responsible data handling, customer privacy, and secure
+                business practices.
               &lt;/p&gt;
             &lt;/div&gt;
           &lt;/div&gt;
@@ -471,17 +468,17 @@ const CompanyModalContent = <span class="cstat-no" title="statement not covered"
       &lt;div
         className={`p-4 rounded-xl border ${
           isDark
-            ? "bg-emerald-900/20 border-emerald-800/30"
-            : "bg-emerald-50 border-emerald-200"
+            ? "bg-blue-900/20 border-blue-800/30"
+            : "bg-blue-50 border-blue-200"
         }`}
       &gt;
         &lt;p
           className={`text-sm ${
-            isDark ? "text-emerald-300" : "text-emerald-700"
+            isDark ? "text-blue-300" : "text-blue-700"
           } text-center`}
           style={{ fontFamily }}
         &gt;
-          For detailed legal documents, contact: legal@zoolab.wildlife
+          For detailed legal documents, contact: legal@leadflow.io
         &lt;/p&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -496,7 +493,7 @@ export default CompanyModalContent;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-07T11:41:20.826Z
+                at 2026-01-09T07:03:05.793Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

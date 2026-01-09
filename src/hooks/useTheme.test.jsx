@@ -1,12 +1,12 @@
 /**
  * Unit Tests for Theme Hooks
- * Tests useTheme hook, ThemeProvider, and ThemeContext
+ * Tests useTheme hook (unified), ThemeProvider, and ThemeContext
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
 import React from "react";
-import useTheme from "./useTheme";
+import useTheme, { useThemeStrict, useThemeSafe } from "./useTheme";
 import ThemeProvider from "./ThemeProvider";
 import { ThemeContext } from "./ThemeContext";
 
@@ -69,6 +69,15 @@ describe("useTheme", () => {
 
       expect(result.current).toHaveProperty("setDarkMode");
       expect(typeof result.current.setDarkMode).toBe("function");
+    });
+
+    it("should return isProviderAvailable as true", () => {
+      const { result } = renderHook(() => useTheme(), {
+        wrapper: createWrapper(false),
+      });
+
+      expect(result.current).toHaveProperty("isProviderAvailable");
+      expect(result.current.isProviderAvailable).toBe(true);
     });
 
     it("should default to light mode (isDark = false)", () => {
@@ -202,19 +211,193 @@ describe("useTheme", () => {
     });
   });
 
-  describe("when used outside ThemeProvider", () => {
-    it("should throw an error", () => {
-      // Suppress console.error for this test since we expect an error
+  describe("when used outside ThemeProvider (safe mode - default)", () => {
+    it("should return fallback values instead of throwing", () => {
+      const { result } = renderHook(() => useTheme());
+
+      expect(result.current.isDark).toBe(false);
+      expect(result.current.darkMode).toBe(false);
+      expect(result.current.isProviderAvailable).toBe(false);
+    });
+
+    it("should have no-op toggleTheme function", () => {
+      const { result } = renderHook(() => useTheme());
+
+      // Should not throw
+      expect(() => {
+        act(() => {
+          result.current.toggleTheme();
+        });
+      }).not.toThrow();
+    });
+
+    it("should have no-op setDarkMode function", () => {
+      const { result } = renderHook(() => useTheme());
+
+      // Should not throw
+      expect(() => {
+        act(() => {
+          result.current.setDarkMode(true);
+        });
+      }).not.toThrow();
+    });
+
+    it("should warn in development when calling toggleTheme outside provider", () => {
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      const { result } = renderHook(() => useTheme());
+
+      act(() => {
+        result.current.toggleTheme();
+      });
+
+      expect(consoleSpy).toHaveBeenCalled();
+      consoleSpy.mockRestore();
+    });
+  });
+
+  describe("darkModeOverride option", () => {
+    it("should override theme when darkModeOverride is true", () => {
+      const { result } = renderHook(
+        () => useTheme({ darkModeOverride: true }),
+        { wrapper: createWrapper(false) },
+      );
+
+      expect(result.current.isDark).toBe(true);
+    });
+
+    it("should override theme when darkModeOverride is false", () => {
+      const { result } = renderHook(
+        () => useTheme({ darkModeOverride: false }),
+        { wrapper: createWrapper(true) },
+      );
+
+      expect(result.current.isDark).toBe(false);
+    });
+
+    it("should support boolean argument for backward compatibility", () => {
+      const { result } = renderHook(() => useTheme(true), {
+        wrapper: createWrapper(false),
+      });
+
+      expect(result.current.isDark).toBe(true);
+    });
+
+    it("should have no-op functions when using override", () => {
+      const { result } = renderHook(
+        () => useTheme({ darkModeOverride: true }),
+        { wrapper: createWrapper(false) },
+      );
+
+      // Functions should be no-ops when override is used
+      act(() => {
+        result.current.toggleTheme();
+        result.current.setDarkMode(false);
+      });
+
+      // Should still be true because override takes precedence
+      expect(result.current.isDark).toBe(true);
+    });
+
+    it("should report provider availability even when using override", () => {
+      const { result: withProvider } = renderHook(
+        () => useTheme({ darkModeOverride: true }),
+        { wrapper: createWrapper(false) },
+      );
+
+      const { result: withoutProvider } = renderHook(() =>
+        useTheme({ darkModeOverride: true }),
+      );
+
+      expect(withProvider.current.isProviderAvailable).toBe(true);
+      expect(withoutProvider.current.isProviderAvailable).toBe(false);
+    });
+  });
+
+  describe("throwOnMissingProvider option", () => {
+    it("should throw when throwOnMissingProvider is true and no provider", () => {
       const consoleSpy = vi
         .spyOn(console, "error")
         .mockImplementation(() => {});
 
       expect(() => {
-        renderHook(() => useTheme());
+        renderHook(() => useTheme({ throwOnMissingProvider: true }));
       }).toThrow("useTheme must be used within a ThemeProvider");
 
       consoleSpy.mockRestore();
     });
+
+    it("should not throw when throwOnMissingProvider is true and provider exists", () => {
+      const { result } = renderHook(
+        () => useTheme({ throwOnMissingProvider: true }),
+        { wrapper: createWrapper(false) },
+      );
+
+      expect(result.current.isDark).toBe(false);
+    });
+  });
+});
+
+// =============================================================================
+// useThemeStrict Tests
+// =============================================================================
+
+describe("useThemeStrict", () => {
+  beforeEach(() => {
+    localStorage.getItem.mockReturnValue(null);
+  });
+
+  it("should throw when used outside ThemeProvider", () => {
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    expect(() => {
+      renderHook(() => useThemeStrict());
+    }).toThrow("useTheme must be used within a ThemeProvider");
+
+    consoleSpy.mockRestore();
+  });
+
+  it("should work normally when used within ThemeProvider", () => {
+    const { result } = renderHook(() => useThemeStrict(), {
+      wrapper: createWrapper(false),
+    });
+
+    expect(result.current.isDark).toBe(false);
+    expect(result.current.isProviderAvailable).toBe(true);
+  });
+});
+
+// =============================================================================
+// useThemeSafe Tests
+// =============================================================================
+
+describe("useThemeSafe", () => {
+  beforeEach(() => {
+    localStorage.getItem.mockReturnValue(null);
+  });
+
+  it("should return fallback values when used outside ThemeProvider", () => {
+    const { result } = renderHook(() => useThemeSafe());
+
+    expect(result.current.isDark).toBe(false);
+    expect(result.current.isProviderAvailable).toBe(false);
+  });
+
+  it("should work normally when used within ThemeProvider", () => {
+    const { result } = renderHook(() => useThemeSafe(), {
+      wrapper: createWrapper(true),
+    });
+
+    expect(result.current.isDark).toBe(true);
+    expect(result.current.isProviderAvailable).toBe(true);
+  });
+
+  it("should support darkModeOverride argument", () => {
+    const { result } = renderHook(() => useThemeSafe(true), {
+      wrapper: createWrapper(false),
+    });
+
+    expect(result.current.isDark).toBe(true);
   });
 });
 
@@ -339,17 +522,19 @@ describe("ThemeProvider", () => {
   });
 
   describe("context value memoization", () => {
-    it("should maintain reference equality when theme does not change", () => {
+    it("should maintain stable function references when theme does not change", () => {
       const { result, rerender } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
 
-      const firstValue = result.current;
-      rerender();
-      const secondValue = result.current;
+      const firstToggle = result.current.toggleTheme;
+      const firstSetDarkMode = result.current.setDarkMode;
 
-      // The object reference should be the same due to useMemo
-      expect(firstValue).toBe(secondValue);
+      rerender();
+
+      // Function references should be stable due to useCallback in provider
+      expect(result.current.toggleTheme).toBe(firstToggle);
+      expect(result.current.setDarkMode).toBe(firstSetDarkMode);
     });
 
     it("should update reference when theme changes", () => {
@@ -357,16 +542,14 @@ describe("ThemeProvider", () => {
         wrapper: createWrapper(false),
       });
 
-      const firstValue = result.current;
+      const firstIsDark = result.current.isDark;
 
       act(() => {
         result.current.toggleTheme();
       });
 
-      const secondValue = result.current;
-
-      // The object reference should be different after toggle
-      expect(firstValue).not.toBe(secondValue);
+      // isDark value should be different after toggle
+      expect(result.current.isDark).not.toBe(firstIsDark);
     });
   });
 });
@@ -440,6 +623,7 @@ describe("Theme Hooks Integration", () => {
       darkMode: expect.any(Boolean),
       toggleTheme: expect.any(Function),
       setDarkMode: expect.any(Function),
+      isProviderAvailable: expect.any(Boolean),
     });
   });
 
@@ -485,5 +669,21 @@ describe("Theme Hooks Integration", () => {
       result.current.setDarkMode(false);
     });
     expect(result.current.isDark).toBe(false);
+  });
+
+  it("should allow components to work without ThemeProvider using safe default", () => {
+    // This simulates a component that can work both with and without ThemeProvider
+    const { result } = renderHook(() => {
+      const theme = useTheme();
+      return {
+        canRender: true,
+        isDark: theme.isDark,
+        hasProvider: theme.isProviderAvailable,
+      };
+    });
+
+    expect(result.current.canRender).toBe(true);
+    expect(result.current.isDark).toBe(false);
+    expect(result.current.hasProvider).toBe(false);
   });
 });

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -153,7 +153,13 @@
 <a name='L88'></a><a href='#L88'>88</a>
 <a name='L89'></a><a href='#L89'>89</a>
 <a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -168,22 +174,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">53x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -243,11 +245,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// eslint-disable-next-line no-unused-vars
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { memo } from "react";
+import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { Info, X } from "lucide-react";
 import { fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import useThemeSafe from "../hooks/useThemeSafe";
 &nbsp;
 /**
  * WelcomeMessage Component
@@ -258,42 +271,40 @@ import useTheme from "../hooks/useTheme";
  * @param {function} props.onClose - Callback when message is dismissed
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const WelcomeMessage = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> show, onClose, darkMode: darkModeOverride }) =&gt; {</span>
-  // Use theme context with optional override for backward compatibility
-  let isDark = <span class="cstat-no" title="statement not covered" >false;</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const <span class="cstat-no" title="statement not covered" >theme = useTheme();</span>
-<span class="cstat-no" title="statement not covered" >    isDark = darkModeOverride !== undefined ? darkModeOverride : theme.isDark;</span>
-  } catch {
-    // Fallback if used outside ThemeProvider (backward compatibility)
-<span class="cstat-no" title="statement not covered" >    isDark = darkModeOverride ?? false;</span>
-  }
+const WelcomeMessage = memo(function WelcomeMessage({
+  show,
+  onClose,
+  darkMode: darkModeOverride,
+}) {
+  // Use safe theme hook with optional override
+  const { isDark } = useThemeSafe(darkModeOverride);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!show) <span class="cstat-no" title="statement not covered" >return null;</span></span>
+  if (!show) return null;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;motion.div
-      className={`mb-4 sm:mb-6 md:mb-8 p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl border ${
+      className={`mb-4 sm:mb-6 md:mb-8 p-3 sm:p-4 md:p-4 rounded-xl sm:rounded-2xl border ${
         isDark
-          ? "bg-emerald-900/20 border-emerald-800/30"
-          : "bg-emerald-50 border-emerald-200"
+          ? "bg-blue-900/20 border-blue-800/30"
+          : "bg-blue-50 border-blue-200"
       }`}
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
+      role="status"
+      aria-live="polite"
     &gt;
       &lt;div className="flex items-start sm:items-center justify-between gap-2 sm:gap-4"&gt;
         &lt;div className="flex items-start sm:items-center flex-1 min-w-0"&gt;
           &lt;div
             className={`p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl shrink-0 ${
-              isDark ? "bg-emerald-800/30" : "bg-emerald-100"
+              isDark ? "bg-blue-800/30" : "bg-blue-100"
             } mr-2 sm:mr-3 md:mr-4`}
           &gt;
             &lt;Info
-              className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                isDark ? "text-emerald-400" : "text-emerald-600"
-              }`}
+              className={`w-4 h-4 sm:w-5 sm:h-5 ${isDark ? "text-blue-400" : "text-blue-600"}`}
+              aria-hidden="true"
             /&gt;
           &lt;/div&gt;
           &lt;div className="min-w-0 flex-1"&gt;
@@ -303,7 +314,7 @@ const WelcomeMessage = <span class="cstat-no" title="statement not covered" ><sp
               }`}
               style={{ fontFamily }}
             &gt;
-              Welcome back, Zoolab Staff!
+              Welcome back, John Doe!
             &lt;/h3&gt;
             &lt;p
               className={`text-xs sm:text-sm mt-0.5 sm:mt-1 leading-snug ${
@@ -311,7 +322,7 @@ const WelcomeMessage = <span class="cstat-no" title="statement not covered" ><sp
               }`}
               style={{ fontFamily }}
             &gt;
-              Here's the current status of your zoo and animal enclosures
+              Here's the current status of your leads and sales pipeline
             &lt;/p&gt;
           &lt;/div&gt;
         &lt;/div&gt;
@@ -324,12 +335,19 @@ const WelcomeMessage = <span class="cstat-no" title="statement not covered" ><sp
           }`}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
+          aria-label="Dismiss welcome message"
         &gt;
-          &lt;X className="w-3.5 h-3.5 sm:w-4 sm:h-4" /&gt;
+          &lt;X className="w-3.5 h-3.5 sm:w-4 sm:h-4" aria-hidden="true" /&gt;
         &lt;/motion.button&gt;
       &lt;/div&gt;
     &lt;/motion.div&gt;
   );
+});
+&nbsp;
+WelcomeMessage.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool,
 };
 &nbsp;
 export default WelcomeMessage;
@@ -340,7 +358,7 @@ export default WelcomeMessage;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-07T11:41:20.826Z
+                at 2026-01-09T07:03:05.793Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

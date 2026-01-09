@@ -18,19 +18,19 @@ import WelcomeMessage from "../WelcomeMessage.jsx";
 import ErrorMessage from "../ErrorMessage.jsx";
 import LoadingSkeleton from "../LoadingSkeleton.jsx";
 import Footer from "../Footer.jsx";
-import {
-  staggerContainerVariants,
-  fontFamily,
-  activityWeekData,
-  initialMeetings,
-  initialActivities,
-} from "../../constants/index.js";
+import { staggerContainerVariants, fontFamily } from "../../constants/index.js";
 
 /**
  * DashboardContent Component
  * Main content area that orchestrates the dashboard layout.
  * Uses the DashboardContext for state management and coordinates
  * between all dashboard sub-components.
+ *
+ * All data is now received from context providers instead of
+ * being imported directly from constants, improving:
+ * - Testability (data can be mocked via provider)
+ * - Decoupling (component doesn't depend on specific data source)
+ * - Flexibility (data can be changed without modifying component)
  */
 const DashboardContent = memo(function DashboardContent() {
   // Get theme from context
@@ -41,7 +41,23 @@ const DashboardContent = memo(function DashboardContent() {
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
 
   // Get dashboard state from context
-  const { leadData, isLoading, error, openProductModal, openResourcesModal, openCompanyModal } = useDashboard();
+  // All data now comes from context instead of direct imports
+  const {
+    // Lead Data
+    leadData,
+    isLoading,
+    error,
+
+    // UI Data (meetings, activities) from UIDataContext
+    meetings,
+    activities,
+    uiActivityData,
+
+    // Modal handlers
+    openProductModal,
+    openResourcesModal,
+    openCompanyModal,
+  } = useDashboard();
 
   // Apply global styles (scrollbars, etc.)
   useGlobalStyles(isDark);
@@ -79,7 +95,12 @@ const DashboardContent = memo(function DashboardContent() {
 
         {/* Welcome Message (dismissible) */}
         <AnimatePresence>
-          {showWelcomeMessage && <WelcomeMessage show={showWelcomeMessage} onClose={handleCloseWelcome} />}
+          {showWelcomeMessage && (
+            <WelcomeMessage
+              show={showWelcomeMessage}
+              onClose={handleCloseWelcome}
+            />
+          )}
         </AnimatePresence>
 
         {/* Error Display */}
@@ -95,21 +116,23 @@ const DashboardContent = memo(function DashboardContent() {
             initial="hidden"
             animate="visible"
           >
-            {/* Statistics Cards */}
-            <StatCards leadData={leadData} activityData={activityWeekData} />
+            {/* Statistics Cards - uses uiActivityData from context */}
+            <StatCards leadData={leadData} activityData={uiActivityData} />
 
             {/* Charts Section with Error Boundaries */}
             <DashboardCharts />
 
-            {/* Cards Section */}
+            {/* Cards Section - data from context */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
-              <MeetingScheduleCard meetings={initialMeetings} />
-              <RecentLeadActivities activities={initialActivities} />
+              <MeetingScheduleCard meetings={meetings} />
+              <RecentLeadActivities activities={activities} />
             </div>
 
             {/* Last Updated Footer */}
             <motion.div
-              className={`mt-12 text-center text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}
+              className={`mt-12 text-center text-sm ${
+                isDark ? "text-slate-500" : "text-slate-400"
+              }`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.5 }}
