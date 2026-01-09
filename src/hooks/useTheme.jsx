@@ -3,8 +3,8 @@
 // Consolidated theme hook that handles all theme-related functionality
 // =============================================================================
 
-import { useContext, useMemo } from "react";
-import { ThemeContext } from "./ThemeContext.js";
+import { useContext, useMemo } from 'react';
+import { ThemeContext } from './ThemeContext.js';
 
 /**
  * Default fallback theme values when no provider is available
@@ -14,12 +14,12 @@ const DEFAULT_THEME = {
   darkMode: false,
   toggleTheme: () => {
     if (import.meta.env.DEV) {
-      console.warn("useTheme: toggleTheme called outside of ThemeProvider");
+      console.warn('useTheme: toggleTheme called outside of ThemeProvider');
     }
   },
   setDarkMode: () => {
     if (import.meta.env.DEV) {
-      console.warn("useTheme: setDarkMode called outside of ThemeProvider");
+      console.warn('useTheme: setDarkMode called outside of ThemeProvider');
     }
   },
 };
@@ -71,7 +71,7 @@ const useTheme = (options) => {
     }
 
     // Backward compatibility: if options is a boolean, treat as darkModeOverride
-    if (typeof options === "boolean") {
+    if (typeof options === 'boolean') {
       return { darkModeOverride: options, safe: true };
     }
 
@@ -113,9 +113,9 @@ const useTheme = (options) => {
   // Handle missing provider
   if (normalizedOptions.throwOnMissingProvider) {
     throw new Error(
-      "useTheme must be used within a ThemeProvider. " +
-        "Either wrap your component tree with <ThemeProvider> or use " +
-        "useTheme({ safe: true }) to get fallback values.",
+      'useTheme must be used within a ThemeProvider. ' +
+        'Either wrap your component tree with <ThemeProvider> or use ' +
+        'useTheme({ safe: true }) to get fallback values.'
     );
   }
 

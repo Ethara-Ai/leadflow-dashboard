@@ -138,15 +138,7 @@
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -223,83 +215,79 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// =============================================================================
 // LEADFLOW DASHBOARD - CONTEXT INDEX
-// Central export point for all context providers
+// Central export point for all context providers and hooks
 // =============================================================================
 &nbsp;
 // -----------------------------------------------------------------------------
-// Main Dashboard Context (Composed)
+// Context Hooks (from separate hook files for Fast Refresh compatibility)
 // -----------------------------------------------------------------------------
 export {
-  default as DashboardContext,
-  DashboardProvider,
-  useDashboardContext,
-  // Re-exported focused context hooks
   useLeadDataContext,
   useAlertsContext,
   useNotesContext,
   useModalsContext,
   useChartPeriodsContext,
   useUIDataContext,
-} from "./DashboardContext.jsx";
+  useDashboardContext,
+} from './hooks/index.js';
+&nbsp;
+// -----------------------------------------------------------------------------
+// Main Dashboard Context (Composed)
+// -----------------------------------------------------------------------------
+export { default as DashboardContext, DashboardProvider } from './DashboardContext.jsx';
 &nbsp;
 // -----------------------------------------------------------------------------
 // Legacy Dashboard Hook (Backward Compatibility)
 // -----------------------------------------------------------------------------
-export { default as useDashboard } from "./useDashboard.js";
+export { default as useDashboard } from './useDashboard.js';
 &nbsp;
 // -----------------------------------------------------------------------------
 // Focused Contexts - Lead Data
 // -----------------------------------------------------------------------------
-export {
-  default as LeadDataContext,
-  LeadDataProvider,
-  useLeadDataContext as useLeadData,
-} from "./LeadDataContext.jsx";
+export { default as LeadDataContext, LeadDataProvider } from './LeadDataContext.jsx';
+&nbsp;
+// Alias for convenience
+export { useLeadDataContext as useLeadData } from './hooks/useLeadDataContext.js';
 &nbsp;
 // -----------------------------------------------------------------------------
 // Focused Contexts - Alerts
 // -----------------------------------------------------------------------------
-export {
-  default as AlertsContext,
-  AlertsProvider,
-  useAlertsContext as useAlerts,
-} from "./AlertsContext.jsx";
+export { default as AlertsContext, AlertsProvider } from './AlertsContext.jsx';
+&nbsp;
+// Alias for convenience
+export { useAlertsContext as useAlerts } from './hooks/useAlertsContext.js';
 &nbsp;
 // -----------------------------------------------------------------------------
 // Focused Contexts - Notes
 // -----------------------------------------------------------------------------
-export {
-  default as NotesContext,
-  NotesProvider,
-  useNotesContext as useNotes,
-} from "./NotesContext.jsx";
+export { default as NotesContext, NotesProvider } from './NotesContext.jsx';
+&nbsp;
+// Alias for convenience
+export { useNotesContext as useNotes } from './hooks/useNotesContext.js';
 &nbsp;
 // -----------------------------------------------------------------------------
 // Focused Contexts - Modals
 // -----------------------------------------------------------------------------
-export {
-  default as ModalsContext,
-  ModalsProvider,
-  useModalsContext as useModals,
-} from "./ModalsContext.jsx";
+export { default as ModalsContext, ModalsProvider } from './ModalsContext.jsx';
+&nbsp;
+// Alias for convenience
+export { useModalsContext as useModals } from './hooks/useModalsContext.js';
 &nbsp;
 // -----------------------------------------------------------------------------
 // Focused Contexts - Chart Periods
 // -----------------------------------------------------------------------------
-export {
-  default as ChartPeriodsContext,
-  ChartPeriodsProvider,
-  useChartPeriodsContext as useChartPeriods,
-} from "./ChartPeriodsContext.jsx";
+export { default as ChartPeriodsContext, ChartPeriodsProvider } from './ChartPeriodsContext.jsx';
+&nbsp;
+// Alias for convenience
+export { useChartPeriodsContext as useChartPeriods } from './hooks/useChartPeriodsContext.js';
 &nbsp;
 // -----------------------------------------------------------------------------
 // Focused Contexts - UI Data (Meetings, Activities)
 // -----------------------------------------------------------------------------
-export {
-  default as UIDataContext,
-  UIDataProvider,
-  useUIDataContext as useUIData,
-} from "./UIDataContext.jsx";
+export { default as UIDataContext, UIDataProvider } from './UIDataContext.jsx';
+&nbsp;
+// Alias for convenience
+export { useUIDataContext as useUIData } from './hooks/useUIDataContext.js';
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -307,7 +295,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-09T07:03:05.510Z
+                at 2026-01-09T12:15:27.420Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -3,16 +3,16 @@
  * Tests error catching, fallback UI, and recovery functionality
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
-import ErrorBoundary from "./ErrorBoundary";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import ErrorBoundary from './ErrorBoundary';
 
 // =============================================================================
 // Test Helpers
 // =============================================================================
 
 // Component that throws an error
-const ThrowError = ({ shouldThrow = true, errorMessage = "Test error" }) => {
+const ThrowError = ({ shouldThrow = true, errorMessage = 'Test error' }) => {
   if (shouldThrow) {
     throw new Error(errorMessage);
   }
@@ -33,31 +33,31 @@ const CustomFallbackComponent = ({ error, resetErrorBoundary }) => (
 // Basic Rendering Tests
 // =============================================================================
 
-describe("ErrorBoundary", () => {
+describe('ErrorBoundary', () => {
   let consoleSpy;
 
   beforeEach(() => {
     // Suppress console.error for cleaner test output
-    consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
     consoleSpy.mockRestore();
   });
 
-  describe("basic rendering", () => {
-    it("should render children when no error occurs", () => {
+  describe('basic rendering', () => {
+    it('should render children when no error occurs', () => {
       render(
         <ErrorBoundary>
           <div data-testid="child">Hello World</div>
         </ErrorBoundary>
       );
 
-      expect(screen.getByTestId("child")).toBeInTheDocument();
-      expect(screen.getByText("Hello World")).toBeInTheDocument();
+      expect(screen.getByTestId('child')).toBeInTheDocument();
+      expect(screen.getByText('Hello World')).toBeInTheDocument();
     });
 
-    it("should render multiple children without error", () => {
+    it('should render multiple children without error', () => {
       render(
         <ErrorBoundary>
           <div data-testid="child-1">Child 1</div>
@@ -65,34 +65,34 @@ describe("ErrorBoundary", () => {
         </ErrorBoundary>
       );
 
-      expect(screen.getByTestId("child-1")).toBeInTheDocument();
-      expect(screen.getByTestId("child-2")).toBeInTheDocument();
+      expect(screen.getByTestId('child-1')).toBeInTheDocument();
+      expect(screen.getByTestId('child-2')).toBeInTheDocument();
     });
 
-    it("should not render fallback UI when no error", () => {
+    it('should not render fallback UI when no error', () => {
       render(
         <ErrorBoundary>
           <div>Content</div>
         </ErrorBoundary>
       );
 
-      expect(screen.queryByText("Something went wrong")).not.toBeInTheDocument();
+      expect(screen.queryByText('Something went wrong')).not.toBeInTheDocument();
     });
   });
 
-  describe("error catching", () => {
-    it("should catch errors and display default fallback UI", () => {
+  describe('error catching', () => {
+    it('should catch errors and display default fallback UI', () => {
       render(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
-      expect(screen.queryByTestId("child-component")).not.toBeInTheDocument();
+      expect(screen.getByText('Something went wrong')).toBeInTheDocument();
+      expect(screen.queryByTestId('child-component')).not.toBeInTheDocument();
     });
 
-    it("should display default fallback message", () => {
+    it('should display default fallback message', () => {
       render(
         <ErrorBoundary>
           <ThrowError />
@@ -104,7 +104,7 @@ describe("ErrorBoundary", () => {
       ).toBeInTheDocument();
     });
 
-    it("should render alert icon in fallback UI", () => {
+    it('should render alert icon in fallback UI', () => {
       const { container } = render(
         <ErrorBoundary>
           <ThrowError />
@@ -112,54 +112,54 @@ describe("ErrorBoundary", () => {
       );
 
       // Should have the AlertTriangle icon container
-      expect(container.querySelector(".bg-red-100")).toBeInTheDocument();
+      expect(container.querySelector('.bg-red-100')).toBeInTheDocument();
     });
 
-    it("should have role alert for accessibility", () => {
+    it('should have role alert for accessibility', () => {
       render(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      expect(screen.getByRole("alert")).toBeInTheDocument();
+      expect(screen.getByRole('alert')).toBeInTheDocument();
     });
 
-    it("should have aria-live assertive for screen readers", () => {
+    it('should have aria-live assertive for screen readers', () => {
       render(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      expect(screen.getByRole("alert")).toHaveAttribute("aria-live", "assertive");
+      expect(screen.getByRole('alert')).toHaveAttribute('aria-live', 'assertive');
     });
   });
 
-  describe("custom fallback", () => {
-    it("should render custom fallback element when provided", () => {
+  describe('custom fallback', () => {
+    it('should render custom fallback element when provided', () => {
       render(
         <ErrorBoundary fallback={<div data-testid="custom-fallback">Custom Error</div>}>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      expect(screen.getByTestId("custom-fallback")).toBeInTheDocument();
-      expect(screen.getByText("Custom Error")).toBeInTheDocument();
+      expect(screen.getByTestId('custom-fallback')).toBeInTheDocument();
+      expect(screen.getByText('Custom Error')).toBeInTheDocument();
     });
 
-    it("should render FallbackComponent when provided", () => {
+    it('should render FallbackComponent when provided', () => {
       render(
         <ErrorBoundary FallbackComponent={CustomFallbackComponent}>
           <ThrowError errorMessage="Specific error" />
         </ErrorBoundary>
       );
 
-      expect(screen.getByTestId("custom-fallback")).toBeInTheDocument();
-      expect(screen.getByTestId("error-message")).toHaveTextContent("Specific error");
+      expect(screen.getByTestId('custom-fallback')).toBeInTheDocument();
+      expect(screen.getByTestId('error-message')).toHaveTextContent('Specific error');
     });
 
-    it("should prioritize FallbackComponent over fallback element", () => {
+    it('should prioritize FallbackComponent over fallback element', () => {
       render(
         <ErrorBoundary
           fallback={<div data-testid="fallback-element">Element Fallback</div>}
@@ -169,45 +169,43 @@ describe("ErrorBoundary", () => {
         </ErrorBoundary>
       );
 
-      expect(screen.getByTestId("custom-fallback")).toBeInTheDocument();
-      expect(screen.queryByTestId("fallback-element")).not.toBeInTheDocument();
+      expect(screen.getByTestId('custom-fallback')).toBeInTheDocument();
+      expect(screen.queryByTestId('fallback-element')).not.toBeInTheDocument();
     });
 
-    it("should pass error to FallbackComponent", () => {
+    it('should pass error to FallbackComponent', () => {
       render(
         <ErrorBoundary FallbackComponent={CustomFallbackComponent}>
           <ThrowError errorMessage="Error passed to component" />
         </ErrorBoundary>
       );
 
-      expect(screen.getByTestId("error-message")).toHaveTextContent(
-        "Error passed to component"
-      );
+      expect(screen.getByTestId('error-message')).toHaveTextContent('Error passed to component');
     });
   });
 
-  describe("showDetails prop", () => {
-    it("should not show error details by default", () => {
+  describe('showDetails prop', () => {
+    it('should not show error details by default', () => {
       render(
         <ErrorBoundary>
           <ThrowError errorMessage="Hidden error" />
         </ErrorBoundary>
       );
 
-      expect(screen.queryByText("Error details")).not.toBeInTheDocument();
+      expect(screen.queryByText('Error details')).not.toBeInTheDocument();
     });
 
-    it("should show error details when showDetails is true", () => {
+    it('should show error details when showDetails is true', () => {
       render(
         <ErrorBoundary showDetails>
           <ThrowError errorMessage="Visible error" />
         </ErrorBoundary>
       );
 
-      expect(screen.getByText("Error details")).toBeInTheDocument();
+      expect(screen.getByText('Error details')).toBeInTheDocument();
     });
 
-    it("should show actual error message in details", () => {
+    it('should show actual error message in details', () => {
       render(
         <ErrorBoundary showDetails>
           <ThrowError errorMessage="Detailed error message" />
@@ -218,8 +216,8 @@ describe("ErrorBoundary", () => {
     });
   });
 
-  describe("callbacks", () => {
-    it("should call onError callback when error is caught", () => {
+  describe('callbacks', () => {
+    it('should call onError callback when error is caught', () => {
       const onError = vi.fn();
 
       render(
@@ -237,7 +235,7 @@ describe("ErrorBoundary", () => {
       );
     });
 
-    it("should call onReset callback when reset is triggered", async () => {
+    it('should call onReset callback when reset is triggered', async () => {
       const onReset = vi.fn();
 
       render(
@@ -246,47 +244,47 @@ describe("ErrorBoundary", () => {
         </ErrorBoundary>
       );
 
-      const tryAgainButton = screen.getByRole("button", { name: /Try Again/i });
+      const tryAgainButton = screen.getByRole('button', { name: /Try Again/i });
       fireEvent.click(tryAgainButton);
 
       expect(onReset).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe("reset functionality", () => {
-    it("should render Try Again button in default fallback", () => {
+  describe('reset functionality', () => {
+    it('should render Try Again button in default fallback', () => {
       render(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      expect(screen.getByRole("button", { name: /Try Again/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Try Again/i })).toBeInTheDocument();
     });
 
-    it("should render Reload Page button in default fallback", () => {
+    it('should render Reload Page button in default fallback', () => {
       render(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      expect(screen.getByRole("button", { name: /Reload Page/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Reload Page/i })).toBeInTheDocument();
     });
 
-    it("should pass resetErrorBoundary to FallbackComponent", () => {
+    it('should pass resetErrorBoundary to FallbackComponent', () => {
       render(
         <ErrorBoundary FallbackComponent={CustomFallbackComponent}>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      expect(screen.getByTestId("reset-button")).toBeInTheDocument();
+      expect(screen.getByTestId('reset-button')).toBeInTheDocument();
     });
 
-    it("should reset state when Try Again is clicked", () => {
+    it('should reset state when Try Again is clicked', () => {
       const TestComponent = () => {
-        const [shouldThrow, setShouldThrow] = vi.importActual("react").useState(true);
+        const [shouldThrow, setShouldThrow] = vi.importActual('react').useState(true);
 
         return (
           <ErrorBoundary>
@@ -306,16 +304,16 @@ describe("ErrorBoundary", () => {
       );
 
       // Initially should show error
-      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      expect(screen.getByText('Something went wrong')).toBeInTheDocument();
 
       // Click Try Again
-      fireEvent.click(screen.getByRole("button", { name: /Try Again/i }));
+      fireEvent.click(screen.getByRole('button', { name: /Try Again/i }));
 
       // Will throw again since component still throws
-      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      expect(screen.getByText('Something went wrong')).toBeInTheDocument();
     });
 
-    it("should call window.location.reload when Reload Page is clicked", () => {
+    it('should call window.location.reload when Reload Page is clicked', () => {
       const reloadMock = vi.fn();
       const originalLocation = window.location;
 
@@ -328,7 +326,7 @@ describe("ErrorBoundary", () => {
         </ErrorBoundary>
       );
 
-      fireEvent.click(screen.getByRole("button", { name: /Reload Page/i }));
+      fireEvent.click(screen.getByRole('button', { name: /Reload Page/i }));
 
       expect(reloadMock).toHaveBeenCalledTimes(1);
 
@@ -336,8 +334,8 @@ describe("ErrorBoundary", () => {
     });
   });
 
-  describe("styling", () => {
-    it("should have centered layout", () => {
+  describe('styling', () => {
+    it('should have centered layout', () => {
       const { container } = render(
         <ErrorBoundary>
           <ThrowError />
@@ -345,63 +343,63 @@ describe("ErrorBoundary", () => {
       );
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass("flex");
-      expect(wrapper).toHaveClass("items-center");
-      expect(wrapper).toHaveClass("justify-center");
+      expect(wrapper).toHaveClass('flex');
+      expect(wrapper).toHaveClass('items-center');
+      expect(wrapper).toHaveClass('justify-center');
     });
 
-    it("should have rounded card styling", () => {
+    it('should have rounded card styling', () => {
       const { container } = render(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      const card = container.querySelector(".rounded-2xl");
+      const card = container.querySelector('.rounded-2xl');
       expect(card).toBeInTheDocument();
     });
 
-    it("should have shadow styling", () => {
+    it('should have shadow styling', () => {
       const { container } = render(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      const card = container.querySelector(".shadow-xl");
+      const card = container.querySelector('.shadow-xl');
       expect(card).toBeInTheDocument();
     });
   });
 
-  describe("button styling", () => {
-    it("should have styled Try Again button", () => {
+  describe('button styling', () => {
+    it('should have styled Try Again button', () => {
       render(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      const tryAgainButton = screen.getByRole("button", { name: /Try Again/i });
-      expect(tryAgainButton).toHaveClass("rounded-xl");
-      expect(tryAgainButton).toHaveClass("transition-colors");
+      const tryAgainButton = screen.getByRole('button', { name: /Try Again/i });
+      expect(tryAgainButton).toHaveClass('rounded-xl');
+      expect(tryAgainButton).toHaveClass('transition-colors');
     });
 
-    it("should have styled Reload Page button", () => {
+    it('should have styled Reload Page button', () => {
       render(
         <ErrorBoundary>
           <ThrowError />
         </ErrorBoundary>
       );
 
-      const reloadButton = screen.getByRole("button", { name: /Reload Page/i });
-      expect(reloadButton).toHaveClass("bg-blue-600");
-      expect(reloadButton).toHaveClass("text-white");
+      const reloadButton = screen.getByRole('button', { name: /Reload Page/i });
+      expect(reloadButton).toHaveClass('bg-blue-600');
+      expect(reloadButton).toHaveClass('text-white');
     });
   });
 
-  describe("error logging", () => {
-    it("should log error to console", () => {
-      const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  describe('error logging', () => {
+    it('should log error to console', () => {
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       render(
         <ErrorBoundary>
@@ -414,8 +412,8 @@ describe("ErrorBoundary", () => {
     });
   });
 
-  describe("getDerivedStateFromError", () => {
-    it("should set hasError to true when error occurs", () => {
+  describe('getDerivedStateFromError', () => {
+    it('should set hasError to true when error occurs', () => {
       render(
         <ErrorBoundary>
           <ThrowError />
@@ -423,12 +421,12 @@ describe("ErrorBoundary", () => {
       );
 
       // If hasError is true, fallback UI is rendered
-      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      expect(screen.getByText('Something went wrong')).toBeInTheDocument();
     });
   });
 
-  describe("edge cases", () => {
-    it("should handle errors without message", () => {
+  describe('edge cases', () => {
+    it('should handle errors without message', () => {
       const ThrowEmptyError = () => {
         throw new Error();
       };
@@ -439,12 +437,12 @@ describe("ErrorBoundary", () => {
         </ErrorBoundary>
       );
 
-      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      expect(screen.getByText('Something went wrong')).toBeInTheDocument();
     });
 
-    it("should handle non-Error throws", () => {
+    it('should handle non-Error throws', () => {
       const ThrowString = () => {
-        throw "String error";
+        throw 'String error';
       };
 
       render(
@@ -453,10 +451,10 @@ describe("ErrorBoundary", () => {
         </ErrorBoundary>
       );
 
-      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      expect(screen.getByText('Something went wrong')).toBeInTheDocument();
     });
 
-    it("should not crash with deeply nested children", () => {
+    it('should not crash with deeply nested children', () => {
       render(
         <ErrorBoundary>
           <div>
@@ -469,7 +467,7 @@ describe("ErrorBoundary", () => {
         </ErrorBoundary>
       );
 
-      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      expect(screen.getByText('Something went wrong')).toBeInTheDocument();
     });
   });
 });

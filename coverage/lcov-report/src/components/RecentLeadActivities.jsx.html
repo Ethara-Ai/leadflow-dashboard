@@ -367,30 +367,7 @@
 <a name='L302'></a><a href='#L302'>302</a>
 <a name='L303'></a><a href='#L303'>303</a>
 <a name='L304'></a><a href='#L304'>304</a>
-<a name='L305'></a><a href='#L305'>305</a>
-<a name='L306'></a><a href='#L306'>306</a>
-<a name='L307'></a><a href='#L307'>307</a>
-<a name='L308'></a><a href='#L308'>308</a>
-<a name='L309'></a><a href='#L309'>309</a>
-<a name='L310'></a><a href='#L310'>310</a>
-<a name='L311'></a><a href='#L311'>311</a>
-<a name='L312'></a><a href='#L312'>312</a>
-<a name='L313'></a><a href='#L313'>313</a>
-<a name='L314'></a><a href='#L314'>314</a>
-<a name='L315'></a><a href='#L315'>315</a>
-<a name='L316'></a><a href='#L316'>316</a>
-<a name='L317'></a><a href='#L317'>317</a>
-<a name='L318'></a><a href='#L318'>318</a>
-<a name='L319'></a><a href='#L319'>319</a>
-<a name='L320'></a><a href='#L320'>320</a>
-<a name='L321'></a><a href='#L321'>321</a>
-<a name='L322'></a><a href='#L322'>322</a>
-<a name='L323'></a><a href='#L323'>323</a>
-<a name='L324'></a><a href='#L324'>324</a>
-<a name='L325'></a><a href='#L325'>325</a>
-<a name='L326'></a><a href='#L326'>326</a>
-<a name='L327'></a><a href='#L327'>327</a>
-<a name='L328'></a><a href='#L328'>328</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L305'></a><a href='#L305'>305</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -553,15 +530,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -677,20 +645,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -717,9 +671,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { memo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
 import {
   Phone,
   Mail,
@@ -730,9 +684,9 @@ import {
   FileText,
   MessageSquare,
   Clock,
-} from "lucide-react";
-import { cardVariants, fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+} from 'lucide-react';
+import { cardVariants, fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 &nbsp;
 /**
  * RecentLeadActivities Component
@@ -750,28 +704,28 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
 &nbsp;
   // Theme classes
   const cardClasses = <span class="cstat-no" title="statement not covered" >isDark</span>
-    ? "bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10"
-    : "bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10";
-  const titleClasses = <span class="cstat-no" title="statement not covered" >isDark ? "text-slate-200" : "text-slate-700";</span>
+    ? 'bg-zinc-900/90 border-zinc-700/50 shadow-2xl shadow-black/60 ring-1 ring-zinc-600/10'
+    : 'bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10';
+  const titleClasses = <span class="cstat-no" title="statement not covered" >isDark ? 'text-zinc-200' : 'text-slate-700';</span>
 &nbsp;
   // Activity type icons
   const getActivityIcon = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>ype) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    switch (type) {</span>
-      case "call":
+      case 'call':
 <span class="cstat-no" title="statement not covered" >        return &lt;Phone className="w-3.5 h-3.5" /&gt;;</span>
-      case "email":
+      case 'email':
 <span class="cstat-no" title="statement not covered" >        return &lt;Mail className="w-3.5 h-3.5" /&gt;;</span>
-      case "meeting":
+      case 'meeting':
 <span class="cstat-no" title="statement not covered" >        return &lt;Calendar className="w-3.5 h-3.5" /&gt;;</span>
-      case "closed":
+      case 'closed':
 <span class="cstat-no" title="statement not covered" >        return &lt;CheckCircle2 className="w-3.5 h-3.5" /&gt;;</span>
-      case "status":
+      case 'status':
 <span class="cstat-no" title="statement not covered" >        return &lt;TrendingUp className="w-3.5 h-3.5" /&gt;;</span>
-      case "new":
+      case 'new':
 <span class="cstat-no" title="statement not covered" >        return &lt;UserPlus className="w-3.5 h-3.5" /&gt;;</span>
-      case "proposal":
+      case 'proposal':
 <span class="cstat-no" title="statement not covered" >        return &lt;FileText className="w-3.5 h-3.5" /&gt;;</span>
-      case "note":
+      case 'note':
 <span class="cstat-no" title="statement not covered" >        return &lt;MessageSquare className="w-3.5 h-3.5" /&gt;;</span>
       default:
 <span class="cstat-no" title="statement not covered" >        return &lt;Clock className="w-3.5 h-3.5" /&gt;;</span>
@@ -781,62 +735,62 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
   // Activity type colors
   const getActivityColor = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>ype) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    switch (type) {</span>
-      case "call":
+      case 'call':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-blue-900/40 text-blue-400 border-blue-800/50"
-          : "bg-blue-100 text-blue-600 border-blue-200";
-      case "email":
+          ? 'bg-blue-900/40 text-blue-400 border-blue-800/50'
+          : 'bg-blue-100 text-blue-600 border-blue-200';
+      case 'email':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-purple-900/40 text-purple-400 border-purple-800/50"
-          : "bg-purple-100 text-purple-600 border-purple-200";
-      case "meeting":
+          ? 'bg-purple-900/40 text-purple-400 border-purple-800/50'
+          : 'bg-purple-100 text-purple-600 border-purple-200';
+      case 'meeting':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-emerald-900/40 text-emerald-400 border-emerald-800/50"
-          : "bg-emerald-100 text-emerald-600 border-emerald-200";
-      case "closed":
+          ? 'bg-emerald-900/40 text-emerald-400 border-emerald-800/50'
+          : 'bg-emerald-100 text-emerald-600 border-emerald-200';
+      case 'closed':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-green-900/40 text-green-400 border-green-800/50"
-          : "bg-green-100 text-green-600 border-green-200";
-      case "status":
+          ? 'bg-green-900/40 text-green-400 border-green-800/50'
+          : 'bg-green-100 text-green-600 border-green-200';
+      case 'status':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-amber-900/40 text-amber-400 border-amber-800/50"
-          : "bg-amber-100 text-amber-600 border-amber-200";
-      case "new":
+          ? 'bg-amber-900/40 text-amber-400 border-amber-800/50'
+          : 'bg-amber-100 text-amber-600 border-amber-200';
+      case 'new':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-cyan-900/40 text-cyan-400 border-cyan-800/50"
-          : "bg-cyan-100 text-cyan-600 border-cyan-200";
-      case "proposal":
+          ? 'bg-cyan-900/40 text-cyan-400 border-cyan-800/50'
+          : 'bg-cyan-100 text-cyan-600 border-cyan-200';
+      case 'proposal':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-indigo-900/40 text-indigo-400 border-indigo-800/50"
-          : "bg-indigo-100 text-indigo-600 border-indigo-200";
-      case "note":
+          ? 'bg-indigo-900/40 text-indigo-400 border-indigo-800/50'
+          : 'bg-indigo-100 text-indigo-600 border-indigo-200';
+      case 'note':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-slate-700 text-slate-300 border-slate-600"
-          : "bg-slate-100 text-slate-600 border-slate-200";
+          ? 'bg-zinc-800 text-zinc-300 border-zinc-700'
+          : 'bg-slate-100 text-slate-600 border-slate-200';
       default:
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-slate-700 text-slate-300 border-slate-600"
-          : "bg-slate-100 text-slate-600 border-slate-200";
+          ? 'bg-zinc-800 text-zinc-300 border-zinc-700'
+          : 'bg-slate-100 text-slate-600 border-slate-200';
     }
   };
 &nbsp;
   // Priority badge colors
   const getPriorityColor = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(p</span>riority) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    switch (priority) {</span>
-      case "high":
+      case 'high':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-red-900/40 text-red-400 border-red-800/50"
-          : "bg-red-100 text-red-600 border-red-200";
-      case "medium":
+          ? 'bg-red-900/40 text-red-400 border-red-800/50'
+          : 'bg-red-100 text-red-600 border-red-200';
+      case 'medium':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-amber-900/40 text-amber-400 border-amber-800/50"
-          : "bg-amber-100 text-amber-600 border-amber-200";
-      case "low":
+          ? 'bg-amber-900/40 text-amber-400 border-amber-800/50'
+          : 'bg-amber-100 text-amber-600 border-amber-200';
+      case 'low':
 <span class="cstat-no" title="statement not covered" >        return isDark</span>
-          ? "bg-slate-700 text-slate-400 border-slate-600"
-          : "bg-slate-100 text-slate-600 border-slate-200";
+          ? 'bg-zinc-800 text-zinc-400 border-zinc-700'
+          : 'bg-slate-100 text-slate-600 border-slate-200';
       default:
-<span class="cstat-no" title="statement not covered" >        return "";</span>
+<span class="cstat-no" title="statement not covered" >        return '';</span>
     }
   };
 &nbsp;
@@ -849,25 +803,16 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
       {/* Header */}
       &lt;div className="flex items-center justify-between mb-3"&gt;
         &lt;div className="flex items-center gap-2"&gt;
-          &lt;div
-            className={`p-2 rounded-lg ${isDark ? "bg-emerald-900/40" : "bg-emerald-100"}`}
-          &gt;
-            &lt;TrendingUp
-              className={`w-4 h-4 ${isDark ? "text-emerald-400" : "text-emerald-600"}`}
-            /&gt;
+          &lt;div className={`p-2 rounded-lg ${isDark ? 'bg-emerald-900/40' : 'bg-emerald-100'}`}&gt;
+            &lt;TrendingUp className={`w-4 h-4 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} /&gt;
           &lt;/div&gt;
-          &lt;h3
-            className={`text-base sm:text-lg font-bold ${titleClasses}`}
-            style={{ fontFamily }}
-          &gt;
+          &lt;h3 className={`text-base sm:text-lg font-bold ${titleClasses}`} style={{ fontFamily }}&gt;
             Recent Activities
           &lt;/h3&gt;
         &lt;/div&gt;
         &lt;span
           className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-            isDark
-              ? "bg-slate-700 text-slate-300"
-              : "bg-slate-100 text-slate-600"
+            isDark ? 'bg-zinc-800 text-zinc-300' : 'bg-slate-100 text-slate-600'
           }`}
           style={{ fontFamily }}
         &gt;
@@ -882,7 +827,7 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
             {/* Timeline line */}
             &lt;div
               className={`absolute left-5 top-3 bottom-3 w-0.5 ${
-                isDark ? "bg-slate-700" : "bg-slate-200"
+                isDark ? 'bg-zinc-700' : 'bg-slate-200'
               }`}
             /&gt;
 &nbsp;
@@ -899,7 +844,7 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
                   {/* Icon */}
                   &lt;div
                     className={`absolute left-2.5 top-1 p-1.5 rounded-lg border-2 ${getActivityColor(
-                      activity.type,
+                      activity.type
                     )}`}
                   &gt;
                     {getActivityIcon(activity.type)}
@@ -909,15 +854,15 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
                   &lt;motion.div
                     className={`p-2.5 rounded-lg border ${
                       isDark
-                        ? "bg-slate-700/30 border-slate-600/30 hover:bg-slate-700/50"
-                        : "bg-slate-50 border-slate-200/50 hover:bg-slate-100"
+                        ? 'bg-zinc-800/30 border-zinc-700/30 hover:bg-zinc-800/50'
+                        : 'bg-slate-50 border-slate-200/50 hover:bg-slate-100'
                     } transition-all duration-200`}
                     whileHover={{ scale: 1.02 }}
                   &gt;
                     &lt;div className="flex items-start justify-between gap-2 mb-0.5"&gt;
                       &lt;p
                         className={`text-xs font-semibold truncate ${
-                          isDark ? "text-slate-200" : "text-slate-800"
+                          isDark ? 'text-zinc-200' : 'text-slate-800'
                         }`}
                         style={{ fontFamily }}
                       &gt;
@@ -926,7 +871,7 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
                       {activity.priority &amp;&amp; (
                         &lt;span
                           className={`text-[9px] px-1.5 py-0.5 rounded-full font-semibold border shrink-0 ${getPriorityColor(
-                            activity.priority,
+                            activity.priority
                           )}`}
                           style={{ fontFamily }}
                         &gt;
@@ -936,9 +881,7 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
                     &lt;/div&gt;
 &nbsp;
                     &lt;p
-                      className={`text-[11px] mb-1 ${
-                        isDark ? "text-slate-400" : "text-slate-600"
-                      }`}
+                      className={`text-[11px] mb-1 ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
                       style={{ fontFamily }}
                     &gt;
                       {activity.description}
@@ -947,16 +890,14 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
                     &lt;div className="flex items-center justify-between gap-2"&gt;
                       &lt;span
                         className={`text-[11px] font-medium ${
-                          isDark ? "text-blue-400" : "text-blue-600"
+                          isDark ? 'text-blue-400' : 'text-blue-600'
                         }`}
                         style={{ fontFamily }}
                       &gt;
                         {activity.leadName}
                       &lt;/span&gt;
                       &lt;span
-                        className={`text-[10px] ${
-                          isDark ? "text-slate-500" : "text-slate-500"
-                        }`}
+                        className={`text-[10px] ${isDark ? 'text-slate-500' : 'text-slate-500'}`}
                         style={{ fontFamily }}
                       &gt;
                         {activity.timestamp}
@@ -966,12 +907,12 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
                     {activity.amount &amp;&amp; (
                       &lt;div
                         className={`mt-1.5 pt-1.5 border-t ${
-                          isDark ? "border-slate-600/30" : "border-slate-200"
+                          isDark ? 'border-zinc-700/30' : 'border-slate-200'
                         }`}
                       &gt;
                         &lt;span
                           className={`text-[11px] font-bold ${
-                            isDark ? "text-emerald-400" : "text-emerald-600"
+                            isDark ? 'text-emerald-400' : 'text-emerald-600'
                           }`}
                           style={{ fontFamily }}
                         &gt;
@@ -986,27 +927,17 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
           &lt;/div&gt;
         ) : (
           &lt;div className="flex flex-col items-center justify-center h-full"&gt;
-            &lt;div
-              className={`p-4 rounded-full mb-3 ${
-                isDark ? "bg-slate-700/30" : "bg-slate-100"
-              }`}
-            &gt;
-              &lt;TrendingUp
-                className={`w-8 h-8 ${isDark ? "text-slate-600" : "text-slate-400"}`}
-              /&gt;
+            &lt;div className={`p-4 rounded-full mb-3 ${isDark ? 'bg-zinc-800/30' : 'bg-slate-100'}`}&gt;
+              &lt;TrendingUp className={`w-8 h-8 ${isDark ? 'text-zinc-600' : 'text-slate-400'}`} /&gt;
             &lt;/div&gt;
             &lt;p
-              className={`text-sm font-medium ${
-                isDark ? "text-slate-400" : "text-slate-600"
-              }`}
+              className={`text-sm font-medium ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}
               style={{ fontFamily }}
             &gt;
               No recent activities
             &lt;/p&gt;
             &lt;p
-              className={`text-xs mt-1 ${
-                isDark ? "text-slate-500" : "text-slate-500"
-              }`}
+              className={`text-xs mt-1 ${isDark ? 'text-slate-500' : 'text-slate-500'}`}
               style={{ fontFamily }}
             &gt;
               Activities will appear here as they happen
@@ -1023,22 +954,22 @@ const <span class="cstat-no" title="statement not covered" >RecentLeadActivities
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([
-        "call",
-        "email",
-        "meeting",
-        "closed",
-        "status",
-        "new",
-        "proposal",
-        "note",
+        'call',
+        'email',
+        'meeting',
+        'closed',
+        'status',
+        'new',
+        'proposal',
+        'note',
       ]).isRequired,
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       leadName: PropTypes.string.isRequired,
       timestamp: PropTypes.string.isRequired,
-      priority: PropTypes.oneOf(["high", "medium", "low"]),
+      priority: PropTypes.oneOf(['high', 'medium', 'low']),
       amount: PropTypes.string,
-    }),
+    })
   ),
   darkMode: PropTypes.bool,
 };
@@ -1051,7 +982,7 @@ export default RecentLeadActivities;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-09T07:03:05.793Z
+                at 2026-01-09T12:15:27.732Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

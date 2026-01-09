@@ -220,11 +220,7 @@
 <a name='L155'></a><a href='#L155'>155</a>
 <a name='L156'></a><a href='#L156'>156</a>
 <a name='L157'></a><a href='#L157'>157</a>
-<a name='L158'></a><a href='#L158'>158</a>
-<a name='L159'></a><a href='#L159'>159</a>
-<a name='L160'></a><a href='#L160'>160</a>
-<a name='L161'></a><a href='#L161'>161</a>
-<a name='L162'></a><a href='#L162'>162</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L158'></a><a href='#L158'>158</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -283,15 +279,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -303,12 +295,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -390,22 +382,22 @@
 // Main content area component that orchestrates the dashboard layout
 // =============================================================================
 &nbsp;
-import { memo, useState, useCallback, useLayoutEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useDashboard } from "../../context/index.js";
-import useTheme from "../../hooks/useTheme.jsx";
-import useGlobalStyles from "../../hooks/useGlobalStyles.js";
-import DashboardHeader from "./DashboardHeader.jsx";
-import DashboardCharts from "./DashboardCharts.jsx";
-import DashboardModals from "./DashboardModals.jsx";
-import StatCards from "../StatCards.jsx";
-import MeetingScheduleCard from "../MeetingScheduleCard.jsx";
-import RecentLeadActivities from "../RecentLeadActivities.jsx";
-import WelcomeMessage from "../WelcomeMessage.jsx";
-import ErrorMessage from "../ErrorMessage.jsx";
-import LoadingSkeleton from "../LoadingSkeleton.jsx";
-import Footer from "../Footer.jsx";
-import { staggerContainerVariants, fontFamily } from "../../constants/index.js";
+import { memo, useState, useCallback, useLayoutEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useDashboard } from '../../context/index.js';
+import useTheme from '../../hooks/useTheme.jsx';
+import useGlobalStyles from '../../hooks/useGlobalStyles.js';
+import DashboardHeader from './DashboardHeader.jsx';
+import DashboardCharts from './DashboardCharts.jsx';
+import DashboardModals from './DashboardModals.jsx';
+import StatCards from '../StatCards.jsx';
+import MeetingScheduleCard from '../MeetingScheduleCard.jsx';
+import RecentLeadActivities from '../RecentLeadActivities.jsx';
+import WelcomeMessage from '../WelcomeMessage.jsx';
+import ErrorMessage from '../ErrorMessage.jsx';
+import LoadingSkeleton from '../LoadingSkeleton.jsx';
+import Footer from '../Footer.jsx';
+import { staggerContainerVariants, fontFamily } from '../../constants/index.js';
 &nbsp;
 /**
  * DashboardContent Component
@@ -439,6 +431,7 @@ const <span class="cstat-no" title="statement not covered" >DashboardContent = m
     meetings,
     activities,
     uiActivityData,
+    addMeeting,
 &nbsp;
     // Modal handlers
     openProductModal,
@@ -468,12 +461,12 @@ const <span class="cstat-no" title="statement not covered" >DashboardContent = m
     &lt;div
       className={`min-h-screen transition-all duration-300 overflow-x-hidden overflow-y-auto ${
         isDark
-          ? "bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white"
-          : "bg-linear-to-br from-slate-50 via-white to-slate-50 text-slate-900"
+          ? 'bg-linear-to-br from-neutral-950 via-black to-neutral-950 text-neutral-50'
+          : 'bg-linear-to-br from-slate-50 via-white to-slate-50 text-slate-900'
       }`}
       style={{
         fontFamily: `${fontFamily}, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`,
-        WebkitOverflowScrolling: "touch",
+        WebkitOverflowScrolling: 'touch',
       }}
     &gt;
       &lt;div className="max-w-7xl mx-auto p-4 sm:p-8"&gt;
@@ -483,10 +476,7 @@ const <span class="cstat-no" title="statement not covered" >DashboardContent = m
         {/* Welcome Message (dismissible) */}
         &lt;AnimatePresence&gt;
           {showWelcomeMessage &amp;&amp; (
-            &lt;WelcomeMessage
-              show={showWelcomeMessage}
-              onClose={handleCloseWelcome}
-            /&gt;
+            &lt;WelcomeMessage show={showWelcomeMessage} onClose={handleCloseWelcome} /&gt;
           )}
         &lt;/AnimatePresence&gt;
 &nbsp;
@@ -511,15 +501,13 @@ const <span class="cstat-no" title="statement not covered" >DashboardContent = m
 &nbsp;
             {/* Cards Section - data from context */}
             &lt;div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6"&gt;
-              &lt;MeetingScheduleCard meetings={meetings} /&gt;
+              &lt;MeetingScheduleCard meetings={meetings} onCreateMeeting={addMeeting} /&gt;
               &lt;RecentLeadActivities activities={activities} /&gt;
             &lt;/div&gt;
 &nbsp;
             {/* Last Updated Footer */}
             &lt;motion.div
-              className={`mt-12 text-center text-sm ${
-                isDark ? "text-slate-500" : "text-slate-400"
-              }`}
+              className={`mt-12 text-center text-sm ${isDark ? 'text-neutral-500' : 'text-slate-400'}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.5 }}
@@ -553,7 +541,7 @@ export default DashboardContent;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-09T07:03:05.793Z
+                at 2026-01-09T12:15:27.732Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

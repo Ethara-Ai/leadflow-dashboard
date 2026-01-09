@@ -53,13 +53,13 @@ vi.mock('recharts', () => ({
       {children}
     </div>
   ),
-  Pie: ({ children, data, dataKey, nameKey, ...props }) => (
+  Pie: ({ children, _data, dataKey, nameKey, ..._props }) => (
     <div data-testid="pie" data-datakey={dataKey} data-namekey={nameKey}>
       {children}
     </div>
   ),
   Cell: ({ fill }) => <div data-testid="cell" data-fill={fill} />,
-  Tooltip: ({ content }) => <div data-testid="tooltip" />,
+  Tooltip: ({ _content }) => <div data-testid="tooltip" />,
 }));
 
 describe('LeadSourceChart', () => {

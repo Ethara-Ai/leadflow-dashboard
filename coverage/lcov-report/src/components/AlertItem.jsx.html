@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
@@ -182,10 +182,7 @@
 <a name='L117'></a><a href='#L117'>117</a>
 <a name='L118'></a><a href='#L118'>118</a>
 <a name='L119'></a><a href='#L119'>119</a>
-<a name='L120'></a><a href='#L120'>120</a>
-<a name='L121'></a><a href='#L121'>121</a>
-<a name='L122'></a><a href='#L122'>122</a>
-<a name='L123'></a><a href='#L123'>123</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L120'></a><a href='#L120'>120</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -195,7 +192,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -238,24 +235,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">161x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">161x</span>
+<span class="cline-any cline-yes">161x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">401x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">161x</span>
+<span class="cline-any cline-yes">161x</span>
+<span class="cline-any cline-yes">161x</span>
+<span class="cline-any cline-yes">161x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">401x</span>
-<span class="cline-any cline-yes">401x</span>
+<span class="cline-any cline-yes">161x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">401x</span>
-<span class="cline-any cline-yes">401x</span>
-<span class="cline-any cline-yes">401x</span>
-<span class="cline-any cline-yes">401x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">401x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -291,10 +288,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -304,15 +301,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { memo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
-import { ShieldAlert, Info, AlertCircle, CheckCircle } from "lucide-react";
-import { fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { ShieldAlert, Info, AlertCircle, CheckCircle } from 'lucide-react';
+import { fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 &nbsp;
 /**
  * Alert type configurations for styling
@@ -320,31 +314,31 @@ import useThemeSafe from "../hooks/useThemeSafe";
 const ALERT_TYPES = {
   warning: {
     icon: ShieldAlert,
-    darkBg: "bg-amber-900/20 border-amber-800/30",
-    lightBg: "bg-amber-50 border-amber-200",
-    darkIcon: "text-amber-400",
-    lightIcon: "text-amber-600",
+    darkBg: 'bg-amber-900/20 border-amber-800/30',
+    lightBg: 'bg-amber-50 border-amber-200',
+    darkIcon: 'text-amber-400',
+    lightIcon: 'text-amber-600',
   },
   info: {
     icon: Info,
-    darkBg: "bg-blue-900/20 border-blue-800/30",
-    lightBg: "bg-blue-50 border-blue-200",
-    darkIcon: "text-blue-400",
-    lightIcon: "text-blue-600",
+    darkBg: 'bg-blue-900/20 border-blue-800/30',
+    lightBg: 'bg-blue-50 border-blue-200',
+    darkIcon: 'text-blue-400',
+    lightIcon: 'text-blue-600',
   },
   error: {
     icon: AlertCircle,
-    darkBg: "bg-red-900/20 border-red-800/30",
-    lightBg: "bg-red-50 border-red-200",
-    darkIcon: "text-red-400",
-    lightIcon: "text-red-600",
+    darkBg: 'bg-red-900/20 border-red-800/30',
+    lightBg: 'bg-red-50 border-red-200',
+    darkIcon: 'text-red-400',
+    lightIcon: 'text-red-600',
   },
   success: {
     icon: CheckCircle,
-    darkBg: "bg-emerald-900/20 border-emerald-800/30",
-    lightBg: "bg-emerald-50 border-emerald-200",
-    darkIcon: "text-emerald-400",
-    lightIcon: "text-emerald-600",
+    darkBg: 'bg-emerald-900/20 border-emerald-800/30',
+    lightBg: 'bg-emerald-50 border-emerald-200',
+    darkIcon: 'text-emerald-400',
+    lightIcon: 'text-emerald-600',
   },
 };
 &nbsp;
@@ -360,22 +354,19 @@ const ALERT_TYPES = {
  * @param {string} props.alert.time - Timestamp string
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const AlertItem = memo(function AlertItem({
-  alert,
-  darkMode: darkModeOverride,
-}) {
+const AlertItem = memo(function AlertItem({ alert, darkMode: darkModeOverride }) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 &nbsp;
   // Get alert type configuration, default to info if type not found
-  const alertConfig = ALERT_TYPES[alert.type] || ALERT_TYPES.info;
+  const alertConfig = ALERT_TYPES[alert.type] || <span class="branch-1 cbranch-no" title="branch not covered" >ALERT_TYPES.info;</span>
   const IconComponent = alertConfig.icon;
 &nbsp;
   // Theme-based classes
   const bgClasses = isDark ? alertConfig.darkBg : alertConfig.lightBg;
   const iconClasses = isDark ? alertConfig.darkIcon : alertConfig.lightIcon;
-  const textClasses = isDark ? "text-slate-200" : "text-slate-700";
-  const timeClasses = isDark ? "text-slate-400" : "text-slate-500";
+  const textClasses = isDark ? 'text-neutral-200' : 'text-slate-700';
+  const timeClasses = isDark ? 'text-neutral-400' : 'text-slate-500';
 &nbsp;
   return (
     &lt;motion.article
@@ -397,8 +388,8 @@ const AlertItem = memo(function AlertItem({
             className={`text-xs sm:text-sm font-medium leading-snug wrap-break-word ${textClasses}`}
             style={{
               fontFamily,
-              wordBreak: "break-word",
-              overflowWrap: "anywhere",
+              wordBreak: 'break-word',
+              overflowWrap: 'anywhere',
             }}
           &gt;
             {alert.message}
@@ -420,7 +411,7 @@ AlertItem.propTypes = {
   alert: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     message: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(["warning", "info", "error", "success"]),
+    type: PropTypes.oneOf(['warning', 'info', 'error', 'success']),
     time: PropTypes.string.isRequired,
     timestamp: PropTypes.string,
     dismissed: PropTypes.bool,
@@ -436,7 +427,7 @@ export default AlertItem;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-09T07:03:05.793Z
+                at 2026-01-09T12:15:27.732Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

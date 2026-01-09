@@ -1,70 +1,80 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            name="description"
-            content="LeadFlow - Professional lead generation and management platform"
-        />
-        <meta name="theme-color" content="#2563eb" />
-        <title>LeadFlow Dashboard</title>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg" />
+    <link rel="mask-icon" href="/favicon.svg" color="#2563eb" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#2563eb" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="LeadFlow - Professional lead generation and management platform"
+    />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="LeadFlow" />
+    <title>LeadFlow Dashboard</title>
 
-        <!-- Preconnect to Google Fonts for performance -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Preconnect to Google Fonts for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-        <!-- Preload critical fonts -->
-        <link
-            rel="preload"
-            href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
-            as="style"
-        />
-        <link
-            rel="preload"
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-            as="style"
-        />
+    <!-- Preload critical fonts -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      as="style"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      as="style"
+    />
 
-        <!-- Load fonts -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-            rel="stylesheet"
-        />
+    <!-- Load fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-        <!-- Skip link styles (inline for immediate availability) -->
-        <style>
-            .skip-link {
-                position: absolute;
-                top: -40px;
-                left: 0;
-                background: #059669;
-                color: white;
-                padding: 8px 16px;
-                text-decoration: none;
-                font-family: "Manrope", sans-serif;
-                font-weight: 600;
-                z-index: 9999;
-                border-radius: 0 0 8px 0;
-                transition: top 0.2s ease-in-out;
-            }
-            .skip-link:focus {
-                top: 0;
-                outline: 2px solid #34d399;
-                outline-offset: 2px;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Skip link for accessibility - allows keyboard users to skip navigation -->
-        <a href="#main-content" class="skip-link"> Skip to main content </a>
+    <!-- Skip link styles (inline for immediate availability) -->
+    <style>
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #059669;
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        font-family: 'Manrope', sans-serif;
+        font-weight: 600;
+        z-index: 9999;
+        border-radius: 0 0 8px 0;
+        transition: top 0.2s ease-in-out;
+      }
+      .skip-link:focus {
+        top: 0;
+        outline: 2px solid #34d399;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Skip link for accessibility - allows keyboard users to skip navigation -->
+    <a href="#main-content" class="skip-link"> Skip to main content </a>
 
-        <div id="root"></div>
-        <script type="module" src="/src/main.jsx"></script>
-    </body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

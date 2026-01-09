@@ -463,7 +463,43 @@
 <a name='L398'></a><a href='#L398'>398</a>
 <a name='L399'></a><a href='#L399'>399</a>
 <a name='L400'></a><a href='#L400'>400</a>
-<a name='L401'></a><a href='#L401'>401</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L401'></a><a href='#L401'>401</a>
+<a name='L402'></a><a href='#L402'>402</a>
+<a name='L403'></a><a href='#L403'>403</a>
+<a name='L404'></a><a href='#L404'>404</a>
+<a name='L405'></a><a href='#L405'>405</a>
+<a name='L406'></a><a href='#L406'>406</a>
+<a name='L407'></a><a href='#L407'>407</a>
+<a name='L408'></a><a href='#L408'>408</a>
+<a name='L409'></a><a href='#L409'>409</a>
+<a name='L410'></a><a href='#L410'>410</a>
+<a name='L411'></a><a href='#L411'>411</a>
+<a name='L412'></a><a href='#L412'>412</a>
+<a name='L413'></a><a href='#L413'>413</a>
+<a name='L414'></a><a href='#L414'>414</a>
+<a name='L415'></a><a href='#L415'>415</a>
+<a name='L416'></a><a href='#L416'>416</a>
+<a name='L417'></a><a href='#L417'>417</a>
+<a name='L418'></a><a href='#L418'>418</a>
+<a name='L419'></a><a href='#L419'>419</a>
+<a name='L420'></a><a href='#L420'>420</a>
+<a name='L421'></a><a href='#L421'>421</a>
+<a name='L422'></a><a href='#L422'>422</a>
+<a name='L423'></a><a href='#L423'>423</a>
+<a name='L424'></a><a href='#L424'>424</a>
+<a name='L425'></a><a href='#L425'>425</a>
+<a name='L426'></a><a href='#L426'>426</a>
+<a name='L427'></a><a href='#L427'>427</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -863,12 +899,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState, useMemo, useCallback, memo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Sun, Moon, RotateCcw, StickyNote, Menu, Download, FileText, FileDown } from "lucide-react";
-import { dropdownVariants, fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
-import useScrollLock from "../hooks/useScrollLock";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState, useMemo, useCallback, memo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Zap,
+  Sun,
+  Moon,
+  RotateCcw,
+  StickyNote,
+  Menu,
+  Download,
+  FileText,
+  FileDown,
+} from 'lucide-react';
+import { dropdownVariants, fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
+import useScrollLock from '../hooks/useScrollLock';
 &nbsp;
 /**
  * Header Component
@@ -908,7 +970,7 @@ const Header = memo(function Header({
 &nbsp;
   // Handler for logo keyboard interaction
   const handleLogoKeyDown = useCallback((e) =&gt; {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       window.location.reload();
     }
   }, []);
@@ -918,11 +980,11 @@ const Header = memo(function Header({
     () =&gt; ({
       fontFamily,
       textShadow: isDark
-        ? "0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)"
-        : "0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05)",
-      transform: "perspective(1000px) rotateX(5deg)",
+        ? '0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)'
+        : '0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05)',
+      transform: 'perspective(1000px) rotateX(5deg)',
     }),
-    [isDark],
+    [isDark]
   );
 &nbsp;
   const fontFamilyStyle = useMemo(() =&gt; ({ fontFamily }), []);
@@ -942,21 +1004,21 @@ const Header = memo(function Header({
   const buttonClasses = useMemo(
     () =&gt;
       isDark
-        ? "bg-slate-800/60 border-slate-700/50 shadow-lg shadow-slate-900/20"
-        : "bg-white/90 border-slate-200/60 shadow-lg shadow-slate-900/10",
-    [isDark],
+        ? 'bg-neutral-900/70 border-neutral-700/50 shadow-lg shadow-black/40'
+        : 'bg-white/90 border-slate-200/60 shadow-lg shadow-slate-900/10',
+    [isDark]
   );
 &nbsp;
   // Memoize menu item classes
   const menuItemClasses = useMemo(
-    () =&gt; (isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"),
-    [isDark],
+    () =&gt; (isDark ? 'text-neutral-300 hover:bg-neutral-700' : 'text-slate-700 hover:bg-slate-100'),
+    [isDark]
   );
 &nbsp;
   // Memoize dropdown container classes
   const dropdownClasses = useMemo(
-    () =&gt; (isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"),
-    [isDark],
+    () =&gt; (isDark ? 'bg-neutral-900/95 border-neutral-700' : 'bg-white/95 border-slate-300'),
+    [isDark]
   );
 &nbsp;
   // Memoize handlers for menu items
@@ -1026,13 +1088,17 @@ const Header = memo(function Header({
           onKeyDown={handleLogoKeyDown}
           aria-label="Reload page"
         &gt;
-          &lt;div className={`p-2 sm:p-2.5 md:p-3 rounded-xl sm:rounded-2xl ${isDark ? "bg-blue-900/30" : "bg-blue-100"}`}&gt;
-            &lt;Zap className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${isDark ? "text-blue-400" : "text-blue-600"}`} /&gt;
+          &lt;div
+            className={`p-2 sm:p-2.5 md:p-3 rounded-xl sm:rounded-2xl ${isDark ? 'bg-blue-900/30' : 'bg-blue-100'}`}
+          &gt;
+            &lt;Zap
+              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}
+            /&gt;
           &lt;/div&gt;
           &lt;div className="flex flex-col justify-center h-full"&gt;
             &lt;h1
               className={`text-[2rem] font-black tracking-tight leading-none ${
-                isDark ? "text-white" : "text-slate-800"
+                isDark ? 'text-white' : 'text-slate-800'
               }`}
               style={titleStyle}
             &gt;
@@ -1040,7 +1106,7 @@ const Header = memo(function Header({
             &lt;/h1&gt;
             &lt;p
               className={`hidden lg:block text-[0.625rem] sm:text-[0.75rem] font-medium leading-tight mt-1.5 ${
-                isDark ? "text-slate-300" : "text-slate-600"
+                isDark ? 'text-slate-300' : 'text-slate-600'
               }`}
               style={fontFamilyStyle}
             &gt;
@@ -1056,7 +1122,7 @@ const Header = memo(function Header({
         &lt;motion.div className="relative lg:hidden"&gt;
           &lt;motion.button
             className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-              isDark ? "text-slate-300" : "text-slate-700"
+              isDark ? 'text-slate-300' : 'text-slate-700'
             } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
             onClick={toggleHamburgerMenu}
             whileHover={buttonHover}
@@ -1072,7 +1138,11 @@ const Header = memo(function Header({
             {isHamburgerMenuOpen &amp;&amp; (
 <span class="branch-1 cbranch-no" title="branch not covered" >              &lt;&gt;</span>
                 {/* Backdrop to close menu when clicking outside */}
-                &lt;div className="fixed inset-0 z-40" onClick={closeHamburgerMenu} aria-hidden="true" /&gt;
+                &lt;div
+                  className="fixed inset-0 z-40"
+                  onClick={closeHamburgerMenu}
+                  aria-hidden="true"
+                /&gt;
                 &lt;motion.div
                   className={`absolute right-0 mt-2 w-56 ${dropdownClasses} backdrop-blur-md rounded-xl border shadow-xl overflow-hidden z-50`}
                   initial="closed"
@@ -1092,8 +1162,12 @@ const Header = memo(function Header({
                       style={fontFamilyStyle}
                       role="menuitem"
                     &gt;
-                      {isDark ? &lt;Sun className="w-4 h-4 text-yellow-400" /&gt; : &lt;Moon className="w-4 h-4" /&gt;}
-                      {isDark ? "Light Mode" : "Dark Mode"}
+                      {isDark ? (
+                        &lt;Sun className="w-4 h-4 text-yellow-400" /&gt;
+                      ) : (
+                        &lt;Moon className="w-4 h-4" /&gt;
+                      )}
+                      {isDark ? 'Light Mode' : 'Dark Mode'}
                     &lt;/motion.button&gt;
 &nbsp;
                     {/* Refresh Button */}
@@ -1107,7 +1181,7 @@ const Header = memo(function Header({
                       role="menuitem"
                     &gt;
                       &lt;RotateCcw
-                        className={`w-4 h-4 ${isDark ? "text-blue-400" : ""} ${isLoading ? "animate-spin" : ""}`}
+                        className={`w-4 h-4 ${isDark ? 'text-blue-400' : ''} ${isLoading ? 'animate-spin' : ''}`}
                       /&gt;
                       Refresh Data
                     &lt;/motion.button&gt;
@@ -1162,34 +1236,38 @@ const Header = memo(function Header({
         &lt;motion.button
           onClick={onToggleDarkMode}
           className={`hidden lg:flex p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-            isDark ? "text-yellow-400" : "text-slate-700"
+            isDark ? 'text-yellow-400' : 'text-slate-700'
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
           whileHover={buttonHover}
           whileTap={buttonTap}
-          aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
         &gt;
-          {isDark ? &lt;Sun className="w-4 h-4 sm:w-5 sm:h-5" /&gt; : &lt;Moon className="w-4 h-4 sm:w-5 sm:h-5" /&gt;}
+          {isDark ? (
+            &lt;Sun className="w-4 h-4 sm:w-5 sm:h-5" /&gt;
+          ) : (
+            &lt;Moon className="w-4 h-4 sm:w-5 sm:h-5" /&gt;
+          )}
         &lt;/motion.button&gt;
 &nbsp;
         {/* Refresh Button */}
         &lt;motion.button
           onClick={onRefresh}
           className={`hidden lg:flex p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-            isDark ? "text-blue-400" : "text-slate-700"
+            isDark ? 'text-blue-400' : 'text-slate-700'
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
           whileHover={buttonHover}
           whileTap={buttonTap}
           disabled={isLoading}
           aria-label="Refresh data"
         &gt;
-          &lt;RotateCcw className={`w-4 h-4 sm:w-5 sm:h-5 ${isLoading ? "animate-spin" : ""}`} /&gt;
+          &lt;RotateCcw className={`w-4 h-4 sm:w-5 sm:h-5 ${isLoading ? 'animate-spin' : ''}`} /&gt;
         &lt;/motion.button&gt;
 &nbsp;
         {/* Notes Button */}
         &lt;motion.button
           onClick={onOpenNotes}
           className={`hidden lg:flex p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-            isDark ? "text-slate-300" : "text-slate-700"
+            isDark ? 'text-slate-300' : 'text-slate-700'
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
           whileHover={buttonHover}
           whileTap={buttonTap}
@@ -1202,7 +1280,7 @@ const Header = memo(function Header({
         &lt;motion.div className="relative hidden lg:block"&gt;
           &lt;motion.button
             className={`p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-              isDark ? "text-slate-300" : "text-slate-700"
+              isDark ? 'text-slate-300' : 'text-slate-700'
             } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
             onClick={toggleMobileMenu}
             whileHover={buttonHover}
@@ -1270,7 +1348,7 @@ export default Header;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-09T07:03:05.510Z
+                at 2026-01-09T12:15:27.420Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

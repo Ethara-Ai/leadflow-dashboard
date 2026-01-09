@@ -32,13 +32,9 @@ const useThemeClasses = (darkModeOverride) => {
       // =======================================================================
       // Modal Classes
       // =======================================================================
-      modal: isDark
-        ? 'bg-zinc-900/95 border-zinc-700'
-        : 'bg-white/95 border-slate-300',
+      modal: isDark ? 'bg-zinc-900/95 border-zinc-700' : 'bg-white/95 border-slate-300',
 
-      modalHeader: isDark
-        ? 'border-zinc-700 bg-zinc-900/80'
-        : 'border-slate-100 bg-slate-50/80',
+      modalHeader: isDark ? 'border-zinc-700 bg-zinc-900/80' : 'border-slate-100 bg-slate-50/80',
 
       // =======================================================================
       // Input Classes
@@ -103,44 +99,26 @@ const useThemeClasses = (darkModeOverride) => {
       accentEmerald: isDark
         ? 'bg-emerald-950/60 text-emerald-400'
         : 'bg-emerald-100 text-emerald-600',
-      accentAmber: isDark
-        ? 'bg-amber-950/60 text-amber-400'
-        : 'bg-amber-100 text-amber-600',
-      accentCyan: isDark
-        ? 'bg-cyan-950/60 text-cyan-400'
-        : 'bg-cyan-100 text-cyan-600',
-      accentBlue: isDark
-        ? 'bg-blue-950/60 text-blue-400'
-        : 'bg-blue-100 text-blue-600',
-      accentRed: isDark
-        ? 'bg-red-950/60 text-red-400'
-        : 'bg-red-100 text-red-600',
+      accentAmber: isDark ? 'bg-amber-950/60 text-amber-400' : 'bg-amber-100 text-amber-600',
+      accentCyan: isDark ? 'bg-cyan-950/60 text-cyan-400' : 'bg-cyan-100 text-cyan-600',
+      accentBlue: isDark ? 'bg-blue-950/60 text-blue-400' : 'bg-blue-100 text-blue-600',
+      accentRed: isDark ? 'bg-red-950/60 text-red-400' : 'bg-red-100 text-red-600',
 
       // =======================================================================
       // Dropdown Classes
       // =======================================================================
-      dropdown: isDark
-        ? 'bg-zinc-900 border-zinc-700'
-        : 'bg-white border-slate-200',
+      dropdown: isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-slate-200',
 
-      dropdownItem: isDark
-        ? 'text-zinc-300 hover:bg-zinc-700'
-        : 'text-slate-700 hover:bg-slate-50',
+      dropdownItem: isDark ? 'text-zinc-300 hover:bg-zinc-700' : 'text-slate-700 hover:bg-slate-50',
 
-      dropdownItemActive: isDark
-        ? 'bg-blue-950/60 text-blue-400'
-        : 'bg-blue-50 text-blue-600',
+      dropdownItemActive: isDark ? 'bg-blue-950/60 text-blue-400' : 'bg-blue-50 text-blue-600',
 
       // =======================================================================
       // Badge Classes
       // =======================================================================
-      badge: isDark
-        ? 'bg-zinc-800 text-zinc-300'
-        : 'bg-slate-100 text-slate-600',
+      badge: isDark ? 'bg-zinc-800 text-zinc-300' : 'bg-slate-100 text-slate-600',
 
-      badgeActive: isDark
-        ? 'bg-amber-950/60 text-amber-300'
-        : 'bg-amber-100 text-amber-700',
+      badgeActive: isDark ? 'bg-amber-950/60 text-amber-300' : 'bg-amber-100 text-amber-700',
 
       // =======================================================================
       // Icon Classes

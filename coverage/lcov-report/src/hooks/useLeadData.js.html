@@ -230,7 +230,11 @@
 <a name='L165'></a><a href='#L165'>165</a>
 <a name='L166'></a><a href='#L166'>166</a>
 <a name='L167'></a><a href='#L167'>167</a>
-<a name='L168'></a><a href='#L168'>168</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -249,6 +253,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -402,9 +410,9 @@
 // Custom hook for managing lead data state and API interactions
 // =============================================================================
 &nbsp;
-import { useState, useCallback, useRef, useEffect } from "react";
-import { refreshLeadData as apiRefreshLeadData } from "../api/leads.js";
-import { initialLeadData, DEFAULT_REFRESH_INTERVAL } from "../constants/index.js";
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { refreshLeadData as apiRefreshLeadData } from '../api/leads.js';
+import { initialLeadData, DEFAULT_REFRESH_INTERVAL } from '../constants/index.js';
 &nbsp;
 /**
  * Custom hook for managing lead data state and refresh functionality
@@ -415,7 +423,11 @@ import { initialLeadData, DEFAULT_REFRESH_INTERVAL } from "../constants/index.js
  * @param {number} [options.refreshInterval] - Interval for auto-refresh in ms
  * @returns {Object} Lead data state and handlers
  */
-const useLeadData = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> onNewAlert, autoRefresh = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span> refreshInterval = <span class="branch-0 cbranch-no" title="branch not covered" >DEFAULT_REFRESH_INTERVAL </span>} = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> =&gt; {</span>
+const useLeadData = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span></span>
+  onNewAlert,
+  autoRefresh = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
+  refreshInterval = <span class="branch-0 cbranch-no" title="branch not covered" >DEFAULT_REFRESH_INTERVAL,</span>
+} = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> =&gt; {
   const [leadData, setLeadData] =<span class="cstat-no" title="statement not covered" > useState(initialLeadData);</span>
   const [isLoading, setIsLoading] =<span class="cstat-no" title="statement not covered" > useState(false);</span>
   const [error, setError] =<span class="cstat-no" title="statement not covered" > useState(null);</span>
@@ -479,12 +491,12 @@ const useLeadData = <span class="cstat-no" title="statement not covered" ><span 
 <span class="cstat-no" title="statement not covered" >        return leadDataRef.current;</span>
       }
 &nbsp;
-      const errorMessage = <span class="cstat-no" title="statement not covered" >err.message || "Failed to refresh data. Please try again.";</span>
+      const errorMessage = <span class="cstat-no" title="statement not covered" >err.message || 'Failed to refresh data. Please try again.';</span>
 <span class="cstat-no" title="statement not covered" >      setError(errorMessage);</span>
 &nbsp;
       // Log error in development
 <span class="cstat-no" title="statement not covered" >      if (import.meta.env.DEV) {</span>
-<span class="cstat-no" title="statement not covered" >        console.error("useLeadData refresh error:", err);</span>
+<span class="cstat-no" title="statement not covered" >        console.error('useLeadData refresh error:', err);</span>
       }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      throw err;</span>
@@ -516,7 +528,7 @@ const useLeadData = <span class="cstat-no" title="statement not covered" ><span 
    * @param {Object|Function} dataOrUpdater - New data or updater function
    */
   const setData =<span class="cstat-no" title="statement not covered" > useCallback(<span class="fstat-no" title="function not covered" >(d</span>ataOrUpdater) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (typeof dataOrUpdater === "function") {</span>
+<span class="cstat-no" title="statement not covered" >    if (typeof dataOrUpdater === 'function') {</span>
 <span class="cstat-no" title="statement not covered" >      setLeadData(<span class="fstat-no" title="function not covered" >(p</span>rev) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
         ...prev,
         ...dataOrUpdater(prev),
@@ -571,7 +583,7 @@ export default useLeadData;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-09T07:03:05.793Z
+                at 2026-01-09T12:15:27.732Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

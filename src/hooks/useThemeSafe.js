@@ -22,4 +22,4 @@
  * const { isDark } = useTheme();
  */
 
-export { useThemeSafe as default } from "./useTheme.jsx";
+export { useThemeSafe as default } from './useTheme.jsx';
