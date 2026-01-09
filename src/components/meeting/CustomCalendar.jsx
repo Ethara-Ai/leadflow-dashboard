@@ -5,6 +5,14 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { fontFamily } from '../../constants';
 
 /**
+ * Check if the device is mobile
+ * @returns {boolean}
+ */
+const isMobileDevice = () => {
+  return typeof window !== 'undefined' && window.innerWidth <= 768;
+};
+
+/**
  * Custom Calendar Picker Component
  * A compact date picker for selecting meeting dates.
  *
@@ -54,12 +62,23 @@ const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, o
     );
   };
 
+  // Get today's date at midnight for comparison
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
   const isPast = (day) => {
     if (!day) return false;
     const date = new Date(year, month, day);
-    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     return date < todayStart;
   };
+
+  // Check if we should disable going to previous month (if all days would be in the past)
+  const isPrevMonthFullyPast = () => {
+    const prevMonthLastDay = new Date(year, month, 0);
+    return prevMonthLastDay < todayStart;
+  };
+
+  // Determine if mobile for responsive sizing
+  const isMobile = isMobileDevice();
 
   return (
     <motion.div
@@ -67,23 +86,24 @@ const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, o
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -8, scale: 0.95 }}
       transition={{ duration: 0.12 }}
-      className={`absolute top-full left-0 mt-1.5 p-1.5 rounded-xl border shadow-xl z-50 w-44 ${
-        isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-slate-200'
-      }`}
+      className={`absolute top-full left-0 mt-1.5 rounded-xl border shadow-xl z-50 ${
+        isMobile ? 'p-3 w-64' : 'p-1.5 w-44'
+      } ${isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-slate-200'}`}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-1">
+      <div className={`flex items-center justify-between ${isMobile ? 'mb-2' : 'mb-1'}`}>
         <button
           type="button"
+          disabled={isPrevMonthFullyPast()}
           onClick={() => setCurrentDate(new Date(year, month - 1, 1))}
-          className={`p-0.5 rounded transition-colors cursor-pointer ${
-            isDark ? 'hover:bg-zinc-700 text-zinc-400' : 'hover:bg-slate-100 text-slate-600'
-          }`}
+          className={`${isMobile ? 'p-1.5' : 'p-0.5'} rounded transition-colors ${
+            isPrevMonthFullyPast() ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'
+          } ${isDark ? 'hover:bg-zinc-700 text-zinc-400' : 'hover:bg-slate-100 text-slate-600'}`}
         >
-          <ChevronLeft size={12} />
+          <ChevronLeft size={isMobile ? 18 : 12} />
         </button>
         <span
-          className={`text-[10px] font-semibold ${isDark ? 'text-zinc-200' : 'text-slate-700'}`}
+          className={`${isMobile ? 'text-sm' : 'text-[10px]'} font-semibold ${isDark ? 'text-zinc-200' : 'text-slate-700'}`}
           style={{ fontFamily }}
         >
           {currentDate.toLocaleString('default', { month: 'short', year: 'numeric' })}
@@ -91,20 +111,20 @@ const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, o
         <button
           type="button"
           onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
-          className={`p-0.5 rounded transition-colors cursor-pointer ${
+          className={`${isMobile ? 'p-1.5' : 'p-0.5'} rounded transition-colors cursor-pointer ${
             isDark ? 'hover:bg-zinc-700 text-zinc-400' : 'hover:bg-slate-100 text-slate-600'
           }`}
         >
-          <ChevronRight size={12} />
+          <ChevronRight size={isMobile ? 18 : 12} />
         </button>
       </div>
 
       {/* Day Headers */}
-      <div className="grid grid-cols-7 mb-0.5">
+      <div className={`grid grid-cols-7 ${isMobile ? 'mb-1' : 'mb-0.5'}`}>
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
           <div
             key={i}
-            className={`text-center text-[8px] font-medium py-0.5 ${
+            className={`text-center ${isMobile ? 'text-xs py-1' : 'text-[8px] py-0.5'} font-medium ${
               isDark ? 'text-zinc-500' : 'text-slate-400'
             }`}
           >
@@ -114,7 +134,7 @@ const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, o
       </div>
 
       {/* Days Grid */}
-      <div className="grid grid-cols-7">
+      <div className="grid grid-cols-7 gap-0.5">
         {days.map((day, i) => (
           <button
             key={i}
@@ -122,9 +142,9 @@ const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, o
             disabled={!day || isPast(day)}
             onClick={() => handleDateSelect(day)}
             className={`
-              w-5 h-5 text-[10px] rounded transition-all duration-100 font-medium
+              ${isMobile ? 'w-8 h-8 text-sm' : 'w-5 h-5 text-[10px]'} rounded transition-all duration-100 font-medium
               ${!day ? 'invisible' : ''}
-              ${isPast(day) ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}
+              ${isPast(day) ? 'opacity-30 cursor-not-allowed line-through' : 'cursor-pointer'}
               ${
                 isSelected(day)
                   ? 'bg-blue-500 text-white shadow-sm'
@@ -142,6 +162,15 @@ const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, o
           </button>
         ))}
       </div>
+
+      {/* Mobile hint for past dates */}
+      {isMobile && (
+        <p
+          className={`text-[10px] mt-2 text-center ${isDark ? 'text-zinc-500' : 'text-slate-400'}`}
+        >
+          Past dates are not available
+        </p>
+      )}
     </motion.div>
   );
 });

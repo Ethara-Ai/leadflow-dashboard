@@ -233,16 +233,17 @@ const CreateMeetingModal = memo(function CreateMeetingModal({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 overflow-y-auto"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 overflow-y-auto h-dvh min-h-dvh"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
           role="presentation"
+          style={{ height: '100dvh', minHeight: '-webkit-fill-available' }}
         >
           <motion.div
             ref={modalRef}
-            className={`w-full max-w-md rounded-3xl border shadow-2xl flex flex-col max-h-[95vh] sm:max-h-[85vh] my-2 sm:my-0 ${
+            className={`w-full max-w-md rounded-3xl border shadow-2xl flex flex-col max-h-[90dvh] sm:max-h-[85vh] my-2 sm:my-0 ${
               isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-slate-200'
             }`}
             initial="hidden"

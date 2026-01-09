@@ -1,8 +1,16 @@
-import { useState, useRef, useEffect, memo } from 'react';
+import { useState, useRef, useEffect, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { fontFamily } from '../../constants';
+
+/**
+ * Check if the device is mobile
+ * @returns {boolean}
+ */
+const isMobileDevice = () => {
+  return typeof window !== 'undefined' && window.innerWidth <= 768;
+};
 
 /**
  * Custom Dropdown Component
@@ -26,6 +34,7 @@ const CustomDropdown = memo(function CustomDropdown({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const optionsRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -36,6 +45,52 @@ const CustomDropdown = memo(function CustomDropdown({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // Auto-scroll modal upward on mobile when dropdown opens to show all options
+  const scrollToShowDropdown = useCallback(() => {
+    if (!isMobileDevice() || !dropdownRef.current) return;
+
+    // Small delay to let the dropdown render
+    setTimeout(() => {
+      if (optionsRef.current && dropdownRef.current) {
+        // Find the modal/scrollable parent
+        const scrollableParent =
+          dropdownRef.current.closest('.overflow-y-auto') ||
+          dropdownRef.current.closest('[class*="overflow"]') ||
+          dropdownRef.current.closest('form');
+
+        if (scrollableParent) {
+          const optionsRect = optionsRef.current.getBoundingClientRect();
+          const parentRect = scrollableParent.getBoundingClientRect();
+
+          // Calculate how much we need to scroll to show the dropdown options
+          const optionsBottom = optionsRect.bottom;
+          const parentBottom = parentRect.bottom;
+
+          if (optionsBottom > parentBottom) {
+            const scrollAmount = optionsBottom - parentBottom + 20; // 20px extra padding
+            scrollableParent.scrollBy({
+              top: scrollAmount,
+              behavior: 'smooth',
+            });
+          }
+        } else {
+          // Fallback: scroll the dropdown button into view with offset for options
+          dropdownRef.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
+        }
+      }
+    }, 50);
+  }, []);
+
+  // Trigger scroll when dropdown opens on mobile
+  useEffect(() => {
+    if (isOpen && isMobileDevice()) {
+      scrollToShowDropdown();
+    }
+  }, [isOpen, scrollToShowDropdown]);
 
   const selectedOption = options.find((opt) => opt.value === value);
 
@@ -67,11 +122,12 @@ const CustomDropdown = memo(function CustomDropdown({
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={optionsRef}
             initial={{ opacity: 0, y: -8, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.95 }}
             transition={{ duration: 0.12 }}
-            className={`absolute top-full left-0 right-0 mt-1 py-0.5 rounded-lg border shadow-lg z-50 max-h-40 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${
+            className={`absolute top-full left-0 right-0 mt-1 py-0.5 rounded-lg border shadow-lg z-50 max-h-48 sm:max-h-40 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${
               isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-slate-200'
             }`}
           >
