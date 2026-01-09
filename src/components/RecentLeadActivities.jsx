@@ -128,7 +128,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
       variants={cardVariants}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center mb-3">
         <div className="flex items-center gap-2">
           <div className={`p-2 rounded-lg ${isDark ? 'bg-emerald-900/40' : 'bg-emerald-100'}`}>
             <TrendingUp className={`w-4 h-4 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
@@ -137,14 +137,6 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
             Recent Activities
           </h3>
         </div>
-        <span
-          className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-            isDark ? 'bg-zinc-800 text-zinc-300' : 'bg-slate-100 text-slate-600'
-          }`}
-          style={{ fontFamily }}
-        >
-          Last 24h
-        </span>
       </div>
 
       {/* Activities Timeline - Fixed height with scroll */}

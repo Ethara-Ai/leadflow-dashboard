@@ -437,6 +437,7 @@ const CreateMeetingModal = memo(function CreateMeetingModal({
                     onChange={handleDurationChange}
                     isDark={isDark}
                     placeholder="Select"
+                    dropUp={true}
                   />
                 </div>
 
@@ -453,6 +454,7 @@ const CreateMeetingModal = memo(function CreateMeetingModal({
                     onChange={handleTypeChange}
                     isDark={isDark}
                     placeholder="Select"
+                    dropUp={true}
                   />
                 </div>
               </div>

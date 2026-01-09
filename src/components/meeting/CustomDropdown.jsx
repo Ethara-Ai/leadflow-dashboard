@@ -31,6 +31,7 @@ const CustomDropdown = memo(function CustomDropdown({
   isDark,
   placeholder,
   icon: Icon,
+  dropUp = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -113,7 +114,7 @@ const CustomDropdown = memo(function CustomDropdown({
         </div>
         <ChevronDown
           size={12}
-          className={`transition-transform duration-150 shrink-0 ${isOpen ? 'rotate-180' : ''} ${
+          className={`transition-transform duration-150 shrink-0 ${isOpen ? (dropUp ? '' : 'rotate-180') : dropUp ? 'rotate-180' : ''} ${
             isDark ? 'text-zinc-400' : 'text-slate-500'
           }`}
         />
@@ -123,11 +124,11 @@ const CustomDropdown = memo(function CustomDropdown({
         {isOpen && (
           <motion.div
             ref={optionsRef}
-            initial={{ opacity: 0, y: -8, scale: 0.95 }}
+            initial={{ opacity: 0, y: dropUp ? 8 : -8, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.95 }}
+            exit={{ opacity: 0, y: dropUp ? 8 : -8, scale: 0.95 }}
             transition={{ duration: 0.12 }}
-            className={`absolute top-full left-0 right-0 mt-1 py-0.5 rounded-lg border shadow-lg z-50 max-h-48 sm:max-h-40 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${
+            className={`absolute ${dropUp ? 'bottom-full mb-1' : 'top-full mt-1'} left-0 right-0 py-0.5 rounded-lg border shadow-lg z-50 max-h-48 sm:max-h-40 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${
               isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-slate-200'
             }`}
           >
@@ -174,6 +175,7 @@ CustomDropdown.propTypes = {
   isDark: PropTypes.bool.isRequired,
   placeholder: PropTypes.string,
   icon: PropTypes.elementType,
+  dropUp: PropTypes.bool,
 };
 
 export default CustomDropdown;

@@ -52,10 +52,10 @@ const Footer = memo(function Footer({
       }`}
       role="contentinfo"
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-12">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-          {/* Brand Section */}
-          <div className="col-span-2 sm:col-span-2 lg:col-span-1 space-y-2 sm:space-y-3 md:space-y-4">
+      <div className="max-w-7xl mx-auto px-8 py-6 sm:py-8 md:py-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:flex lg:justify-between lg:items-start gap-4 sm:gap-6 md:gap-8">
+          {/* Brand Section - Leftmost */}
+          <div className="col-span-2 sm:col-span-2 lg:shrink-0 space-y-2 sm:space-y-3 md:space-y-4">
             <div
               className="flex items-center space-x-2 sm:space-x-3 cursor-pointer w-fit"
               onClick={handleLogoClick}
@@ -80,7 +80,7 @@ const Footer = memo(function Footer({
               </span>
             </div>
             <p
-              className={`text-xs sm:text-sm leading-relaxed ${textClasses}`}
+              className={`text-xs sm:text-sm leading-relaxed max-w-md ${textClasses}`}
               style={{ fontFamily }}
             >
               Professional lead generation and management platform for sales teams, marketing
@@ -88,86 +88,89 @@ const Footer = memo(function Footer({
             </p>
           </div>
 
-          {/* Product Section */}
-          <nav
-            className="space-y-2 sm:space-y-3 md:space-y-4"
-            aria-labelledby="footer-product-heading"
-          >
-            <h4
-              id="footer-product-heading"
-              className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
-              style={{ fontFamily }}
+          {/* Navigation Sections Container - Right aligned on large screens */}
+          <div className="col-span-2 sm:col-span-2 lg:col-span-1 flex flex-wrap lg:flex-nowrap gap-8 sm:gap-10 lg:gap-16">
+            {/* Product Section */}
+            <nav
+              className="space-y-2 sm:space-y-3 md:space-y-4"
+              aria-labelledby="footer-product-heading"
             >
-              Product
-            </h4>
-            <ul className="space-y-1 sm:space-y-2">
-              {['Features', 'Support'].map((link) => (
-                <li key={link}>
-                  <button
-                    onClick={onOpenProductModal}
-                    className={`text-xs sm:text-sm transition-colors cursor-pointer text-left ${linkClasses}`}
-                    style={{ fontFamily }}
-                  >
-                    {link}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+              <h4
+                id="footer-product-heading"
+                className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
+                style={{ fontFamily }}
+              >
+                Product
+              </h4>
+              <ul className="space-y-1 sm:space-y-2">
+                {['Features', 'Support'].map((link) => (
+                  <li key={link}>
+                    <button
+                      onClick={onOpenProductModal}
+                      className={`text-xs sm:text-sm transition-colors cursor-pointer text-left ${linkClasses}`}
+                      style={{ fontFamily }}
+                    >
+                      {link}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          {/* Resources Section */}
-          <nav
-            className="space-y-2 sm:space-y-3 md:space-y-4"
-            aria-labelledby="footer-resources-heading"
-          >
-            <h4
-              id="footer-resources-heading"
-              className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
-              style={{ fontFamily }}
+            {/* Resources Section */}
+            <nav
+              className="space-y-2 sm:space-y-3 md:space-y-4"
+              aria-labelledby="footer-resources-heading"
             >
-              Resources
-            </h4>
-            <ul className="space-y-1 sm:space-y-2">
-              {['Community', 'Case Studies'].map((link) => (
-                <li key={link}>
-                  <button
-                    onClick={onOpenResourcesModal}
-                    className={`text-xs sm:text-sm transition-colors cursor-pointer text-left ${linkClasses}`}
-                    style={{ fontFamily }}
-                  >
-                    {link}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+              <h4
+                id="footer-resources-heading"
+                className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
+                style={{ fontFamily }}
+              >
+                Resources
+              </h4>
+              <ul className="space-y-1 sm:space-y-2">
+                {['Community', 'Case Studies'].map((link) => (
+                  <li key={link}>
+                    <button
+                      onClick={onOpenResourcesModal}
+                      className={`text-xs sm:text-sm transition-colors cursor-pointer text-left ${linkClasses}`}
+                      style={{ fontFamily }}
+                    >
+                      {link}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          {/* Company Section */}
-          <nav
-            className="space-y-2 sm:space-y-3 md:space-y-4"
-            aria-labelledby="footer-company-heading"
-          >
-            <h4
-              id="footer-company-heading"
-              className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
-              style={{ fontFamily }}
+            {/* Company Section - Rightmost */}
+            <nav
+              className="space-y-2 sm:space-y-3 md:space-y-4"
+              aria-labelledby="footer-company-heading"
             >
-              Company
-            </h4>
-            <ul className="space-y-1 sm:space-y-2">
-              {['Privacy', 'Terms'].map((link) => (
-                <li key={link}>
-                  <button
-                    onClick={onOpenCompanyModal}
-                    className={`text-xs sm:text-sm transition-colors cursor-pointer text-left ${linkClasses}`}
-                    style={{ fontFamily }}
-                  >
-                    {link}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+              <h4
+                id="footer-company-heading"
+                className={`text-sm sm:text-base md:text-lg font-bold ${headingClasses}`}
+                style={{ fontFamily }}
+              >
+                Company
+              </h4>
+              <ul className="space-y-1 sm:space-y-2">
+                {['Privacy', 'Terms'].map((link) => (
+                  <li key={link}>
+                    <button
+                      onClick={onOpenCompanyModal}
+                      className={`text-xs sm:text-sm transition-colors cursor-pointer text-left ${linkClasses}`}
+                      style={{ fontFamily }}
+                    >
+                      {link}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
 
         {/* Bottom Bar */}

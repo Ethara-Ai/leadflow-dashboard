@@ -22,9 +22,23 @@ const isMobileDevice = () => {
  * @param {boolean} props.isDark - Whether dark mode is enabled
  * @param {function} props.onClose - Callback to close the calendar
  */
+/**
+ * Parse a YYYY-MM-DD date string into a local Date object
+ * This avoids timezone issues that occur with new Date(dateString)
+ * @param {string} dateStr - Date string in YYYY-MM-DD format
+ * @returns {Date} Local date object
+ */
+const parseLocalDate = (dateStr) => {
+  if (!dateStr) return null;
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
 const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, onClose }) {
-  const [currentDate, setCurrentDate] = useState(value ? new Date(value) : new Date());
-  const selectedDate = value ? new Date(value) : null;
+  // Parse value as local date to avoid timezone issues
+  const parsedValue = value ? parseLocalDate(value) : null;
+  const [currentDate, setCurrentDate] = useState(parsedValue || new Date());
+  const selectedDate = parsedValue;
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -40,13 +54,24 @@ const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, o
     days.push(i);
   }
 
+  // Get today's date at midnight for comparison (defined early for use in handleDateSelect)
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
   const handleDateSelect = (day) => {
-    if (day) {
-      const selected = new Date(year, month, day);
-      const formatted = selected.toISOString().split('T')[0];
-      onChange(formatted);
-      onClose();
-    }
+    if (!day) return;
+
+    // Extra guard for mobile devices where disabled buttons might still trigger
+    const dateToSelect = new Date(year, month, day);
+    if (dateToSelect < todayStart) return;
+
+    // Format date as YYYY-MM-DD using local date values (avoid timezone issues with toISOString)
+    const formattedYear = year;
+    const formattedMonth = String(month + 1).padStart(2, '0');
+    const formattedDay = String(day).padStart(2, '0');
+    const formatted = `${formattedYear}-${formattedMonth}-${formattedDay}`;
+
+    onChange(formatted);
+    onClose();
   };
 
   const isToday = (day) => {
@@ -61,9 +86,6 @@ const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, o
       year === selectedDate.getFullYear()
     );
   };
-
-  // Get today's date at midnight for comparison
-  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
   const isPast = (day) => {
     if (!day) return false;
@@ -144,7 +166,7 @@ const CustomCalendar = memo(function CustomCalendar({ value, onChange, isDark, o
             className={`
               ${isMobile ? 'w-8 h-8 text-sm' : 'w-5 h-5 text-[10px]'} rounded transition-all duration-100 font-medium
               ${!day ? 'invisible' : ''}
-              ${isPast(day) ? 'opacity-30 cursor-not-allowed line-through' : 'cursor-pointer'}
+              ${isPast(day) ? 'opacity-30 cursor-not-allowed line-through pointer-events-none' : 'cursor-pointer'}
               ${
                 isSelected(day)
                   ? 'bg-blue-500 text-white shadow-sm'

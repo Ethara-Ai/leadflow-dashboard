@@ -243,6 +243,55 @@
   opacity: 0.85;
 }
 
+/* Remove black square/focus outline from all Recharts elements on click */
+.recharts-wrapper,
+.recharts-surface,
+.recharts-pie,
+.recharts-pie-sector,
+.recharts-bar,
+.recharts-bar-rectangle,
+.recharts-line,
+.recharts-line-curve,
+.recharts-area,
+.recharts-area-curve,
+.recharts-dot,
+.recharts-active-dot,
+.recharts-legend-item,
+.recharts-tooltip-wrapper,
+.recharts-cartesian-grid,
+.recharts-reference-line,
+.recharts-cell {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Remove focus styles on click for all chart elements */
+.recharts-wrapper *:focus,
+.recharts-wrapper *:active,
+.recharts-surface *:focus,
+.recharts-surface *:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Specifically target SVG elements inside charts */
+.recharts-wrapper svg,
+.recharts-wrapper svg *,
+.recharts-wrapper path,
+.recharts-wrapper rect,
+.recharts-wrapper circle {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Remove any selection/highlight on touch devices */
+.recharts-wrapper {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 /* Ensure responsive container doesn't overflow */
 .recharts-responsive-container {
   max-width: 100%;
