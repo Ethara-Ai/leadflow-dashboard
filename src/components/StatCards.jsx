@@ -1,10 +1,10 @@
-import { memo } from "react";
-import { motion } from "framer-motion";
-import { Users, Phone, Calendar, TrendingUp } from "lucide-react";
-import { staggerContainerVariants } from "../constants";
-import { calculateTotalLeads } from "../utils";
-import useThemeSafe from "../hooks/useThemeSafe";
-import StatCard from "./StatCard";
+import { memo } from 'react';
+import { motion } from 'framer-motion';
+import { Users, Phone, Calendar, TrendingUp } from 'lucide-react';
+import { staggerContainerVariants } from '../constants';
+import { calculateTotalLeads } from '../utils';
+import useThemeSafe from '../hooks/useThemeSafe';
+import StatCard from './StatCard';
 
 /**
  * Helper function to determine the subValueVariant based on the value
@@ -13,10 +13,10 @@ import StatCard from "./StatCard";
  * @returns {"positive"|"negative"|"warning"|"neutral"} - The variant type
  */
 const getSubValueVariant = (subValue) => {
-  if (!subValue) return "neutral";
-  if (subValue.includes("+")) return "positive";
-  if (subValue.includes("-")) return "warning";
-  return "neutral";
+  if (!subValue) return 'neutral';
+  if (subValue.includes('+')) return 'positive';
+  if (subValue.includes('-')) return 'warning';
+  return 'neutral';
 };
 
 /**
@@ -37,36 +37,36 @@ const StatCards = memo(function StatCards({ leadData, activityData, darkMode: da
 
   const stats = [
     {
-      title: "Total Leads",
+      title: 'Total Leads',
       value: leadData.totalLeads,
       icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: "+24",
-      subText: "new this week",
-      accent: isDark ? "bg-emerald-900/40 text-emerald-400" : "bg-emerald-100 text-emerald-600",
+      subValue: '+24',
+      subText: 'new this week',
+      accent: isDark ? 'bg-emerald-900/40 text-emerald-400' : 'bg-emerald-100 text-emerald-600',
     },
     {
-      title: "Calls Made",
+      title: 'Calls Made',
       value: leadData.callsMade,
       icon: <Phone className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: "+18",
-      subText: "vs yesterday",
-      accent: isDark ? "bg-amber-900/40 text-amber-400" : "bg-amber-100 text-amber-600",
+      subValue: '+18',
+      subText: 'vs yesterday',
+      accent: isDark ? 'bg-amber-900/40 text-amber-400' : 'bg-amber-100 text-amber-600',
     },
     {
-      title: "Meetings",
+      title: 'Meetings',
       value: `${leadData.meetingsScheduled}`,
       icon: <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: "+5",
-      subText: "scheduled",
-      accent: isDark ? "bg-cyan-900/40 text-cyan-400" : "bg-cyan-100 text-cyan-600",
+      subValue: '+5',
+      subText: 'scheduled',
+      accent: isDark ? 'bg-cyan-900/40 text-cyan-400' : 'bg-cyan-100 text-cyan-600',
     },
     {
-      title: "Conversion Rate",
+      title: 'Conversion Rate',
       value: `${totalLeads}%`,
       icon: <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />,
-      subValue: "+3.2%",
-      subText: "from meetings",
-      accent: isDark ? "bg-blue-900/40 text-blue-400" : "bg-blue-100 text-blue-600",
+      subValue: '+3.2%',
+      subText: 'from meetings',
+      accent: isDark ? 'bg-blue-900/40 text-blue-400' : 'bg-blue-100 text-blue-600',
     },
   ];
 

@@ -1,8 +1,8 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { Zap, Heart } from "lucide-react";
-import { fontFamily, fontFamilyHeading } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { Zap, Heart } from 'lucide-react';
+import { fontFamily, fontFamilyHeading } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * Footer Component
@@ -30,25 +30,25 @@ const Footer = memo(function Footer({
 
   // Handler for logo keyboard interaction
   const handleLogoKeyDown = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       window.location.reload();
     }
   };
 
   // Theme-based classes
-  const headingClasses = isDark ? "text-slate-200" : "text-slate-700";
-  const textClasses = isDark ? "text-slate-400" : "text-slate-600";
+  const headingClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const textClasses = isDark ? 'text-slate-400' : 'text-slate-600';
   const linkClasses = isDark
-    ? "text-slate-400 hover:text-slate-200"
-    : "text-slate-600 hover:text-slate-800";
+    ? 'text-slate-400 hover:text-slate-200'
+    : 'text-slate-600 hover:text-slate-800';
 
   return (
     <footer
       className={`mt-8 sm:mt-12 md:mt-16 border-t transition-all duration-300 ${
         isDark
-          ? "bg-slate-900/50 border-slate-800 backdrop-blur-lg"
-          : "bg-white/80 border-slate-200 backdrop-blur-lg"
+          ? 'bg-slate-900/50 border-slate-800 backdrop-blur-lg'
+          : 'bg-white/80 border-slate-200 backdrop-blur-lg'
       }`}
       role="contentinfo"
     >
@@ -65,15 +65,15 @@ const Footer = memo(function Footer({
               aria-label="Reload page"
             >
               <div
-                className={`p-2 sm:p-2.5 md:p-3 rounded-xl ${isDark ? "bg-blue-900/30" : "bg-blue-100"}`}
+                className={`p-2 sm:p-2.5 md:p-3 rounded-xl ${isDark ? 'bg-blue-900/30' : 'bg-blue-100'}`}
               >
                 <Zap
-                  className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${isDark ? "text-blue-400" : "text-blue-600"}`}
+                  className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}
                   aria-hidden="true"
                 />
               </div>
               <span
-                className={`text-lg sm:text-xl md:text-2xl font-bold ${isDark ? "text-slate-100" : "text-slate-800"}`}
+                className={`text-lg sm:text-xl md:text-2xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}
                 style={{ fontFamily: fontFamilyHeading }}
               >
                 LeadFlow
@@ -83,9 +83,8 @@ const Footer = memo(function Footer({
               className={`text-xs sm:text-sm leading-relaxed ${textClasses}`}
               style={{ fontFamily }}
             >
-              Professional lead generation and management platform for sales
-              teams, marketing professionals, and business development
-              specialists.
+              Professional lead generation and management platform for sales teams, marketing
+              professionals, and business development specialists.
             </p>
           </div>
 
@@ -102,7 +101,7 @@ const Footer = memo(function Footer({
               Product
             </h4>
             <ul className="space-y-1 sm:space-y-2">
-              {["Features", "Support"].map((link) => (
+              {['Features', 'Support'].map((link) => (
                 <li key={link}>
                   <button
                     onClick={onOpenProductModal}
@@ -129,7 +128,7 @@ const Footer = memo(function Footer({
               Resources
             </h4>
             <ul className="space-y-1 sm:space-y-2">
-              {["Community", "Case Studies"].map((link) => (
+              {['Community', 'Case Studies'].map((link) => (
                 <li key={link}>
                   <button
                     onClick={onOpenResourcesModal}
@@ -156,7 +155,7 @@ const Footer = memo(function Footer({
               Company
             </h4>
             <ul className="space-y-1 sm:space-y-2">
-              {["Privacy", "Terms"].map((link) => (
+              {['Privacy', 'Terms'].map((link) => (
                 <li key={link}>
                   <button
                     onClick={onOpenCompanyModal}
@@ -174,7 +173,7 @@ const Footer = memo(function Footer({
         {/* Bottom Bar */}
         <div
           className={`mt-6 sm:mt-8 md:mt-12 pt-4 sm:pt-6 md:pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 ${
-            isDark ? "border-slate-800" : "border-slate-200"
+            isDark ? 'border-slate-800' : 'border-slate-200'
           }`}
         >
           <p
@@ -184,20 +183,14 @@ const Footer = memo(function Footer({
             © {new Date().getFullYear()} LeadFlow. All rights reserved.
           </p>
           <div className="flex items-center space-x-1">
-            <span
-              className={`text-xs sm:text-sm ${textClasses}`}
-              style={{ fontFamily }}
-            >
+            <span className={`text-xs sm:text-sm ${textClasses}`} style={{ fontFamily }}>
               Made with
             </span>
             <Heart
               className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 mx-0.5 sm:mx-1"
               aria-label="love"
             />
-            <span
-              className={`text-xs sm:text-sm ${textClasses}`}
-              style={{ fontFamily }}
-            >
+            <span className={`text-xs sm:text-sm ${textClasses}`} style={{ fontFamily }}>
               for business growth
             </span>
           </div>

@@ -1,5 +1,5 @@
-import { fontFamily } from "../constants";
-import useTheme from "../hooks/useTheme";
+import { fontFamily } from '../constants';
+import useTheme from '../hooks/useTheme';
 
 /**
  * CompanyModalContent Component
@@ -20,51 +20,35 @@ const CompanyModalContent = ({ darkMode: darkModeOverride }) => {
   }
 
   // Theme-based classes
-  const headingClasses = isDark ? "text-slate-200" : "text-slate-700";
-  const textClasses = isDark ? "text-slate-400" : "text-slate-600";
-  const cardClasses = isDark ? "bg-slate-700/30" : "bg-slate-50";
+  const headingClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const textClasses = isDark ? 'text-slate-400' : 'text-slate-600';
+  const cardClasses = isDark ? 'bg-slate-700/30' : 'bg-slate-50';
 
   return (
     <div className="space-y-6">
       {/* Privacy Policy Section */}
       <div className="space-y-4">
-        <h4
-          className={`text-lg font-bold ${headingClasses}`}
-          style={{ fontFamily }}
-        >
+        <h4 className={`text-lg font-bold ${headingClasses}`} style={{ fontFamily }}>
           Privacy Policy
         </h4>
         <div className={`p-4 rounded-xl ${cardClasses}`}>
           <div className="space-y-3">
             <div>
-              <h6
-                className={`font-medium ${headingClasses}`}
-                style={{ fontFamily }}
-              >
+              <h6 className={`font-medium ${headingClasses}`} style={{ fontFamily }}>
                 Data Protection
               </h6>
-              <p
-                className={`text-sm mt-1 ${textClasses}`}
-                style={{ fontFamily }}
-              >
-                We employ enterprise-grade encryption and security measures to
-                protect your lead records, sales data, and customer information.
+              <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
+                We employ enterprise-grade encryption and security measures to protect your lead
+                records, sales data, and customer information.
               </p>
             </div>
             <div>
-              <h6
-                className={`font-medium ${headingClasses}`}
-                style={{ fontFamily }}
-              >
+              <h6 className={`font-medium ${headingClasses}`} style={{ fontFamily }}>
                 Data Ownership
               </h6>
-              <p
-                className={`text-sm mt-1 ${textClasses}`}
-                style={{ fontFamily }}
-              >
-                Your sales data belongs to you. We provide tools for easy export
-                and maintain strict data portability standards for regulatory
-                compliance.
+              <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
+                Your sales data belongs to you. We provide tools for easy export and maintain strict
+                data portability standards for regulatory compliance.
               </p>
             </div>
           </div>
@@ -73,44 +57,27 @@ const CompanyModalContent = ({ darkMode: darkModeOverride }) => {
 
       {/* Terms of Service Section */}
       <div className="space-y-4">
-        <h4
-          className={`text-lg font-bold ${headingClasses}`}
-          style={{ fontFamily }}
-        >
+        <h4 className={`text-lg font-bold ${headingClasses}`} style={{ fontFamily }}>
           Terms of Service
         </h4>
         <div className={`p-4 rounded-xl ${cardClasses}`}>
           <div className="space-y-3">
             <div>
-              <h6
-                className={`font-medium ${headingClasses}`}
-                style={{ fontFamily }}
-              >
+              <h6 className={`font-medium ${headingClasses}`} style={{ fontFamily }}>
                 Professional License
               </h6>
-              <p
-                className={`text-sm mt-1 ${textClasses}`}
-                style={{ fontFamily }}
-              >
-                Licensed for sales teams, marketing agencies, and business
-                development organizations. Custom enterprise plans available for
-                large teams.
+              <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
+                Licensed for sales teams, marketing agencies, and business development
+                organizations. Custom enterprise plans available for large teams.
               </p>
             </div>
             <div>
-              <h6
-                className={`font-medium ${headingClasses}`}
-                style={{ fontFamily }}
-              >
+              <h6 className={`font-medium ${headingClasses}`} style={{ fontFamily }}>
                 Data Compliance Standards
               </h6>
-              <p
-                className={`text-sm mt-1 ${textClasses}`}
-                style={{ fontFamily }}
-              >
-                Committed to GDPR, CCPA, and SOC 2 compliance standards,
-                ensuring responsible data handling, customer privacy, and secure
-                business practices.
+              <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
+                Committed to GDPR, CCPA, and SOC 2 compliance standards, ensuring responsible data
+                handling, customer privacy, and secure business practices.
               </p>
             </div>
           </div>
@@ -120,15 +87,11 @@ const CompanyModalContent = ({ darkMode: darkModeOverride }) => {
       {/* Contact Info */}
       <div
         className={`p-4 rounded-xl border ${
-          isDark
-            ? "bg-blue-900/20 border-blue-800/30"
-            : "bg-blue-50 border-blue-200"
+          isDark ? 'bg-blue-900/20 border-blue-800/30' : 'bg-blue-50 border-blue-200'
         }`}
       >
         <p
-          className={`text-sm ${
-            isDark ? "text-blue-300" : "text-blue-700"
-          } text-center`}
+          className={`text-sm ${isDark ? 'text-blue-300' : 'text-blue-700'} text-center`}
           style={{ fontFamily }}
         >
           For detailed legal documents, contact: legal@leadflow.io

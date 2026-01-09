@@ -3,11 +3,11 @@
  * Tests the alerts panel with modal trigger functionality
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import AlertsPanel from "./AlertsPanel";
-import ThemeProvider from "../hooks/ThemeProvider";
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import AlertsPanel from './AlertsPanel';
+import ThemeProvider from '../hooks/ThemeProvider';
 
 // =============================================================================
 // Test Helpers
@@ -20,21 +20,21 @@ const renderWithTheme = (ui, { darkMode = false } = {}) => {
 const mockAlerts = [
   {
     id: 1,
-    message: "Temperature alert in elephant enclosure",
-    type: "warning",
-    time: "1 hour ago",
+    message: 'Temperature alert in elephant enclosure',
+    type: 'warning',
+    time: '1 hour ago',
   },
   {
     id: 2,
-    message: "Feeding completed for primates",
-    type: "info",
-    time: "2 hours ago",
+    message: 'Feeding completed for primates',
+    type: 'info',
+    time: '2 hours ago',
   },
   {
     id: 3,
-    message: "Low stock alert: Vitamin supplements",
-    type: "warning",
-    time: "3 hours ago",
+    message: 'Low stock alert: Vitamin supplements',
+    type: 'warning',
+    time: '3 hours ago',
   },
 ];
 
@@ -44,7 +44,7 @@ const defaultProps = {
 };
 
 // Mock framer-motion to simplify testing
-vi.mock("framer-motion", () => ({
+vi.mock('framer-motion', () => ({
   motion: {
     div: ({
       children,
@@ -62,7 +62,16 @@ vi.mock("framer-motion", () => ({
         {children}
       </div>
     ),
-    button: ({ children, className, onClick, disabled, _whileHover, _whileTap, style, ...rest }) => (
+    button: ({
+      children,
+      className,
+      onClick,
+      disabled,
+      _whileHover,
+      _whileTap,
+      style,
+      ...rest
+    }) => (
       <button className={className} onClick={onClick} disabled={disabled} style={style} {...rest}>
         {children}
       </button>
@@ -80,7 +89,7 @@ vi.mock("framer-motion", () => ({
 // Basic Rendering Tests
 // =============================================================================
 
-describe("AlertsPanel", () => {
+describe('AlertsPanel', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -89,27 +98,27 @@ describe("AlertsPanel", () => {
   // Basic Rendering Tests
   // ===========================================================================
 
-  describe("basic rendering", () => {
-    it("should render the Lead Alerts heading", () => {
+  describe('basic rendering', () => {
+    it('should render the Lead Alerts heading', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      expect(screen.getByText("Lead Alerts")).toBeInTheDocument();
+      expect(screen.getByText('Lead Alerts')).toBeInTheDocument();
     });
 
-    it("should render the alert count button", () => {
+    it('should render the alert count button', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      expect(screen.getByText("3")).toBeInTheDocument();
+      expect(screen.getByText('3')).toBeInTheDocument();
     });
 
-    it("should render the Bell icon", () => {
+    it('should render the Bell icon', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />);
-      expect(container.querySelector("svg")).toBeInTheDocument();
+      expect(container.querySelector('svg')).toBeInTheDocument();
     });
 
-    it("should render all alerts in the list", () => {
+    it('should render all alerts in the list', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      expect(screen.getByText("Temperature alert in elephant enclosure")).toBeInTheDocument();
-      expect(screen.getByText("Feeding completed for primates")).toBeInTheDocument();
-      expect(screen.getByText("Low stock alert: Vitamin supplements")).toBeInTheDocument();
+      expect(screen.getByText('Temperature alert in elephant enclosure')).toBeInTheDocument();
+      expect(screen.getByText('Feeding completed for primates')).toBeInTheDocument();
+      expect(screen.getByText('Low stock alert: Vitamin supplements')).toBeInTheDocument();
     });
   });
 
@@ -117,25 +126,25 @@ describe("AlertsPanel", () => {
   // Empty State Tests
   // ===========================================================================
 
-  describe("empty state", () => {
-    it("should show empty state when no alerts", () => {
+  describe('empty state', () => {
+    it('should show empty state when no alerts', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
-      expect(screen.getByText("No current alerts")).toBeInTheDocument();
+      expect(screen.getByText('No current alerts')).toBeInTheDocument();
     });
 
-    it("should show encouraging message when no alerts", () => {
+    it('should show encouraging message when no alerts', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
-      expect(screen.getByText("All leads are being properly managed!")).toBeInTheDocument();
+      expect(screen.getByText('All leads are being properly managed!')).toBeInTheDocument();
     });
 
-    it("should show Bell icon in empty state", () => {
+    it('should show Bell icon in empty state', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
-      expect(container.querySelector("svg")).toBeInTheDocument();
+      expect(container.querySelector('svg')).toBeInTheDocument();
     });
 
-    it("should show 0 count when no alerts", () => {
+    it('should show 0 count when no alerts', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
-      expect(screen.getByText("0")).toBeInTheDocument();
+      expect(screen.getByText('0')).toBeInTheDocument();
     });
   });
 
@@ -143,37 +152,37 @@ describe("AlertsPanel", () => {
   // Alert Count Button Tests
   // ===========================================================================
 
-  describe("alert count button", () => {
-    it("should display correct alert count", () => {
+  describe('alert count button', () => {
+    it('should display correct alert count', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      expect(screen.getByText("3")).toBeInTheDocument();
+      expect(screen.getByText('3')).toBeInTheDocument();
     });
 
-    it("should update count when alerts change", () => {
+    it('should update count when alerts change', () => {
       const { rerender } = renderWithTheme(<AlertsPanel {...defaultProps} />);
-      expect(screen.getByText("3")).toBeInTheDocument();
+      expect(screen.getByText('3')).toBeInTheDocument();
 
-      const newAlerts = [...mockAlerts, { id: 4, message: "New alert", type: "info", time: "now" }];
+      const newAlerts = [...mockAlerts, { id: 4, message: 'New alert', type: 'info', time: 'now' }];
       rerender(
         <ThemeProvider defaultDarkMode={false}>
           <AlertsPanel {...defaultProps} alerts={newAlerts} />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
-      expect(screen.getByText("4")).toBeInTheDocument();
+      expect(screen.getByText('4')).toBeInTheDocument();
     });
 
-    it("should have amber styling when alerts exist", () => {
+    it('should have amber styling when alerts exist', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />, { darkMode: false });
       const button = screen.getByLabelText(/3 alerts/);
-      expect(button).toHaveClass("bg-amber-100");
+      expect(button).toHaveClass('bg-amber-100');
     });
 
-    it("should not have amber styling when no alerts", () => {
+    it('should not have amber styling when no alerts', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />, {
         darkMode: false,
       });
       const button = screen.getByLabelText(/0 alerts/);
-      expect(button).not.toHaveClass("bg-amber-100");
+      expect(button).not.toHaveClass('bg-amber-100');
     });
   });
 
@@ -181,8 +190,8 @@ describe("AlertsPanel", () => {
   // Modal Trigger Tests
   // ===========================================================================
 
-  describe("modal trigger", () => {
-    it("should call onOpenModal when button is clicked", async () => {
+  describe('modal trigger', () => {
+    it('should call onOpenModal when button is clicked', async () => {
       const user = userEvent.setup();
       renderWithTheme(<AlertsPanel {...defaultProps} />);
 
@@ -192,7 +201,7 @@ describe("AlertsPanel", () => {
       expect(defaultProps.onOpenModal).toHaveBeenCalledTimes(1);
     });
 
-    it("should call onOpenModal on empty state button click", async () => {
+    it('should call onOpenModal on empty state button click', async () => {
       const user = userEvent.setup();
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
 
@@ -202,9 +211,9 @@ describe("AlertsPanel", () => {
       expect(defaultProps.onOpenModal).toHaveBeenCalledTimes(1);
     });
 
-    it("should have correct aria-label on button", () => {
+    it('should have correct aria-label on button', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      const button = screen.getByLabelText("3 alerts. Click to manage alerts.");
+      const button = screen.getByLabelText('3 alerts. Click to manage alerts.');
       expect(button).toBeInTheDocument();
     });
   });
@@ -213,55 +222,55 @@ describe("AlertsPanel", () => {
   // Dark Mode Styling Tests
   // ===========================================================================
 
-  describe("dark mode styling", () => {
-    it("should apply dark theme card classes in dark mode", () => {
+  describe('dark mode styling', () => {
+    it('should apply dark theme card classes in dark mode', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />, {
         darkMode: true,
       });
       const card = container.firstChild;
-      expect(card).toHaveClass("bg-slate-800/80");
+      expect(card).toHaveClass('bg-slate-800/80');
     });
 
-    it("should apply light theme card classes in light mode", () => {
+    it('should apply light theme card classes in light mode', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />, {
         darkMode: false,
       });
       const card = container.firstChild;
-      expect(card).toHaveClass("bg-white/90");
+      expect(card).toHaveClass('bg-white/90');
     });
 
-    it("should apply dark theme heading color in dark mode", () => {
+    it('should apply dark theme heading color in dark mode', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />, { darkMode: true });
-      const heading = screen.getByText("Lead Alerts");
-      expect(heading).toHaveClass("text-slate-200");
+      const heading = screen.getByText('Lead Alerts');
+      expect(heading).toHaveClass('text-slate-200');
     });
 
-    it("should apply light theme heading color in light mode", () => {
+    it('should apply light theme heading color in light mode', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />, { darkMode: false });
-      const heading = screen.getByText("Lead Alerts");
-      expect(heading).toHaveClass("text-slate-700");
+      const heading = screen.getByText('Lead Alerts');
+      expect(heading).toHaveClass('text-slate-700');
     });
 
-    it("should apply dark theme button styling with alerts in dark mode", () => {
+    it('should apply dark theme button styling with alerts in dark mode', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />, { darkMode: true });
       const button = screen.getByLabelText(/3 alerts/);
-      expect(button).toHaveClass("bg-amber-900/40");
+      expect(button).toHaveClass('bg-amber-900/40');
     });
 
-    it("should apply dark theme empty state text in dark mode", () => {
+    it('should apply dark theme empty state text in dark mode', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />, {
         darkMode: true,
       });
-      const emptyText = screen.getByText("No current alerts");
-      expect(emptyText).toHaveClass("text-slate-400");
+      const emptyText = screen.getByText('No current alerts');
+      expect(emptyText).toHaveClass('text-slate-400');
     });
 
-    it("should apply light theme empty state text in light mode", () => {
+    it('should apply light theme empty state text in light mode', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />, {
         darkMode: false,
       });
-      const emptyText = screen.getByText("No current alerts");
-      expect(emptyText).toHaveClass("text-slate-600");
+      const emptyText = screen.getByText('No current alerts');
+      expect(emptyText).toHaveClass('text-slate-600');
     });
   });
 
@@ -269,27 +278,27 @@ describe("AlertsPanel", () => {
   // DarkMode Override Prop Tests
   // ===========================================================================
 
-  describe("darkMode override prop", () => {
-    it("should use darkMode override when provided (true)", () => {
+  describe('darkMode override prop', () => {
+    it('should use darkMode override when provided (true)', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} darkMode={true} />, {
         darkMode: false,
       });
-      const heading = screen.getByText("Lead Alerts");
-      expect(heading).toHaveClass("text-slate-200");
+      const heading = screen.getByText('Lead Alerts');
+      expect(heading).toHaveClass('text-slate-200');
     });
 
-    it("should use darkMode override when provided (false)", () => {
+    it('should use darkMode override when provided (false)', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} darkMode={false} />, {
         darkMode: true,
       });
-      const heading = screen.getByText("Lead Alerts");
-      expect(heading).toHaveClass("text-slate-700");
+      const heading = screen.getByText('Lead Alerts');
+      expect(heading).toHaveClass('text-slate-700');
     });
 
-    it("should use context value when darkMode override is undefined", () => {
+    it('should use context value when darkMode override is undefined', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />, { darkMode: true });
-      const heading = screen.getByText("Lead Alerts");
-      expect(heading).toHaveClass("text-slate-200");
+      const heading = screen.getByText('Lead Alerts');
+      expect(heading).toHaveClass('text-slate-200');
     });
   });
 
@@ -297,22 +306,22 @@ describe("AlertsPanel", () => {
   // Accessibility Tests
   // ===========================================================================
 
-  describe("accessibility", () => {
-    it("should have proper heading for alerts section", () => {
+  describe('accessibility', () => {
+    it('should have proper heading for alerts section', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      const heading = screen.getByText("Lead Alerts");
-      expect(heading.tagName).toBe("H3");
+      const heading = screen.getByText('Lead Alerts');
+      expect(heading.tagName).toBe('H3');
     });
 
-    it("should have clickable button for modal trigger", () => {
+    it('should have clickable button for modal trigger', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
       const button = screen.getByLabelText(/3 alerts/);
-      expect(button.tagName).toBe("BUTTON");
+      expect(button.tagName).toBe('BUTTON');
     });
 
-    it("should render alerts as accessible content", () => {
+    it('should render alerts as accessible content', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      const alerts = screen.getAllByRole("alert");
+      const alerts = screen.getAllByRole('alert');
       expect(alerts).toHaveLength(3);
     });
   });
@@ -321,35 +330,35 @@ describe("AlertsPanel", () => {
   // Styling Classes Tests
   // ===========================================================================
 
-  describe("styling classes", () => {
-    it("should have backdrop-blur-lg class", () => {
+  describe('styling classes', () => {
+    it('should have backdrop-blur-lg class', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />);
       const card = container.firstChild;
-      expect(card).toHaveClass("backdrop-blur-lg");
+      expect(card).toHaveClass('backdrop-blur-lg');
     });
 
-    it("should have rounded corners", () => {
+    it('should have rounded corners', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />);
-      const roundedElement = container.querySelector(".rounded-xl, .sm\\:rounded-2xl");
+      const roundedElement = container.querySelector('.rounded-xl, .sm\\:rounded-2xl');
       expect(roundedElement).toBeInTheDocument();
     });
 
-    it("should have transition classes for hover effects", () => {
+    it('should have transition classes for hover effects', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />);
       const card = container.firstChild;
-      expect(card).toHaveClass("transition-all");
+      expect(card).toHaveClass('transition-all');
     });
 
-    it("should have hover shadow class", () => {
+    it('should have hover shadow class', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />);
       const card = container.firstChild;
-      expect(card).toHaveClass("hover:shadow-2xl");
+      expect(card).toHaveClass('hover:shadow-2xl');
     });
 
-    it("should have max-height on alerts list for scrolling", () => {
+    it('should have max-height on alerts list for scrolling', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />);
       const alertsList = container.querySelector('[role="log"]');
-      expect(alertsList).toHaveClass("max-h-75");
+      expect(alertsList).toHaveClass('max-h-75');
     });
   });
 
@@ -357,25 +366,25 @@ describe("AlertsPanel", () => {
   // Responsive Classes Tests
   // ===========================================================================
 
-  describe("responsive classes", () => {
-    it("should have responsive padding classes", () => {
+  describe('responsive classes', () => {
+    it('should have responsive padding classes', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />);
       const card = container.firstChild;
-      expect(card).toHaveClass("p-3", "sm:p-4", "md:p-6");
+      expect(card).toHaveClass('p-3', 'sm:p-4', 'md:p-6');
     });
 
-    it("should have responsive text sizes for heading", () => {
+    it('should have responsive text sizes for heading', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
-      const heading = screen.getByText("Lead Alerts");
-      expect(heading).toHaveClass("text-base");
-      expect(heading).toHaveClass("sm:text-lg");
-      expect(heading).toHaveClass("md:text-xl");
+      const heading = screen.getByText('Lead Alerts');
+      expect(heading).toHaveClass('text-base');
+      expect(heading).toHaveClass('sm:text-lg');
+      expect(heading).toHaveClass('md:text-xl');
     });
 
-    it("should have responsive button padding", () => {
+    it('should have responsive button padding', () => {
       renderWithTheme(<AlertsPanel {...defaultProps} />);
       const button = screen.getByLabelText(/3 alerts/);
-      expect(button).toHaveClass("px-2.5", "sm:px-4");
+      expect(button).toHaveClass('px-2.5', 'sm:px-4');
     });
   });
 
@@ -383,22 +392,22 @@ describe("AlertsPanel", () => {
   // Backward Compatibility Tests (outside ThemeProvider)
   // ===========================================================================
 
-  describe("backward compatibility (outside ThemeProvider)", () => {
-    it("should render without ThemeProvider using darkMode prop", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  describe('backward compatibility (outside ThemeProvider)', () => {
+    it('should render without ThemeProvider using darkMode prop', () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       render(<AlertsPanel {...defaultProps} darkMode={true} />);
-      expect(screen.getByText("Lead Alerts")).toBeInTheDocument();
+      expect(screen.getByText('Lead Alerts')).toBeInTheDocument();
 
       consoleSpy.mockRestore();
     });
 
-    it("should default to light mode when outside ThemeProvider without darkMode prop", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    it('should default to light mode when outside ThemeProvider without darkMode prop', () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       render(<AlertsPanel {...defaultProps} />);
-      const heading = screen.getByText("Lead Alerts");
-      expect(heading).toHaveClass("text-slate-700");
+      const heading = screen.getByText('Lead Alerts');
+      expect(heading).toHaveClass('text-slate-700');
 
       consoleSpy.mockRestore();
     });
@@ -408,8 +417,8 @@ describe("AlertsPanel", () => {
   // Edge Cases Tests
   // ===========================================================================
 
-  describe("edge cases", () => {
-    it("should handle rapid button clicks", async () => {
+  describe('edge cases', () => {
+    it('should handle rapid button clicks', async () => {
       const user = userEvent.setup();
       renderWithTheme(<AlertsPanel {...defaultProps} />);
 
@@ -419,36 +428,38 @@ describe("AlertsPanel", () => {
       await user.click(button);
 
       expect(defaultProps.onOpenModal).toHaveBeenCalledTimes(3);
-      expect(screen.getByText("Lead Alerts")).toBeInTheDocument();
+      expect(screen.getByText('Lead Alerts')).toBeInTheDocument();
     });
 
-    it("should handle large number of alerts", () => {
+    it('should handle large number of alerts', () => {
       const manyAlerts = Array.from({ length: 50 }, (_, i) => ({
         id: i + 1,
         message: `Alert ${i + 1}`,
-        type: i % 2 === 0 ? "warning" : "info",
+        type: i % 2 === 0 ? 'warning' : 'info',
         time: `${i} hours ago`,
       }));
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={manyAlerts} />);
-      expect(screen.getByText("50")).toBeInTheDocument();
+      expect(screen.getByText('50')).toBeInTheDocument();
     });
 
-    it("should handle alerts with very long messages", () => {
-      const longMessage = "A".repeat(500);
-      const alertsWithLongMessage = [{ id: 1, message: longMessage, type: "warning", time: "now" }];
+    it('should handle alerts with very long messages', () => {
+      const longMessage = 'A'.repeat(500);
+      const alertsWithLongMessage = [{ id: 1, message: longMessage, type: 'warning', time: 'now' }];
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={alertsWithLongMessage} />);
       expect(screen.getByText(longMessage)).toBeInTheDocument();
     });
 
-    it("should handle alerts with special characters", () => {
+    it('should handle alerts with special characters', () => {
       const specialMessage = '<script>alert("xss")</script> & "quotes" \'single\' <tag>';
-      const alertsWithSpecialChars = [{ id: 1, message: specialMessage, type: "info", time: "now" }];
+      const alertsWithSpecialChars = [
+        { id: 1, message: specialMessage, type: 'info', time: 'now' },
+      ];
       renderWithTheme(<AlertsPanel {...defaultProps} alerts={alertsWithSpecialChars} />);
       expect(screen.getByText(specialMessage)).toBeInTheDocument();
     });
 
-    it("should handle undefined alerts gracefully", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    it('should handle undefined alerts gracefully', () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       // This should either throw or handle gracefully
       expect(() => {
@@ -463,18 +474,18 @@ describe("AlertsPanel", () => {
   // Animation Tests
   // ===========================================================================
 
-  describe("animation", () => {
-    it("should have main container rendered", () => {
+  describe('animation', () => {
+    it('should have main container rendered', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} />);
       const card = container.firstChild;
       expect(card).toBeInTheDocument();
-      expect(card).toHaveClass("backdrop-blur-lg");
+      expect(card).toHaveClass('backdrop-blur-lg');
     });
 
-    it("should animate empty state icon", () => {
+    it('should animate empty state icon', () => {
       const { container } = renderWithTheme(<AlertsPanel {...defaultProps} alerts={[]} />);
       // The bell icon in empty state should be rendered
-      const icons = container.querySelectorAll("svg");
+      const icons = container.querySelectorAll('svg');
       expect(icons.length).toBeGreaterThan(0);
     });
   });

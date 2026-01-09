@@ -3,7 +3,7 @@
 // Common utility functions used throughout the application
 // =============================================================================
 
-import { alertMessages, ALERT_TYPES } from "./constants/index.js";
+import { alertMessages, ALERT_TYPES } from './constants/index.js';
 
 // =============================================================================
 // LEAD DATA UTILITIES
@@ -55,8 +55,8 @@ export const calculateTotalCalls = (weekData) => {
  * @returns {string} Formatted percentage
  */
 export const formatEfficiency = (efficiency) => {
-  if (typeof efficiency !== "number" || isNaN(efficiency)) {
-    return "0%";
+  if (typeof efficiency !== 'number' || isNaN(efficiency)) {
+    return '0%';
   }
   return `${efficiency}%`;
 };
@@ -67,8 +67,8 @@ export const formatEfficiency = (efficiency) => {
  * @returns {string} Formatted number string
  */
 export const formatNumber = (num) => {
-  if (typeof num !== "number" || isNaN(num)) {
-    return "0";
+  if (typeof num !== 'number' || isNaN(num)) {
+    return '0';
   }
   return num.toLocaleString();
 };
@@ -79,12 +79,12 @@ export const formatNumber = (num) => {
  * @param {string} [currency='USD'] - Currency code
  * @returns {string} Formatted currency string
  */
-export const formatCurrency = (amount, currency = "USD") => {
-  if (typeof amount !== "number" || isNaN(amount)) {
-    return "$0";
+export const formatCurrency = (amount, currency = 'USD') => {
+  if (typeof amount !== 'number' || isNaN(amount)) {
+    return '$0';
   }
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
     currency,
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
@@ -98,14 +98,14 @@ export const formatCurrency = (amount, currency = "USD") => {
  * @returns {string} Formatted date string
  */
 export const formatDate = (date, options = {}) => {
-  const dateObj = typeof date === "string" ? new Date(date) : date;
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
   if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) {
-    return "";
+    return '';
   }
-  return dateObj.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+  return dateObj.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
     ...options,
   });
 };
@@ -116,9 +116,9 @@ export const formatDate = (date, options = {}) => {
  * @returns {string} Relative time string
  */
 export const formatRelativeTime = (date) => {
-  const dateObj = typeof date === "string" ? new Date(date) : date;
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
   if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) {
-    return "";
+    return '';
   }
 
   const now = new Date();
@@ -127,10 +127,10 @@ export const formatRelativeTime = (date) => {
   const diffHours = Math.floor(diffMs / 3600000);
   const diffDays = Math.floor(diffMs / 86400000);
 
-  if (diffMins < 1) return "Just now";
-  if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? "s" : ""} ago`;
-  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
-  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+  if (diffMins < 1) return 'Just now';
+  if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
 
   return formatDate(dateObj);
 };
@@ -146,7 +146,7 @@ export const formatRelativeTime = (date) => {
  */
 export const getRandomAlertMessage = () => {
   if (!alertMessages || alertMessages.length === 0) {
-    return "New notification";
+    return 'New notification';
   }
   return alertMessages[Math.floor(Math.random() * alertMessages.length)];
 };
@@ -157,7 +157,7 @@ export const getRandomAlertMessage = () => {
  * @returns {string} Alert type ('warning', 'info', 'error', or 'success')
  */
 export const getAlertType = (message) => {
-  if (!message || typeof message !== "string") {
+  if (!message || typeof message !== 'string') {
     return ALERT_TYPES.INFO;
   }
 
@@ -165,30 +165,30 @@ export const getAlertType = (message) => {
 
   // Check for warning indicators
   if (
-    lowerMessage.includes("immediate") ||
-    lowerMessage.includes("pending") ||
-    lowerMessage.includes("requires") ||
-    lowerMessage.includes("hot lead") ||
-    lowerMessage.includes("high-value") ||
-    lowerMessage.includes("urgent") ||
-    lowerMessage.includes("warning")
+    lowerMessage.includes('immediate') ||
+    lowerMessage.includes('pending') ||
+    lowerMessage.includes('requires') ||
+    lowerMessage.includes('hot lead') ||
+    lowerMessage.includes('high-value') ||
+    lowerMessage.includes('urgent') ||
+    lowerMessage.includes('warning')
   ) {
     return ALERT_TYPES.WARNING;
   }
 
   // Check for success indicators
   if (
-    lowerMessage.includes("completed") ||
-    lowerMessage.includes("achieved") ||
-    lowerMessage.includes("improved") ||
-    lowerMessage.includes("closed") ||
-    lowerMessage.includes("success")
+    lowerMessage.includes('completed') ||
+    lowerMessage.includes('achieved') ||
+    lowerMessage.includes('improved') ||
+    lowerMessage.includes('closed') ||
+    lowerMessage.includes('success')
   ) {
     return ALERT_TYPES.SUCCESS;
   }
 
   // Check for error indicators
-  if (lowerMessage.includes("error") || lowerMessage.includes("failed")) {
+  if (lowerMessage.includes('error') || lowerMessage.includes('failed')) {
     return ALERT_TYPES.ERROR;
   }
 
@@ -208,26 +208,26 @@ export const exportToCSV = (data, filename) => {
   const { leadData, activityData, conversionData, sourceData, alerts } = data;
 
   const csvData = [
-    ["Metric", "Value", "Type"],
-    ["Total Leads", leadData?.totalLeads ?? "", "Lead Stats"],
-    ["Calls Made", leadData?.callsMade ?? "", "Activity"],
-    ["Meetings Scheduled", leadData?.meetingsScheduled ?? "", "Activity"],
-    ["Last Updated", leadData?.lastUpdated ?? "", "System"],
-    [""],
-    ["Lead Activity Data"],
-    ["Period", "Active Leads", "Calls Completed"],
+    ['Metric', 'Value', 'Type'],
+    ['Total Leads', leadData?.totalLeads ?? '', 'Lead Stats'],
+    ['Calls Made', leadData?.callsMade ?? '', 'Activity'],
+    ['Meetings Scheduled', leadData?.meetingsScheduled ?? '', 'Activity'],
+    ['Last Updated', leadData?.lastUpdated ?? '', 'System'],
+    [''],
+    ['Lead Activity Data'],
+    ['Period', 'Active Leads', 'Calls Completed'],
     ...(activityData || []).map((item) => [item.name, item.leads, item.callsCompleted]),
-    [""],
-    ["Conversion Rate"],
-    ["Period", "Rate"],
-    ...(conversionData || []).map((item) => [item.name, item.efficiency + "%"]),
-    [""],
-    ["Lead Source Distribution"],
-    ["Source", "Percentage"],
-    ...(sourceData || []).map((item) => [item.name, item.value + "%"]),
-    [""],
-    ["Active Alerts"],
-    ["Message", "Type", "Time"],
+    [''],
+    ['Conversion Rate'],
+    ['Period', 'Rate'],
+    ...(conversionData || []).map((item) => [item.name, item.efficiency + '%']),
+    [''],
+    ['Lead Source Distribution'],
+    ['Source', 'Percentage'],
+    ...(sourceData || []).map((item) => [item.name, item.value + '%']),
+    [''],
+    ['Active Alerts'],
+    ['Message', 'Type', 'Time'],
     ...(alerts || []).map((alert) => [alert.message, alert.type, alert.time]),
   ];
 
@@ -235,18 +235,22 @@ export const exportToCSV = (data, filename) => {
     .map((row) =>
       row
         .map((field) => {
-          const stringField = String(field ?? "");
+          const stringField = String(field ?? '');
           // Escape quotes and wrap in quotes if contains comma, quote, or newline
-          if (stringField.includes(",") || stringField.includes('"') || stringField.includes("\n")) {
+          if (
+            stringField.includes(',') ||
+            stringField.includes('"') ||
+            stringField.includes('\n')
+          ) {
             return `"${stringField.replace(/"/g, '""')}"`;
           }
           return stringField;
         })
-        .join(","),
+        .join(',')
     )
-    .join("\n");
+    .join('\n');
 
-  downloadFile(csvContent, filename, "text/csv;charset=utf-8;");
+  downloadFile(csvContent, filename, 'text/csv;charset=utf-8;');
 };
 
 /**
@@ -256,7 +260,7 @@ export const exportToCSV = (data, filename) => {
  */
 export const exportToJSON = (data, filename) => {
   const dataStr = JSON.stringify(data, null, 2);
-  downloadFile(dataStr, filename, "application/json");
+  downloadFile(dataStr, filename, 'application/json');
 };
 
 /**
@@ -268,7 +272,7 @@ export const exportToJSON = (data, filename) => {
 const downloadFile = (content, filename, mimeType) => {
   const dataBlob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(dataBlob);
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = url;
   link.download = filename;
   document.body.appendChild(link);
@@ -283,8 +287,8 @@ const downloadFile = (content, filename, mimeType) => {
  * @param {string} [prefix='leadflow-data'] - Filename prefix
  * @returns {string} Filename with date
  */
-export const generateExportFilename = (extension, prefix = "leadflow-data") => {
-  const date = new Date().toISOString().split("T")[0];
+export const generateExportFilename = (extension, prefix = 'leadflow-data') => {
+  const date = new Date().toISOString().split('T')[0];
   return `${prefix}-${date}.${extension}`;
 };
 
@@ -298,7 +302,7 @@ export const generateExportFilename = (extension, prefix = "leadflow-data") => {
  * @returns {boolean} Whether email is valid
  */
 export const isValidEmail = (email) => {
-  if (!email || typeof email !== "string") return false;
+  if (!email || typeof email !== 'string') return false;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
@@ -309,8 +313,8 @@ export const isValidEmail = (email) => {
  * @returns {boolean} Whether phone is valid
  */
 export const isValidPhone = (phone) => {
-  if (!phone || typeof phone !== "string") return false;
-  const cleaned = phone.replace(/\D/g, "");
+  if (!phone || typeof phone !== 'string') return false;
+  const cleaned = phone.replace(/\D/g, '');
   return cleaned.length >= 10 && cleaned.length <= 15;
 };
 
@@ -358,7 +362,7 @@ export const throttle = (func, limit) => {
  * @param {string} [prefix=''] - Optional prefix for the ID
  * @returns {string} Unique ID
  */
-export const generateId = (prefix = "") => {
+export const generateId = (prefix = '') => {
   const timestamp = Date.now().toString(36);
   const randomStr = Math.random().toString(36).substring(2, 9);
   return prefix ? `${prefix}-${timestamp}-${randomStr}` : `${timestamp}-${randomStr}`;
@@ -370,7 +374,7 @@ export const generateId = (prefix = "") => {
  * @returns {Object} Cloned object
  */
 export const deepClone = (obj) => {
-  if (obj === null || typeof obj !== "object") return obj;
+  if (obj === null || typeof obj !== 'object') return obj;
   return JSON.parse(JSON.stringify(obj));
 };
 
@@ -382,7 +386,7 @@ export const deepClone = (obj) => {
 export const isEmpty = (obj) => {
   if (obj === null || obj === undefined) return true;
   if (Array.isArray(obj)) return obj.length === 0;
-  if (typeof obj === "object") return Object.keys(obj).length === 0;
-  if (typeof obj === "string") return obj.trim().length === 0;
+  if (typeof obj === 'object') return Object.keys(obj).length === 0;
+  if (typeof obj === 'string') return obj.trim().length === 0;
   return false;
 };

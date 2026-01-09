@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------------
 // API Client
 // -----------------------------------------------------------------------------
-export { default as ApiClient, apiClient, ApiError } from "./client.js";
+export { default as ApiClient, apiClient, ApiError } from './client.js';
 
 // -----------------------------------------------------------------------------
 // Lead API
@@ -23,14 +23,14 @@ export {
   deleteLead,
   fetchLeadActivities,
   maybeGenerateAlert,
-} from "./leads.js";
+} from './leads.js';
 
 // -----------------------------------------------------------------------------
 // Re-export commonly used items at the top level
 // -----------------------------------------------------------------------------
 
 // Import apiClient for use in utility functions
-import { apiClient as client } from "./client.js";
+import { apiClient as client } from './client.js';
 
 /**
  * Convenience function to get the default API client
@@ -43,5 +43,5 @@ export const getApiClient = () => client;
  * @returns {boolean} True if real API is configured
  */
 export const isApiConfigured = () => {
-  return !!import.meta.env.VITE_API_BASE_URL && import.meta.env.VITE_USE_MOCK_DATA !== "true";
+  return !!import.meta.env.VITE_API_BASE_URL && import.meta.env.VITE_USE_MOCK_DATA !== 'true';
 };

@@ -3,11 +3,11 @@
  * Tests the reusable modal wrapper with theme support
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import FooterModal from "./FooterModal";
-import ThemeProvider from "../hooks/ThemeProvider";
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import FooterModal from './FooterModal';
+import ThemeProvider from '../hooks/ThemeProvider';
 
 // =============================================================================
 // Test Helpers
@@ -20,12 +20,12 @@ const renderWithTheme = (ui, { darkMode = false } = {}) => {
 const defaultProps = {
   isOpen: true,
   onClose: vi.fn(),
-  title: "Test Modal Title",
+  title: 'Test Modal Title',
   children: <p>Test modal content</p>,
 };
 
 // Mock framer-motion to simplify testing
-vi.mock("framer-motion", () => ({
+vi.mock('framer-motion', () => ({
   motion: {
     div: ({ children, className, onClick, ...props }) => (
       <div className={className} onClick={onClick} {...props}>
@@ -40,42 +40,42 @@ vi.mock("framer-motion", () => ({
 // Basic Rendering Tests
 // =============================================================================
 
-describe("FooterModal", () => {
+describe('FooterModal', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  describe("basic rendering", () => {
-    it("should render when isOpen is true", () => {
+  describe('basic rendering', () => {
+    it('should render when isOpen is true', () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
-      expect(screen.getByText("Test Modal Title")).toBeInTheDocument();
+      expect(screen.getByText('Test Modal Title')).toBeInTheDocument();
     });
 
-    it("should not render when isOpen is false", () => {
+    it('should not render when isOpen is false', () => {
       renderWithTheme(<FooterModal {...defaultProps} isOpen={false} />);
-      expect(screen.queryByText("Test Modal Title")).not.toBeInTheDocument();
+      expect(screen.queryByText('Test Modal Title')).not.toBeInTheDocument();
     });
 
-    it("should render the modal title", () => {
+    it('should render the modal title', () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
-      expect(screen.getByText("Test Modal Title")).toBeInTheDocument();
+      expect(screen.getByText('Test Modal Title')).toBeInTheDocument();
     });
 
-    it("should render children content", () => {
+    it('should render children content', () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
-      expect(screen.getByText("Test modal content")).toBeInTheDocument();
+      expect(screen.getByText('Test modal content')).toBeInTheDocument();
     });
 
-    it("should render the close button", () => {
+    it('should render the close button', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const closeButton = container.querySelector("button");
+      const closeButton = container.querySelector('button');
       expect(closeButton).toBeInTheDocument();
     });
 
-    it("should render the X icon in close button", () => {
+    it('should render the X icon in close button', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const closeButton = container.querySelector("button");
-      const icon = closeButton.querySelector("svg");
+      const closeButton = container.querySelector('button');
+      const icon = closeButton.querySelector('svg');
       expect(icon).toBeInTheDocument();
     });
   });
@@ -84,44 +84,44 @@ describe("FooterModal", () => {
   // Close Functionality Tests
   // =============================================================================
 
-  describe("close functionality", () => {
-    it("should call onClose when close button is clicked", async () => {
+  describe('close functionality', () => {
+    it('should call onClose when close button is clicked', async () => {
       const user = userEvent.setup();
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
 
-      const closeButton = container.querySelector("button");
+      const closeButton = container.querySelector('button');
       await user.click(closeButton);
 
       expect(defaultProps.onClose).toHaveBeenCalledTimes(1);
     });
 
-    it("should call onClose when backdrop is clicked", async () => {
+    it('should call onClose when backdrop is clicked', async () => {
       const user = userEvent.setup();
       renderWithTheme(<FooterModal {...defaultProps} />);
 
       // The backdrop is the outer fixed div
-      const backdrop = document.querySelector(".fixed.inset-0.bg-black\\/50");
+      const backdrop = document.querySelector('.fixed.inset-0.bg-black\\/50');
       if (backdrop) {
         await user.click(backdrop);
         expect(defaultProps.onClose).toHaveBeenCalled();
       }
     });
 
-    it("should not call onClose when modal content is clicked", async () => {
+    it('should not call onClose when modal content is clicked', async () => {
       const user = userEvent.setup();
       renderWithTheme(<FooterModal {...defaultProps} />);
 
-      const modalContent = screen.getByText("Test modal content");
+      const modalContent = screen.getByText('Test modal content');
       await user.click(modalContent);
 
       expect(defaultProps.onClose).not.toHaveBeenCalled();
     });
 
-    it("should not call onClose when modal container is clicked", async () => {
+    it('should not call onClose when modal container is clicked', async () => {
       const user = userEvent.setup();
       renderWithTheme(<FooterModal {...defaultProps} />);
 
-      const title = screen.getByText("Test Modal Title");
+      const title = screen.getByText('Test Modal Title');
       await user.click(title);
 
       expect(defaultProps.onClose).not.toHaveBeenCalled();
@@ -132,41 +132,41 @@ describe("FooterModal", () => {
   // Title Tests
   // =============================================================================
 
-  describe("title rendering", () => {
-    it("should render different titles", () => {
+  describe('title rendering', () => {
+    it('should render different titles', () => {
       const { rerender } = renderWithTheme(<FooterModal {...defaultProps} title="First Title" />);
-      expect(screen.getByText("First Title")).toBeInTheDocument();
+      expect(screen.getByText('First Title')).toBeInTheDocument();
 
       rerender(
         <ThemeProvider defaultDarkMode={false}>
           <FooterModal {...defaultProps} title="Second Title" />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
-      expect(screen.getByText("Second Title")).toBeInTheDocument();
+      expect(screen.getByText('Second Title')).toBeInTheDocument();
     });
 
-    it("should render title as h2 element", () => {
+    it('should render title as h2 element', () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
-      const title = screen.getByText("Test Modal Title");
-      expect(title.tagName).toBe("H2");
+      const title = screen.getByText('Test Modal Title');
+      expect(title.tagName).toBe('H2');
     });
 
-    it("should apply font-bold to title", () => {
+    it('should apply font-bold to title', () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
-      const title = screen.getByText("Test Modal Title");
-      expect(title).toHaveClass("font-bold");
+      const title = screen.getByText('Test Modal Title');
+      expect(title).toHaveClass('font-bold');
     });
 
-    it("should handle long titles", () => {
-      const longTitle = "This is a very long modal title that might wrap to multiple lines";
+    it('should handle long titles', () => {
+      const longTitle = 'This is a very long modal title that might wrap to multiple lines';
       renderWithTheme(<FooterModal {...defaultProps} title={longTitle} />);
       expect(screen.getByText(longTitle)).toBeInTheDocument();
     });
 
-    it("should handle empty title", () => {
+    it('should handle empty title', () => {
       renderWithTheme(<FooterModal {...defaultProps} title="" />);
       const { container } = renderWithTheme(<FooterModal {...defaultProps} title="" />);
-      expect(container.querySelector("h2")).toBeInTheDocument();
+      expect(container.querySelector('h2')).toBeInTheDocument();
     });
   });
 
@@ -174,17 +174,17 @@ describe("FooterModal", () => {
   // Children Content Tests
   // =============================================================================
 
-  describe("children content", () => {
-    it("should render text children", () => {
+  describe('children content', () => {
+    it('should render text children', () => {
       renderWithTheme(
         <FooterModal {...defaultProps}>
           <span>Simple text content</span>
-        </FooterModal>,
+        </FooterModal>
       );
-      expect(screen.getByText("Simple text content")).toBeInTheDocument();
+      expect(screen.getByText('Simple text content')).toBeInTheDocument();
     });
 
-    it("should render complex children", () => {
+    it('should render complex children', () => {
       renderWithTheme(
         <FooterModal {...defaultProps}>
           <div>
@@ -192,29 +192,29 @@ describe("FooterModal", () => {
             <p>Paragraph content</p>
             <button>Button</button>
           </div>
-        </FooterModal>,
+        </FooterModal>
       );
-      expect(screen.getByText("Heading")).toBeInTheDocument();
-      expect(screen.getByText("Paragraph content")).toBeInTheDocument();
-      expect(screen.getByText("Button")).toBeInTheDocument();
+      expect(screen.getByText('Heading')).toBeInTheDocument();
+      expect(screen.getByText('Paragraph content')).toBeInTheDocument();
+      expect(screen.getByText('Button')).toBeInTheDocument();
     });
 
-    it("should render multiple children", () => {
+    it('should render multiple children', () => {
       renderWithTheme(
         <FooterModal {...defaultProps}>
           <p>First child</p>
           <p>Second child</p>
           <p>Third child</p>
-        </FooterModal>,
+        </FooterModal>
       );
-      expect(screen.getByText("First child")).toBeInTheDocument();
-      expect(screen.getByText("Second child")).toBeInTheDocument();
-      expect(screen.getByText("Third child")).toBeInTheDocument();
+      expect(screen.getByText('First child')).toBeInTheDocument();
+      expect(screen.getByText('Second child')).toBeInTheDocument();
+      expect(screen.getByText('Third child')).toBeInTheDocument();
     });
 
-    it("should handle null children", () => {
+    it('should handle null children', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} children={null} />);
-      expect(container.querySelector(".p-4.sm\\:p-6.flex-1.overflow-y-auto")).toBeInTheDocument();
+      expect(container.querySelector('.p-4.sm\\:p-6.flex-1.overflow-y-auto')).toBeInTheDocument();
     });
   });
 
@@ -222,64 +222,64 @@ describe("FooterModal", () => {
   // Theme Styling Tests
   // =============================================================================
 
-  describe("dark mode styling", () => {
-    it("should apply dark theme background in dark mode", () => {
+  describe('dark mode styling', () => {
+    it('should apply dark theme background in dark mode', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />, {
         darkMode: true,
       });
-      const modalContainer = container.querySelector(".bg-slate-800\\/95");
+      const modalContainer = container.querySelector('.bg-slate-800\\/95');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should apply light theme background in light mode", () => {
+    it('should apply light theme background in light mode', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />, {
         darkMode: false,
       });
-      const modalContainer = container.querySelector(".bg-white\\/95");
+      const modalContainer = container.querySelector('.bg-white\\/95');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should apply dark theme border in dark mode", () => {
+    it('should apply dark theme border in dark mode', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />, {
         darkMode: true,
       });
-      const modalContainer = container.querySelector(".border-slate-700");
+      const modalContainer = container.querySelector('.border-slate-700');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should apply light theme border in light mode", () => {
+    it('should apply light theme border in light mode', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />, {
         darkMode: false,
       });
-      const modalContainer = container.querySelector(".border-slate-300");
+      const modalContainer = container.querySelector('.border-slate-300');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should apply dark theme title color in dark mode", () => {
+    it('should apply dark theme title color in dark mode', () => {
       renderWithTheme(<FooterModal {...defaultProps} />, { darkMode: true });
-      const title = screen.getByText("Test Modal Title");
-      expect(title).toHaveClass("text-slate-200");
+      const title = screen.getByText('Test Modal Title');
+      expect(title).toHaveClass('text-slate-200');
     });
 
-    it("should apply light theme title color in light mode", () => {
+    it('should apply light theme title color in light mode', () => {
       renderWithTheme(<FooterModal {...defaultProps} />, { darkMode: false });
-      const title = screen.getByText("Test Modal Title");
-      expect(title).toHaveClass("text-slate-700");
+      const title = screen.getByText('Test Modal Title');
+      expect(title).toHaveClass('text-slate-700');
     });
 
-    it("should apply dark theme header border in dark mode", () => {
+    it('should apply dark theme header border in dark mode', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />, {
         darkMode: true,
       });
-      const headerBorder = container.querySelector(".border-slate-700");
+      const headerBorder = container.querySelector('.border-slate-700');
       expect(headerBorder).toBeInTheDocument();
     });
 
-    it("should apply light theme header border in light mode", () => {
+    it('should apply light theme header border in light mode', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />, {
         darkMode: false,
       });
-      const headerBorder = container.querySelector(".border-slate-200");
+      const headerBorder = container.querySelector('.border-slate-200');
       expect(headerBorder).toBeInTheDocument();
     });
   });
@@ -288,47 +288,47 @@ describe("FooterModal", () => {
   // Close Button Styling Tests
   // =============================================================================
 
-  describe("close button styling", () => {
-    it("should have dark theme close button styling in dark mode", () => {
+  describe('close button styling', () => {
+    it('should have dark theme close button styling in dark mode', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />, {
         darkMode: true,
       });
-      const closeButton = container.querySelector("button");
-      expect(closeButton).toHaveClass("text-slate-400");
-      expect(closeButton).toHaveClass("hover:text-slate-200");
+      const closeButton = container.querySelector('button');
+      expect(closeButton).toHaveClass('text-slate-400');
+      expect(closeButton).toHaveClass('hover:text-slate-200');
     });
 
-    it("should have light theme close button styling in light mode", () => {
+    it('should have light theme close button styling in light mode', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />, {
         darkMode: false,
       });
-      const closeButton = container.querySelector("button");
-      expect(closeButton).toHaveClass("text-slate-500");
-      expect(closeButton).toHaveClass("hover:text-slate-700");
+      const closeButton = container.querySelector('button');
+      expect(closeButton).toHaveClass('text-slate-500');
+      expect(closeButton).toHaveClass('hover:text-slate-700');
     });
 
-    it("should have rounded corners on close button", () => {
+    it('should have rounded corners on close button', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const closeButton = container.querySelector("button");
-      expect(closeButton).toHaveClass("rounded-lg");
+      const closeButton = container.querySelector('button');
+      expect(closeButton).toHaveClass('rounded-lg');
     });
 
-    it("should have transition classes on close button", () => {
+    it('should have transition classes on close button', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const closeButton = container.querySelector("button");
-      expect(closeButton).toHaveClass("transition-colors");
+      const closeButton = container.querySelector('button');
+      expect(closeButton).toHaveClass('transition-colors');
     });
 
-    it("should have cursor-pointer on close button", () => {
+    it('should have cursor-pointer on close button', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const closeButton = container.querySelector("button");
-      expect(closeButton).toHaveClass("cursor-pointer");
+      const closeButton = container.querySelector('button');
+      expect(closeButton).toHaveClass('cursor-pointer');
     });
 
-    it("should have padding on close button", () => {
+    it('should have padding on close button', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const closeButton = container.querySelector("button");
-      expect(closeButton).toHaveClass("p-2");
+      const closeButton = container.querySelector('button');
+      expect(closeButton).toHaveClass('p-2');
     });
   });
 
@@ -336,24 +336,28 @@ describe("FooterModal", () => {
   // darkMode Override Prop Tests
   // =============================================================================
 
-  describe("darkMode override prop", () => {
-    it("should use darkMode override when provided (true)", () => {
-      const { container } = renderWithTheme(<FooterModal {...defaultProps} darkMode={true} />, { darkMode: false });
-      const modalContainer = container.querySelector(".bg-slate-800\\/95");
+  describe('darkMode override prop', () => {
+    it('should use darkMode override when provided (true)', () => {
+      const { container } = renderWithTheme(<FooterModal {...defaultProps} darkMode={true} />, {
+        darkMode: false,
+      });
+      const modalContainer = container.querySelector('.bg-slate-800\\/95');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should use darkMode override when provided (false)", () => {
-      const { container } = renderWithTheme(<FooterModal {...defaultProps} darkMode={false} />, { darkMode: true });
-      const modalContainer = container.querySelector(".bg-white\\/95");
+    it('should use darkMode override when provided (false)', () => {
+      const { container } = renderWithTheme(<FooterModal {...defaultProps} darkMode={false} />, {
+        darkMode: true,
+      });
+      const modalContainer = container.querySelector('.bg-white\\/95');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should use context value when darkMode override is undefined", () => {
+    it('should use context value when darkMode override is undefined', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />, {
         darkMode: true,
       });
-      const modalContainer = container.querySelector(".bg-slate-800\\/95");
+      const modalContainer = container.querySelector('.bg-slate-800\\/95');
       expect(modalContainer).toBeInTheDocument();
     });
   });
@@ -362,26 +366,26 @@ describe("FooterModal", () => {
   // Accessibility Tests
   // =============================================================================
 
-  describe("accessibility", () => {
-    it("should have proper heading structure", () => {
+  describe('accessibility', () => {
+    it('should have proper heading structure', () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
-      const heading = screen.getByRole("heading", { level: 2 });
+      const heading = screen.getByRole('heading', { level: 2 });
       expect(heading).toBeInTheDocument();
     });
 
-    it("should have clickable close button", () => {
+    it('should have clickable close button', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const closeButton = container.querySelector("button");
+      const closeButton = container.querySelector('button');
       expect(closeButton).toBeInTheDocument();
     });
 
-    it("should have scrollable content area", () => {
+    it('should have scrollable content area', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const contentArea = container.querySelector(".overflow-y-auto");
+      const contentArea = container.querySelector('.overflow-y-auto');
       expect(contentArea).toBeInTheDocument();
     });
 
-    it("should have max-height on modal for scroll", () => {
+    it('should have max-height on modal for scroll', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
       const modalContainer = container.querySelector("[class*='max-h']");
       expect(modalContainer).toBeInTheDocument();
@@ -392,46 +396,46 @@ describe("FooterModal", () => {
   // Styling Classes Tests
   // =============================================================================
 
-  describe("styling classes", () => {
-    it("should have backdrop-blur on modal container", () => {
+  describe('styling classes', () => {
+    it('should have backdrop-blur on modal container', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const modalContainer = container.querySelector(".backdrop-blur-md");
+      const modalContainer = container.querySelector('.backdrop-blur-md');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should have rounded corners on modal", () => {
+    it('should have rounded corners on modal', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const modalContainer = container.querySelector(".rounded-2xl");
+      const modalContainer = container.querySelector('.rounded-2xl');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should have shadow on modal", () => {
+    it('should have shadow on modal', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const modalContainer = container.querySelector(".shadow-2xl");
+      const modalContainer = container.querySelector('.shadow-2xl');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should have max-width on modal", () => {
+    it('should have max-width on modal', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const modalContainer = container.querySelector(".max-w-2xl");
+      const modalContainer = container.querySelector('.max-w-2xl');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should have max-height on modal", () => {
+    it('should have max-height on modal', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
       const modalContainer = container.querySelector("[class*='max-h']");
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should have w-full on modal", () => {
+    it('should have w-full on modal', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const modalContainer = container.querySelector(".w-full");
+      const modalContainer = container.querySelector('.w-full');
       expect(modalContainer).toBeInTheDocument();
     });
 
-    it("should have overflow-hidden on modal", () => {
+    it('should have overflow-hidden on modal', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const modalContainer = container.querySelector(".overflow-hidden");
+      const modalContainer = container.querySelector('.overflow-hidden');
       expect(modalContainer).toBeInTheDocument();
     });
   });
@@ -440,40 +444,42 @@ describe("FooterModal", () => {
   // Backdrop Tests
   // =============================================================================
 
-  describe("backdrop", () => {
-    it("should have backdrop with fixed positioning", () => {
+  describe('backdrop', () => {
+    it('should have backdrop with fixed positioning', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const backdrop = container.querySelector(".fixed.inset-0");
+      const backdrop = container.querySelector('.fixed.inset-0');
       expect(backdrop).toBeInTheDocument();
     });
 
-    it("should have backdrop with z-50", () => {
+    it('should have backdrop with z-50', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const backdrop = container.querySelector(".z-50");
+      const backdrop = container.querySelector('.z-50');
       expect(backdrop).toBeInTheDocument();
     });
 
-    it("should have backdrop with black/50 background", () => {
+    it('should have backdrop with black/50 background', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const backdrop = container.querySelector(".bg-black\\/50");
+      const backdrop = container.querySelector('.bg-black\\/50');
       expect(backdrop).toBeInTheDocument();
     });
 
-    it("should have backdrop with blur effect", () => {
+    it('should have backdrop with blur effect', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const backdrop = container.querySelector(".backdrop-blur-sm");
+      const backdrop = container.querySelector('.backdrop-blur-sm');
       expect(backdrop).toBeInTheDocument();
     });
 
-    it("should have flex centering on backdrop", () => {
+    it('should have flex centering on backdrop', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const backdrop = container.querySelector(".flex.items-start.sm\\:items-center.justify-center");
+      const backdrop = container.querySelector(
+        '.flex.items-start.sm\\:items-center.justify-center'
+      );
       expect(backdrop).toBeInTheDocument();
     });
 
-    it("should have padding on backdrop for mobile", () => {
+    it('should have padding on backdrop for mobile', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const backdrop = container.querySelector(".p-2");
+      const backdrop = container.querySelector('.p-2');
       expect(backdrop).toBeInTheDocument();
     });
   });
@@ -482,22 +488,22 @@ describe("FooterModal", () => {
   // Header Section Tests
   // =============================================================================
 
-  describe("header section", () => {
-    it("should have padding on header", () => {
+  describe('header section', () => {
+    it('should have padding on header', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const header = container.querySelector(".p-4.sm\\:p-6.border-b");
+      const header = container.querySelector('.p-4.sm\\:p-6.border-b');
       expect(header).toBeInTheDocument();
     });
 
-    it("should have border-b on header", () => {
+    it('should have border-b on header', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const header = container.querySelector(".border-b");
+      const header = container.querySelector('.border-b');
       expect(header).toBeInTheDocument();
     });
 
-    it("should have flex layout for header content", () => {
+    it('should have flex layout for header content', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const headerFlex = container.querySelector(".flex.justify-between.items-center");
+      const headerFlex = container.querySelector('.flex.justify-between.items-center');
       expect(headerFlex).toBeInTheDocument();
     });
   });
@@ -506,16 +512,16 @@ describe("FooterModal", () => {
   // Content Section Tests
   // =============================================================================
 
-  describe("content section", () => {
-    it("should have padding on content", () => {
+  describe('content section', () => {
+    it('should have padding on content', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const content = container.querySelector(".p-4.sm\\:p-6.flex-1.overflow-y-auto");
+      const content = container.querySelector('.p-4.sm\\:p-6.flex-1.overflow-y-auto');
       expect(content).toBeInTheDocument();
     });
 
-    it("should have custom-scroll class for styled scrollbar", () => {
+    it('should have custom-scroll class for styled scrollbar', () => {
       const { container } = renderWithTheme(<FooterModal {...defaultProps} />);
-      const content = container.querySelector(".custom-scroll");
+      const content = container.querySelector('.custom-scroll');
       expect(content).toBeInTheDocument();
     });
   });
@@ -524,21 +530,21 @@ describe("FooterModal", () => {
   // Backward Compatibility Tests
   // =============================================================================
 
-  describe("backward compatibility (outside ThemeProvider)", () => {
-    it("should render without ThemeProvider using darkMode prop", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  describe('backward compatibility (outside ThemeProvider)', () => {
+    it('should render without ThemeProvider using darkMode prop', () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       render(<FooterModal {...defaultProps} darkMode={true} />);
-      expect(screen.getByText("Test Modal Title")).toBeInTheDocument();
+      expect(screen.getByText('Test Modal Title')).toBeInTheDocument();
 
       consoleSpy.mockRestore();
     });
 
-    it("should default to light mode when outside ThemeProvider without darkMode prop", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    it('should default to light mode when outside ThemeProvider without darkMode prop', () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const { container } = render(<FooterModal {...defaultProps} />);
-      const modalContainer = container.querySelector(".bg-white\\/95");
+      const modalContainer = container.querySelector('.bg-white\\/95');
       expect(modalContainer).toBeInTheDocument();
 
       consoleSpy.mockRestore();
@@ -549,36 +555,36 @@ describe("FooterModal", () => {
   // Edge Cases
   // =============================================================================
 
-  describe("edge cases", () => {
-    it("should handle isOpen changing from true to false", () => {
+  describe('edge cases', () => {
+    it('should handle isOpen changing from true to false', () => {
       const { rerender } = renderWithTheme(<FooterModal {...defaultProps} isOpen={true} />);
-      expect(screen.getByText("Test Modal Title")).toBeInTheDocument();
+      expect(screen.getByText('Test Modal Title')).toBeInTheDocument();
 
       rerender(
         <ThemeProvider defaultDarkMode={false}>
           <FooterModal {...defaultProps} isOpen={false} />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
-      expect(screen.queryByText("Test Modal Title")).not.toBeInTheDocument();
+      expect(screen.queryByText('Test Modal Title')).not.toBeInTheDocument();
     });
 
-    it("should handle isOpen changing from false to true", () => {
+    it('should handle isOpen changing from false to true', () => {
       const { rerender } = renderWithTheme(<FooterModal {...defaultProps} isOpen={false} />);
-      expect(screen.queryByText("Test Modal Title")).not.toBeInTheDocument();
+      expect(screen.queryByText('Test Modal Title')).not.toBeInTheDocument();
 
       rerender(
         <ThemeProvider defaultDarkMode={false}>
           <FooterModal {...defaultProps} isOpen={true} />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
-      expect(screen.getByText("Test Modal Title")).toBeInTheDocument();
+      expect(screen.getByText('Test Modal Title')).toBeInTheDocument();
     });
 
-    it("should handle rapid open/close", async () => {
+    it('should handle rapid open/close', async () => {
       const user = userEvent.setup();
       const { container } = renderWithTheme(<FooterModal {...defaultProps} isOpen={true} />);
 
-      const closeButton = container.querySelector("button");
+      const closeButton = container.querySelector('button');
       await user.click(closeButton);
       await user.click(closeButton);
       await user.click(closeButton);
@@ -586,22 +592,22 @@ describe("FooterModal", () => {
       expect(defaultProps.onClose).toHaveBeenCalledTimes(3);
     });
 
-    it("should handle title with special characters", () => {
-      const specialTitle = "Title with <script> & \"quotes\" 'apostrophe'";
+    it('should handle title with special characters', () => {
+      const specialTitle = 'Title with <script> & "quotes" \'apostrophe\'';
       renderWithTheme(<FooterModal {...defaultProps} title={specialTitle} />);
       expect(screen.getByText(specialTitle)).toBeInTheDocument();
     });
 
-    it("should handle children with interactive elements", async () => {
+    it('should handle children with interactive elements', async () => {
       const childButtonClick = vi.fn();
       renderWithTheme(
         <FooterModal {...defaultProps}>
           <button onClick={childButtonClick}>Child Button</button>
-        </FooterModal>,
+        </FooterModal>
       );
 
       const user = userEvent.setup();
-      await user.click(screen.getByText("Child Button"));
+      await user.click(screen.getByText('Child Button'));
 
       expect(childButtonClick).toHaveBeenCalledTimes(1);
       expect(defaultProps.onClose).not.toHaveBeenCalled();
@@ -612,21 +618,21 @@ describe("FooterModal", () => {
   // Stop Propagation Tests
   // =============================================================================
 
-  describe("event propagation", () => {
-    it("should stop propagation when clicking inside modal", () => {
+  describe('event propagation', () => {
+    it('should stop propagation when clicking inside modal', () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
 
       // Click on the modal content area
-      const modalContent = screen.getByText("Test modal content");
+      const modalContent = screen.getByText('Test modal content');
       fireEvent.click(modalContent);
 
       expect(defaultProps.onClose).not.toHaveBeenCalled();
     });
 
-    it("should stop propagation when clicking on modal title", () => {
+    it('should stop propagation when clicking on modal title', () => {
       renderWithTheme(<FooterModal {...defaultProps} />);
 
-      const title = screen.getByText("Test Modal Title");
+      const title = screen.getByText('Test Modal Title');
       fireEvent.click(title);
 
       expect(defaultProps.onClose).not.toHaveBeenCalled();

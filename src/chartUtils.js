@@ -1,4 +1,4 @@
-import { fontFamily } from "./constants";
+import { fontFamily } from './constants';
 
 /**
  * Get chart axis styles based on theme
@@ -6,15 +6,15 @@ import { fontFamily } from "./constants";
  * @returns {Object} - Axis style configuration
  */
 export const getAxisStyles = (isDark) => ({
-  stroke: isDark ? "#94a3b8" : "#475569",
-  tickLine: { stroke: isDark ? "#94a3b8" : "#475569" },
+  stroke: isDark ? '#94a3b8' : '#475569',
+  tickLine: { stroke: isDark ? '#94a3b8' : '#475569' },
   axisLine: {
-    stroke: isDark ? "#94a3b8" : "#475569",
+    stroke: isDark ? '#94a3b8' : '#475569',
     strokeWidth: 1,
   },
   tick: {
     fontSize: 10,
-    fill: isDark ? "#94a3b8" : "#475569",
+    fill: isDark ? '#94a3b8' : '#475569',
   },
 });
 
@@ -24,8 +24,8 @@ export const getAxisStyles = (isDark) => ({
  * @returns {Object} - Grid style configuration
  */
 export const getGridStyles = (isDark) => ({
-  strokeDasharray: "3 3",
-  stroke: isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+  strokeDasharray: '3 3',
+  stroke: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
 });
 
 /**
@@ -34,7 +34,7 @@ export const getGridStyles = (isDark) => ({
  * @returns {Object} - Cursor style configuration
  */
 export const getTooltipCursorStyles = (isDark) => ({
-  fill: isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.05)",
+  fill: isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
 });
 
 /**
@@ -44,16 +44,15 @@ export const getTooltipCursorStyles = (isDark) => ({
  */
 export const getChartCardClasses = (isDark) =>
   isDark
-    ? "bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10"
-    : "bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10";
+    ? 'bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10'
+    : 'bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10';
 
 /**
  * Get chart title classes based on theme
  * @param {boolean} isDark - Whether dark mode is enabled
  * @returns {string} - Tailwind CSS classes
  */
-export const getChartTitleClasses = (isDark) =>
-  isDark ? "text-slate-200" : "text-slate-700";
+export const getChartTitleClasses = (isDark) => (isDark ? 'text-slate-200' : 'text-slate-700');
 
 /**
  * Common chart gradient definitions for Area charts
@@ -62,17 +61,17 @@ export const getChartTitleClasses = (isDark) =>
  */
 export const getChartGradients = (isDark) => ({
   primary: {
-    start: isDark ? "#60a5fa" : "#2563eb",
+    start: isDark ? '#60a5fa' : '#2563eb',
     startOpacity: 0.8,
     endOpacity: 0.2,
   },
   secondary: {
-    start: isDark ? "#34d399" : "#059669",
+    start: isDark ? '#34d399' : '#059669',
     startOpacity: 0.8,
     endOpacity: 0.2,
   },
   warning: {
-    start: isDark ? "#fbbf24" : "#d97706",
+    start: isDark ? '#fbbf24' : '#d97706',
     startOpacity: 0.8,
     endOpacity: 0.2,
   },
@@ -88,7 +87,7 @@ export const getDotStyles = (isDark, color) => ({
   r: 3,
   fill: color,
   strokeWidth: 1.5,
-  stroke: isDark ? "#1e293b" : "#ffffff",
+  stroke: isDark ? '#1e293b' : '#ffffff',
 });
 
 /**
@@ -101,7 +100,7 @@ export const getActiveDotStyles = (isDark, color) => ({
   r: 5,
   fill: color,
   strokeWidth: 2,
-  stroke: isDark ? "#1e293b" : "#ffffff",
+  stroke: isDark ? '#1e293b' : '#ffffff',
 });
 
 /**
@@ -110,12 +109,12 @@ export const getActiveDotStyles = (isDark, color) => ({
  * @returns {Object} - Color configurations
  */
 export const getChartColors = (isDark) => ({
-  primary: isDark ? "#60a5fa" : "#2563eb",
-  secondary: isDark ? "#34d399" : "#059669",
-  warning: isDark ? "#fbbf24" : "#d97706",
-  danger: isDark ? "#f87171" : "#dc2626",
-  text: isDark ? "#94a3b8" : "#475569",
-  lightText: isDark ? "#cbd5e1" : "#64748b",
+  primary: isDark ? '#60a5fa' : '#2563eb',
+  secondary: isDark ? '#34d399' : '#059669',
+  warning: isDark ? '#fbbf24' : '#d97706',
+  danger: isDark ? '#f87171' : '#dc2626',
+  text: isDark ? '#94a3b8' : '#475569',
+  lightText: isDark ? '#cbd5e1' : '#64748b',
 });
 
 /**

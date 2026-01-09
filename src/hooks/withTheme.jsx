@@ -1,4 +1,4 @@
-import useTheme from "./useTheme";
+import useTheme from './useTheme';
 
 /**
  * Higher-order component to inject theme props into class components
@@ -11,7 +11,7 @@ const withTheme = (Component) => {
     return <Component {...props} {...theme} />;
   };
 
-  WrappedComponent.displayName = `withTheme(${Component.displayName || Component.name || "Component"})`;
+  WrappedComponent.displayName = `withTheme(${Component.displayName || Component.name || 'Component'})`;
 
   return WrappedComponent;
 };

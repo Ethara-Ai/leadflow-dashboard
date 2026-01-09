@@ -3,28 +3,28 @@
 // Main content area component that orchestrates the dashboard layout
 // =============================================================================
 
-import { memo, useState, useCallback, useLayoutEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useDashboard } from "../../context/index.js";
-import useTheme from "../../hooks/useTheme.jsx";
-import useGlobalStyles from "../../hooks/useGlobalStyles.js";
-import DashboardHeader from "./DashboardHeader.jsx";
-import DashboardCharts from "./DashboardCharts.jsx";
-import DashboardModals from "./DashboardModals.jsx";
-import StatCards from "../StatCards.jsx";
-import MeetingScheduleCard from "../MeetingScheduleCard.jsx";
-import RecentLeadActivities from "../RecentLeadActivities.jsx";
-import WelcomeMessage from "../WelcomeMessage.jsx";
-import ErrorMessage from "../ErrorMessage.jsx";
-import LoadingSkeleton from "../LoadingSkeleton.jsx";
-import Footer from "../Footer.jsx";
+import { memo, useState, useCallback, useLayoutEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useDashboard } from '../../context/index.js';
+import useTheme from '../../hooks/useTheme.jsx';
+import useGlobalStyles from '../../hooks/useGlobalStyles.js';
+import DashboardHeader from './DashboardHeader.jsx';
+import DashboardCharts from './DashboardCharts.jsx';
+import DashboardModals from './DashboardModals.jsx';
+import StatCards from '../StatCards.jsx';
+import MeetingScheduleCard from '../MeetingScheduleCard.jsx';
+import RecentLeadActivities from '../RecentLeadActivities.jsx';
+import WelcomeMessage from '../WelcomeMessage.jsx';
+import ErrorMessage from '../ErrorMessage.jsx';
+import LoadingSkeleton from '../LoadingSkeleton.jsx';
+import Footer from '../Footer.jsx';
 import {
   staggerContainerVariants,
   fontFamily,
   activityWeekData,
   initialMeetings,
   initialActivities,
-} from "../../constants/index.js";
+} from '../../constants/index.js';
 
 /**
  * DashboardContent Component
@@ -41,7 +41,8 @@ const DashboardContent = memo(function DashboardContent() {
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
 
   // Get dashboard state from context
-  const { leadData, isLoading, error, openProductModal, openResourcesModal, openCompanyModal } = useDashboard();
+  const { leadData, isLoading, error, openProductModal, openResourcesModal, openCompanyModal } =
+    useDashboard();
 
   // Apply global styles (scrollbars, etc.)
   useGlobalStyles(isDark);
@@ -65,12 +66,12 @@ const DashboardContent = memo(function DashboardContent() {
     <div
       className={`min-h-screen transition-all duration-300 overflow-x-hidden overflow-y-auto ${
         isDark
-          ? "bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white"
-          : "bg-linear-to-br from-slate-50 via-white to-slate-50 text-slate-900"
+          ? 'bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white'
+          : 'bg-linear-to-br from-slate-50 via-white to-slate-50 text-slate-900'
       }`}
       style={{
         fontFamily: `${fontFamily}, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`,
-        WebkitOverflowScrolling: "touch",
+        WebkitOverflowScrolling: 'touch',
       }}
     >
       <div className="max-w-7xl mx-auto p-4 sm:p-8">
@@ -79,7 +80,9 @@ const DashboardContent = memo(function DashboardContent() {
 
         {/* Welcome Message (dismissible) */}
         <AnimatePresence>
-          {showWelcomeMessage && <WelcomeMessage show={showWelcomeMessage} onClose={handleCloseWelcome} />}
+          {showWelcomeMessage && (
+            <WelcomeMessage show={showWelcomeMessage} onClose={handleCloseWelcome} />
+          )}
         </AnimatePresence>
 
         {/* Error Display */}
@@ -109,7 +112,7 @@ const DashboardContent = memo(function DashboardContent() {
 
             {/* Last Updated Footer */}
             <motion.div
-              className={`mt-12 text-center text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}
+              className={`mt-12 text-center text-sm ${isDark ? 'text-slate-500' : 'text-slate-400'}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.5 }}

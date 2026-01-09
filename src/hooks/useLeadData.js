@@ -3,9 +3,9 @@
 // Custom hook for managing lead data state and API interactions
 // =============================================================================
 
-import { useState, useCallback, useRef, useEffect } from "react";
-import { refreshLeadData as apiRefreshLeadData } from "../api/leads.js";
-import { initialLeadData, DEFAULT_REFRESH_INTERVAL } from "../constants/index.js";
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { refreshLeadData as apiRefreshLeadData } from '../api/leads.js';
+import { initialLeadData, DEFAULT_REFRESH_INTERVAL } from '../constants/index.js';
 
 /**
  * Custom hook for managing lead data state and refresh functionality
@@ -16,7 +16,11 @@ import { initialLeadData, DEFAULT_REFRESH_INTERVAL } from "../constants/index.js
  * @param {number} [options.refreshInterval] - Interval for auto-refresh in ms
  * @returns {Object} Lead data state and handlers
  */
-const useLeadData = ({ onNewAlert, autoRefresh = false, refreshInterval = DEFAULT_REFRESH_INTERVAL } = {}) => {
+const useLeadData = ({
+  onNewAlert,
+  autoRefresh = false,
+  refreshInterval = DEFAULT_REFRESH_INTERVAL,
+} = {}) => {
   const [leadData, setLeadData] = useState(initialLeadData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -80,12 +84,12 @@ const useLeadData = ({ onNewAlert, autoRefresh = false, refreshInterval = DEFAUL
         return leadDataRef.current;
       }
 
-      const errorMessage = err.message || "Failed to refresh data. Please try again.";
+      const errorMessage = err.message || 'Failed to refresh data. Please try again.';
       setError(errorMessage);
 
       // Log error in development
       if (import.meta.env.DEV) {
-        console.error("useLeadData refresh error:", err);
+        console.error('useLeadData refresh error:', err);
       }
 
       throw err;
@@ -117,7 +121,7 @@ const useLeadData = ({ onNewAlert, autoRefresh = false, refreshInterval = DEFAUL
    * @param {Object|Function} dataOrUpdater - New data or updater function
    */
   const setData = useCallback((dataOrUpdater) => {
-    if (typeof dataOrUpdater === "function") {
+    if (typeof dataOrUpdater === 'function') {
       setLeadData((prev) => ({
         ...prev,
         ...dataOrUpdater(prev),

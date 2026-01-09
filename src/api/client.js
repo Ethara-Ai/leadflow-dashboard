@@ -9,7 +9,7 @@
 export class ApiError extends Error {
   constructor(message, status, data = null) {
     super(message);
-    this.name = "ApiError";
+    this.name = 'ApiError';
     this.status = status;
     this.data = data;
     this.timestamp = new Date().toISOString();
@@ -48,12 +48,12 @@ export class ApiError extends Error {
  * Default API configuration
  */
 const DEFAULT_CONFIG = {
-  baseUrl: import.meta.env.VITE_API_BASE_URL || "/api",
+  baseUrl: import.meta.env.VITE_API_BASE_URL || '/api',
   timeout: 30000,
   retries: 3,
   retryDelay: 1000,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 };
 
@@ -144,8 +144,8 @@ class ApiClient {
    * @returns {string} Full URL
    */
   buildUrl(endpoint) {
-    const base = this.config.baseUrl.replace(/\/$/, "");
-    const path = endpoint.replace(/^\//, "");
+    const base = this.config.baseUrl.replace(/\/$/, '');
+    const path = endpoint.replace(/^\//, '');
     return `${base}/${path}`;
   }
 
@@ -157,7 +157,7 @@ class ApiClient {
    */
   async request(endpoint, options = {}) {
     const {
-      method = "GET",
+      method = 'GET',
       body,
       headers = {},
       timeout = this.config.timeout,
@@ -174,8 +174,8 @@ class ApiClient {
     };
 
     // Add body for non-GET requests
-    if (body && method !== "GET") {
-      requestConfig.body = typeof body === "string" ? body : JSON.stringify(body);
+    if (body && method !== 'GET') {
+      requestConfig.body = typeof body === 'string' ? body : JSON.stringify(body);
     }
 
     // Apply request interceptors
@@ -198,9 +198,9 @@ class ApiClient {
 
         // Parse response
         let data;
-        const contentType = response.headers.get("content-type");
+        const contentType = response.headers.get('content-type');
 
-        if (contentType?.includes("application/json")) {
+        if (contentType?.includes('application/json')) {
           data = await response.json();
         } else {
           data = await response.text();
@@ -208,7 +208,11 @@ class ApiClient {
 
         // Handle non-OK responses
         if (!response.ok) {
-          throw new ApiError(data?.message || `HTTP ${response.status}: ${response.statusText}`, response.status, data);
+          throw new ApiError(
+            data?.message || `HTTP ${response.status}: ${response.statusText}`,
+            response.status,
+            data
+          );
         }
 
         // Apply response interceptors and return
@@ -217,12 +221,12 @@ class ApiClient {
         clearTimeout(timeoutId);
 
         // Handle abort/timeout
-        if (error.name === "AbortError") {
-          lastError = new ApiError("Request timeout", 0);
+        if (error.name === 'AbortError') {
+          lastError = new ApiError('Request timeout', 0);
         } else if (error instanceof ApiError) {
           lastError = error;
         } else {
-          lastError = new ApiError(error.message || "Network error", 0, null);
+          lastError = new ApiError(error.message || 'Network error', 0, null);
         }
 
         // Check if we should retry
@@ -233,7 +237,7 @@ class ApiClient {
           if (import.meta.env.DEV) {
             console.warn(
               `API request failed, retrying in ${delay}ms (attempt ${attempt + 1}/${retries})`,
-              lastError.message,
+              lastError.message
             );
           }
           await sleep(delay);
@@ -252,7 +256,7 @@ class ApiClient {
    * @returns {Promise<Object>} Response data
    */
   get(endpoint, options = {}) {
-    return this.request(endpoint, { ...options, method: "GET" });
+    return this.request(endpoint, { ...options, method: 'GET' });
   }
 
   /**
@@ -263,7 +267,7 @@ class ApiClient {
    * @returns {Promise<Object>} Response data
    */
   post(endpoint, body, options = {}) {
-    return this.request(endpoint, { ...options, method: "POST", body });
+    return this.request(endpoint, { ...options, method: 'POST', body });
   }
 
   /**
@@ -274,7 +278,7 @@ class ApiClient {
    * @returns {Promise<Object>} Response data
    */
   put(endpoint, body, options = {}) {
-    return this.request(endpoint, { ...options, method: "PUT", body });
+    return this.request(endpoint, { ...options, method: 'PUT', body });
   }
 
   /**
@@ -285,7 +289,7 @@ class ApiClient {
    * @returns {Promise<Object>} Response data
    */
   patch(endpoint, body, options = {}) {
-    return this.request(endpoint, { ...options, method: "PATCH", body });
+    return this.request(endpoint, { ...options, method: 'PATCH', body });
   }
 
   /**
@@ -295,7 +299,7 @@ class ApiClient {
    * @returns {Promise<Object>} Response data
    */
   delete(endpoint, options = {}) {
-    return this.request(endpoint, { ...options, method: "DELETE" });
+    return this.request(endpoint, { ...options, method: 'DELETE' });
   }
 }
 

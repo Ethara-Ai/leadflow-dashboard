@@ -3,18 +3,18 @@
 // Centralized state management for the dashboard
 // =============================================================================
 
-import { createContext, useCallback, useMemo } from "react";
-import PropTypes from "prop-types";
+import { createContext, useCallback, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 // Import hooks
-import useLeadData from "../hooks/useLeadData.js";
-import useAlerts from "../hooks/useAlerts.js";
-import useNotes from "../hooks/useNotes.js";
-import useModals from "../hooks/useModals.js";
-import useChartPeriods from "../hooks/useChartPeriods.js";
+import useLeadData from '../hooks/useLeadData.js';
+import useAlerts from '../hooks/useAlerts.js';
+import useNotes from '../hooks/useNotes.js';
+import useModals from '../hooks/useModals.js';
+import useChartPeriods from '../hooks/useChartPeriods.js';
 
 // Import utilities
-import { exportToCSV, exportToJSON, generateExportFilename } from "../utils.js";
+import { exportToCSV, exportToJSON, generateExportFilename } from '../utils.js';
 
 /**
  * Dashboard Context
@@ -92,7 +92,7 @@ export const DashboardProvider = ({ children }) => {
     (alert) => {
       addAlert(alert);
     },
-    [addAlert],
+    [addAlert]
   );
 
   const {
@@ -136,7 +136,7 @@ export const DashboardProvider = ({ children }) => {
       sourceData,
       alerts,
     };
-    exportToCSV(data, generateExportFilename("csv"));
+    exportToCSV(data, generateExportFilename('csv'));
   }, [leadData, activityData, conversionData, sourceData, alerts]);
 
   const handleExportJSON = useCallback(() => {
@@ -154,7 +154,7 @@ export const DashboardProvider = ({ children }) => {
       alerts: alerts.filter((alert) => !alert.dismissed),
       notes,
     };
-    exportToJSON(data, generateExportFilename("json"));
+    exportToJSON(data, generateExportFilename('json'));
   }, [leadData, activityData, conversionData, sourceData, alerts, notes]);
 
   // =========================================================================
@@ -304,7 +304,7 @@ export const DashboardProvider = ({ children }) => {
       // Export
       handleExportCSV,
       handleExportJSON,
-    ],
+    ]
   );
 
   return <DashboardContext.Provider value={value}>{children}</DashboardContext.Provider>;

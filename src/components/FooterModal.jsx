@@ -1,9 +1,9 @@
-import { useRef, useEffect, memo } from "react";
-import PropTypes from "prop-types";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
-import { fontFamily, modalVariants } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { useRef, useEffect, memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
+import { fontFamily, modalVariants } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * FooterModal Component
@@ -49,13 +49,13 @@ const FooterModal = memo(function FooterModal({
     if (!isOpen) return;
 
     const handleEscape = (e) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         onClose();
       }
     };
 
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
   // Trap focus within modal
@@ -64,13 +64,13 @@ const FooterModal = memo(function FooterModal({
 
     const modal = modalRef.current;
     const focusableElements = modal.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
     const handleTabKey = (e) => {
-      if (e.key !== "Tab") return;
+      if (e.key !== 'Tab') return;
 
       if (e.shiftKey && document.activeElement === firstElement) {
         e.preventDefault();
@@ -81,23 +81,21 @@ const FooterModal = memo(function FooterModal({
       }
     };
 
-    document.addEventListener("keydown", handleTabKey);
-    return () => document.removeEventListener("keydown", handleTabKey);
+    document.addEventListener('keydown', handleTabKey);
+    return () => document.removeEventListener('keydown', handleTabKey);
   }, [isOpen]);
 
   // Generate unique IDs for accessibility
-  const titleId = `footer-modal-title-${title?.toLowerCase().replace(/\s+/g, "-") || "default"}`;
-  const descriptionId = `footer-modal-description-${title?.toLowerCase().replace(/\s+/g, "-") || "default"}`;
+  const titleId = `footer-modal-title-${title?.toLowerCase().replace(/\s+/g, '-') || 'default'}`;
+  const descriptionId = `footer-modal-description-${title?.toLowerCase().replace(/\s+/g, '-') || 'default'}`;
 
   // Theme-based classes
-  const modalClasses = isDark
-    ? "bg-slate-800/95 border-slate-700"
-    : "bg-white/95 border-slate-300";
-  const headerBorderClasses = isDark ? "border-slate-700" : "border-slate-200";
-  const titleClasses = isDark ? "text-slate-200" : "text-slate-700";
+  const modalClasses = isDark ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-300';
+  const headerBorderClasses = isDark ? 'border-slate-700' : 'border-slate-200';
+  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
   const closeButtonClasses = isDark
-    ? "text-slate-400 hover:text-slate-200 hover:bg-slate-700/50"
-    : "text-slate-500 hover:text-slate-700 hover:bg-slate-200";
+    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200';
 
   return (
     <AnimatePresence>
@@ -124,9 +122,7 @@ const FooterModal = memo(function FooterModal({
             aria-describedby={descriptionId}
           >
             {/* Header */}
-            <div
-              className={`p-4 sm:p-6 border-b shrink-0 ${headerBorderClasses}`}
-            >
+            <div className={`p-4 sm:p-6 border-b shrink-0 ${headerBorderClasses}`}>
               <div className="flex justify-between items-center">
                 <h2
                   id={titleId}

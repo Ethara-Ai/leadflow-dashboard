@@ -3,9 +3,13 @@
 // API endpoints for lead management with mock data fallback
 // =============================================================================
 
-import { apiClient } from "./client.js";
-import { initialLeadData, alertMessages, ALERT_GENERATION_PROBABILITY } from "../constants/index.js";
-import { getAlertType } from "../utils.js";
+import { apiClient } from './client.js';
+import {
+  initialLeadData,
+  alertMessages,
+  ALERT_GENERATION_PROBABILITY,
+} from '../constants/index.js';
+import { getAlertType } from '../utils.js';
 
 /**
  * Simulates network delay for mock responses
@@ -20,7 +24,7 @@ const simulateDelay = (ms = 500) => new Promise((resolve) => setTimeout(resolve,
  * @returns {boolean}
  */
 const shouldUseMockData = () => {
-  return !import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_USE_MOCK_DATA === "true";
+  return !import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_USE_MOCK_DATA === 'true';
 };
 
 /**
@@ -45,7 +49,10 @@ const generateMockLeadData = (previousData = null) => {
   return {
     totalLeads: baseData.totalLeads + Math.floor(Math.random() * 50),
     callsMade: baseData.callsMade + Math.floor(Math.random() * 20),
-    meetingsScheduled: Math.max(0, Math.min(100, baseData.meetingsScheduled + Math.floor(Math.random() * 5))),
+    meetingsScheduled: Math.max(
+      0,
+      Math.min(100, baseData.meetingsScheduled + Math.floor(Math.random() * 5))
+    ),
     lastUpdated: new Date().toLocaleString(),
   };
 };
@@ -65,7 +72,7 @@ export const maybeGenerateAlert = () => {
     id: Date.now(),
     message,
     type: getAlertType(message),
-    time: "Just now",
+    time: 'Just now',
     timestamp: new Date().toISOString(),
   };
 };
@@ -89,7 +96,7 @@ export const fetchLeadData = async (options = {}) => {
   }
 
   try {
-    const response = await apiClient.get("/leads/dashboard", options);
+    const response = await apiClient.get('/leads/dashboard', options);
     return {
       data: response.data,
       alert: response.alert || null,
@@ -97,7 +104,7 @@ export const fetchLeadData = async (options = {}) => {
   } catch (error) {
     // Fallback to mock data on error in development
     if (import.meta.env.DEV) {
-      console.warn("API request failed, using mock data:", error.message);
+      console.warn('API request failed, using mock data:', error.message);
       await simulateDelay(300);
       return {
         data: generateMockLeadData(options.previousData),
@@ -122,12 +129,12 @@ export const refreshLeadData = async (previousData = null) => {
  * @param {string} period - Time period (week, month, year)
  * @returns {Promise<Object>} Lead statistics
  */
-export const fetchLeadStatistics = async (period = "week") => {
+export const fetchLeadStatistics = async (period = 'week') => {
   if (shouldUseMockData()) {
     await simulateDelay(400);
 
     // Return mock statistics based on period
-    const multiplier = period === "year" ? 12 : period === "month" ? 4 : 1;
+    const multiplier = period === 'year' ? 12 : period === 'month' ? 4 : 1;
 
     return {
       totalLeads: randomVariation(847 * multiplier, 0.15),
@@ -159,7 +166,9 @@ export const fetchLeads = async (params = {}) => {
       name: `Lead ${(page - 1) * limit + i + 1}`,
       email: `lead${(page - 1) * limit + i + 1}@example.com`,
       company: `Company ${Math.floor(Math.random() * 100)}`,
-      status: ["new", "contacted", "qualified", "proposal", "closed"][Math.floor(Math.random() * 5)],
+      status: ['new', 'contacted', 'qualified', 'proposal', 'closed'][
+        Math.floor(Math.random() * 5)
+      ],
       value: Math.floor(Math.random() * 100000) + 10000,
       createdAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
     }));
@@ -197,13 +206,13 @@ export const fetchLeadById = async (leadId) => {
 
     return {
       id: leadId,
-      name: "Sample Lead",
-      email: "sample@example.com",
-      phone: "+1 (555) 123-4567",
-      company: "Sample Corp",
-      status: "qualified",
+      name: 'Sample Lead',
+      email: 'sample@example.com',
+      phone: '+1 (555) 123-4567',
+      company: 'Sample Corp',
+      status: 'qualified',
       value: 75000,
-      notes: "High-priority enterprise prospect",
+      notes: 'High-priority enterprise prospect',
       activities: [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -225,13 +234,13 @@ export const createLead = async (leadData) => {
     return {
       id: `lead-${Date.now()}`,
       ...leadData,
-      status: leadData.status || "new",
+      status: leadData.status || 'new',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
   }
 
-  return apiClient.post("/leads", leadData);
+  return apiClient.post('/leads', leadData);
 };
 
 /**
@@ -280,24 +289,24 @@ export const fetchLeadActivities = async (leadId) => {
     return [
       {
         id: 1,
-        type: "call",
-        description: "Discovery call completed",
+        type: 'call',
+        description: 'Discovery call completed',
         timestamp: new Date(Date.now() - 86400000).toISOString(),
-        user: "John Doe",
+        user: 'John Doe',
       },
       {
         id: 2,
-        type: "email",
-        description: "Sent proposal document",
+        type: 'email',
+        description: 'Sent proposal document',
         timestamp: new Date(Date.now() - 172800000).toISOString(),
-        user: "Jane Smith",
+        user: 'Jane Smith',
       },
       {
         id: 3,
-        type: "note",
-        description: "Client interested in enterprise plan",
+        type: 'note',
+        description: 'Client interested in enterprise plan',
         timestamp: new Date(Date.now() - 259200000).toISOString(),
-        user: "John Doe",
+        user: 'John Doe',
       },
     ];
   }

@@ -1,12 +1,12 @@
-import { memo, useState, useEffect, useCallback, useMemo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
-import { cardVariants, fontFamily, getChartColors } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
-import CustomTooltip from "./CustomTooltip";
-import TimePeriodButtons from "./TimePeriodButtons";
-import { getChartCardClasses, getChartTitleClasses } from "../chartUtils";
+import { memo, useState, useEffect, useCallback, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { cardVariants, fontFamily, getChartColors } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
+import CustomTooltip from './CustomTooltip';
+import TimePeriodButtons from './TimePeriodButtons';
+import { getChartCardClasses, getChartTitleClasses } from '../chartUtils';
 
 /**
  * LeadSourceChart Component
@@ -18,7 +18,12 @@ import { getChartCardClasses, getChartTitleClasses } from "../chartUtils";
  * @param {function} props.setTimePeriod - Callback when time period changes
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTimePeriod, darkMode: darkModeOverride }) {
+const LeadSourceChart = memo(function LeadSourceChart({
+  data,
+  timePeriod,
+  setTimePeriod,
+  darkMode: darkModeOverride,
+}) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
@@ -38,23 +43,23 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
       inner: isSmallScreen ? 35 : 50,
       outer: isSmallScreen ? 60 : 80,
     }),
-    [isSmallScreen],
+    [isSmallScreen]
   );
 
   // Memoize pie chart margins
   const chartMargins = useMemo(() => ({ top: 5, right: 5, bottom: 5, left: 5 }), []);
 
   // Memoize pie style
-  const pieStyle = useMemo(() => ({ fontSize: "12px", fontFamily }), []);
+  const pieStyle = useMemo(() => ({ fontSize: '12px', fontFamily }), []);
 
   // Memoize tooltip wrapper style
   const tooltipWrapperStyle = useMemo(
     () => ({
       zIndex: 50,
-      pointerEvents: "none",
-      visibility: "visible",
+      pointerEvents: 'none',
+      visibility: 'visible',
     }),
-    [],
+    []
   );
 
   // Detect screen size
@@ -64,8 +69,8 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
     };
 
     checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   // Custom tooltip position handler to keep tooltip within bounds on small screens
@@ -79,15 +84,15 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
         setTooltipPosition({ x: constrainedX, y: constrainedY });
       }
     },
-    [isSmallScreen],
+    [isSmallScreen]
   );
 
   // Memoize container height class
-  const containerHeightClass = isSmallScreen ? "h-40" : "h-48";
+  const containerHeightClass = isSmallScreen ? 'h-40' : 'h-48';
 
   // Memoize text color classes
-  const legendTextClass = useMemo(() => (isDark ? "text-slate-300" : "text-slate-600"), [isDark]);
-  const legendValueClass = useMemo(() => (isDark ? "text-slate-200" : "text-slate-700"), [isDark]);
+  const legendTextClass = useMemo(() => (isDark ? 'text-slate-300' : 'text-slate-600'), [isDark]);
+  const legendValueClass = useMemo(() => (isDark ? 'text-slate-200' : 'text-slate-700'), [isDark]);
 
   return (
     <motion.div
@@ -110,7 +115,11 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
         aria-label="Lead source distribution pie chart showing lead source percentages"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart key={`lead-source-chart-${timePeriod}`} margin={chartMargins} onMouseMove={handleMouseMove}>
+          <PieChart
+            key={`lead-source-chart-${timePeriod}`}
+            margin={chartMargins}
+            onMouseMove={handleMouseMove}
+          >
             <Pie
               data={data}
               cx="50%"
@@ -131,7 +140,7 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
                   key={`cell-${entry.name}-${index}`}
                   fill={COLORS[index % COLORS.length]}
                   className="cursor-pointer"
-                  style={{ outline: "none" }}
+                  style={{ outline: 'none' }}
                 />
               ))}
             </Pie>
@@ -146,7 +155,11 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
       </div>
 
       {/* Legend - Always visible with complete names and percentages */}
-      <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2" role="list" aria-label="Lead source distribution legend">
+      <div
+        className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2"
+        role="list"
+        aria-label="Lead source distribution legend"
+      >
         {data.map((entry, index) => (
           <div key={entry.name} className="flex items-center gap-2 min-w-0" role="listitem">
             <span
@@ -157,7 +170,10 @@ const LeadSourceChart = memo(function LeadSourceChart({ data, timePeriod, setTim
             <span className={`text-xs flex-1 ${legendTextClass}`} style={{ fontFamily }}>
               {entry.name}
             </span>
-            <span className={`text-xs font-semibold shrink-0 ${legendValueClass}`} style={{ fontFamily }}>
+            <span
+              className={`text-xs font-semibold shrink-0 ${legendValueClass}`}
+              style={{ fontFamily }}
+            >
               {entry.value}%
             </span>
           </div>
@@ -172,9 +188,9 @@ LeadSourceChart.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
-    }),
+    })
   ).isRequired,
-  timePeriod: PropTypes.oneOf(["week", "month", "year"]).isRequired,
+  timePeriod: PropTypes.oneOf(['week', 'month', 'year']).isRequired,
   setTimePeriod: PropTypes.func.isRequired,
   darkMode: PropTypes.bool,
 };

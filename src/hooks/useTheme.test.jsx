@@ -3,12 +3,12 @@
  * Tests useTheme hook, ThemeProvider, and ThemeContext
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook, act, waitFor } from "@testing-library/react";
-import React from "react";
-import useTheme from "./useTheme";
-import ThemeProvider from "./ThemeProvider";
-import { ThemeContext } from "./ThemeContext";
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { renderHook, act, waitFor } from '@testing-library/react';
+import React from 'react';
+import useTheme from './useTheme';
+import ThemeProvider from './ThemeProvider';
+import { ThemeContext } from './ThemeContext';
 
 // =============================================================================
 // Test Wrapper Helper
@@ -16,11 +16,7 @@ import { ThemeContext } from "./ThemeContext";
 
 const createWrapper = (defaultDarkMode = false) => {
   return function Wrapper({ children }) {
-    return (
-      <ThemeProvider defaultDarkMode={defaultDarkMode}>
-        {children}
-      </ThemeProvider>
-    );
+    return <ThemeProvider defaultDarkMode={defaultDarkMode}>{children}</ThemeProvider>;
   };
 };
 
@@ -28,50 +24,50 @@ const createWrapper = (defaultDarkMode = false) => {
 // useTheme Hook Tests
 // =============================================================================
 
-describe("useTheme", () => {
+describe('useTheme', () => {
   beforeEach(() => {
     // Clear localStorage before each test
     localStorage.getItem.mockReturnValue(null);
   });
 
-  describe("when used within ThemeProvider", () => {
-    it("should return isDark property", () => {
+  describe('when used within ThemeProvider', () => {
+    it('should return isDark property', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
 
-      expect(result.current).toHaveProperty("isDark");
-      expect(typeof result.current.isDark).toBe("boolean");
+      expect(result.current).toHaveProperty('isDark');
+      expect(typeof result.current.isDark).toBe('boolean');
     });
 
-    it("should return darkMode alias for backward compatibility", () => {
+    it('should return darkMode alias for backward compatibility', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
 
-      expect(result.current).toHaveProperty("darkMode");
+      expect(result.current).toHaveProperty('darkMode');
       expect(result.current.darkMode).toBe(result.current.isDark);
     });
 
-    it("should return toggleTheme function", () => {
+    it('should return toggleTheme function', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
 
-      expect(result.current).toHaveProperty("toggleTheme");
-      expect(typeof result.current.toggleTheme).toBe("function");
+      expect(result.current).toHaveProperty('toggleTheme');
+      expect(typeof result.current.toggleTheme).toBe('function');
     });
 
-    it("should return setDarkMode function", () => {
+    it('should return setDarkMode function', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
 
-      expect(result.current).toHaveProperty("setDarkMode");
-      expect(typeof result.current.setDarkMode).toBe("function");
+      expect(result.current).toHaveProperty('setDarkMode');
+      expect(typeof result.current.setDarkMode).toBe('function');
     });
 
-    it("should default to light mode (isDark = false)", () => {
+    it('should default to light mode (isDark = false)', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
@@ -79,7 +75,7 @@ describe("useTheme", () => {
       expect(result.current.isDark).toBe(false);
     });
 
-    it("should respect defaultDarkMode prop", () => {
+    it('should respect defaultDarkMode prop', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(true),
       });
@@ -88,8 +84,8 @@ describe("useTheme", () => {
     });
   });
 
-  describe("toggleTheme functionality", () => {
-    it("should toggle from light to dark mode", () => {
+  describe('toggleTheme functionality', () => {
+    it('should toggle from light to dark mode', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
@@ -103,7 +99,7 @@ describe("useTheme", () => {
       expect(result.current.isDark).toBe(true);
     });
 
-    it("should toggle from dark to light mode", () => {
+    it('should toggle from dark to light mode', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(true),
       });
@@ -117,7 +113,7 @@ describe("useTheme", () => {
       expect(result.current.isDark).toBe(false);
     });
 
-    it("should toggle multiple times correctly", () => {
+    it('should toggle multiple times correctly', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
@@ -140,7 +136,7 @@ describe("useTheme", () => {
       expect(result.current.isDark).toBe(true);
     });
 
-    it("should keep darkMode alias in sync after toggle", () => {
+    it('should keep darkMode alias in sync after toggle', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
@@ -154,8 +150,8 @@ describe("useTheme", () => {
     });
   });
 
-  describe("setDarkMode functionality", () => {
-    it("should set dark mode to true", () => {
+  describe('setDarkMode functionality', () => {
+    it('should set dark mode to true', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
@@ -169,7 +165,7 @@ describe("useTheme", () => {
       expect(result.current.isDark).toBe(true);
     });
 
-    it("should set dark mode to false", () => {
+    it('should set dark mode to false', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(true),
       });
@@ -183,7 +179,7 @@ describe("useTheme", () => {
       expect(result.current.isDark).toBe(false);
     });
 
-    it("should handle setting same value (idempotent)", () => {
+    it('should handle setting same value (idempotent)', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(true),
       });
@@ -202,16 +198,14 @@ describe("useTheme", () => {
     });
   });
 
-  describe("when used outside ThemeProvider", () => {
-    it("should throw an error", () => {
+  describe('when used outside ThemeProvider', () => {
+    it('should throw an error', () => {
       // Suppress console.error for this test since we expect an error
-      const consoleSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       expect(() => {
         renderHook(() => useTheme());
-      }).toThrow("useTheme must be used within a ThemeProvider");
+      }).toThrow('useTheme must be used within a ThemeProvider');
 
       consoleSpy.mockRestore();
     });
@@ -222,14 +216,14 @@ describe("useTheme", () => {
 // ThemeProvider Tests
 // =============================================================================
 
-describe("ThemeProvider", () => {
+describe('ThemeProvider', () => {
   beforeEach(() => {
     localStorage.getItem.mockReturnValue(null);
     localStorage.setItem.mockClear();
   });
 
-  describe("initialization", () => {
-    it("should render children", () => {
+  describe('initialization', () => {
+    it('should render children', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: ({ children }) => <ThemeProvider>{children}</ThemeProvider>,
       });
@@ -237,7 +231,7 @@ describe("ThemeProvider", () => {
       expect(result.current).toBeDefined();
     });
 
-    it("should default to light mode when no localStorage value", () => {
+    it('should default to light mode when no localStorage value', () => {
       localStorage.getItem.mockReturnValue(null);
 
       const { result } = renderHook(() => useTheme(), {
@@ -247,7 +241,7 @@ describe("ThemeProvider", () => {
       expect(result.current.isDark).toBe(false);
     });
 
-    it("should use defaultDarkMode when no localStorage value", () => {
+    it('should use defaultDarkMode when no localStorage value', () => {
       localStorage.getItem.mockReturnValue(null);
 
       const { result } = renderHook(() => useTheme(), {
@@ -257,19 +251,19 @@ describe("ThemeProvider", () => {
       expect(result.current.isDark).toBe(true);
     });
 
-    it("should read from localStorage on mount", () => {
-      localStorage.getItem.mockReturnValue("dark");
+    it('should read from localStorage on mount', () => {
+      localStorage.getItem.mockReturnValue('dark');
 
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
 
-      expect(localStorage.getItem).toHaveBeenCalledWith("leadflow-theme");
+      expect(localStorage.getItem).toHaveBeenCalledWith('leadflow-theme');
       expect(result.current.isDark).toBe(true);
     });
 
     it("should use light mode when localStorage value is 'light'", () => {
-      localStorage.getItem.mockReturnValue("light");
+      localStorage.getItem.mockReturnValue('light');
 
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(true), // Even with default true
@@ -279,7 +273,7 @@ describe("ThemeProvider", () => {
     });
   });
 
-  describe("localStorage persistence", () => {
+  describe('localStorage persistence', () => {
     it("should save 'dark' to localStorage when toggled to dark mode", async () => {
       localStorage.getItem.mockReturnValue(null);
 
@@ -292,15 +286,12 @@ describe("ThemeProvider", () => {
       });
 
       await waitFor(() => {
-        expect(localStorage.setItem).toHaveBeenCalledWith(
-          "leadflow-theme",
-          "dark",
-        );
+        expect(localStorage.setItem).toHaveBeenCalledWith('leadflow-theme', 'dark');
       });
     });
 
     it("should save 'light' to localStorage when toggled to light mode", async () => {
-      localStorage.getItem.mockReturnValue("dark");
+      localStorage.getItem.mockReturnValue('dark');
 
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(true),
@@ -311,14 +302,11 @@ describe("ThemeProvider", () => {
       });
 
       await waitFor(() => {
-        expect(localStorage.setItem).toHaveBeenCalledWith(
-          "leadflow-theme",
-          "light",
-        );
+        expect(localStorage.setItem).toHaveBeenCalledWith('leadflow-theme', 'light');
       });
     });
 
-    it("should save to localStorage when using setDarkMode", async () => {
+    it('should save to localStorage when using setDarkMode', async () => {
       localStorage.getItem.mockReturnValue(null);
 
       const { result } = renderHook(() => useTheme(), {
@@ -330,16 +318,13 @@ describe("ThemeProvider", () => {
       });
 
       await waitFor(() => {
-        expect(localStorage.setItem).toHaveBeenCalledWith(
-          "leadflow-theme",
-          "dark",
-        );
+        expect(localStorage.setItem).toHaveBeenCalledWith('leadflow-theme', 'dark');
       });
     });
   });
 
-  describe("context value memoization", () => {
-    it("should maintain reference equality when theme does not change", () => {
+  describe('context value memoization', () => {
+    it('should maintain reference equality when theme does not change', () => {
       const { result, rerender } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
@@ -352,7 +337,7 @@ describe("ThemeProvider", () => {
       expect(firstValue).toBe(secondValue);
     });
 
-    it("should update reference when theme changes", () => {
+    it('should update reference when theme changes', () => {
       const { result } = renderHook(() => useTheme(), {
         wrapper: createWrapper(false),
       });
@@ -375,19 +360,19 @@ describe("ThemeProvider", () => {
 // ThemeContext Tests
 // =============================================================================
 
-describe("ThemeContext", () => {
-  it("should be defined", () => {
+describe('ThemeContext', () => {
+  it('should be defined', () => {
     expect(ThemeContext).toBeDefined();
   });
 
-  it("should have undefined as default value", () => {
+  it('should have undefined as default value', () => {
     // The context is created with undefined as default
     // This is intentional to detect usage outside provider
     const { result } = renderHook(() => React.useContext(ThemeContext));
     expect(result.current).toBeUndefined();
   });
 
-  it("should be a valid React context", () => {
+  it('should be a valid React context', () => {
     expect(ThemeContext.Provider).toBeDefined();
     expect(ThemeContext.Consumer).toBeDefined();
   });
@@ -397,12 +382,12 @@ describe("ThemeContext", () => {
 // Integration Tests
 // =============================================================================
 
-describe("Theme Hooks Integration", () => {
+describe('Theme Hooks Integration', () => {
   beforeEach(() => {
     localStorage.getItem.mockReturnValue(null);
   });
 
-  it("should share state between multiple useTheme calls", () => {
+  it('should share state between multiple useTheme calls', () => {
     const wrapper = createWrapper(false);
 
     const { result: result1 } = renderHook(() => useTheme(), { wrapper });
@@ -413,7 +398,7 @@ describe("Theme Hooks Integration", () => {
     expect(result2.current.isDark).toBe(false);
   });
 
-  it("should work with nested providers (last provider wins)", () => {
+  it('should work with nested providers (last provider wins)', () => {
     const NestedWrapper = ({ children }) => (
       <ThemeProvider defaultDarkMode={false}>
         <ThemeProvider defaultDarkMode={true}>{children}</ThemeProvider>
@@ -428,7 +413,7 @@ describe("Theme Hooks Integration", () => {
     expect(result.current.isDark).toBe(true);
   });
 
-  it("should provide complete theme interface", () => {
+  it('should provide complete theme interface', () => {
     const { result } = renderHook(() => useTheme(), {
       wrapper: createWrapper(false),
     });
@@ -443,7 +428,7 @@ describe("Theme Hooks Integration", () => {
     });
   });
 
-  it("should handle rapid toggles correctly", () => {
+  it('should handle rapid toggles correctly', () => {
     const { result } = renderHook(() => useTheme(), {
       wrapper: createWrapper(false),
     });
@@ -461,7 +446,7 @@ describe("Theme Hooks Integration", () => {
     expect(result.current.isDark).toBe(true);
   });
 
-  it("should handle mixed toggleTheme and setDarkMode calls", () => {
+  it('should handle mixed toggleTheme and setDarkMode calls', () => {
     const { result } = renderHook(() => useTheme(), {
       wrapper: createWrapper(false),
     });

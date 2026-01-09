@@ -3,15 +3,15 @@
 // Charts section component with memoized styles and context integration
 // =============================================================================
 
-import { memo } from "react";
-import { useDashboard } from "../../context/index.js";
-import useTheme from "../../hooks/useTheme.jsx";
-import useChartStyles from "../../hooks/useChartStyles.js";
-import LeadActivityChart from "../LeadActivityChart.jsx";
-import ConversionRateChart from "../ConversionRateChart.jsx";
-import LeadSourceChart from "../LeadSourceChart.jsx";
-import AlertsPanel from "../AlertsPanel.jsx";
-import { ChartErrorBoundary } from "../charts/index.js";
+import { memo } from 'react';
+import { useDashboard } from '../../context/index.js';
+import useTheme from '../../hooks/useTheme.jsx';
+import useChartStyles from '../../hooks/useChartStyles.js';
+import LeadActivityChart from '../LeadActivityChart.jsx';
+import ConversionRateChart from '../ConversionRateChart.jsx';
+import LeadSourceChart from '../LeadSourceChart.jsx';
+import AlertsPanel from '../AlertsPanel.jsx';
+import { ChartErrorBoundary } from '../charts/index.js';
 
 /**
  * DashboardCharts Component

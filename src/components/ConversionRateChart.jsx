@@ -1,13 +1,22 @@
-import { memo, useMemo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
-import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from "recharts";
-import { cardVariants, fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
-import { formatEfficiency } from "../utils";
-import CustomTooltip from "./CustomTooltip";
-import TimePeriodButtons from "./TimePeriodButtons";
-import { ChartLegend, XAxisTick } from "./ChartComponents";
+import { memo, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import {
+  ResponsiveContainer,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  Line,
+} from 'recharts';
+import { cardVariants, fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
+import { formatEfficiency } from '../utils';
+import CustomTooltip from './CustomTooltip';
+import TimePeriodButtons from './TimePeriodButtons';
+import { ChartLegend, XAxisTick } from './ChartComponents';
 import {
   getAxisStyles,
   getGridStyles,
@@ -16,7 +25,7 @@ import {
   getChartTitleClasses,
   getDotStyles,
   getActiveDotStyles,
-} from "../chartUtils";
+} from '../chartUtils';
 
 /**
  * ConversionRateChart Component
@@ -45,14 +54,14 @@ const ConversionRateChart = memo(function ConversionRateChart({
   const titleClasses = useMemo(() => getChartTitleClasses(isDark), [isDark]);
 
   // Memoize chart color based on theme
-  const lineColor = useMemo(() => (isDark ? "#fbbf24" : "#d97706"), [isDark]);
+  const lineColor = useMemo(() => (isDark ? '#fbbf24' : '#d97706'), [isDark]);
 
   // Memoize dot styles
   const dotStyles = useMemo(() => getDotStyles(isDark, lineColor), [isDark, lineColor]);
   const activeDotStyles = useMemo(() => getActiveDotStyles(isDark, lineColor), [isDark, lineColor]);
 
   // Memoize legend wrapper style
-  const legendWrapperStyle = useMemo(() => ({ paddingTop: "10px" }), []);
+  const legendWrapperStyle = useMemo(() => ({ paddingTop: '10px' }), []);
 
   // Memoize chart margins
   const chartMargins = useMemo(
@@ -62,11 +71,14 @@ const ConversionRateChart = memo(function ConversionRateChart({
       left: 0,
       bottom: 25,
     }),
-    [],
+    []
   );
 
   // Memoize tooltip formatter
-  const tooltipFormatter = useMemo(() => (value) => [formatEfficiency(value), "Conversion Rate"], []);
+  const tooltipFormatter = useMemo(
+    () => (value) => [formatEfficiency(value), 'Conversion Rate'],
+    []
+  );
 
   return (
     <motion.div
@@ -76,7 +88,10 @@ const ConversionRateChart = memo(function ConversionRateChart({
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
+        <h3
+          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
+          style={{ fontFamily }}
+        >
           Conversion Rate
         </h3>
         <TimePeriodButtons currentPeriod={timePeriod} onPeriodChange={setTimePeriod} />
@@ -116,7 +131,10 @@ const ConversionRateChart = memo(function ConversionRateChart({
               cursor={cursorStyles}
               formatter={tooltipFormatter}
             />
-            <Legend content={(props) => <ChartLegend {...props} />} wrapperStyle={legendWrapperStyle} />
+            <Legend
+              content={(props) => <ChartLegend {...props} />}
+              wrapperStyle={legendWrapperStyle}
+            />
             <Line
               type="monotone"
               dataKey="efficiency"
@@ -138,9 +156,9 @@ ConversionRateChart.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       efficiency: PropTypes.number.isRequired,
-    }),
+    })
   ).isRequired,
-  timePeriod: PropTypes.oneOf(["week", "month", "year"]).isRequired,
+  timePeriod: PropTypes.oneOf(['week', 'month', 'year']).isRequired,
   setTimePeriod: PropTypes.func.isRequired,
   darkMode: PropTypes.bool,
 };

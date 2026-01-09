@@ -1,14 +1,14 @@
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback, useEffect, useMemo } from 'react';
 
 /**
  * Modal identifiers for type safety and consistency
  */
 export const MODAL_IDS = {
-  NOTES: "notes",
-  PRODUCT: "product",
-  RESOURCES: "resources",
-  COMPANY: "company",
-  ALERTS: "alerts",
+  NOTES: 'notes',
+  PRODUCT: 'product',
+  RESOURCES: 'resources',
+  COMPANY: 'company',
+  ALERTS: 'alerts',
 };
 
 /**
@@ -35,7 +35,7 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
         return next;
       });
     },
-    [allowMultiple],
+    [allowMultiple]
   );
 
   /**
@@ -68,7 +68,7 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
         }
       });
     },
-    [allowMultiple],
+    [allowMultiple]
   );
 
   /**
@@ -87,7 +87,7 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
     (modalId) => {
       return openModals.has(modalId);
     },
-    [openModals],
+    [openModals]
   );
 
   /**
@@ -107,17 +107,17 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
     if (isAnyModalOpen) {
       // Store current scroll position and lock
       const scrollY = window.scrollY;
-      document.body.style.position = "fixed";
+      document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
-      document.body.style.overflow = "hidden";
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
 
       return () => {
         // Restore scroll position when all modals close
-        document.body.style.position = "";
-        document.body.style.top = "";
-        document.body.style.width = "";
-        document.body.style.overflow = "";
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
         window.scrollTo(0, scrollY);
       };
     }
@@ -132,7 +132,7 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
       isCompanyModalOpen: openModals.has(MODAL_IDS.COMPANY),
       isAlertsModalOpen: openModals.has(MODAL_IDS.ALERTS),
     }),
-    [openModals],
+    [openModals]
   );
 
   // Convenience handlers for common modals (backward compatibility)
@@ -149,7 +149,7 @@ const useModals = ({ allowMultiple = false, lockScroll = true } = {}) => {
       openAlertsModal: () => openModal(MODAL_IDS.ALERTS),
       closeAlertsModal: () => closeModal(MODAL_IDS.ALERTS),
     }),
-    [openModal, closeModal],
+    [openModal, closeModal]
   );
 
   return {

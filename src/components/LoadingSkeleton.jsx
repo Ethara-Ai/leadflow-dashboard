@@ -1,8 +1,8 @@
-import { memo, useMemo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
-import { cardVariants } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { memo, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { cardVariants } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * Pre-calculated skeleton line widths to avoid random values during render
@@ -26,14 +26,19 @@ const LoadingSkeleton = memo(function LoadingSkeleton({ darkMode: darkModeOverri
 
   // Card background classes based on theme
   const cardClasses = isDark
-    ? "bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10"
-    : "bg-white/90 border-slate-200/60";
+    ? 'bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10'
+    : 'bg-white/90 border-slate-200/60';
 
   // Skeleton element classes based on theme
-  const skeletonClasses = isDark ? "bg-slate-700" : "bg-slate-200";
+  const skeletonClasses = isDark ? 'bg-slate-700' : 'bg-slate-200';
 
   return (
-    <div className="space-y-8" role="status" aria-label="Loading dashboard content" aria-busy="true">
+    <div
+      className="space-y-8"
+      role="status"
+      aria-label="Loading dashboard content"
+      aria-busy="true"
+    >
       <span className="sr-only">Loading dashboard...</span>
 
       {/* Stat Cards Skeleton */}

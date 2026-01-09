@@ -1,9 +1,9 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
-import { ShieldAlert } from "lucide-react";
-import { fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { ShieldAlert } from 'lucide-react';
+import { fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * ErrorMessage Component
@@ -22,7 +22,7 @@ const ErrorMessage = memo(function ErrorMessage({ error, darkMode: darkModeOverr
   return (
     <motion.div
       className={`mb-6 p-4 rounded-xl border ${
-        isDark ? "bg-red-900/20 border-red-800/30" : "bg-red-50 border-red-200"
+        isDark ? 'bg-red-900/20 border-red-800/30' : 'bg-red-50 border-red-200'
       }`}
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -31,7 +31,7 @@ const ErrorMessage = memo(function ErrorMessage({ error, darkMode: darkModeOverr
       aria-live="assertive"
     >
       <p
-        className={`text-sm font-medium flex items-center ${isDark ? "text-red-400" : "text-red-600"}`}
+        className={`text-sm font-medium flex items-center ${isDark ? 'text-red-400' : 'text-red-600'}`}
         style={{ fontFamily }}
       >
         <ShieldAlert size={16} className="mr-2 shrink-0" aria-hidden="true" />

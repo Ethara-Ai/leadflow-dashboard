@@ -1,9 +1,9 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
-import { ShieldAlert, Info, AlertCircle, CheckCircle } from "lucide-react";
-import { fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { ShieldAlert, Info, AlertCircle, CheckCircle } from 'lucide-react';
+import { fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * Alert type configurations for styling
@@ -11,31 +11,31 @@ import useThemeSafe from "../hooks/useThemeSafe";
 const ALERT_TYPES = {
   warning: {
     icon: ShieldAlert,
-    darkBg: "bg-amber-900/20 border-amber-800/30",
-    lightBg: "bg-amber-50 border-amber-200",
-    darkIcon: "text-amber-400",
-    lightIcon: "text-amber-600",
+    darkBg: 'bg-amber-900/20 border-amber-800/30',
+    lightBg: 'bg-amber-50 border-amber-200',
+    darkIcon: 'text-amber-400',
+    lightIcon: 'text-amber-600',
   },
   info: {
     icon: Info,
-    darkBg: "bg-blue-900/20 border-blue-800/30",
-    lightBg: "bg-blue-50 border-blue-200",
-    darkIcon: "text-blue-400",
-    lightIcon: "text-blue-600",
+    darkBg: 'bg-blue-900/20 border-blue-800/30',
+    lightBg: 'bg-blue-50 border-blue-200',
+    darkIcon: 'text-blue-400',
+    lightIcon: 'text-blue-600',
   },
   error: {
     icon: AlertCircle,
-    darkBg: "bg-red-900/20 border-red-800/30",
-    lightBg: "bg-red-50 border-red-200",
-    darkIcon: "text-red-400",
-    lightIcon: "text-red-600",
+    darkBg: 'bg-red-900/20 border-red-800/30',
+    lightBg: 'bg-red-50 border-red-200',
+    darkIcon: 'text-red-400',
+    lightIcon: 'text-red-600',
   },
   success: {
     icon: CheckCircle,
-    darkBg: "bg-emerald-900/20 border-emerald-800/30",
-    lightBg: "bg-emerald-50 border-emerald-200",
-    darkIcon: "text-emerald-400",
-    lightIcon: "text-emerald-600",
+    darkBg: 'bg-emerald-900/20 border-emerald-800/30',
+    lightBg: 'bg-emerald-50 border-emerald-200',
+    darkIcon: 'text-emerald-400',
+    lightIcon: 'text-emerald-600',
   },
 };
 
@@ -51,10 +51,7 @@ const ALERT_TYPES = {
  * @param {string} props.alert.time - Timestamp string
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const AlertItem = memo(function AlertItem({
-  alert,
-  darkMode: darkModeOverride,
-}) {
+const AlertItem = memo(function AlertItem({ alert, darkMode: darkModeOverride }) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
@@ -65,8 +62,8 @@ const AlertItem = memo(function AlertItem({
   // Theme-based classes
   const bgClasses = isDark ? alertConfig.darkBg : alertConfig.lightBg;
   const iconClasses = isDark ? alertConfig.darkIcon : alertConfig.lightIcon;
-  const textClasses = isDark ? "text-slate-200" : "text-slate-700";
-  const timeClasses = isDark ? "text-slate-400" : "text-slate-500";
+  const textClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const timeClasses = isDark ? 'text-slate-400' : 'text-slate-500';
 
   return (
     <motion.article
@@ -88,8 +85,8 @@ const AlertItem = memo(function AlertItem({
             className={`text-xs sm:text-sm font-medium leading-snug wrap-break-word ${textClasses}`}
             style={{
               fontFamily,
-              wordBreak: "break-word",
-              overflowWrap: "anywhere",
+              wordBreak: 'break-word',
+              overflowWrap: 'anywhere',
             }}
           >
             {alert.message}
@@ -111,7 +108,7 @@ AlertItem.propTypes = {
   alert: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     message: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(["warning", "info", "error", "success"]),
+    type: PropTypes.oneOf(['warning', 'info', 'error', 'success']),
     time: PropTypes.string.isRequired,
     timestamp: PropTypes.string,
     dismissed: PropTypes.bool,

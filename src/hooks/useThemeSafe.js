@@ -3,8 +3,8 @@
 // Safe theme hook that handles cases where ThemeProvider is not available
 // =============================================================================
 
-import { useContext } from "react";
-import { ThemeContext } from "./ThemeContext.js";
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext.js';
 
 /**
  * Safe theme hook that handles cases where ThemeProvider is not available
@@ -42,12 +42,12 @@ const useThemeSafe = (darkModeOverride) => {
     darkMode: false,
     toggleTheme: () => {
       if (import.meta.env.DEV) {
-        console.warn("useThemeSafe: toggleTheme called outside of ThemeProvider");
+        console.warn('useThemeSafe: toggleTheme called outside of ThemeProvider');
       }
     },
     setDarkMode: () => {
       if (import.meta.env.DEV) {
-        console.warn("useThemeSafe: setDarkMode called outside of ThemeProvider");
+        console.warn('useThemeSafe: setDarkMode called outside of ThemeProvider');
       }
     },
   };

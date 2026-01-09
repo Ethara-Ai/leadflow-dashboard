@@ -1,13 +1,13 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
-import { fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * Default time periods if none provided
  */
-const DEFAULT_PERIODS = ["week", "month", "year"];
+const DEFAULT_PERIODS = ['week', 'month', 'year'];
 
 /**
  * Format period label for display
@@ -46,10 +46,10 @@ const TimePeriodButtons = memo(function TimePeriodButtons({
             key={period}
             className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-xl transition-all duration-200 flex-1 sm:flex-none cursor-pointer ${
               isSelected
-                ? "bg-blue-600 text-white shadow-lg"
+                ? 'bg-blue-600 text-white shadow-lg'
                 : isDark
-                  ? "text-slate-400 hover:text-slate-200 hover:bg-slate-700/50"
-                  : "text-slate-600 hover:text-slate-800 hover:bg-slate-100"
+                  ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                  : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100'
             }`}
             onClick={() => onPeriodChange(period)}
             whileHover={{ scale: 1.05 }}
@@ -67,7 +67,7 @@ const TimePeriodButtons = memo(function TimePeriodButtons({
 });
 
 TimePeriodButtons.propTypes = {
-  currentPeriod: PropTypes.oneOf(["week", "month", "year"]).isRequired,
+  currentPeriod: PropTypes.oneOf(['week', 'month', 'year']).isRequired,
   onPeriodChange: PropTypes.func.isRequired,
   periods: PropTypes.arrayOf(PropTypes.string),
   darkMode: PropTypes.bool,

@@ -1,10 +1,10 @@
-import { useRef, useEffect, useState, memo } from "react";
-import PropTypes from "prop-types";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Bell } from "lucide-react";
-import { fontFamily, modalVariants } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
-import AlertItem from "./AlertItem";
+import { useRef, useEffect, useState, memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Bell } from 'lucide-react';
+import { fontFamily, modalVariants } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
+import AlertItem from './AlertItem';
 
 /**
  * AlertsModal Component
@@ -30,7 +30,7 @@ const AlertsModal = memo(function AlertsModal({
   const closeButtonRef = useRef(null);
   const inputRef = useRef(null);
   const previousActiveElement = useRef(null);
-  const [newAlert, setNewAlert] = useState("");
+  const [newAlert, setNewAlert] = useState('');
 
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
@@ -49,7 +49,7 @@ const AlertsModal = memo(function AlertsModal({
         previousActiveElement.current = null;
       }
       // Reset input when modal closes
-      setNewAlert("");
+      setNewAlert('');
     }
   }, [isOpen]);
 
@@ -58,13 +58,13 @@ const AlertsModal = memo(function AlertsModal({
     if (!isOpen) return;
 
     const handleEscape = (e) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         onClose();
       }
     };
 
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
   // Trap focus within modal
@@ -73,13 +73,13 @@ const AlertsModal = memo(function AlertsModal({
 
     const modal = modalRef.current;
     const focusableElements = modal.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
     const handleTabKey = (e) => {
-      if (e.key !== "Tab") return;
+      if (e.key !== 'Tab') return;
 
       if (e.shiftKey && document.activeElement === firstElement) {
         e.preventDefault();
@@ -90,20 +90,20 @@ const AlertsModal = memo(function AlertsModal({
       }
     };
 
-    document.addEventListener("keydown", handleTabKey);
-    return () => document.removeEventListener("keydown", handleTabKey);
+    document.addEventListener('keydown', handleTabKey);
+    return () => document.removeEventListener('keydown', handleTabKey);
   }, [isOpen]);
 
   // Handle adding a new alert
   const handleAddAlert = () => {
     if (!newAlert.trim()) return;
     onAddAlert(newAlert);
-    setNewAlert("");
+    setNewAlert('');
   };
 
   // Handle keyboard submit
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleAddAlert();
     }
   };
@@ -114,38 +114,36 @@ const AlertsModal = memo(function AlertsModal({
   };
 
   // Generate unique IDs for accessibility
-  const titleId = "alerts-modal-title";
-  const descriptionId = "alerts-modal-description";
+  const titleId = 'alerts-modal-title';
+  const descriptionId = 'alerts-modal-description';
 
   // Theme-based classes
-  const modalClasses = isDark
-    ? "bg-slate-800/95 border-slate-700"
-    : "bg-white/95 border-slate-300";
-  const headerBorderClasses = isDark ? "border-slate-700" : "border-slate-200";
-  const titleClasses = isDark ? "text-slate-200" : "text-slate-700";
+  const modalClasses = isDark ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-300';
+  const headerBorderClasses = isDark ? 'border-slate-700' : 'border-slate-200';
+  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
   const closeButtonClasses = isDark
-    ? "text-slate-400 hover:text-slate-200 hover:bg-slate-700/50"
-    : "text-slate-500 hover:text-slate-700 hover:bg-slate-200";
+    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200';
   const inputClasses = isDark
-    ? "bg-slate-700 border-slate-600 text-slate-200 placeholder-slate-400 focus:border-blue-500"
-    : "bg-slate-50 border-slate-300 text-slate-700 placeholder-slate-500 focus:border-blue-500";
+    ? 'bg-slate-700 border-slate-600 text-slate-200 placeholder-slate-400 focus:border-blue-500'
+    : 'bg-slate-50 border-slate-300 text-slate-700 placeholder-slate-500 focus:border-blue-500';
   const buttonClasses = isDark
-    ? "text-slate-400 hover:text-slate-200"
-    : "text-slate-600 hover:text-slate-800";
-  const emptyIconClasses = isDark ? "text-slate-500" : "text-slate-400";
-  const emptyTextClasses = isDark ? "text-slate-400" : "text-slate-600";
-  const emptySubtextClasses = isDark ? "text-slate-500" : "text-slate-500";
+    ? 'text-slate-400 hover:text-slate-200'
+    : 'text-slate-600 hover:text-slate-800';
+  const emptyIconClasses = isDark ? 'text-slate-500' : 'text-slate-400';
+  const emptyTextClasses = isDark ? 'text-slate-400' : 'text-slate-600';
+  const emptySubtextClasses = isDark ? 'text-slate-500' : 'text-slate-500';
   const disabledButtonClasses = isDark
-    ? "bg-slate-700 text-slate-500"
-    : "bg-slate-200 text-slate-400";
+    ? 'bg-slate-700 text-slate-500'
+    : 'bg-slate-200 text-slate-400';
   const countBadgeClasses =
     alerts.length > 0
       ? isDark
-        ? "bg-amber-900/40 text-amber-300"
-        : "bg-amber-100 text-amber-700"
+        ? 'bg-amber-900/40 text-amber-300'
+        : 'bg-amber-100 text-amber-700'
       : isDark
-        ? "bg-slate-700 text-slate-400"
-        : "bg-slate-200 text-slate-500";
+        ? 'bg-slate-700 text-slate-400'
+        : 'bg-slate-200 text-slate-500';
 
   return (
     <AnimatePresence>
@@ -173,9 +171,7 @@ const AlertsModal = memo(function AlertsModal({
             aria-describedby={descriptionId}
           >
             {/* Header */}
-            <div
-              className={`p-4 sm:p-6 border-b shrink-0 ${headerBorderClasses}`}
-            >
+            <div className={`p-4 sm:p-6 border-b shrink-0 ${headerBorderClasses}`}>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                   <h2
@@ -217,8 +213,8 @@ const AlertsModal = memo(function AlertsModal({
 
             {/* Screen reader description */}
             <p id={descriptionId} className="sr-only">
-              Lead alerts management modal. You can view, add, and clear alerts.
-              Press Escape to close.
+              Lead alerts management modal. You can view, add, and clear alerts. Press Escape to
+              close.
             </p>
 
             {/* Alerts List */}
@@ -242,7 +238,7 @@ const AlertsModal = memo(function AlertsModal({
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{
-                      type: "spring",
+                      type: 'spring',
                       stiffness: 200,
                       damping: 15,
                       delay: 0.2,
@@ -270,9 +266,7 @@ const AlertsModal = memo(function AlertsModal({
             </div>
 
             {/* Add Alert Input */}
-            <div
-              className={`p-4 sm:p-6 border-t shrink-0 ${headerBorderClasses}`}
-            >
+            <div className={`p-4 sm:p-6 border-t shrink-0 ${headerBorderClasses}`}>
               <div className="flex gap-2">
                 <label htmlFor="new-alert-modal-input" className="sr-only">
                   Add custom alert
@@ -286,7 +280,7 @@ const AlertsModal = memo(function AlertsModal({
                   placeholder="Add custom alert..."
                   maxLength={200}
                   className={`flex-1 min-w-0 px-3 py-2.5 text-sm rounded-lg border transition-all duration-200 ${inputClasses} focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
-                  style={{ fontFamily, textOverflow: "ellipsis" }}
+                  style={{ fontFamily, textOverflow: 'ellipsis' }}
                   onKeyDown={handleKeyDown}
                   aria-describedby="alert-modal-input-hint"
                 />
@@ -298,7 +292,7 @@ const AlertsModal = memo(function AlertsModal({
                   disabled={!newAlert.trim()}
                   className={`px-4 py-2.5 text-sm font-medium rounded-lg transition-colors shrink-0 ${
                     newAlert.trim()
-                      ? "bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer'
                       : `${disabledButtonClasses} cursor-not-allowed`
                   }`}
                   whileHover={newAlert.trim() ? { scale: 1.05 } : {}}
@@ -324,9 +318,9 @@ AlertsModal.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       message: PropTypes.string.isRequired,
-      type: PropTypes.oneOf(["info", "warning", "error"]).isRequired,
+      type: PropTypes.oneOf(['info', 'warning', 'error']).isRequired,
       time: PropTypes.string.isRequired,
-    }),
+    })
   ).isRequired,
   onAddAlert: PropTypes.func.isRequired,
   onClearAlerts: PropTypes.func.isRequired,

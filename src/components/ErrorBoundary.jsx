@@ -1,7 +1,7 @@
-import { Component } from "react";
-import PropTypes from "prop-types";
-import { AlertTriangle, RefreshCcw } from "lucide-react";
-import { fontFamily } from "../constants";
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { AlertTriangle, RefreshCcw } from 'lucide-react';
+import { fontFamily } from '../constants';
 
 /**
  * Error Boundary Component
@@ -30,7 +30,7 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     // Log error to console (in production, send to error reporting service)
-    console.error("ErrorBoundary caught an error:", error, errorInfo);
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
 
     this.setState({
       error,
@@ -77,7 +77,11 @@ class ErrorBoundary extends Component {
 
       // Default fallback UI
       return (
-        <div className="min-h-64 flex items-center justify-center p-6" role="alert" aria-live="assertive">
+        <div
+          className="min-h-64 flex items-center justify-center p-6"
+          role="alert"
+          aria-live="assertive"
+        >
           <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 max-w-md w-full text-center">
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <AlertTriangle className="w-8 h-8 text-red-500" />
@@ -93,7 +97,10 @@ class ErrorBoundary extends Component {
 
             {showDetails && error && (
               <details className="mb-6 text-left">
-                <summary className="cursor-pointer text-sm text-slate-500 hover:text-slate-700" style={{ fontFamily }}>
+                <summary
+                  className="cursor-pointer text-sm text-slate-500 hover:text-slate-700"
+                  style={{ fontFamily }}
+                >
                   Error details
                 </summary>
                 <pre className="mt-2 p-3 bg-slate-100 rounded-lg text-xs text-red-600 overflow-auto max-h-32">

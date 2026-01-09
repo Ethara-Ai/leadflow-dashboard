@@ -3,8 +3,8 @@
 // Custom hook for managing notes state
 // =============================================================================
 
-import { useState, useCallback } from "react";
-import { initialNotes, MAX_NOTES, MAX_NOTE_LENGTH } from "../constants/index.js";
+import { useState, useCallback } from 'react';
+import { initialNotes, MAX_NOTES, MAX_NOTE_LENGTH } from '../constants/index.js';
 
 /**
  * Custom hook for managing notes state
@@ -15,7 +15,11 @@ import { initialNotes, MAX_NOTES, MAX_NOTE_LENGTH } from "../constants/index.js"
  * @param {number} [options.maxNoteLength] - Maximum character length for notes (defaults to MAX_NOTE_LENGTH)
  * @returns {Object} Notes state and handlers
  */
-const useNotes = ({ initialState = initialNotes, maxNotes = MAX_NOTES, maxNoteLength = MAX_NOTE_LENGTH } = {}) => {
+const useNotes = ({
+  initialState = initialNotes,
+  maxNotes = MAX_NOTES,
+  maxNoteLength = MAX_NOTE_LENGTH,
+} = {}) => {
   const [notes, setNotes] = useState(initialState);
 
   /**
@@ -25,14 +29,14 @@ const useNotes = ({ initialState = initialNotes, maxNotes = MAX_NOTES, maxNoteLe
    */
   const validateNote = useCallback(
     (content) => {
-      if (!content || typeof content !== "string") {
-        return { valid: false, error: "Note content is required" };
+      if (!content || typeof content !== 'string') {
+        return { valid: false, error: 'Note content is required' };
       }
 
       const trimmedContent = content.trim();
 
       if (trimmedContent.length === 0) {
-        return { valid: false, error: "Note cannot be empty" };
+        return { valid: false, error: 'Note cannot be empty' };
       }
 
       if (trimmedContent.length > maxNoteLength) {
@@ -44,7 +48,7 @@ const useNotes = ({ initialState = initialNotes, maxNotes = MAX_NOTES, maxNoteLe
 
       return { valid: true, error: null };
     },
-    [maxNoteLength],
+    [maxNoteLength]
   );
 
   /**
@@ -56,7 +60,7 @@ const useNotes = ({ initialState = initialNotes, maxNotes = MAX_NOTES, maxNoteLe
     (contentOrNote) => {
       let newNote;
 
-      if (typeof contentOrNote === "string") {
+      if (typeof contentOrNote === 'string') {
         const validation = validateNote(contentOrNote);
         if (!validation.valid) {
           return { success: false, note: null, error: validation.error };
@@ -83,14 +87,14 @@ const useNotes = ({ initialState = initialNotes, maxNotes = MAX_NOTES, maxNoteLe
           timestamp: new Date().toLocaleString(),
           createdAt: new Date().toISOString(),
           ...contentOrNote,
-          content: content?.trim() || "",
+          content: content?.trim() || '',
         };
       }
 
       setNotes((prev) => [newNote, ...prev].slice(0, maxNotes));
       return { success: true, note: newNote, error: null };
     },
-    [maxNotes, validateNote],
+    [maxNotes, validateNote]
   );
 
   /**
@@ -135,16 +139,16 @@ const useNotes = ({ initialState = initialNotes, maxNotes = MAX_NOTES, maxNoteLe
             };
           }
           return note;
-        }),
+        })
       );
 
       if (!found) {
-        return { success: false, error: "Note not found" };
+        return { success: false, error: 'Note not found' };
       }
 
       return { success: true, error: null };
     },
-    [validateNote],
+    [validateNote]
   );
 
   /**
@@ -170,7 +174,7 @@ const useNotes = ({ initialState = initialNotes, maxNotes = MAX_NOTES, maxNoteLe
     (noteId) => {
       return notes.find((note) => note.id === noteId);
     },
-    [notes],
+    [notes]
   );
 
   /**
@@ -186,7 +190,7 @@ const useNotes = ({ initialState = initialNotes, maxNotes = MAX_NOTES, maxNoteLe
       const term = searchTerm.toLowerCase();
       return notes.filter((note) => note.content.toLowerCase().includes(term));
     },
-    [notes],
+    [notes]
   );
 
   /**
@@ -202,7 +206,7 @@ const useNotes = ({ initialState = initialNotes, maxNotes = MAX_NOTES, maxNoteLe
         return ascending ? dateA - dateB : dateB - dateA;
       });
     },
-    [notes],
+    [notes]
   );
 
   /**
