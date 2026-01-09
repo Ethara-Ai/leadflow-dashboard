@@ -1,9 +1,9 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
-import { Info, X } from "lucide-react";
-import { fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { Info, X } from 'lucide-react';
+import { fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * WelcomeMessage Component
@@ -14,11 +14,7 @@ import useThemeSafe from "../hooks/useThemeSafe";
  * @param {function} props.onClose - Callback when message is dismissed
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const WelcomeMessage = memo(function WelcomeMessage({
-  show,
-  onClose,
-  darkMode: darkModeOverride,
-}) {
+const WelcomeMessage = memo(function WelcomeMessage({ show, onClose, darkMode: darkModeOverride }) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
@@ -27,9 +23,7 @@ const WelcomeMessage = memo(function WelcomeMessage({
   return (
     <motion.div
       className={`mb-4 sm:mb-6 md:mb-8 p-3 sm:p-4 md:p-4 rounded-xl sm:rounded-2xl border ${
-        isDark
-          ? "bg-blue-900/20 border-blue-800/30"
-          : "bg-blue-50 border-blue-200"
+        isDark ? 'bg-blue-900/20 border-blue-800/30' : 'bg-blue-50 border-blue-200'
       }`}
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -42,18 +36,18 @@ const WelcomeMessage = memo(function WelcomeMessage({
         <div className="flex items-start sm:items-center flex-1 min-w-0">
           <div
             className={`p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl shrink-0 ${
-              isDark ? "bg-blue-800/30" : "bg-blue-100"
+              isDark ? 'bg-blue-800/30' : 'bg-blue-100'
             } mr-2 sm:mr-3 md:mr-4`}
           >
             <Info
-              className={`w-4 h-4 sm:w-5 sm:h-5 ${isDark ? "text-blue-400" : "text-blue-600"}`}
+              className={`w-4 h-4 sm:w-5 sm:h-5 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}
               aria-hidden="true"
             />
           </div>
           <div className="min-w-0 flex-1">
             <h3
               className={`text-sm sm:text-base md:text-lg font-bold leading-tight ${
-                isDark ? "text-slate-200" : "text-slate-700"
+                isDark ? 'text-slate-200' : 'text-slate-700'
               }`}
               style={{ fontFamily }}
             >
@@ -61,7 +55,7 @@ const WelcomeMessage = memo(function WelcomeMessage({
             </h3>
             <p
               className={`text-xs sm:text-sm mt-0.5 sm:mt-1 leading-snug ${
-                isDark ? "text-slate-400" : "text-slate-600"
+                isDark ? 'text-slate-400' : 'text-slate-600'
               }`}
               style={{ fontFamily }}
             >
@@ -73,8 +67,8 @@ const WelcomeMessage = memo(function WelcomeMessage({
           onClick={onClose}
           className={`p-1.5 sm:p-2 rounded-md sm:rounded-lg transition-colors cursor-pointer shrink-0 ${
             isDark
-              ? "text-slate-400 hover:text-slate-200 hover:bg-slate-700/50"
-              : "text-slate-500 hover:text-slate-700 hover:bg-slate-200"
+              ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+              : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200'
           }`}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}

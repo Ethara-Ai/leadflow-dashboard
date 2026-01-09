@@ -81,12 +81,12 @@ const DashboardContent = memo(function DashboardContent() {
     <div
       className={`min-h-screen transition-all duration-300 overflow-x-hidden overflow-y-auto ${
         isDark
-          ? "bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white"
-          : "bg-linear-to-br from-slate-50 via-white to-slate-50 text-slate-900"
+          ? 'bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white'
+          : 'bg-linear-to-br from-slate-50 via-white to-slate-50 text-slate-900'
       }`}
       style={{
         fontFamily: `${fontFamily}, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`,
-        WebkitOverflowScrolling: "touch",
+        WebkitOverflowScrolling: 'touch',
       }}
     >
       <div className="max-w-7xl mx-auto p-4 sm:p-8">

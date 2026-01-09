@@ -3,9 +3,9 @@
  * This file runs before each test file and sets up the testing environment
  */
 
-import { expect, afterEach, beforeEach, vi } from "vitest";
-import { cleanup } from "@testing-library/react";
-import * as matchers from "@testing-library/jest-dom/matchers";
+import { expect, afterEach, beforeEach, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import * as matchers from '@testing-library/jest-dom/matchers';
 
 // Extend Vitest's expect with jest-dom matchers
 expect.extend(matchers);
@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 // Mock window.matchMedia for responsive components
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation((query) => ({
     matches: false,
@@ -62,19 +62,19 @@ const localStorageMock = {
   clear: vi.fn(),
 };
 
-Object.defineProperty(window, "localStorage", {
+Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
 // Mock URL.createObjectURL and URL.revokeObjectURL for file export functions
-URL.createObjectURL = vi.fn(() => "blob:mock-url");
+URL.createObjectURL = vi.fn(() => 'blob:mock-url');
 URL.revokeObjectURL = vi.fn();
 
 // Mock document.createElement for download link creation
 const originalCreateElement = document.createElement.bind(document);
 document.createElement = vi.fn((tagName) => {
   const element = originalCreateElement(tagName);
-  if (tagName === "a") {
+  if (tagName === 'a') {
     element.click = vi.fn();
   }
   return element;

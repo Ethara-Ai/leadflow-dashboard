@@ -3,9 +3,9 @@
 // Provides centralized theme management via React Context
 // =============================================================================
 
-import { useState, useEffect, useMemo } from "react";
-import { ThemeContext } from "./ThemeContext.js";
-import { STORAGE_KEYS } from "../constants/index.js";
+import { useState, useEffect, useMemo } from 'react';
+import { ThemeContext } from './ThemeContext.js';
+import { STORAGE_KEYS } from '../constants/index.js';
 
 /**
  * Theme Provider component that wraps the application
@@ -18,20 +18,20 @@ import { STORAGE_KEYS } from "../constants/index.js";
 const ThemeProvider = ({ children, defaultDarkMode = false }) => {
   const [isDark, setIsDark] = useState(() => {
     // Check for saved preference in localStorage
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem(STORAGE_KEYS.THEME);
         if (saved !== null) {
-          return saved === "dark";
+          return saved === 'dark';
         }
         // Check for system preference
-        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
           return true;
         }
       } catch (error) {
         // localStorage may be unavailable (e.g., private browsing)
         if (import.meta.env.DEV) {
-          console.warn("ThemeProvider: Unable to access localStorage", error);
+          console.warn('ThemeProvider: Unable to access localStorage', error);
         }
       }
     }
@@ -41,20 +41,20 @@ const ThemeProvider = ({ children, defaultDarkMode = false }) => {
   // Persist theme preference to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEYS.THEME, isDark ? "dark" : "light");
+      localStorage.setItem(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light');
     } catch (error) {
       // Silently fail if localStorage is unavailable
       if (import.meta.env.DEV) {
-        console.warn("ThemeProvider: Unable to save theme preference", error);
+        console.warn('ThemeProvider: Unable to save theme preference', error);
       }
     }
   }, [isDark]);
 
   // Listen for system theme changes
   useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
+    if (typeof window === 'undefined' || !window.matchMedia) return;
 
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const handleChange = (e) => {
       // Only auto-switch if user hasn't set a preference
@@ -69,8 +69,8 @@ const ThemeProvider = ({ children, defaultDarkMode = false }) => {
       }
     };
 
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   /**
@@ -92,7 +92,7 @@ const ThemeProvider = ({ children, defaultDarkMode = false }) => {
       toggleTheme,
       setDarkMode,
     }),
-    [isDark],
+    [isDark]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

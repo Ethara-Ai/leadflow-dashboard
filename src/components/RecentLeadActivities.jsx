@@ -1,6 +1,6 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
 import {
   Phone,
   Mail,
@@ -11,9 +11,9 @@ import {
   FileText,
   MessageSquare,
   Clock,
-} from "lucide-react";
-import { cardVariants, fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+} from 'lucide-react';
+import { cardVariants, fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * RecentLeadActivities Component
@@ -31,28 +31,28 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
 
   // Theme classes
   const cardClasses = isDark
-    ? "bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10"
-    : "bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10";
-  const titleClasses = isDark ? "text-slate-200" : "text-slate-700";
+    ? 'bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10'
+    : 'bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10';
+  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
 
   // Activity type icons
   const getActivityIcon = (type) => {
     switch (type) {
-      case "call":
+      case 'call':
         return <Phone className="w-3.5 h-3.5" />;
-      case "email":
+      case 'email':
         return <Mail className="w-3.5 h-3.5" />;
-      case "meeting":
+      case 'meeting':
         return <Calendar className="w-3.5 h-3.5" />;
-      case "closed":
+      case 'closed':
         return <CheckCircle2 className="w-3.5 h-3.5" />;
-      case "status":
+      case 'status':
         return <TrendingUp className="w-3.5 h-3.5" />;
-      case "new":
+      case 'new':
         return <UserPlus className="w-3.5 h-3.5" />;
-      case "proposal":
+      case 'proposal':
         return <FileText className="w-3.5 h-3.5" />;
-      case "note":
+      case 'note':
         return <MessageSquare className="w-3.5 h-3.5" />;
       default:
         return <Clock className="w-3.5 h-3.5" />;
@@ -62,62 +62,62 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
   // Activity type colors
   const getActivityColor = (type) => {
     switch (type) {
-      case "call":
+      case 'call':
         return isDark
-          ? "bg-blue-900/40 text-blue-400 border-blue-800/50"
-          : "bg-blue-100 text-blue-600 border-blue-200";
-      case "email":
+          ? 'bg-blue-900/40 text-blue-400 border-blue-800/50'
+          : 'bg-blue-100 text-blue-600 border-blue-200';
+      case 'email':
         return isDark
-          ? "bg-purple-900/40 text-purple-400 border-purple-800/50"
-          : "bg-purple-100 text-purple-600 border-purple-200";
-      case "meeting":
+          ? 'bg-purple-900/40 text-purple-400 border-purple-800/50'
+          : 'bg-purple-100 text-purple-600 border-purple-200';
+      case 'meeting':
         return isDark
-          ? "bg-emerald-900/40 text-emerald-400 border-emerald-800/50"
-          : "bg-emerald-100 text-emerald-600 border-emerald-200";
-      case "closed":
+          ? 'bg-emerald-900/40 text-emerald-400 border-emerald-800/50'
+          : 'bg-emerald-100 text-emerald-600 border-emerald-200';
+      case 'closed':
         return isDark
-          ? "bg-green-900/40 text-green-400 border-green-800/50"
-          : "bg-green-100 text-green-600 border-green-200";
-      case "status":
+          ? 'bg-green-900/40 text-green-400 border-green-800/50'
+          : 'bg-green-100 text-green-600 border-green-200';
+      case 'status':
         return isDark
-          ? "bg-amber-900/40 text-amber-400 border-amber-800/50"
-          : "bg-amber-100 text-amber-600 border-amber-200";
-      case "new":
+          ? 'bg-amber-900/40 text-amber-400 border-amber-800/50'
+          : 'bg-amber-100 text-amber-600 border-amber-200';
+      case 'new':
         return isDark
-          ? "bg-cyan-900/40 text-cyan-400 border-cyan-800/50"
-          : "bg-cyan-100 text-cyan-600 border-cyan-200";
-      case "proposal":
+          ? 'bg-cyan-900/40 text-cyan-400 border-cyan-800/50'
+          : 'bg-cyan-100 text-cyan-600 border-cyan-200';
+      case 'proposal':
         return isDark
-          ? "bg-indigo-900/40 text-indigo-400 border-indigo-800/50"
-          : "bg-indigo-100 text-indigo-600 border-indigo-200";
-      case "note":
+          ? 'bg-indigo-900/40 text-indigo-400 border-indigo-800/50'
+          : 'bg-indigo-100 text-indigo-600 border-indigo-200';
+      case 'note':
         return isDark
-          ? "bg-slate-700 text-slate-300 border-slate-600"
-          : "bg-slate-100 text-slate-600 border-slate-200";
+          ? 'bg-slate-700 text-slate-300 border-slate-600'
+          : 'bg-slate-100 text-slate-600 border-slate-200';
       default:
         return isDark
-          ? "bg-slate-700 text-slate-300 border-slate-600"
-          : "bg-slate-100 text-slate-600 border-slate-200";
+          ? 'bg-slate-700 text-slate-300 border-slate-600'
+          : 'bg-slate-100 text-slate-600 border-slate-200';
     }
   };
 
   // Priority badge colors
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case "high":
+      case 'high':
         return isDark
-          ? "bg-red-900/40 text-red-400 border-red-800/50"
-          : "bg-red-100 text-red-600 border-red-200";
-      case "medium":
+          ? 'bg-red-900/40 text-red-400 border-red-800/50'
+          : 'bg-red-100 text-red-600 border-red-200';
+      case 'medium':
         return isDark
-          ? "bg-amber-900/40 text-amber-400 border-amber-800/50"
-          : "bg-amber-100 text-amber-600 border-amber-200";
-      case "low":
+          ? 'bg-amber-900/40 text-amber-400 border-amber-800/50'
+          : 'bg-amber-100 text-amber-600 border-amber-200';
+      case 'low':
         return isDark
-          ? "bg-slate-700 text-slate-400 border-slate-600"
-          : "bg-slate-100 text-slate-600 border-slate-200";
+          ? 'bg-slate-700 text-slate-400 border-slate-600'
+          : 'bg-slate-100 text-slate-600 border-slate-200';
       default:
-        return "";
+        return '';
     }
   };
 
@@ -130,25 +130,16 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div
-            className={`p-2 rounded-lg ${isDark ? "bg-emerald-900/40" : "bg-emerald-100"}`}
-          >
-            <TrendingUp
-              className={`w-4 h-4 ${isDark ? "text-emerald-400" : "text-emerald-600"}`}
-            />
+          <div className={`p-2 rounded-lg ${isDark ? 'bg-emerald-900/40' : 'bg-emerald-100'}`}>
+            <TrendingUp className={`w-4 h-4 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
           </div>
-          <h3
-            className={`text-base sm:text-lg font-bold ${titleClasses}`}
-            style={{ fontFamily }}
-          >
+          <h3 className={`text-base sm:text-lg font-bold ${titleClasses}`} style={{ fontFamily }}>
             Recent Activities
           </h3>
         </div>
         <span
           className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-            isDark
-              ? "bg-slate-700 text-slate-300"
-              : "bg-slate-100 text-slate-600"
+            isDark ? 'bg-slate-700 text-slate-300' : 'bg-slate-100 text-slate-600'
           }`}
           style={{ fontFamily }}
         >
@@ -163,7 +154,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
             {/* Timeline line */}
             <div
               className={`absolute left-5 top-3 bottom-3 w-0.5 ${
-                isDark ? "bg-slate-700" : "bg-slate-200"
+                isDark ? 'bg-slate-700' : 'bg-slate-200'
               }`}
             />
 
@@ -180,7 +171,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                   {/* Icon */}
                   <div
                     className={`absolute left-2.5 top-1 p-1.5 rounded-lg border-2 ${getActivityColor(
-                      activity.type,
+                      activity.type
                     )}`}
                   >
                     {getActivityIcon(activity.type)}
@@ -190,15 +181,15 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                   <motion.div
                     className={`p-2.5 rounded-lg border ${
                       isDark
-                        ? "bg-slate-700/30 border-slate-600/30 hover:bg-slate-700/50"
-                        : "bg-slate-50 border-slate-200/50 hover:bg-slate-100"
+                        ? 'bg-slate-700/30 border-slate-600/30 hover:bg-slate-700/50'
+                        : 'bg-slate-50 border-slate-200/50 hover:bg-slate-100'
                     } transition-all duration-200`}
                     whileHover={{ scale: 1.02 }}
                   >
                     <div className="flex items-start justify-between gap-2 mb-0.5">
                       <p
                         className={`text-xs font-semibold truncate ${
-                          isDark ? "text-slate-200" : "text-slate-800"
+                          isDark ? 'text-slate-200' : 'text-slate-800'
                         }`}
                         style={{ fontFamily }}
                       >
@@ -207,7 +198,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                       {activity.priority && (
                         <span
                           className={`text-[9px] px-1.5 py-0.5 rounded-full font-semibold border shrink-0 ${getPriorityColor(
-                            activity.priority,
+                            activity.priority
                           )}`}
                           style={{ fontFamily }}
                         >
@@ -217,9 +208,7 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                     </div>
 
                     <p
-                      className={`text-[11px] mb-1 ${
-                        isDark ? "text-slate-400" : "text-slate-600"
-                      }`}
+                      className={`text-[11px] mb-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
                       style={{ fontFamily }}
                     >
                       {activity.description}
@@ -228,16 +217,14 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                     <div className="flex items-center justify-between gap-2">
                       <span
                         className={`text-[11px] font-medium ${
-                          isDark ? "text-blue-400" : "text-blue-600"
+                          isDark ? 'text-blue-400' : 'text-blue-600'
                         }`}
                         style={{ fontFamily }}
                       >
                         {activity.leadName}
                       </span>
                       <span
-                        className={`text-[10px] ${
-                          isDark ? "text-slate-500" : "text-slate-500"
-                        }`}
+                        className={`text-[10px] ${isDark ? 'text-slate-500' : 'text-slate-500'}`}
                         style={{ fontFamily }}
                       >
                         {activity.timestamp}
@@ -247,12 +234,12 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
                     {activity.amount && (
                       <div
                         className={`mt-1.5 pt-1.5 border-t ${
-                          isDark ? "border-slate-600/30" : "border-slate-200"
+                          isDark ? 'border-slate-600/30' : 'border-slate-200'
                         }`}
                       >
                         <span
                           className={`text-[11px] font-bold ${
-                            isDark ? "text-emerald-400" : "text-emerald-600"
+                            isDark ? 'text-emerald-400' : 'text-emerald-600'
                           }`}
                           style={{ fontFamily }}
                         >
@@ -267,27 +254,17 @@ const RecentLeadActivities = memo(function RecentLeadActivities({
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full">
-            <div
-              className={`p-4 rounded-full mb-3 ${
-                isDark ? "bg-slate-700/30" : "bg-slate-100"
-              }`}
-            >
-              <TrendingUp
-                className={`w-8 h-8 ${isDark ? "text-slate-600" : "text-slate-400"}`}
-              />
+            <div className={`p-4 rounded-full mb-3 ${isDark ? 'bg-slate-700/30' : 'bg-slate-100'}`}>
+              <TrendingUp className={`w-8 h-8 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
             </div>
             <p
-              className={`text-sm font-medium ${
-                isDark ? "text-slate-400" : "text-slate-600"
-              }`}
+              className={`text-sm font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
               style={{ fontFamily }}
             >
               No recent activities
             </p>
             <p
-              className={`text-xs mt-1 ${
-                isDark ? "text-slate-500" : "text-slate-500"
-              }`}
+              className={`text-xs mt-1 ${isDark ? 'text-slate-500' : 'text-slate-500'}`}
               style={{ fontFamily }}
             >
               Activities will appear here as they happen
@@ -304,22 +281,22 @@ RecentLeadActivities.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([
-        "call",
-        "email",
-        "meeting",
-        "closed",
-        "status",
-        "new",
-        "proposal",
-        "note",
+        'call',
+        'email',
+        'meeting',
+        'closed',
+        'status',
+        'new',
+        'proposal',
+        'note',
       ]).isRequired,
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       leadName: PropTypes.string.isRequired,
       timestamp: PropTypes.string.isRequired,
-      priority: PropTypes.oneOf(["high", "medium", "low"]),
+      priority: PropTypes.oneOf(['high', 'medium', 'low']),
       amount: PropTypes.string,
-    }),
+    })
   ),
   darkMode: PropTypes.bool,
 };

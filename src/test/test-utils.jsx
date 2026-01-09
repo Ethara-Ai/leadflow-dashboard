@@ -3,11 +3,11 @@
  * Provides common testing utilities for the Zoolab Dashboard project
  */
 
-import React from "react";
-import { render as rtlRender } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { vi, expect } from "vitest";
-import ThemeProvider from "../hooks/ThemeProvider";
+import React from 'react';
+import { render as rtlRender } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { vi, expect } from 'vitest';
+import ThemeProvider from '../hooks/ThemeProvider';
 
 /**
  * Custom render function that wraps components with necessary providers
@@ -17,10 +17,7 @@ import ThemeProvider from "../hooks/ThemeProvider";
  * @param {Object} options.renderOptions - Additional options to pass to RTL render
  * @returns {Object} - RTL render result plus user event instance
  */
-export function renderWithProviders(
-  ui,
-  { darkMode = false, ...renderOptions } = {},
-) {
+export function renderWithProviders(ui, { darkMode = false, ...renderOptions } = {}) {
   function Wrapper({ children }) {
     return <ThemeProvider defaultDarkMode={darkMode}>{children}</ThemeProvider>;
   }
@@ -52,7 +49,7 @@ export function renderLightMode(ui, options = {}) {
 }
 
 // Re-export everything from testing library
-export * from "@testing-library/react";
+export * from '@testing-library/react';
 
 // Override render with our custom render
 export { renderWithProviders as render };
@@ -67,7 +64,7 @@ export { renderWithProviders as render };
  * @returns {Array} - Array of activity data objects
  */
 export function generateMockActivityData(count = 7) {
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   return Array.from({ length: count }, (_, i) => ({
     name: days[i % days.length],
     animals: Math.floor(Math.random() * 100) + 100,
@@ -81,7 +78,7 @@ export function generateMockActivityData(count = 7) {
  * @returns {Array} - Array of efficiency data objects
  */
 export function generateMockFeedingData(count = 7) {
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   return Array.from({ length: count }, (_, i) => ({
     name: days[i % days.length],
     efficiency: Math.floor(Math.random() * 25) + 75,
@@ -94,10 +91,10 @@ export function generateMockFeedingData(count = 7) {
  */
 export function generateMockDietData() {
   return [
-    { name: "Fresh Produce", value: 35 },
-    { name: "Protein/Meat", value: 30 },
-    { name: "Grains & Pellets", value: 20 },
-    { name: "Supplements", value: 15 },
+    { name: 'Fresh Produce', value: 35 },
+    { name: 'Protein/Meat', value: 30 },
+    { name: 'Grains & Pellets', value: 20 },
+    { name: 'Supplements', value: 15 },
   ];
 }
 
@@ -109,31 +106,31 @@ export function generateMockDietData() {
 export function generateMockAlerts(count = 3) {
   const messages = [
     {
-      message: "Elephant enclosure temperature above optimal range",
-      type: "warning",
+      message: 'Elephant enclosure temperature above optimal range',
+      type: 'warning',
     },
     {
-      message: "Veterinary checkup completed for primates section",
-      type: "info",
+      message: 'Veterinary checkup completed for primates section',
+      type: 'info',
     },
     {
-      message: "Low stock alert: Vitamin supplements for reptile house",
-      type: "warning",
+      message: 'Low stock alert: Vitamin supplements for reptile house',
+      type: 'warning',
     },
     {
-      message: "Humidity level critical in tropical bird aviary",
-      type: "warning",
+      message: 'Humidity level critical in tropical bird aviary',
+      type: 'warning',
     },
     {
-      message: "New animal arrival scheduled for quarantine area",
-      type: "info",
+      message: 'New animal arrival scheduled for quarantine area',
+      type: 'info',
     },
   ];
 
   return Array.from({ length: count }, (_, i) => ({
     id: i + 1,
     ...messages[i % messages.length],
-    time: `${i + 1} hour${i === 0 ? "" : "s"} ago`,
+    time: `${i + 1} hour${i === 0 ? '' : 's'} ago`,
   }));
 }
 
@@ -159,10 +156,10 @@ export function generateMockZooData(overrides = {}) {
  */
 export function generateMockNotes(count = 2) {
   const noteContents = [
-    "Lion enclosure: Male lion showing increased appetite after medication completed",
-    "Penguin habitat: Water filtration system maintenance scheduled for next week",
-    "Gorilla section: New enrichment activities showing positive behavioral results",
-    "Reptile house: Temperature monitoring system upgraded successfully",
+    'Lion enclosure: Male lion showing increased appetite after medication completed',
+    'Penguin habitat: Water filtration system maintenance scheduled for next week',
+    'Gorilla section: New enrichment activities showing positive behavioral results',
+    'Reptile house: Temperature monitoring system upgraded successfully',
   ];
 
   return Array.from({ length: count }, (_, i) => ({
@@ -187,7 +184,7 @@ export function createAsyncMock(resolveValue, delay = 100) {
     () =>
       new Promise((resolve) => {
         setTimeout(() => resolve(resolveValue), delay);
-      }),
+      })
   );
 }
 
@@ -201,11 +198,8 @@ export function createAsyncRejectMock(error, delay = 100) {
   return vi.fn(
     () =>
       new Promise((_, reject) => {
-        setTimeout(
-          () => reject(error instanceof Error ? error : new Error(error)),
-          delay,
-        );
-      }),
+        setTimeout(() => reject(error instanceof Error ? error : new Error(error)), delay);
+      })
   );
 }
 
@@ -234,8 +228,8 @@ export const mockCardVariants = {
  * Mock dropdown animation variants
  */
 export const mockDropdownVariants = {
-  closed: { opacity: 1, y: 0, height: "auto", transition: { duration: 0 } },
-  open: { opacity: 1, y: 0, height: "auto", transition: { duration: 0 } },
+  closed: { opacity: 1, y: 0, height: 'auto', transition: { duration: 0 } },
+  open: { opacity: 1, y: 0, height: 'auto', transition: { duration: 0 } },
 };
 
 // =============================================================================
@@ -261,7 +255,7 @@ export async function waitForElementToBeRemoved(queryFn, timeout = 5000) {
     await new Promise((resolve) => setTimeout(resolve, 50));
   }
 
-  throw new Error("Element was not removed within timeout");
+  throw new Error('Element was not removed within timeout');
 }
 
 /**
@@ -297,7 +291,7 @@ export function expectStyles(element, styles) {
 export function simulateResize(width, height) {
   window.innerWidth = width;
   window.innerHeight = height;
-  window.dispatchEvent(new Event("resize"));
+  window.dispatchEvent(new Event('resize'));
 }
 
 /**
@@ -308,11 +302,11 @@ export function simulateResize(width, height) {
  */
 export function pressKey(element, key, options = {}) {
   element.dispatchEvent(
-    new KeyboardEvent("keydown", {
+    new KeyboardEvent('keydown', {
       key,
       bubbles: true,
       ...options,
-    }),
+    })
   );
 }
 
@@ -321,7 +315,7 @@ export function pressKey(element, key, options = {}) {
  * @param {HTMLElement} element - Element to dispatch event on
  */
 export function pressEnter(element) {
-  pressKey(element, "Enter");
+  pressKey(element, 'Enter');
 }
 
 /**
@@ -329,7 +323,7 @@ export function pressEnter(element) {
  * @param {HTMLElement} element - Element to dispatch event on
  */
 export function pressEscape(element) {
-  pressKey(element, "Escape");
+  pressKey(element, 'Escape');
 }
 
 // =============================================================================
@@ -340,11 +334,9 @@ export function pressEscape(element) {
  * Mock Recharts ResponsiveContainer for testing
  * Recharts ResponsiveContainer doesn't render children without a sized parent
  */
-export const MockResponsiveContainer = ({
-  children,
-  width = 500,
-  height = 300,
-}) => <div style={{ width, height }}>{children}</div>;
+export const MockResponsiveContainer = ({ children, width = 500, height = 300 }) => (
+  <div style={{ width, height }}>{children}</div>
+);
 
 /**
  * Get chart elements within a container
@@ -353,15 +345,15 @@ export const MockResponsiveContainer = ({
  */
 export function getChartElements(container) {
   return {
-    getSvg: () => container.querySelector("svg"),
-    getBars: () => container.querySelectorAll(".recharts-bar-rectangle"),
-    getLines: () => container.querySelectorAll(".recharts-line"),
-    getAreas: () => container.querySelectorAll(".recharts-area"),
-    getPieSectors: () => container.querySelectorAll(".recharts-pie-sector"),
-    getTooltip: () => container.querySelector(".recharts-tooltip-wrapper"),
-    getLegend: () => container.querySelector(".recharts-legend-wrapper"),
-    getXAxis: () => container.querySelector(".recharts-xAxis"),
-    getYAxis: () => container.querySelector(".recharts-yAxis"),
+    getSvg: () => container.querySelector('svg'),
+    getBars: () => container.querySelectorAll('.recharts-bar-rectangle'),
+    getLines: () => container.querySelectorAll('.recharts-line'),
+    getAreas: () => container.querySelectorAll('.recharts-area'),
+    getPieSectors: () => container.querySelectorAll('.recharts-pie-sector'),
+    getTooltip: () => container.querySelector('.recharts-tooltip-wrapper'),
+    getLegend: () => container.querySelector('.recharts-legend-wrapper'),
+    getXAxis: () => container.querySelector('.recharts-xAxis'),
+    getYAxis: () => container.querySelector('.recharts-yAxis'),
   };
 }
 
@@ -376,11 +368,11 @@ export function getChartElements(container) {
  */
 export function isFocusable(element) {
   const focusableSelectors = [
-    "a[href]",
-    "button:not([disabled])",
-    "input:not([disabled])",
-    "select:not([disabled])",
-    "textarea:not([disabled])",
+    'a[href]',
+    'button:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
     "[tabindex]:not([tabindex='-1'])",
   ];
 
@@ -394,7 +386,7 @@ export function isFocusable(element) {
  */
 export function getFocusableElements(container) {
   return container.querySelectorAll(
-    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
   );
 }
 

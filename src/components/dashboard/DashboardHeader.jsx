@@ -3,10 +3,10 @@
 // Header component that connects to dashboard context
 // =============================================================================
 
-import { memo } from "react";
-import { useDashboard } from "../../context/index.js";
-import useTheme from "../../hooks/useTheme.jsx";
-import Header from "../Header.jsx";
+import { memo } from 'react';
+import { useDashboard } from '../../context/index.js';
+import useTheme from '../../hooks/useTheme.jsx';
+import Header from '../Header.jsx';
 
 /**
  * DashboardHeader Component

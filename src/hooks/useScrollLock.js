@@ -3,7 +3,7 @@
 // Reusable hook for managing body scroll locking
 // =============================================================================
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 /**
  * Custom hook for locking body scroll when a modal or overlay is open.
@@ -46,37 +46,37 @@ const useScrollLock = (
       scrollYRef.current = window.scrollY;
 
       // Apply scroll lock styles
-      document.body.style.position = "fixed";
+      document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollYRef.current}px`;
-      document.body.style.width = "100%";
-      document.body.style.overflow = "hidden";
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
     } else {
       // Get the stored scroll position from body.style.top
       const storedScrollY = document.body.style.top;
 
       // Remove scroll lock styles
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      document.body.style.overflow = "";
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
 
       // Restore scroll position if we had one stored
       if (storedScrollY) {
-        window.scrollTo(0, parseInt(storedScrollY || "0") * -1);
+        window.scrollTo(0, parseInt(storedScrollY || '0') * -1);
       }
     }
 
     // Cleanup function to ensure styles are removed on unmount
     return () => {
       const storedScrollY = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      document.body.style.overflow = "";
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
 
       // Restore scroll position on cleanup
       if (storedScrollY) {
-        window.scrollTo(0, parseInt(storedScrollY || "0") * -1);
+        window.scrollTo(0, parseInt(storedScrollY || '0') * -1);
       }
     };
   }, [isLocked, enabled, mobileOnly, mobileBreakpoint]);

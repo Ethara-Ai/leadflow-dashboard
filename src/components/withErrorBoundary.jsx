@@ -1,4 +1,4 @@
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundary from './ErrorBoundary';
 
 /**
  * Higher-order component to wrap any component with an ErrorBoundary
@@ -13,7 +13,7 @@ const withErrorBoundary = (WrappedComponent, errorBoundaryProps = {}) => {
     </ErrorBoundary>
   );
 
-  WithErrorBoundary.displayName = `withErrorBoundary(${WrappedComponent.displayName || WrappedComponent.name || "Component"})`;
+  WithErrorBoundary.displayName = `withErrorBoundary(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
 
   return WithErrorBoundary;
 };

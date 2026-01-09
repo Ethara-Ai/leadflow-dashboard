@@ -18,7 +18,7 @@ import {
 import { UIDataProvider, useUIDataContext } from "./UIDataContext.jsx";
 
 // Import utilities
-import { exportToCSV, exportToJSON, generateExportFilename } from "../utils.js";
+import { exportToCSV, exportToJSON, generateExportFilename } from '../utils.js';
 
 /**
  * Dashboard Context
@@ -237,7 +237,7 @@ const DashboardInnerProvider = ({ children }) => {
       // Export
       handleExportCSV,
       handleExportJSON,
-    ],
+    ]
   );
 
   return (

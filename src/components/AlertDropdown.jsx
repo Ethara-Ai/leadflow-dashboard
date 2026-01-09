@@ -1,9 +1,9 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
-import { dropdownVariants, fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
+import { dropdownVariants, fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * AlertDropdownItem Component
@@ -13,32 +13,32 @@ const AlertDropdownItem = memo(function AlertDropdownItem({ alert, isDark }) {
   // Alert type styling
   const getAlertStyles = () => {
     switch (alert.type) {
-      case "warning":
+      case 'warning':
         return {
-          bg: isDark ? "bg-amber-900/20" : "bg-amber-50",
-          text: isDark ? "text-amber-300" : "text-amber-700",
+          bg: isDark ? 'bg-amber-900/20' : 'bg-amber-50',
+          text: isDark ? 'text-amber-300' : 'text-amber-700',
         };
-      case "error":
+      case 'error':
         return {
-          bg: isDark ? "bg-red-900/20" : "bg-red-50",
-          text: isDark ? "text-red-300" : "text-red-700",
+          bg: isDark ? 'bg-red-900/20' : 'bg-red-50',
+          text: isDark ? 'text-red-300' : 'text-red-700',
         };
-      case "success":
+      case 'success':
         return {
-          bg: isDark ? "bg-emerald-900/20" : "bg-emerald-50",
-          text: isDark ? "text-emerald-300" : "text-emerald-700",
+          bg: isDark ? 'bg-emerald-900/20' : 'bg-emerald-50',
+          text: isDark ? 'text-emerald-300' : 'text-emerald-700',
         };
       default:
         return {
-          bg: isDark ? "bg-blue-900/20" : "bg-blue-50",
-          text: isDark ? "text-blue-300" : "text-blue-700",
+          bg: isDark ? 'bg-blue-900/20' : 'bg-blue-50',
+          text: isDark ? 'text-blue-300' : 'text-blue-700',
         };
     }
   };
 
   const styles = getAlertStyles();
-  const borderClasses = isDark ? "border-slate-700" : "border-slate-200";
-  const timeClasses = isDark ? "text-slate-500" : "text-slate-500";
+  const borderClasses = isDark ? 'border-slate-700' : 'border-slate-200';
+  const timeClasses = isDark ? 'text-slate-500' : 'text-slate-500';
 
   return (
     <div className={`p-4 border-b last:border-0 ${borderClasses} ${styles.bg}`} role="listitem">
@@ -46,13 +46,17 @@ const AlertDropdownItem = memo(function AlertDropdownItem({ alert, isDark }) {
         className={`text-sm font-medium wrap-break-word overflow-hidden ${styles.text}`}
         style={{
           fontFamily,
-          wordBreak: "break-word",
-          overflowWrap: "anywhere",
+          wordBreak: 'break-word',
+          overflowWrap: 'anywhere',
         }}
       >
         {alert.message}
       </p>
-      <time className={`text-xs mt-1 block ${timeClasses}`} style={{ fontFamily }} dateTime={alert.timestamp}>
+      <time
+        className={`text-xs mt-1 block ${timeClasses}`}
+        style={{ fontFamily }}
+        dateTime={alert.timestamp}
+      >
         {alert.time}
       </time>
     </div>
@@ -63,7 +67,7 @@ AlertDropdownItem.propTypes = {
   alert: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     message: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(["warning", "info", "error", "success"]),
+    type: PropTypes.oneOf(['warning', 'info', 'error', 'success']),
     time: PropTypes.string.isRequired,
     timestamp: PropTypes.string,
   }).isRequired,
@@ -107,24 +111,28 @@ const AlertDropdown = memo(function AlertDropdown({
 
   // Handle keyboard submit
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleSubmit();
     }
   };
 
   // Theme-based classes
-  const containerClasses = isDark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-300";
-  const headerBorderClasses = isDark ? "border-slate-700" : "border-slate-200";
-  const headingClasses = isDark ? "text-slate-200" : "text-slate-700";
-  const buttonClasses = isDark ? "text-slate-400 hover:text-slate-200" : "text-slate-600 hover:text-slate-800";
+  const containerClasses = isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-300';
+  const headerBorderClasses = isDark ? 'border-slate-700' : 'border-slate-200';
+  const headingClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+  const buttonClasses = isDark
+    ? 'text-slate-400 hover:text-slate-200'
+    : 'text-slate-600 hover:text-slate-800';
   const closeButtonClasses = isDark
-    ? "text-slate-400 hover:text-slate-200 hover:bg-slate-700"
-    : "text-slate-500 hover:text-slate-700 hover:bg-slate-100";
+    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700'
+    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100';
   const inputClasses = isDark
-    ? "bg-slate-700 border-slate-600 text-slate-200 placeholder-slate-400 focus:border-blue-500"
-    : "bg-slate-50 border-slate-300 text-slate-700 placeholder-slate-500 focus:border-blue-500";
-  const emptyTextClasses = "text-slate-500";
-  const disabledButtonClasses = isDark ? "bg-slate-700 text-slate-500" : "bg-slate-200 text-slate-400";
+    ? 'bg-slate-700 border-slate-600 text-slate-200 placeholder-slate-400 focus:border-blue-500'
+    : 'bg-slate-50 border-slate-300 text-slate-700 placeholder-slate-500 focus:border-blue-500';
+  const emptyTextClasses = 'text-slate-500';
+  const disabledButtonClasses = isDark
+    ? 'bg-slate-700 text-slate-500'
+    : 'bg-slate-200 text-slate-400';
 
   return (
     <AnimatePresence>
@@ -147,8 +155,8 @@ const AlertDropdown = memo(function AlertDropdown({
             exit="closed"
             variants={dropdownVariants}
             style={{
-              maxHeight: "calc(100vh - 200px)",
-              overflow: "hidden",
+              maxHeight: 'calc(100vh - 200px)',
+              overflow: 'hidden',
             }}
             role="dialog"
             aria-modal="true"
@@ -157,7 +165,11 @@ const AlertDropdown = memo(function AlertDropdown({
             {/* Header */}
             <div className={`p-3 sm:p-4 border-b ${headerBorderClasses}`}>
               <div className="flex justify-between items-center">
-                <h4 id="alerts-dropdown-title" className={`text-sm font-bold ${headingClasses}`} style={{ fontFamily }}>
+                <h4
+                  id="alerts-dropdown-title"
+                  className={`text-sm font-bold ${headingClasses}`}
+                  style={{ fontFamily }}
+                >
                   Alerts
                 </h4>
                 <div className="flex items-center gap-2">
@@ -181,11 +193,21 @@ const AlertDropdown = memo(function AlertDropdown({
             </div>
 
             {/* Alerts List */}
-            <div className="max-h-64 overflow-y-auto hidden-scrollbar" role="list" aria-label="Alert notifications">
+            <div
+              className="max-h-64 overflow-y-auto hidden-scrollbar"
+              role="list"
+              aria-label="Alert notifications"
+            >
               {alerts.length > 0 ? (
-                alerts.map((alert) => <AlertDropdownItem key={alert.id} alert={alert} isDark={isDark} />)
+                alerts.map((alert) => (
+                  <AlertDropdownItem key={alert.id} alert={alert} isDark={isDark} />
+                ))
               ) : (
-                <div className={`p-6 text-center text-sm ${emptyTextClasses}`} style={{ fontFamily }} role="status">
+                <div
+                  className={`p-6 text-center text-sm ${emptyTextClasses}`}
+                  style={{ fontFamily }}
+                  role="status"
+                >
                   No alerts
                 </div>
               )}
@@ -205,7 +227,7 @@ const AlertDropdown = memo(function AlertDropdown({
                   placeholder="Add custom alert..."
                   maxLength={200}
                   className={`flex-1 min-w-0 px-3 py-2 text-sm rounded-lg border transition-all duration-200 ${inputClasses} focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
-                  style={{ fontFamily, textOverflow: "ellipsis" }}
+                  style={{ fontFamily, textOverflow: 'ellipsis' }}
                   onKeyDown={handleKeyDown}
                   aria-describedby="alert-input-hint"
                 />
@@ -217,7 +239,7 @@ const AlertDropdown = memo(function AlertDropdown({
                   disabled={!newAlert.trim()}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors shrink-0 ${
                     newAlert.trim()
-                      ? "bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer'
                       : `${disabledButtonClasses} cursor-not-allowed`
                   }`}
                   whileHover={newAlert.trim() ? { scale: 1.05 } : {}}
@@ -243,16 +265,19 @@ AlertDropdown.propTypes = {
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       message: PropTypes.string.isRequired,
-      type: PropTypes.oneOf(["warning", "info", "error", "success"]),
+      type: PropTypes.oneOf(['warning', 'info', 'error', 'success']),
       time: PropTypes.string.isRequired,
       timestamp: PropTypes.string,
-    }),
+    })
   ).isRequired,
   newAlert: PropTypes.string.isRequired,
   onNewAlertChange: PropTypes.func.isRequired,
   onAddAlert: PropTypes.func.isRequired,
   onClearAlerts: PropTypes.func.isRequired,
-  dropdownRef: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({ current: PropTypes.instanceOf(Element) })]),
+  dropdownRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
   darkMode: PropTypes.bool,
 };
 

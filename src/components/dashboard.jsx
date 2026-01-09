@@ -3,11 +3,11 @@
 // Root dashboard component with providers and error boundary
 // =============================================================================
 
-import { memo } from "react";
-import ErrorBoundary from "./ErrorBoundary.jsx";
-import ThemeProvider from "../hooks/ThemeProvider.jsx";
-import { DashboardProvider } from "../context/DashboardContext.jsx";
-import { DashboardContent } from "./dashboard/index.js";
+import { memo } from 'react';
+import ErrorBoundary from './ErrorBoundary.jsx';
+import ThemeProvider from '../hooks/ThemeProvider.jsx';
+import { DashboardProvider } from '../context/DashboardContext.jsx';
+import { DashboardContent } from './dashboard/index.js';
 
 /**
  * Dashboard Component

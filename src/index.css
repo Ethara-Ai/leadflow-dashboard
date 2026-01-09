@@ -1,116 +1,116 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Hidden scrollbar utility */
 .hidden-scrollbar {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .hidden-scrollbar::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* Custom scroll - thin scrollbar */
 .custom-scroll {
-    scrollbar-width: thin;
+  scrollbar-width: thin;
 }
 
 .custom-scroll::-webkit-scrollbar {
-    width: 4px;
+  width: 4px;
 }
 
 .custom-scroll::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-    background-color: rgba(148, 163, 184, 0.3);
-    border-radius: 4px;
+  background-color: rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(148, 163, 184, 0.5);
+  background-color: rgba(148, 163, 184, 0.5);
 }
 
 /* Pie chart tooltip containment for small devices */
 .recharts-wrapper {
-    overflow: visible;
+  overflow: visible;
 }
 
 .recharts-tooltip-wrapper {
-    z-index: 50 !important;
-    pointer-events: none !important;
-    transition: none !important;
+  z-index: 50 !important;
+  pointer-events: none !important;
+  transition: none !important;
 }
 
 /* Constrain tooltip on very small screens (<320px) */
 @media (max-width: 320px) {
-    .recharts-tooltip-wrapper {
-        max-width: 130px !important;
-        position: absolute !important;
-    }
+  .recharts-tooltip-wrapper {
+    max-width: 130px !important;
+    position: absolute !important;
+  }
 
-    .recharts-tooltip-wrapper > div {
-        max-width: 130px !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-        padding: 6px !important;
-        font-size: 10px !important;
-    }
+  .recharts-tooltip-wrapper > div {
+    max-width: 130px !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    padding: 6px !important;
+    font-size: 10px !important;
+  }
 
-    /* Smaller pie chart for very small screens */
-    .recharts-pie-sector {
-        stroke-width: 1px;
-    }
+  /* Smaller pie chart for very small screens */
+  .recharts-pie-sector {
+    stroke-width: 1px;
+  }
 }
 
 /* Constrain tooltip on small screens (<480px) */
 @media (max-width: 480px) {
-    .recharts-tooltip-wrapper {
-        max-width: 150px !important;
-    }
+  .recharts-tooltip-wrapper {
+    max-width: 150px !important;
+  }
 
-    .recharts-tooltip-wrapper > div {
-        max-width: 150px !important;
-        padding: 8px !important;
-    }
+  .recharts-tooltip-wrapper > div {
+    max-width: 150px !important;
+    padding: 8px !important;
+  }
 }
 
 /* Ensure pie chart stays within container */
 .recharts-surface {
-    overflow: visible;
+  overflow: visible;
 }
 
 /* Ensure text labels are visible */
 .recharts-pie-label-text {
-    fill: currentColor;
-    font-weight: 500;
+  fill: currentColor;
+  font-weight: 500;
 }
 
 /* Pie chart hover effects */
 .recharts-pie-sector {
-    outline: none !important;
-    transition: opacity 0.15s ease-in-out;
+  outline: none !important;
+  transition: opacity 0.15s ease-in-out;
 }
 
 .recharts-pie-sector:hover {
-    opacity: 0.85;
+  opacity: 0.85;
 }
 
 /* Ensure responsive container doesn't overflow */
 .recharts-responsive-container {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 /* Custom styling for diet distribution card on very small screens */
 @media (max-width: 320px) {
-    .recharts-wrapper {
-        max-width: 100% !important;
-    }
+  .recharts-wrapper {
+    max-width: 100% !important;
+  }
 
-    .recharts-responsive-container {
-        min-width: 0 !important;
-    }
+  .recharts-responsive-container {
+    min-width: 0 !important;
+  }
 }
 
 /* ==========================================
@@ -119,115 +119,115 @@
 
 /* Fix page scrolling on mobile devices */
 @media (max-width: 768px) {
-    html,
-    body {
-        overflow-x: hidden;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        height: auto;
-        min-height: 100%;
-    }
+  html,
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: auto;
+    min-height: 100%;
+  }
 
-    /* Ensure main container allows scrolling to footer */
-    .min-h-screen {
-        min-height: 100vh;
-        height: auto;
-        overflow: visible;
-        padding-bottom: env(safe-area-inset-bottom, 0);
-    }
+  /* Ensure main container allows scrolling to footer */
+  .min-h-screen {
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
 
-    /* Fix for iOS Safari viewport issues */
-    html {
-        height: -webkit-fill-available;
-    }
+  /* Fix for iOS Safari viewport issues */
+  html {
+    height: -webkit-fill-available;
+  }
 
-    body {
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
-    }
+  body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
 }
 
 /* Fix modal visibility on mobile devices */
 @media (max-width: 768px) {
-    /* Modal backdrop - ensure it covers full viewport */
-    .fixed.inset-0 {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 100%;
-        height: 100dvh;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
+  /* Modal backdrop - ensure it covers full viewport */
+  .fixed.inset-0 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    height: 100dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 
-    /* Modal container adjustments */
-    .fixed.inset-0.flex.items-center.justify-center {
-        align-items: flex-start;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
+  /* Modal container adjustments */
+  .fixed.inset-0.flex.items-center.justify-center {
+    align-items: flex-start;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 
-    /* Modal content box */
-    .max-h-\[85vh\] {
-        max-height: 90vh !important;
-        max-height: 90dvh !important;
-        margin: 0.5rem;
-    }
+  /* Modal content box */
+  .max-h-\[85vh\] {
+    max-height: 90vh !important;
+    max-height: 90dvh !important;
+    margin: 0.5rem;
+  }
 
-    .max-h-\[80vh\] {
-        max-height: 90vh !important;
-        max-height: 90dvh !important;
-        margin: 0.5rem;
-    }
+  .max-h-\[80vh\] {
+    max-height: 90vh !important;
+    max-height: 90dvh !important;
+    margin: 0.5rem;
+  }
 
-    /* Ensure modal content is scrollable */
-    .overflow-y-auto.custom-scroll {
-        max-height: calc(90dvh - 120px);
-        -webkit-overflow-scrolling: touch;
-    }
+  /* Ensure modal content is scrollable */
+  .overflow-y-auto.custom-scroll {
+    max-height: calc(90dvh - 120px);
+    -webkit-overflow-scrolling: touch;
+  }
 
-    /* Modal width adjustments for mobile */
-    .max-w-2xl {
-        max-width: calc(100vw - 2rem) !important;
-        width: 100%;
-    }
+  /* Modal width adjustments for mobile */
+  .max-w-2xl {
+    max-width: calc(100vw - 2rem) !important;
+    width: 100%;
+  }
 }
 
 /* Extra small mobile devices */
 @media (max-width: 480px) {
-    /* Further reduce modal padding on very small screens */
-    .fixed.inset-0.flex.items-center.justify-center {
-        padding: 0.5rem;
-    }
+  /* Further reduce modal padding on very small screens */
+  .fixed.inset-0.flex.items-center.justify-center {
+    padding: 0.5rem;
+  }
 
-    .max-h-\[85vh\],
-    .max-h-\[80vh\] {
-        max-height: 95vh !important;
-        max-height: 95dvh !important;
-        margin: 0.25rem;
-    }
+  .max-h-\[85vh\],
+  .max-h-\[80vh\] {
+    max-height: 95vh !important;
+    max-height: 95dvh !important;
+    margin: 0.25rem;
+  }
 
-    /* Ensure modal header and content have appropriate padding */
-    .p-6 {
-        padding: 1rem;
-    }
+  /* Ensure modal header and content have appropriate padding */
+  .p-6 {
+    padding: 1rem;
+  }
 
-    /* Modal scrollable content area */
-    .overflow-y-auto.custom-scroll {
-        max-height: calc(95dvh - 100px);
-    }
+  /* Modal scrollable content area */
+  .overflow-y-auto.custom-scroll {
+    max-height: calc(95dvh - 100px);
+  }
 }
 
 /* Fix for notch and safe areas on modern mobile devices */
 @supports (padding: max(0px)) {
-    @media (max-width: 768px) {
-        .fixed.inset-0 {
-            padding-top: max(1rem, env(safe-area-inset-top));
-            padding-bottom: max(1rem, env(safe-area-inset-bottom));
-            padding-left: env(safe-area-inset-left);
-            padding-right: env(safe-area-inset-right);
-        }
+  @media (max-width: 768px) {
+    .fixed.inset-0 {
+      padding-top: max(1rem, env(safe-area-inset-top));
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
     }
+  }
 }

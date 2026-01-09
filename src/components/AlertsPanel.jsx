@@ -1,10 +1,10 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { motion, AnimatePresence } from "framer-motion";
-import { Bell } from "lucide-react";
-import { cardVariants, fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
-import AlertItem from "./AlertItem";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Bell } from 'lucide-react';
+import { cardVariants, fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
+import AlertItem from './AlertItem';
 
 /**
  * AlertsPanel Component
@@ -21,20 +21,20 @@ const AlertsPanel = memo(function AlertsPanel({ alerts, onOpenModal, darkMode: d
 
   // Theme-based classes
   const cardClasses = isDark
-    ? "bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10"
-    : "bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10";
-  const titleClasses = isDark ? "text-slate-200" : "text-slate-700";
+    ? 'bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10'
+    : 'bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10';
+  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
   const alertButtonClasses =
     alerts.length > 0
       ? isDark
-        ? "bg-amber-900/40 text-amber-300 shadow-lg"
-        : "bg-amber-100 text-amber-700 shadow-lg"
+        ? 'bg-amber-900/40 text-amber-300 shadow-lg'
+        : 'bg-amber-100 text-amber-700 shadow-lg'
       : isDark
-        ? "text-slate-400 hover:text-slate-200 hover:bg-slate-700/50"
-        : "text-slate-600 hover:text-slate-800 hover:bg-slate-100";
-  const emptyIconClasses = isDark ? "text-slate-500" : "text-slate-400";
-  const emptyTextClasses = isDark ? "text-slate-400" : "text-slate-600";
-  const emptySubtextClasses = isDark ? "text-slate-500" : "text-slate-500";
+        ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+        : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100';
+  const emptyIconClasses = isDark ? 'text-slate-500' : 'text-slate-400';
+  const emptyTextClasses = isDark ? 'text-slate-400' : 'text-slate-600';
+  const emptySubtextClasses = isDark ? 'text-slate-500' : 'text-slate-500';
 
   return (
     <motion.div
@@ -44,7 +44,10 @@ const AlertsPanel = memo(function AlertsPanel({ alerts, onOpenModal, darkMode: d
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <h3 className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`} style={{ fontFamily }}>
+        <h3
+          className={`text-base sm:text-lg md:text-xl font-bold ${titleClasses}`}
+          style={{ fontFamily }}
+        >
           Lead Alerts
         </h3>
 
@@ -82,7 +85,7 @@ const AlertsPanel = memo(function AlertsPanel({ alerts, onOpenModal, darkMode: d
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{
-              type: "spring",
+              type: 'spring',
               stiffness: 200,
               damping: 15,
               delay: 0.2,
@@ -90,7 +93,10 @@ const AlertsPanel = memo(function AlertsPanel({ alerts, onOpenModal, darkMode: d
           >
             <Bell className={`w-6 h-6 sm:w-8 sm:h-8 ${emptyIconClasses}`} aria-hidden="true" />
           </motion.div>
-          <p className={`mt-3 sm:mt-4 text-sm sm:text-base font-medium ${emptyTextClasses}`} style={{ fontFamily }}>
+          <p
+            className={`mt-3 sm:mt-4 text-sm sm:text-base font-medium ${emptyTextClasses}`}
+            style={{ fontFamily }}
+          >
             No current alerts
           </p>
           <p className={`mt-1 text-xs sm:text-sm ${emptySubtextClasses}`} style={{ fontFamily }}>
@@ -107,9 +113,9 @@ AlertsPanel.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       message: PropTypes.string.isRequired,
-      type: PropTypes.oneOf(["info", "warning", "error", "success"]).isRequired,
+      type: PropTypes.oneOf(['info', 'warning', 'error', 'success']).isRequired,
       time: PropTypes.string.isRequired,
-    }),
+    })
   ).isRequired,
   onOpenModal: PropTypes.func.isRequired,
   darkMode: PropTypes.bool,

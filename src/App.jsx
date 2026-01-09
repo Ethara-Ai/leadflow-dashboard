@@ -1,16 +1,16 @@
-import { useState, useEffect, useCallback } from "react";
-import { AnimatePresence } from "framer-motion";
-import Dashboard from "./components/dashboard.jsx";
-import LoadingScreen from "./components/LoadingScreen";
-import { MAX_LOADING_TIME, MIN_LOADING_TIME } from "./constants/index.js";
+import { useState, useEffect, useCallback } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import Dashboard from './components/dashboard.jsx';
+import LoadingScreen from './components/LoadingScreen';
+import { MAX_LOADING_TIME, MIN_LOADING_TIME } from './constants/index.js';
 
 /**
  * Loading state machine states
  */
 const LOADING_STATE = {
-  LOADING: "loading",
-  MIN_TIME_ELAPSED: "minTimeElapsed",
-  READY: "ready",
+  LOADING: 'loading',
+  MIN_TIME_ELAPSED: 'minTimeElapsed',
+  READY: 'ready',
 };
 
 /**
@@ -45,7 +45,7 @@ function App() {
 
     // Track state flags
     let minTimeElapsed = false;
-    let documentLoaded = document.readyState === "complete";
+    let documentLoaded = document.readyState === 'complete';
     let maxTimeElapsed = false;
 
     /**
@@ -84,10 +84,10 @@ function App() {
     };
 
     // Check if document is already loaded
-    if (document.readyState === "complete") {
+    if (document.readyState === 'complete') {
       documentLoaded = true;
     } else {
-      window.addEventListener("load", handleLoad);
+      window.addEventListener('load', handleLoad);
     }
 
     // Cleanup function
@@ -95,7 +95,7 @@ function App() {
       isCleanedUp = true;
       clearTimeout(minTimeoutId);
       clearTimeout(maxTimeoutId);
-      window.removeEventListener("load", handleLoad);
+      window.removeEventListener('load', handleLoad);
     };
   }, [checkIfReady]);
 

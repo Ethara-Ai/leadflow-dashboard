@@ -1,6 +1,6 @@
-import { memo, useState } from "react";
-import PropTypes from "prop-types";
-import { motion, AnimatePresence } from "framer-motion";
+import { memo, useState } from 'react';
+import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Calendar,
   Clock,
@@ -10,9 +10,9 @@ import {
   ChevronLeft,
   ChevronRight,
   List,
-} from "lucide-react";
-import { cardVariants, fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+} from 'lucide-react';
+import { cardVariants, fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * MeetingScheduleCard Component
@@ -28,7 +28,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
 }) {
   const { isDark } = useThemeSafe(darkModeOverride);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewMode, setViewMode] = useState("calendar"); // "calendar" or "list"
+  const [viewMode, setViewMode] = useState('calendar'); // "calendar" or "list"
   const [selectedDay, setSelectedDay] = useState(null);
 
   // Get calendar data for current month
@@ -59,9 +59,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
   const getMeetingsForCurrentMonth = () => {
     return meetings.filter((meeting) => {
       const meetingDate = new Date(meeting.date);
-      return (
-        meetingDate.getMonth() === month && meetingDate.getFullYear() === year
-      );
+      return meetingDate.getMonth() === month && meetingDate.getFullYear() === year;
     });
   };
 
@@ -98,23 +96,23 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
 
   // Get meetings for current month (sorted by date) for list view
   const monthMeetingsList = currentMonthMeetings.sort(
-    (a, b) => new Date(a.date) - new Date(b.date),
+    (a, b) => new Date(a.date) - new Date(b.date)
   );
 
   // Theme classes
   const cardClasses = isDark
-    ? "bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10"
-    : "bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10";
-  const titleClasses = isDark ? "text-slate-200" : "text-slate-700";
+    ? 'bg-slate-800/80 border-slate-600/50 shadow-2xl shadow-black/50 ring-1 ring-slate-500/10'
+    : 'bg-white/90 border-slate-200/60 shadow-xl shadow-slate-900/10';
+  const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
 
   // Meeting type icons
   const getMeetingIcon = (type) => {
     switch (type) {
-      case "video":
+      case 'video':
         return <Video className="w-3 h-3" />;
-      case "phone":
+      case 'phone':
         return <Phone className="w-3 h-3" />;
-      case "in-person":
+      case 'in-person':
         return <Users className="w-3 h-3" />;
       default:
         return <Calendar className="w-3 h-3" />;
@@ -124,22 +122,14 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
   // Meeting type colors
   const getMeetingColor = (type) => {
     switch (type) {
-      case "video":
-        return isDark
-          ? "bg-blue-900/40 text-blue-400"
-          : "bg-blue-100 text-blue-600";
-      case "phone":
-        return isDark
-          ? "bg-emerald-900/40 text-emerald-400"
-          : "bg-emerald-100 text-emerald-600";
-      case "in-person":
-        return isDark
-          ? "bg-purple-900/40 text-purple-400"
-          : "bg-purple-100 text-purple-600";
+      case 'video':
+        return isDark ? 'bg-blue-900/40 text-blue-400' : 'bg-blue-100 text-blue-600';
+      case 'phone':
+        return isDark ? 'bg-emerald-900/40 text-emerald-400' : 'bg-emerald-100 text-emerald-600';
+      case 'in-person':
+        return isDark ? 'bg-purple-900/40 text-purple-400' : 'bg-purple-100 text-purple-600';
       default:
-        return isDark
-          ? "bg-slate-700 text-slate-300"
-          : "bg-slate-100 text-slate-600";
+        return isDark ? 'bg-slate-700 text-slate-300' : 'bg-slate-100 text-slate-600';
     }
   };
 
@@ -156,35 +146,28 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div
-            className={`p-2 rounded-lg ${isDark ? "bg-blue-900/40" : "bg-blue-100"}`}
-          >
-            <Calendar
-              className={`w-4 h-4 ${isDark ? "text-blue-400" : "text-blue-600"}`}
-            />
+          <div className={`p-2 rounded-lg ${isDark ? 'bg-blue-900/40' : 'bg-blue-100'}`}>
+            <Calendar className={`w-4 h-4 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
           </div>
-          <h3
-            className={`text-base sm:text-lg font-bold ${titleClasses}`}
-            style={{ fontFamily }}
-          >
+          <h3 className={`text-base sm:text-lg font-bold ${titleClasses}`} style={{ fontFamily }}>
             Meeting Schedule
           </h3>
         </div>
 
         {/* Toggle Buttons */}
         <div
-          className={`flex items-center gap-1 p-1 rounded-lg ${isDark ? "bg-slate-700/50" : "bg-slate-100"}`}
+          className={`flex items-center gap-1 p-1 rounded-lg ${isDark ? 'bg-slate-700/50' : 'bg-slate-100'}`}
         >
           <motion.button
-            onClick={() => setViewMode("calendar")}
+            onClick={() => setViewMode('calendar')}
             className={`p-2 rounded-md transition-all duration-200 cursor-pointer ${
-              viewMode === "calendar"
+              viewMode === 'calendar'
                 ? isDark
-                  ? "bg-blue-900/60 text-blue-400 shadow-md"
-                  : "bg-white text-blue-600 shadow-md"
+                  ? 'bg-blue-900/60 text-blue-400 shadow-md'
+                  : 'bg-white text-blue-600 shadow-md'
                 : isDark
-                  ? "text-slate-400 hover:text-slate-200"
-                  : "text-slate-600 hover:text-slate-800"
+                  ? 'text-slate-400 hover:text-slate-200'
+                  : 'text-slate-600 hover:text-slate-800'
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -193,15 +176,15 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
             <Calendar className="w-4 h-4" />
           </motion.button>
           <motion.button
-            onClick={() => setViewMode("list")}
+            onClick={() => setViewMode('list')}
             className={`p-2 rounded-md transition-all duration-200 cursor-pointer ${
-              viewMode === "list"
+              viewMode === 'list'
                 ? isDark
-                  ? "bg-blue-900/60 text-blue-400 shadow-md"
-                  : "bg-white text-blue-600 shadow-md"
+                  ? 'bg-blue-900/60 text-blue-400 shadow-md'
+                  : 'bg-white text-blue-600 shadow-md'
                 : isDark
-                  ? "text-slate-400 hover:text-slate-200"
-                  : "text-slate-600 hover:text-slate-800"
+                  ? 'text-slate-400 hover:text-slate-200'
+                  : 'text-slate-600 hover:text-slate-800'
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -214,7 +197,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
 
       {/* Content Area with responsive height */}
       <div className="flex-1 min-h-[280px] min-[634px]:min-h-0 overflow-hidden relative">
-        {viewMode === "calendar" ? (
+        {viewMode === 'calendar' ? (
           /* Calendar View - Fully visible without scrolling */
           <div className="h-full flex flex-col">
             {/* Calendar Header */}
@@ -223,8 +206,8 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                 onClick={prevMonth}
                 className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                   isDark
-                    ? "text-slate-400 hover:text-slate-200 hover:bg-slate-700/50"
-                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"
+                    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
                 }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -233,20 +216,20 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                 <ChevronLeft className="w-4 h-4" />
               </motion.button>
               <span
-                className={`text-sm font-semibold ${isDark ? "text-slate-200" : "text-slate-700"}`}
+                className={`text-sm font-semibold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}
                 style={{ fontFamily }}
               >
-                {currentDate.toLocaleString("default", {
-                  month: "long",
-                  year: "numeric",
+                {currentDate.toLocaleString('default', {
+                  month: 'long',
+                  year: 'numeric',
                 })}
               </span>
               <motion.button
                 onClick={nextMonth}
                 className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                   isDark
-                    ? "text-slate-400 hover:text-slate-200 hover:bg-slate-700/50"
-                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"
+                    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
                 }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -260,11 +243,11 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
             <div className="flex-1 flex flex-col overflow-y-auto hidden-scrollbar">
               <div className="grid grid-cols-7 gap-2 mb-2">
                 {/* Day headers */}
-                {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
+                {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
                   <div
                     key={day}
                     className={`text-center text-[10px] font-medium py-1 ${
-                      isDark ? "text-slate-500" : "text-slate-600"
+                      isDark ? 'text-slate-500' : 'text-slate-600'
                     }`}
                     style={{ fontFamily }}
                   >
@@ -286,10 +269,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
 
                         if (!isValidDay) {
                           return (
-                            <div
-                              key={`empty-${rowIndex}-${colIndex}`}
-                              className="aspect-square"
-                            />
+                            <div key={`empty-${rowIndex}-${colIndex}`} className="aspect-square" />
                           );
                         }
 
@@ -304,23 +284,23 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                           <motion.div
                             key={day}
                             className={`aspect-square flex flex-col items-center justify-center rounded-lg text-[11px] relative ${
-                              hasMeetingDay ? "cursor-pointer" : ""
+                              hasMeetingDay ? 'cursor-pointer' : ''
                             } ${
                               isSelected
                                 ? isDark
-                                  ? "bg-blue-600/50 text-blue-200 font-bold ring-2 ring-blue-400"
-                                  : "bg-blue-500/20 text-blue-700 font-bold ring-2 ring-blue-500"
+                                  ? 'bg-blue-600/50 text-blue-200 font-bold ring-2 ring-blue-400'
+                                  : 'bg-blue-500/20 text-blue-700 font-bold ring-2 ring-blue-500'
                                 : isToday
                                   ? isDark
-                                    ? "bg-blue-900/50 text-blue-300 font-bold shadow-md ring-2 ring-blue-500/50"
-                                    : "bg-blue-100 text-blue-700 font-bold shadow-md ring-2 ring-blue-400/50"
+                                    ? 'bg-blue-900/50 text-blue-300 font-bold shadow-md ring-2 ring-blue-500/50'
+                                    : 'bg-blue-100 text-blue-700 font-bold shadow-md ring-2 ring-blue-400/50'
                                   : hasMeetingDay
                                     ? isDark
-                                      ? "bg-emerald-900/30 text-emerald-300 hover:bg-emerald-900/50 font-semibold"
-                                      : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-semibold"
+                                      ? 'bg-emerald-900/30 text-emerald-300 hover:bg-emerald-900/50 font-semibold'
+                                      : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-semibold'
                                     : isDark
-                                      ? "text-slate-300"
-                                      : "text-slate-700"
+                                      ? 'text-slate-300'
+                                      : 'text-slate-700'
                             } transition-all duration-200`}
                             style={{ fontFamily }}
                             onClick={() => hasMeetingDay && handleDayClick(day)}
@@ -336,9 +316,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                                     <span
                                       key={idx}
                                       className={`w-1 h-1 rounded-full ${
-                                        isDark
-                                          ? "bg-emerald-400"
-                                          : "bg-emerald-600"
+                                        isDark ? 'bg-emerald-400' : 'bg-emerald-600'
                                       }`}
                                     />
                                   ))}
@@ -351,110 +329,104 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
 
                     {/* Expandable meeting details below the row */}
                     <AnimatePresence>
-                      {selectedDayRow === rowIndex &&
-                        selectedDayMeetings.length > 0 && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="overflow-hidden"
+                      {selectedDayRow === rowIndex && selectedDayMeetings.length > 0 && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
+                        >
+                          <div
+                            className={`mt-2 p-3 rounded-lg border ${
+                              isDark
+                                ? 'bg-slate-700/50 border-slate-600/50'
+                                : 'bg-slate-50 border-slate-200'
+                            }`}
                           >
-                            <div
-                              className={`mt-2 p-3 rounded-lg border ${
-                                isDark
-                                  ? "bg-slate-700/50 border-slate-600/50"
-                                  : "bg-slate-50 border-slate-200"
-                              }`}
-                            >
-                              <div className="flex items-center justify-between mb-2">
-                                <p
-                                  className={`text-xs font-bold ${
-                                    isDark ? "text-slate-200" : "text-slate-700"
+                            <div className="flex items-center justify-between mb-2">
+                              <p
+                                className={`text-xs font-bold ${
+                                  isDark ? 'text-slate-200' : 'text-slate-700'
+                                }`}
+                                style={{ fontFamily }}
+                              >
+                                {selectedDayMeetings.length}{' '}
+                                {selectedDayMeetings.length === 1 ? 'Meeting' : 'Meetings'} on{' '}
+                                {currentDate.toLocaleString('default', {
+                                  month: 'short',
+                                })}{' '}
+                                {selectedDay}
+                              </p>
+                              <motion.button
+                                onClick={() => setSelectedDay(null)}
+                                className={`p-1 rounded-md ${
+                                  isDark
+                                    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-600/50'
+                                    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200'
+                                }`}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                <span className="text-xs">✕</span>
+                              </motion.button>
+                            </div>
+                            <div className="space-y-2">
+                              {selectedDayMeetings.map((meeting) => (
+                                <div
+                                  key={meeting.id}
+                                  className={`flex items-start gap-2 p-2 rounded-md ${
+                                    isDark ? 'bg-slate-800/50' : 'bg-white'
                                   }`}
-                                  style={{ fontFamily }}
                                 >
-                                  {selectedDayMeetings.length}{" "}
-                                  {selectedDayMeetings.length === 1
-                                    ? "Meeting"
-                                    : "Meetings"}{" "}
-                                  on{" "}
-                                  {currentDate.toLocaleString("default", {
-                                    month: "short",
-                                  })}{" "}
-                                  {selectedDay}
-                                </p>
-                                <motion.button
-                                  onClick={() => setSelectedDay(null)}
-                                  className={`p-1 rounded-md ${
-                                    isDark
-                                      ? "text-slate-400 hover:text-slate-200 hover:bg-slate-600/50"
-                                      : "text-slate-500 hover:text-slate-700 hover:bg-slate-200"
-                                  }`}
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.95 }}
-                                >
-                                  <span className="text-xs">✕</span>
-                                </motion.button>
-                              </div>
-                              <div className="space-y-2">
-                                {selectedDayMeetings.map((meeting) => (
                                   <div
-                                    key={meeting.id}
-                                    className={`flex items-start gap-2 p-2 rounded-md ${
-                                      isDark ? "bg-slate-800/50" : "bg-white"
-                                    }`}
+                                    className={`p-1.5 rounded-md shrink-0 ${getMeetingColor(meeting.type)}`}
                                   >
-                                    <div
-                                      className={`p-1.5 rounded-md shrink-0 ${getMeetingColor(meeting.type)}`}
+                                    {getMeetingIcon(meeting.type)}
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <p
+                                      className={`text-xs font-semibold truncate ${
+                                        isDark ? 'text-slate-200' : 'text-slate-800'
+                                      }`}
+                                      style={{ fontFamily }}
                                     >
-                                      {getMeetingIcon(meeting.type)}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <p
-                                        className={`text-xs font-semibold truncate ${
-                                          isDark
-                                            ? "text-slate-200"
-                                            : "text-slate-800"
-                                        }`}
-                                        style={{ fontFamily }}
-                                      >
-                                        {meeting.title}
-                                      </p>
-                                      <p
-                                        className={`text-[11px] ${isDark ? "text-slate-400" : "text-slate-600"}`}
-                                        style={{ fontFamily }}
-                                      >
-                                        {meeting.client}
-                                      </p>
-                                      <div className="flex items-center gap-2 mt-1">
-                                        <div className="flex items-center gap-1">
-                                          <Clock
-                                            className={`w-3 h-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}
-                                          />
-                                          <span
-                                            className={`text-[11px] ${isDark ? "text-slate-400" : "text-slate-600"}`}
-                                            style={{ fontFamily }}
-                                          >
-                                            {meeting.time}
-                                          </span>
-                                        </div>
-                                        {meeting.duration && (
-                                          <span
-                                            className={`text-[11px] ${isDark ? "text-slate-500" : "text-slate-500"}`}
-                                            style={{ fontFamily }}
-                                          >
-                                            • {meeting.duration}
-                                          </span>
-                                        )}
+                                      {meeting.title}
+                                    </p>
+                                    <p
+                                      className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+                                      style={{ fontFamily }}
+                                    >
+                                      {meeting.client}
+                                    </p>
+                                    <div className="flex items-center gap-2 mt-1">
+                                      <div className="flex items-center gap-1">
+                                        <Clock
+                                          className={`w-3 h-3 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}
+                                        />
+                                        <span
+                                          className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
+                                          style={{ fontFamily }}
+                                        >
+                                          {meeting.time}
+                                        </span>
                                       </div>
+                                      {meeting.duration && (
+                                        <span
+                                          className={`text-[11px] ${isDark ? 'text-slate-500' : 'text-slate-500'}`}
+                                          style={{ fontFamily }}
+                                        >
+                                          • {meeting.duration}
+                                        </span>
+                                      )}
                                     </div>
                                   </div>
-                                ))}
-                              </div>
+                                </div>
+                              ))}
                             </div>
-                          </motion.div>
-                        )}
+                          </div>
+                        </motion.div>
+                      )}
                     </AnimatePresence>
                   </div>
                 ))}
@@ -471,8 +443,8 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                     key={meeting.id}
                     className={`p-2.5 rounded-lg border ${
                       isDark
-                        ? "bg-slate-700/30 border-slate-600/30"
-                        : "bg-slate-50 border-slate-200/50"
+                        ? 'bg-slate-700/30 border-slate-600/30'
+                        : 'bg-slate-50 border-slate-200/50'
                     } transition-all duration-200 hover:shadow-md`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -480,22 +452,20 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                     whileHover={{ scale: 1 }}
                   >
                     <div className="flex items-start gap-2">
-                      <div
-                        className={`p-1.5 rounded-md shrink-0 ${getMeetingColor(meeting.type)}`}
-                      >
+                      <div className={`p-1.5 rounded-md shrink-0 ${getMeetingColor(meeting.type)}`}>
                         {getMeetingIcon(meeting.type)}
                       </div>
                       <div className="flex-1 min-w-0">
                         <p
                           className={`text-xs font-semibold truncate ${
-                            isDark ? "text-slate-200" : "text-slate-800"
+                            isDark ? 'text-slate-200' : 'text-slate-800'
                           }`}
                           style={{ fontFamily }}
                         >
                           {meeting.title}
                         </p>
                         <p
-                          className={`text-[11px] mt-0.5 ${isDark ? "text-slate-400" : "text-slate-600"}`}
+                          className={`text-[11px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
                           style={{ fontFamily }}
                         >
                           {meeting.client}
@@ -503,10 +473,10 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                         <div className="flex items-center gap-3 mt-1">
                           <div className="flex items-center gap-1">
                             <Clock
-                              className={`w-3 h-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}
+                              className={`w-3 h-3 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}
                             />
                             <span
-                              className={`text-[11px] ${isDark ? "text-slate-400" : "text-slate-600"}`}
+                              className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
                               style={{ fontFamily }}
                             >
                               {meeting.time}
@@ -514,7 +484,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                           </div>
                           {meeting.duration && (
                             <span
-                              className={`text-[11px] ${isDark ? "text-slate-500" : "text-slate-500"}`}
+                              className={`text-[11px] ${isDark ? 'text-slate-500' : 'text-slate-500'}`}
                               style={{ fontFamily }}
                             >
                               • {meeting.duration}
@@ -529,10 +499,10 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
             ) : (
               <div className="flex flex-col items-center justify-center h-full">
                 <Calendar
-                  className={`w-10 h-10 mx-auto mb-2 ${isDark ? "text-slate-600" : "text-slate-400"}`}
+                  className={`w-10 h-10 mx-auto mb-2 ${isDark ? 'text-slate-600' : 'text-slate-400'}`}
                 />
                 <p
-                  className={`text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}
+                  className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
                   style={{ fontFamily }}
                 >
                   No upcoming meetings
@@ -544,16 +514,13 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
       </div>
 
       {/* Footer - Total meetings count */}
-      <div
-        className={`mt-3 pt-2.5 border-t ${isDark ? "border-slate-700" : "border-slate-200"}`}
-      >
+      <div className={`mt-3 pt-2.5 border-t ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
         <p
-          className={`text-[10px] text-center ${isDark ? "text-slate-400" : "text-slate-600"}`}
+          className={`text-[10px] text-center ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
           style={{ fontFamily }}
         >
-          {currentMonthMeetings.length}{" "}
-          {currentMonthMeetings.length === 1 ? "meeting" : "meetings"} scheduled
-          in {currentDate.toLocaleString("default", { month: "long" })} {year}
+          {currentMonthMeetings.length} {currentMonthMeetings.length === 1 ? 'meeting' : 'meetings'}{' '}
+          scheduled in {currentDate.toLocaleString('default', { month: 'long' })} {year}
         </p>
       </div>
     </motion.div>
@@ -569,8 +536,8 @@ MeetingScheduleCard.propTypes = {
       date: PropTypes.string.isRequired,
       time: PropTypes.string.isRequired,
       duration: PropTypes.string,
-      type: PropTypes.oneOf(["video", "phone", "in-person"]).isRequired,
-    }),
+      type: PropTypes.oneOf(['video', 'phone', 'in-person']).isRequired,
+    })
   ),
   darkMode: PropTypes.bool,
 };

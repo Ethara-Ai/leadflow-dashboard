@@ -3,11 +3,11 @@
  * Tests the theme context provider with localStorage persistence
  */
 
-import { describe, it, expect, beforeEach } from "vitest";
-import { render, screen, act, waitFor } from "@testing-library/react";
-import React, { useContext } from "react";
-import ThemeProvider from "./ThemeProvider";
-import { ThemeContext } from "./ThemeContext";
+import { describe, it, expect, beforeEach } from 'vitest';
+import { render, screen, act, waitFor } from '@testing-library/react';
+import React, { useContext } from 'react';
+import ThemeProvider from './ThemeProvider';
+import { ThemeContext } from './ThemeContext';
 
 // =============================================================================
 // Test Helpers
@@ -22,16 +22,10 @@ const TestConsumer = () => {
       <button data-testid="toggle-btn" onClick={context?.toggleTheme}>
         Toggle
       </button>
-      <button
-        data-testid="set-dark-btn"
-        onClick={() => context?.setDarkMode(true)}
-      >
+      <button data-testid="set-dark-btn" onClick={() => context?.setDarkMode(true)}>
         Set Dark
       </button>
-      <button
-        data-testid="set-light-btn"
-        onClick={() => context?.setDarkMode(false)}
-      >
+      <button data-testid="set-light-btn" onClick={() => context?.setDarkMode(false)}>
         Set Light
       </button>
     </div>
@@ -42,46 +36,46 @@ const TestConsumer = () => {
 // Basic Rendering Tests
 // =============================================================================
 
-describe("ThemeProvider", () => {
+describe('ThemeProvider', () => {
   beforeEach(() => {
     localStorage.getItem.mockReturnValue(null);
     localStorage.setItem.mockClear();
   });
 
-  describe("basic rendering", () => {
-    it("should render children", () => {
+  describe('basic rendering', () => {
+    it('should render children', () => {
       render(
         <ThemeProvider>
           <div data-testid="child">Child Content</div>
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("child")).toBeInTheDocument();
-      expect(screen.getByText("Child Content")).toBeInTheDocument();
+      expect(screen.getByTestId('child')).toBeInTheDocument();
+      expect(screen.getByText('Child Content')).toBeInTheDocument();
     });
 
-    it("should render multiple children", () => {
+    it('should render multiple children', () => {
       render(
         <ThemeProvider>
           <div data-testid="child-1">First</div>
           <div data-testid="child-2">Second</div>
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("child-1")).toBeInTheDocument();
-      expect(screen.getByTestId("child-2")).toBeInTheDocument();
+      expect(screen.getByTestId('child-1')).toBeInTheDocument();
+      expect(screen.getByTestId('child-2')).toBeInTheDocument();
     });
 
-    it("should render nested elements", () => {
+    it('should render nested elements', () => {
       render(
         <ThemeProvider>
           <div data-testid="parent">
             <div data-testid="nested">Nested Content</div>
           </div>
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("nested")).toBeInTheDocument();
+      expect(screen.getByTestId('nested')).toBeInTheDocument();
     });
   });
 
@@ -89,59 +83,59 @@ describe("ThemeProvider", () => {
   // Context Value Tests
   // =============================================================================
 
-  describe("context value", () => {
-    it("should provide isDark value", () => {
+  describe('context value', () => {
+    it('should provide isDark value', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
 
-    it("should provide darkMode alias", () => {
+    it('should provide darkMode alias', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("dark-mode")).toHaveTextContent("false");
+      expect(screen.getByTestId('dark-mode')).toHaveTextContent('false');
     });
 
-    it("should have isDark and darkMode in sync", () => {
+    it('should have isDark and darkMode in sync', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      const isDark = screen.getByTestId("is-dark").textContent;
-      const darkMode = screen.getByTestId("dark-mode").textContent;
+      const isDark = screen.getByTestId('is-dark').textContent;
+      const darkMode = screen.getByTestId('dark-mode').textContent;
 
       expect(isDark).toBe(darkMode);
     });
 
-    it("should provide toggleTheme function", () => {
+    it('should provide toggleTheme function', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      const toggleBtn = screen.getByTestId("toggle-btn");
+      const toggleBtn = screen.getByTestId('toggle-btn');
       expect(toggleBtn).toBeInTheDocument();
     });
 
-    it("should provide setDarkMode function", () => {
+    it('should provide setDarkMode function', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      const setDarkBtn = screen.getByTestId("set-dark-btn");
+      const setDarkBtn = screen.getByTestId('set-dark-btn');
       expect(setDarkBtn).toBeInTheDocument();
     });
   });
@@ -150,35 +144,35 @@ describe("ThemeProvider", () => {
   // Default Value Tests
   // =============================================================================
 
-  describe("default values", () => {
-    it("should default to light mode (isDark = false)", () => {
+  describe('default values', () => {
+    it('should default to light mode (isDark = false)', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
 
-    it("should use defaultDarkMode prop when set to true", () => {
+    it('should use defaultDarkMode prop when set to true', () => {
       render(
         <ThemeProvider defaultDarkMode={true}>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
     });
 
-    it("should use defaultDarkMode prop when set to false", () => {
+    it('should use defaultDarkMode prop when set to false', () => {
       render(
         <ThemeProvider defaultDarkMode={false}>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
   });
 
@@ -186,95 +180,89 @@ describe("ThemeProvider", () => {
   // localStorage Integration Tests
   // =============================================================================
 
-  describe("localStorage integration", () => {
-    it("should check localStorage on mount", () => {
+  describe('localStorage integration', () => {
+    it('should check localStorage on mount', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(localStorage.getItem).toHaveBeenCalledWith("leadflow-theme");
+      expect(localStorage.getItem).toHaveBeenCalledWith('leadflow-theme');
     });
 
     it("should use dark mode when localStorage has 'dark'", () => {
-      localStorage.getItem.mockReturnValue("dark");
+      localStorage.getItem.mockReturnValue('dark');
 
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
     });
 
     it("should use light mode when localStorage has 'light'", () => {
-      localStorage.getItem.mockReturnValue("light");
+      localStorage.getItem.mockReturnValue('light');
 
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
 
-    it("should prefer localStorage over defaultDarkMode", () => {
-      localStorage.getItem.mockReturnValue("light");
+    it('should prefer localStorage over defaultDarkMode', () => {
+      localStorage.getItem.mockReturnValue('light');
 
       render(
         <ThemeProvider defaultDarkMode={true}>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
       // localStorage says light, even though default is dark
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
 
-    it("should save to localStorage when theme changes", async () => {
+    it('should save to localStorage when theme changes', async () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      const toggleBtn = screen.getByTestId("toggle-btn");
+      const toggleBtn = screen.getByTestId('toggle-btn');
 
       act(() => {
         toggleBtn.click();
       });
 
       await waitFor(() => {
-        expect(localStorage.setItem).toHaveBeenCalledWith(
-          "leadflow-theme",
-          "dark",
-        );
+        expect(localStorage.setItem).toHaveBeenCalledWith('leadflow-theme', 'dark');
       });
     });
 
     it("should save 'light' to localStorage when set to light mode", async () => {
-      localStorage.getItem.mockReturnValue("dark");
+      localStorage.getItem.mockReturnValue('dark');
 
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      const setLightBtn = screen.getByTestId("set-light-btn");
+      const setLightBtn = screen.getByTestId('set-light-btn');
 
       act(() => {
         setLightBtn.click();
       });
 
       await waitFor(() => {
-        expect(localStorage.setItem).toHaveBeenCalledWith(
-          "leadflow-theme",
-          "light",
-        );
+        expect(localStorage.setItem).toHaveBeenCalledWith('leadflow-theme', 'light');
       });
     });
   });
@@ -283,84 +271,84 @@ describe("ThemeProvider", () => {
   // toggleTheme Tests
   // =============================================================================
 
-  describe("toggleTheme functionality", () => {
-    it("should toggle from light to dark", () => {
+  describe('toggleTheme functionality', () => {
+    it('should toggle from light to dark', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
 
       act(() => {
-        screen.getByTestId("toggle-btn").click();
+        screen.getByTestId('toggle-btn').click();
       });
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
     });
 
-    it("should toggle from dark to light", () => {
+    it('should toggle from dark to light', () => {
       render(
         <ThemeProvider defaultDarkMode={true}>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
 
       act(() => {
-        screen.getByTestId("toggle-btn").click();
+        screen.getByTestId('toggle-btn').click();
       });
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
 
-    it("should keep isDark and darkMode in sync after toggle", () => {
+    it('should keep isDark and darkMode in sync after toggle', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
       act(() => {
-        screen.getByTestId("toggle-btn").click();
+        screen.getByTestId('toggle-btn').click();
       });
 
-      const isDark = screen.getByTestId("is-dark").textContent;
-      const darkMode = screen.getByTestId("dark-mode").textContent;
+      const isDark = screen.getByTestId('is-dark').textContent;
+      const darkMode = screen.getByTestId('dark-mode').textContent;
 
       expect(isDark).toBe(darkMode);
-      expect(isDark).toBe("true");
+      expect(isDark).toBe('true');
     });
 
-    it("should handle multiple toggles", () => {
+    it('should handle multiple toggles', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      const toggleBtn = screen.getByTestId("toggle-btn");
+      const toggleBtn = screen.getByTestId('toggle-btn');
 
       // Start: false
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
 
       // Toggle 1: true
       act(() => toggleBtn.click());
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
 
       // Toggle 2: false
       act(() => toggleBtn.click());
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
 
       // Toggle 3: true
       act(() => toggleBtn.click());
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
 
       // Toggle 4: false
       act(() => toggleBtn.click());
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
   });
 
@@ -368,59 +356,59 @@ describe("ThemeProvider", () => {
   // setDarkMode Tests
   // =============================================================================
 
-  describe("setDarkMode functionality", () => {
-    it("should set dark mode to true", () => {
+  describe('setDarkMode functionality', () => {
+    it('should set dark mode to true', () => {
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
 
       act(() => {
-        screen.getByTestId("set-dark-btn").click();
+        screen.getByTestId('set-dark-btn').click();
       });
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
     });
 
-    it("should set dark mode to false", () => {
+    it('should set dark mode to false', () => {
       render(
         <ThemeProvider defaultDarkMode={true}>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
 
       act(() => {
-        screen.getByTestId("set-light-btn").click();
+        screen.getByTestId('set-light-btn').click();
       });
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
 
-    it("should be idempotent when setting same value", () => {
+    it('should be idempotent when setting same value', () => {
       render(
         <ThemeProvider defaultDarkMode={true}>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
       // Already dark, set to dark again
       act(() => {
-        screen.getByTestId("set-dark-btn").click();
+        screen.getByTestId('set-dark-btn').click();
       });
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
 
       // Set to dark again
       act(() => {
-        screen.getByTestId("set-dark-btn").click();
+        screen.getByTestId('set-dark-btn').click();
       });
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("true");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('true');
     });
   });
 
@@ -428,7 +416,7 @@ describe("ThemeProvider", () => {
   // Multiple Consumers Tests
   // =============================================================================
 
-  describe("multiple consumers", () => {
+  describe('multiple consumers', () => {
     const MultiConsumer = () => (
       <>
         <div data-testid="consumer-1">
@@ -440,25 +428,21 @@ describe("ThemeProvider", () => {
       </>
     );
 
-    it("should provide same values to multiple consumers", () => {
+    it('should provide same values to multiple consumers', () => {
       render(
         <ThemeProvider defaultDarkMode={true}>
           <MultiConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      const consumer1 = screen.getByTestId("consumer-1");
-      const consumer2 = screen.getByTestId("consumer-2");
+      const consumer1 = screen.getByTestId('consumer-1');
+      const consumer2 = screen.getByTestId('consumer-2');
 
-      const isDark1 = consumer1.querySelector(
-        '[data-testid="is-dark"]',
-      ).textContent;
-      const isDark2 = consumer2.querySelector(
-        '[data-testid="is-dark"]',
-      ).textContent;
+      const isDark1 = consumer1.querySelector('[data-testid="is-dark"]').textContent;
+      const isDark2 = consumer2.querySelector('[data-testid="is-dark"]').textContent;
 
       expect(isDark1).toBe(isDark2);
-      expect(isDark1).toBe("true");
+      expect(isDark1).toBe('true');
     });
   });
 
@@ -466,8 +450,8 @@ describe("ThemeProvider", () => {
   // Nested Providers Tests
   // =============================================================================
 
-  describe("nested providers", () => {
-    it("should allow nested providers with different values", () => {
+  describe('nested providers', () => {
+    it('should allow nested providers with different values', () => {
       render(
         <ThemeProvider defaultDarkMode={false}>
           <div data-testid="outer">
@@ -478,21 +462,17 @@ describe("ThemeProvider", () => {
               <TestConsumer />
             </div>
           </ThemeProvider>
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      const outer = screen.getByTestId("outer");
-      const inner = screen.getByTestId("inner");
+      const outer = screen.getByTestId('outer');
+      const inner = screen.getByTestId('inner');
 
-      const outerIsDark = outer.querySelector(
-        '[data-testid="is-dark"]',
-      ).textContent;
-      const innerIsDark = inner.querySelector(
-        '[data-testid="is-dark"]',
-      ).textContent;
+      const outerIsDark = outer.querySelector('[data-testid="is-dark"]').textContent;
+      const innerIsDark = inner.querySelector('[data-testid="is-dark"]').textContent;
 
-      expect(outerIsDark).toBe("false");
-      expect(innerIsDark).toBe("true");
+      expect(outerIsDark).toBe('false');
+      expect(innerIsDark).toBe('true');
     });
   });
 
@@ -500,51 +480,51 @@ describe("ThemeProvider", () => {
   // Edge Cases
   // =============================================================================
 
-  describe("edge cases", () => {
-    it("should handle undefined localStorage value gracefully", () => {
+  describe('edge cases', () => {
+    it('should handle undefined localStorage value gracefully', () => {
       localStorage.getItem.mockReturnValue(undefined);
 
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
 
-    it("should handle invalid localStorage value gracefully", () => {
-      localStorage.getItem.mockReturnValue("invalid-value");
+    it('should handle invalid localStorage value gracefully', () => {
+      localStorage.getItem.mockReturnValue('invalid-value');
 
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
       // Should not be dark since value !== "dark"
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
 
-    it("should handle empty string localStorage value", () => {
-      localStorage.getItem.mockReturnValue("");
+    it('should handle empty string localStorage value', () => {
+      localStorage.getItem.mockReturnValue('');
 
       render(
         <ThemeProvider>
           <TestConsumer />
-        </ThemeProvider>,
+        </ThemeProvider>
       );
 
-      expect(screen.getByTestId("is-dark")).toHaveTextContent("false");
+      expect(screen.getByTestId('is-dark')).toHaveTextContent('false');
     });
 
-    it("should render without crashing when children is null", () => {
+    it('should render without crashing when children is null', () => {
       expect(() => {
         render(<ThemeProvider>{null}</ThemeProvider>);
       }).not.toThrow();
     });
 
-    it("should render without crashing when children is undefined", () => {
+    it('should render without crashing when children is undefined', () => {
       expect(() => {
         render(<ThemeProvider>{undefined}</ThemeProvider>);
       }).not.toThrow();

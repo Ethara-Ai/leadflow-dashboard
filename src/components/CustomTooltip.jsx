@@ -1,7 +1,7 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * Format value based on data type
@@ -11,7 +11,7 @@ import useThemeSafe from "../hooks/useThemeSafe";
  * @returns {string} - Formatted value string
  */
 const formatTooltipValue = (value, dataKey) => {
-  if (typeof value === "number" && dataKey === "value") {
+  if (typeof value === 'number' && dataKey === 'value') {
     return `${value}%`;
   }
   return String(value);
@@ -27,7 +27,12 @@ const formatTooltipValue = (value, dataKey) => {
  * @param {string} [props.label] - Label for the tooltip
  * @param {boolean} [props.darkMode] - Override theme context (optional, for edge cases)
  */
-const CustomTooltip = memo(function CustomTooltip({ active, payload, label, darkMode: darkModeOverride }) {
+const CustomTooltip = memo(function CustomTooltip({
+  active,
+  payload,
+  label,
+  darkMode: darkModeOverride,
+}) {
   // Use safe theme hook with optional override
   const { isDark } = useThemeSafe(darkModeOverride);
 
@@ -38,10 +43,10 @@ const CustomTooltip = memo(function CustomTooltip({ active, payload, label, dark
   return (
     <div
       className={`${
-        isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"
+        isDark ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-300'
       } backdrop-blur-md rounded-lg p-2 sm:p-4 border shadow-xl max-w-37.5 sm:max-w-50 wrap-break-word`}
       style={{
-        pointerEvents: "none",
+        pointerEvents: 'none',
       }}
       role="tooltip"
       aria-live="polite"
@@ -49,7 +54,7 @@ const CustomTooltip = memo(function CustomTooltip({ active, payload, label, dark
       {label && (
         <p
           className={`font-bold mb-1 sm:mb-2 text-xs sm:text-sm truncate ${
-            isDark ? "text-slate-200" : "text-slate-700"
+            isDark ? 'text-slate-200' : 'text-slate-700'
           }`}
           style={{ fontFamily }}
         >
@@ -63,7 +68,9 @@ const CustomTooltip = memo(function CustomTooltip({ active, payload, label, dark
           style={{ color: entry.color, fontFamily }}
         >
           <span className="font-semibold">{entry.name}: </span>
-          <span className="whitespace-nowrap">{formatTooltipValue(entry.value, entry.dataKey)}</span>
+          <span className="whitespace-nowrap">
+            {formatTooltipValue(entry.value, entry.dataKey)}
+          </span>
         </p>
       ))}
     </div>
@@ -78,7 +85,7 @@ CustomTooltip.propTypes = {
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       color: PropTypes.string,
       dataKey: PropTypes.string,
-    }),
+    })
   ),
   label: PropTypes.string,
   darkMode: PropTypes.bool,

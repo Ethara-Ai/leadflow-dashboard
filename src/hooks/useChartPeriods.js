@@ -3,7 +3,7 @@
 // Custom hook for managing chart time period states
 // =============================================================================
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback } from 'react';
 import {
   activityWeekData,
   activityMonthData,
@@ -15,7 +15,7 @@ import {
   sourceMonthData,
   sourceYearData,
   TIME_PERIODS,
-} from "../constants/index.js";
+} from '../constants/index.js';
 
 // Re-export TIME_PERIODS for convenience
 export { TIME_PERIODS };
@@ -24,9 +24,9 @@ export { TIME_PERIODS };
  * Chart identifiers
  */
 export const CHART_IDS = {
-  ACTIVITY: "activity",
-  CONVERSION: "conversion",
-  SOURCE: "source",
+  ACTIVITY: 'activity',
+  CONVERSION: 'conversion',
+  SOURCE: 'source',
 };
 
 /**
@@ -115,9 +115,15 @@ const useChartPeriods = ({ defaultPeriod = TIME_PERIODS.WEEK } = {}) => {
   }, []);
 
   // Memoized data for each chart based on current period
-  const activityData = useMemo(() => getChartData(CHART_IDS.ACTIVITY, activityPeriod), [activityPeriod]);
+  const activityData = useMemo(
+    () => getChartData(CHART_IDS.ACTIVITY, activityPeriod),
+    [activityPeriod]
+  );
 
-  const conversionData = useMemo(() => getChartData(CHART_IDS.CONVERSION, conversionPeriod), [conversionPeriod]);
+  const conversionData = useMemo(
+    () => getChartData(CHART_IDS.CONVERSION, conversionPeriod),
+    [conversionPeriod]
+  );
 
   const sourceData = useMemo(() => getChartData(CHART_IDS.SOURCE, sourcePeriod), [sourcePeriod]);
 

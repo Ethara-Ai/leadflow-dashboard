@@ -3,7 +3,7 @@
 // Custom hook for memoized chart styles to prevent recreation on every render
 // =============================================================================
 
-import { useMemo } from "react";
+import { useMemo } from 'react';
 import {
   getAxisStyles,
   getGridStyles,
@@ -13,7 +13,7 @@ import {
   getDotStyles,
   getActiveDotStyles,
   getChartColors,
-} from "../chartUtils.js";
+} from '../chartUtils.js';
 
 /**
  * Custom hook for memoized chart styles

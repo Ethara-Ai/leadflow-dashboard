@@ -1,7 +1,7 @@
-import { Component } from "react";
-import PropTypes from "prop-types";
-import { AlertTriangle, RefreshCcw } from "lucide-react";
-import { fontFamily } from "../../constants/index.js";
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { AlertTriangle, RefreshCcw } from 'lucide-react';
+import { fontFamily } from '../../constants/index.js';
 
 /**
  * ChartErrorBoundary Component
@@ -33,7 +33,11 @@ class ChartErrorBoundary extends Component {
   componentDidCatch(error, errorInfo) {
     // Log error for debugging
     if (import.meta.env.DEV) {
-      console.error(`ChartErrorBoundary caught an error in "${this.props.chartName || "Chart"}":`, error, errorInfo);
+      console.error(
+        `ChartErrorBoundary caught an error in "${this.props.chartName || 'Chart'}":`,
+        error,
+        errorInfo
+      );
     }
 
     // Track error count for retry limiting
@@ -57,8 +61,8 @@ class ChartErrorBoundary extends Component {
   render() {
     const {
       children,
-      chartName = "Chart",
-      height = "300px",
+      chartName = 'Chart',
+      height = '300px',
       showRetry = true,
       maxRetries = 3,
       fallback,
@@ -70,20 +74,24 @@ class ChartErrorBoundary extends Component {
     if (hasError) {
       // Use custom fallback if provided
       if (fallback) {
-        return typeof fallback === "function" ? fallback({ error, retry: this.handleRetry, chartName }) : fallback;
+        return typeof fallback === 'function'
+          ? fallback({ error, retry: this.handleRetry, chartName })
+          : fallback;
       }
 
       const canRetry = showRetry && errorCount < maxRetries;
 
       // Theme-based styling
-      const containerClasses = isDark ? "bg-slate-800/80 border-slate-600/50" : "bg-white/90 border-slate-200/60";
-      const iconBgClasses = isDark ? "bg-red-900/30" : "bg-red-100";
-      const iconClasses = isDark ? "text-red-400" : "text-red-500";
-      const titleClasses = isDark ? "text-slate-200" : "text-slate-700";
-      const textClasses = isDark ? "text-slate-400" : "text-slate-600";
+      const containerClasses = isDark
+        ? 'bg-slate-800/80 border-slate-600/50'
+        : 'bg-white/90 border-slate-200/60';
+      const iconBgClasses = isDark ? 'bg-red-900/30' : 'bg-red-100';
+      const iconClasses = isDark ? 'text-red-400' : 'text-red-500';
+      const titleClasses = isDark ? 'text-slate-200' : 'text-slate-700';
+      const textClasses = isDark ? 'text-slate-400' : 'text-slate-600';
       const buttonClasses = isDark
-        ? "bg-slate-700 hover:bg-slate-600 text-slate-200"
-        : "bg-slate-100 hover:bg-slate-200 text-slate-700";
+        ? 'bg-slate-700 hover:bg-slate-600 text-slate-200'
+        : 'bg-slate-100 hover:bg-slate-200 text-slate-700';
 
       return (
         <div
@@ -92,7 +100,9 @@ class ChartErrorBoundary extends Component {
           role="alert"
           aria-live="polite"
         >
-          <div className={`w-12 h-12 ${iconBgClasses} rounded-full flex items-center justify-center mb-4`}>
+          <div
+            className={`w-12 h-12 ${iconBgClasses} rounded-full flex items-center justify-center mb-4`}
+          >
             <AlertTriangle className={`w-6 h-6 ${iconClasses}`} />
           </div>
 
@@ -106,11 +116,14 @@ class ChartErrorBoundary extends Component {
 
           {import.meta.env.DEV && error && (
             <details className="mb-4 w-full max-w-sm">
-              <summary className={`cursor-pointer text-xs ${textClasses} hover:underline`} style={{ fontFamily }}>
+              <summary
+                className={`cursor-pointer text-xs ${textClasses} hover:underline`}
+                style={{ fontFamily }}
+              >
                 Technical details
               </summary>
               <pre
-                className={`mt-2 p-2 ${isDark ? "bg-slate-900" : "bg-slate-100"} rounded text-xs ${iconClasses} overflow-auto max-h-20`}
+                className={`mt-2 p-2 ${isDark ? 'bg-slate-900' : 'bg-slate-100'} rounded text-xs ${iconClasses} overflow-auto max-h-20`}
               >
                 {error.toString()}
               </pre>

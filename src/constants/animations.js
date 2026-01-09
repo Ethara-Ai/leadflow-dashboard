@@ -10,7 +10,7 @@ export const cardVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: "easeOut" },
+    transition: { duration: 0.2, ease: 'easeOut' },
   },
 };
 
@@ -22,13 +22,13 @@ export const dropdownVariants = {
     opacity: 0,
     y: -10,
     height: 0,
-    transition: { duration: 0.15, ease: "easeInOut" },
+    transition: { duration: 0.15, ease: 'easeInOut' },
   },
   open: {
     opacity: 1,
     y: 0,
-    height: "auto",
-    transition: { duration: 0.15, ease: "easeInOut" },
+    height: 'auto',
+    transition: { duration: 0.15, ease: 'easeInOut' },
   },
 };
 
@@ -51,12 +51,12 @@ export const modalVariants = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.2, ease: "easeOut" },
+    transition: { duration: 0.2, ease: 'easeOut' },
   },
   exit: {
     opacity: 0,
     scale: 0.95,
-    transition: { duration: 0.15, ease: "easeIn" },
+    transition: { duration: 0.15, ease: 'easeIn' },
   },
 };
 
@@ -67,11 +67,11 @@ export const fadeVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.3, ease: "easeOut" },
+    transition: { duration: 0.3, ease: 'easeOut' },
   },
   exit: {
     opacity: 0,
-    transition: { duration: 0.2, ease: "easeIn" },
+    transition: { duration: 0.2, ease: 'easeIn' },
   },
 };
 
@@ -83,12 +83,12 @@ export const slideUpVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.3, ease: "easeOut" },
+    transition: { duration: 0.3, ease: 'easeOut' },
   },
   exit: {
     opacity: 0,
     y: 20,
-    transition: { duration: 0.2, ease: "easeIn" },
+    transition: { duration: 0.2, ease: 'easeIn' },
   },
 };
 
@@ -105,9 +105,9 @@ export const scaleVariants = {
  * Common transition presets
  */
 export const transitions = {
-  fast: { duration: 0.15, ease: "easeOut" },
-  normal: { duration: 0.2, ease: "easeOut" },
-  slow: { duration: 0.3, ease: "easeOut" },
-  spring: { type: "spring", stiffness: 300, damping: 20 },
-  springBouncy: { type: "spring", stiffness: 400, damping: 15 },
+  fast: { duration: 0.15, ease: 'easeOut' },
+  normal: { duration: 0.2, ease: 'easeOut' },
+  slow: { duration: 0.3, ease: 'easeOut' },
+  spring: { type: 'spring', stiffness: 300, damping: 20 },
+  springBouncy: { type: 'spring', stiffness: 400, damping: 15 },
 };

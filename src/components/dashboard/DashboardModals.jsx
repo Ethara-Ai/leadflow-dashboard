@@ -3,14 +3,14 @@
 // Centralized modal management component
 // =============================================================================
 
-import { memo } from "react";
-import { useDashboard } from "../../context/index.js";
-import NotesModal from "../NotesModal.jsx";
-import AlertsModal from "../AlertsModal.jsx";
-import FooterModal from "../FooterModal.jsx";
-import ProductModalContent from "../ProductModalContent.jsx";
-import ResourcesModalContent from "../ResourcesModalContent.jsx";
-import CompanyModalContent from "../CompanyModalContent.jsx";
+import { memo } from 'react';
+import { useDashboard } from '../../context/index.js';
+import NotesModal from '../NotesModal.jsx';
+import AlertsModal from '../AlertsModal.jsx';
+import FooterModal from '../FooterModal.jsx';
+import ProductModalContent from '../ProductModalContent.jsx';
+import ResourcesModalContent from '../ResourcesModalContent.jsx';
+import CompanyModalContent from '../CompanyModalContent.jsx';
 
 /**
  * DashboardModals Component
@@ -69,12 +69,20 @@ const DashboardModals = memo(function DashboardModals() {
       />
 
       {/* Product Information Modal */}
-      <FooterModal isOpen={isProductModalOpen} onClose={closeProductModal} title="Product Information">
+      <FooterModal
+        isOpen={isProductModalOpen}
+        onClose={closeProductModal}
+        title="Product Information"
+      >
         <ProductModalContent />
       </FooterModal>
 
       {/* Resources & Community Modal */}
-      <FooterModal isOpen={isResourcesModalOpen} onClose={closeResourcesModal} title="Resources & Community">
+      <FooterModal
+        isOpen={isResourcesModalOpen}
+        onClose={closeResourcesModal}
+        title="Resources & Community"
+      >
         <ResourcesModalContent />
       </FooterModal>
 

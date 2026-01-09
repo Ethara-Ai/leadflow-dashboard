@@ -3,9 +3,9 @@
 // Custom hook for injecting global styles into the document head
 // =============================================================================
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
-const THEME_STYLES_ID = "leadflow-theme-styles";
+const THEME_STYLES_ID = 'leadflow-theme-styles';
 
 // Reference counter for tracking how many components are using this hook
 let mountCount = 0;
@@ -29,7 +29,7 @@ const generateScrollbarStyles = (isDark) => `
 
   body {
     scrollbar-width: thin;
-    scrollbar-color: ${isDark ? "#475569 #1e293b" : "#cbd5e1 #f1f5f9"};
+    scrollbar-color: ${isDark ? '#475569 #1e293b' : '#cbd5e1 #f1f5f9'};
   }
 
   body::-webkit-scrollbar {
@@ -37,27 +37,27 @@ const generateScrollbarStyles = (isDark) => `
   }
 
   body::-webkit-scrollbar-track {
-    background: ${isDark ? "#1e293b" : "#f1f5f9"};
+    background: ${isDark ? '#1e293b' : '#f1f5f9'};
     border-radius: 4px;
   }
 
   body::-webkit-scrollbar-thumb {
-    background: ${isDark ? "#475569" : "#cbd5e1"};
+    background: ${isDark ? '#475569' : '#cbd5e1'};
     border-radius: 4px;
-    border: 2px solid ${isDark ? "#1e293b" : "#f1f5f9"};
+    border: 2px solid ${isDark ? '#1e293b' : '#f1f5f9'};
   }
 
   body::-webkit-scrollbar-thumb:hover {
-    background: ${isDark ? "#64748b" : "#94a3b8"};
+    background: ${isDark ? '#64748b' : '#94a3b8'};
   }
 
   body::-webkit-scrollbar-thumb:active {
-    background: ${isDark ? "#64748b" : "#94a3b8"};
+    background: ${isDark ? '#64748b' : '#94a3b8'};
   }
 
   .custom-scroll {
     scrollbar-width: thin;
-    scrollbar-color: ${isDark ? "#475569 #334155" : "#cbd5e1 #e2e8f0"};
+    scrollbar-color: ${isDark ? '#475569 #334155' : '#cbd5e1 #e2e8f0'};
   }
 
   .custom-scroll::-webkit-scrollbar {
@@ -65,17 +65,17 @@ const generateScrollbarStyles = (isDark) => `
   }
 
   .custom-scroll::-webkit-scrollbar-track {
-    background: ${isDark ? "#334155" : "#e2e8f0"};
+    background: ${isDark ? '#334155' : '#e2e8f0'};
     border-radius: 3px;
   }
 
   .custom-scroll::-webkit-scrollbar-thumb {
-    background: ${isDark ? "#475569" : "#cbd5e1"};
+    background: ${isDark ? '#475569' : '#cbd5e1'};
     border-radius: 3px;
   }
 
   .custom-scroll::-webkit-scrollbar-thumb:hover {
-    background: ${isDark ? "#64748b" : "#94a3b8"};
+    background: ${isDark ? '#64748b' : '#94a3b8'};
   }
 
   .hidden-scrollbar {
@@ -94,7 +94,7 @@ const generateScrollbarStyles = (isDark) => `
  */
 const updateStyles = (isDark) => {
   if (!currentStyleElement) {
-    currentStyleElement = document.createElement("style");
+    currentStyleElement = document.createElement('style');
     currentStyleElement.id = THEME_STYLES_ID;
     document.head.appendChild(currentStyleElement);
   }

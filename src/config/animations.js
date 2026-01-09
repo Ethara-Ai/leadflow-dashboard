@@ -28,13 +28,13 @@ export const TIMING = {
 
 export const EASING = {
   /** Standard ease out for most animations */
-  EASE_OUT: "easeOut",
+  EASE_OUT: 'easeOut',
   /** Standard ease in for exit animations */
-  EASE_IN: "easeIn",
+  EASE_IN: 'easeIn',
   /** Smooth ease in-out for bidirectional animations */
-  EASE_IN_OUT: "easeInOut",
+  EASE_IN_OUT: 'easeInOut',
   /** Spring animation for bouncy effects */
-  SPRING: { type: "spring", stiffness: 260, damping: 20 },
+  SPRING: { type: 'spring', stiffness: 260, damping: 20 },
 };
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ export const dropdownVariants = {
   open: {
     opacity: 1,
     y: 0,
-    height: "auto",
+    height: 'auto',
     transition: {
       duration: TIMING.FAST,
       ease: EASING.EASE_IN_OUT,
@@ -250,6 +250,6 @@ export const spinAnimation = {
   transition: {
     duration: 1,
     repeat: Infinity,
-    ease: "linear",
+    ease: 'linear',
   },
 };

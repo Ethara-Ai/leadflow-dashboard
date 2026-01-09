@@ -7,15 +7,15 @@
  */
 export const STORAGE_KEYS = {
   /** Theme preference (dark/light) */
-  THEME: "leadflow-theme",
+  THEME: 'leadflow-theme',
   /** User notes data */
-  NOTES: "leadflow-notes",
+  NOTES: 'leadflow-notes',
   /** Application settings */
-  SETTINGS: "leadflow-settings",
+  SETTINGS: 'leadflow-settings',
   /** User preferences */
-  PREFERENCES: "leadflow-preferences",
+  PREFERENCES: 'leadflow-preferences',
   /** Cached dashboard data */
-  DASHBOARD_CACHE: "leadflow-dashboard-cache",
+  DASHBOARD_CACHE: 'leadflow-dashboard-cache',
 };
 
 /**

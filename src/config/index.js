@@ -15,4 +15,4 @@ export {
   isFeatureEnabled,
   getAssetUrl,
   logConfig,
-} from "./env.js";
+} from './env.js';

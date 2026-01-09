@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------------
 // Storage Constants
 // -----------------------------------------------------------------------------
-export { STORAGE_KEYS, STORAGE_EXPIRY } from "./storage.js";
+export { STORAGE_KEYS, STORAGE_EXPIRY } from './storage.js';
 
 // -----------------------------------------------------------------------------
 // Animation Constants
@@ -20,7 +20,7 @@ export {
   slideUpVariants,
   scaleVariants,
   transitions,
-} from "./animations.js";
+} from './animations.js';
 
 // -----------------------------------------------------------------------------
 // Chart Data Constants
@@ -45,7 +45,7 @@ export {
   // Time Periods
   TIME_PERIODS,
   TIME_PERIOD_OPTIONS,
-} from "./chartData.js";
+} from './chartData.js';
 
 // -----------------------------------------------------------------------------
 // Mock Data Constants
@@ -66,7 +66,7 @@ export {
   ACTIVITY_TYPES,
   ACTIVITY_PRIORITIES,
   initialActivities,
-} from "./mockData.js";
+} from './mockData.js';
 
 // -----------------------------------------------------------------------------
 // Typography Constants

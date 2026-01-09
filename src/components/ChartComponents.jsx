@@ -1,7 +1,7 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
 
 /**
  * ChartLegend Component
@@ -19,7 +19,11 @@ export const ChartLegend = memo(function ChartLegend({ payload }) {
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-2 px-2" role="list" aria-label="Chart legend">
+    <div
+      className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-2 px-2"
+      role="list"
+      aria-label="Chart legend"
+    >
       {payload.map((entry, index) => (
         <div key={`legend-${index}`} className="flex items-center gap-1.5 sm:gap-2" role="listitem">
           <div
@@ -28,7 +32,7 @@ export const ChartLegend = memo(function ChartLegend({ payload }) {
             aria-hidden="true"
           />
           <span
-            className={`text-xs sm:text-sm font-medium ${isDark ? "text-slate-300" : "text-slate-600"}`}
+            className={`text-xs sm:text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-600'}`}
             style={{ fontFamily }}
           >
             {entry.value}
@@ -44,7 +48,7 @@ ChartLegend.propTypes = {
     PropTypes.shape({
       value: PropTypes.string,
       color: PropTypes.string,
-    }),
+    })
   ),
 };
 
@@ -68,7 +72,7 @@ export const XAxisTick = memo(function XAxisTick({ x, y, payload }) {
         y={0}
         dy={12}
         textAnchor="middle"
-        fill={isDark ? "#94a3b8" : "#475569"}
+        fill={isDark ? '#94a3b8' : '#475569'}
         fontSize={10}
         fontWeight="500"
         fontFamily={fontFamily}

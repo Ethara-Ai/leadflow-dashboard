@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { fontFamily } from "../constants";
+import { motion } from 'framer-motion';
+import { fontFamily } from '../constants';
 
 /**
  * LoadingScreen Component

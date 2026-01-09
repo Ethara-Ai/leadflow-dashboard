@@ -1,9 +1,19 @@
-import { useState, useMemo, useCallback, memo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Sun, Moon, RotateCcw, StickyNote, Menu, Download, FileText, FileDown } from "lucide-react";
-import { dropdownVariants, fontFamily } from "../constants";
-import useThemeSafe from "../hooks/useThemeSafe";
-import useScrollLock from "../hooks/useScrollLock";
+import { useState, useMemo, useCallback, memo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Zap,
+  Sun,
+  Moon,
+  RotateCcw,
+  StickyNote,
+  Menu,
+  Download,
+  FileText,
+  FileDown,
+} from 'lucide-react';
+import { dropdownVariants, fontFamily } from '../constants';
+import useThemeSafe from '../hooks/useThemeSafe';
+import useScrollLock from '../hooks/useScrollLock';
 
 /**
  * Header Component
@@ -43,7 +53,7 @@ const Header = memo(function Header({
 
   // Handler for logo keyboard interaction
   const handleLogoKeyDown = useCallback((e) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       window.location.reload();
     }
   }, []);
@@ -53,11 +63,11 @@ const Header = memo(function Header({
     () => ({
       fontFamily,
       textShadow: isDark
-        ? "0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)"
-        : "0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05)",
-      transform: "perspective(1000px) rotateX(5deg)",
+        ? '0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)'
+        : '0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05)',
+      transform: 'perspective(1000px) rotateX(5deg)',
     }),
-    [isDark],
+    [isDark]
   );
 
   const fontFamilyStyle = useMemo(() => ({ fontFamily }), []);
@@ -77,21 +87,21 @@ const Header = memo(function Header({
   const buttonClasses = useMemo(
     () =>
       isDark
-        ? "bg-slate-800/60 border-slate-700/50 shadow-lg shadow-slate-900/20"
-        : "bg-white/90 border-slate-200/60 shadow-lg shadow-slate-900/10",
-    [isDark],
+        ? 'bg-slate-800/60 border-slate-700/50 shadow-lg shadow-slate-900/20'
+        : 'bg-white/90 border-slate-200/60 shadow-lg shadow-slate-900/10',
+    [isDark]
   );
 
   // Memoize menu item classes
   const menuItemClasses = useMemo(
-    () => (isDark ? "text-slate-300 hover:bg-slate-700" : "text-slate-700 hover:bg-slate-100"),
-    [isDark],
+    () => (isDark ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-700 hover:bg-slate-100'),
+    [isDark]
   );
 
   // Memoize dropdown container classes
   const dropdownClasses = useMemo(
-    () => (isDark ? "bg-slate-800/95 border-slate-700" : "bg-white/95 border-slate-300"),
-    [isDark],
+    () => (isDark ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-300'),
+    [isDark]
   );
 
   // Memoize handlers for menu items
@@ -161,13 +171,17 @@ const Header = memo(function Header({
           onKeyDown={handleLogoKeyDown}
           aria-label="Reload page"
         >
-          <div className={`p-2 sm:p-2.5 md:p-3 rounded-xl sm:rounded-2xl ${isDark ? "bg-blue-900/30" : "bg-blue-100"}`}>
-            <Zap className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${isDark ? "text-blue-400" : "text-blue-600"}`} />
+          <div
+            className={`p-2 sm:p-2.5 md:p-3 rounded-xl sm:rounded-2xl ${isDark ? 'bg-blue-900/30' : 'bg-blue-100'}`}
+          >
+            <Zap
+              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}
+            />
           </div>
           <div className="flex flex-col justify-center h-full">
             <h1
               className={`text-[2rem] font-black tracking-tight leading-none ${
-                isDark ? "text-white" : "text-slate-800"
+                isDark ? 'text-white' : 'text-slate-800'
               }`}
               style={titleStyle}
             >
@@ -175,7 +189,7 @@ const Header = memo(function Header({
             </h1>
             <p
               className={`hidden lg:block text-[0.625rem] sm:text-[0.75rem] font-medium leading-tight mt-1.5 ${
-                isDark ? "text-slate-300" : "text-slate-600"
+                isDark ? 'text-slate-300' : 'text-slate-600'
               }`}
               style={fontFamilyStyle}
             >
@@ -191,7 +205,7 @@ const Header = memo(function Header({
         <motion.div className="relative lg:hidden">
           <motion.button
             className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-              isDark ? "text-slate-300" : "text-slate-700"
+              isDark ? 'text-slate-300' : 'text-slate-700'
             } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
             onClick={toggleHamburgerMenu}
             whileHover={buttonHover}
@@ -207,7 +221,11 @@ const Header = memo(function Header({
             {isHamburgerMenuOpen && (
               <>
                 {/* Backdrop to close menu when clicking outside */}
-                <div className="fixed inset-0 z-40" onClick={closeHamburgerMenu} aria-hidden="true" />
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={closeHamburgerMenu}
+                  aria-hidden="true"
+                />
                 <motion.div
                   className={`absolute right-0 mt-2 w-56 ${dropdownClasses} backdrop-blur-md rounded-xl border shadow-xl overflow-hidden z-50`}
                   initial="closed"
@@ -227,8 +245,12 @@ const Header = memo(function Header({
                       style={fontFamilyStyle}
                       role="menuitem"
                     >
-                      {isDark ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4" />}
-                      {isDark ? "Light Mode" : "Dark Mode"}
+                      {isDark ? (
+                        <Sun className="w-4 h-4 text-yellow-400" />
+                      ) : (
+                        <Moon className="w-4 h-4" />
+                      )}
+                      {isDark ? 'Light Mode' : 'Dark Mode'}
                     </motion.button>
 
                     {/* Refresh Button */}
@@ -242,7 +264,7 @@ const Header = memo(function Header({
                       role="menuitem"
                     >
                       <RotateCcw
-                        className={`w-4 h-4 ${isDark ? "text-blue-400" : ""} ${isLoading ? "animate-spin" : ""}`}
+                        className={`w-4 h-4 ${isDark ? 'text-blue-400' : ''} ${isLoading ? 'animate-spin' : ''}`}
                       />
                       Refresh Data
                     </motion.button>
@@ -297,34 +319,38 @@ const Header = memo(function Header({
         <motion.button
           onClick={onToggleDarkMode}
           className={`hidden lg:flex p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-            isDark ? "text-yellow-400" : "text-slate-700"
+            isDark ? 'text-yellow-400' : 'text-slate-700'
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
           whileHover={buttonHover}
           whileTap={buttonTap}
-          aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
         >
-          {isDark ? <Sun className="w-4 h-4 sm:w-5 sm:h-5" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5" />}
+          {isDark ? (
+            <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
+          ) : (
+            <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
+          )}
         </motion.button>
 
         {/* Refresh Button */}
         <motion.button
           onClick={onRefresh}
           className={`hidden lg:flex p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-            isDark ? "text-blue-400" : "text-slate-700"
+            isDark ? 'text-blue-400' : 'text-slate-700'
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
           whileHover={buttonHover}
           whileTap={buttonTap}
           disabled={isLoading}
           aria-label="Refresh data"
         >
-          <RotateCcw className={`w-4 h-4 sm:w-5 sm:h-5 ${isLoading ? "animate-spin" : ""}`} />
+          <RotateCcw className={`w-4 h-4 sm:w-5 sm:h-5 ${isLoading ? 'animate-spin' : ''}`} />
         </motion.button>
 
         {/* Notes Button */}
         <motion.button
           onClick={onOpenNotes}
           className={`hidden lg:flex p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-            isDark ? "text-slate-300" : "text-slate-700"
+            isDark ? 'text-slate-300' : 'text-slate-700'
           } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
           whileHover={buttonHover}
           whileTap={buttonTap}
@@ -337,7 +363,7 @@ const Header = memo(function Header({
         <motion.div className="relative hidden lg:block">
           <motion.button
             className={`p-2 sm:p-2.5 md:p-3 rounded-lg sm:rounded-xl transition-all duration-200 ${buttonClasses} ${
-              isDark ? "text-slate-300" : "text-slate-700"
+              isDark ? 'text-slate-300' : 'text-slate-700'
             } border backdrop-blur-lg hover:shadow-xl cursor-pointer`}
             onClick={toggleMobileMenu}
             whileHover={buttonHover}

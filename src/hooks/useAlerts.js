@@ -3,9 +3,9 @@
 // Custom hook for managing alerts state
 // =============================================================================
 
-import { useState, useCallback } from "react";
-import { initialAlerts, MAX_ALERTS, ALERT_TYPES } from "../constants/index.js";
-import { getAlertType } from "../utils.js";
+import { useState, useCallback } from 'react';
+import { initialAlerts, MAX_ALERTS, ALERT_TYPES } from '../constants/index.js';
+import { getAlertType } from '../utils.js';
 
 /**
  * Custom hook for managing alerts state
@@ -26,20 +26,20 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = MAX_ALERTS } = {}
     (alertOrMessage) => {
       let newAlert;
 
-      if (typeof alertOrMessage === "string") {
+      if (typeof alertOrMessage === 'string') {
         const message = alertOrMessage;
         newAlert = {
           id: Date.now(),
           message,
           type: getAlertType(message),
-          time: "Just now",
+          time: 'Just now',
           timestamp: new Date().toISOString(),
         };
       } else {
         // Use provided alert object, ensuring it has an id
         newAlert = {
           id: Date.now(),
-          time: "Just now",
+          time: 'Just now',
           timestamp: new Date().toISOString(),
           ...alertOrMessage,
         };
@@ -47,7 +47,7 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = MAX_ALERTS } = {}
 
       setAlerts((prev) => [newAlert, ...prev].slice(0, maxAlerts));
     },
-    [maxAlerts],
+    [maxAlerts]
   );
 
   /**
@@ -63,7 +63,9 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = MAX_ALERTS } = {}
    * @param {number|string} alertId - ID of the alert to dismiss
    */
   const dismissAlert = useCallback((alertId) => {
-    setAlerts((prev) => prev.map((alert) => (alert.id === alertId ? { ...alert, dismissed: true } : alert)));
+    setAlerts((prev) =>
+      prev.map((alert) => (alert.id === alertId ? { ...alert, dismissed: true } : alert))
+    );
   }, []);
 
   /**
@@ -99,13 +101,15 @@ const useAlerts = ({ initialState = initialAlerts, maxAlerts = MAX_ALERTS } = {}
     (type) => {
       return alerts.filter((alert) => alert.type === type && !alert.dismissed);
     },
-    [alerts],
+    [alerts]
   );
 
   /**
    * Check if there are any warning alerts
    */
-  const hasWarnings = alerts.some((alert) => alert.type === ALERT_TYPES.WARNING && !alert.dismissed);
+  const hasWarnings = alerts.some(
+    (alert) => alert.type === ALERT_TYPES.WARNING && !alert.dismissed
+  );
 
   /**
    * Check if there are any error alerts
