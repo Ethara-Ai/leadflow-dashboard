@@ -70,8 +70,8 @@ const ResourcesModalContent = ({ darkMode: darkModeOverride }) => {
               TechCorp Enterprise Solutions
             </h6>
             <p className={`text-sm mt-1 ${textClasses}`} style={{ fontFamily }}>
-              How leading enterprises use LeadFlow for comprehensive pipeline management and
-              achieved 40% increase in conversion rates.
+              How leading enterprises use LeadFlow for comprehensive pipeline management and achieve
+              a 40% increase in conversion rates.
             </p>
           </div>
           <div
