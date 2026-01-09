@@ -395,7 +395,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                               </p>
                               <motion.button
                                 onClick={() => setSelectedDay(null)}
-                                className={`p-1 rounded-md cursor-pointer ${
+                                className={`meeting-close-btn p-1.5 sm:p-1 rounded-md cursor-pointer ${
                                   isDark
                                     ? 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-600/50'
                                     : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200'
@@ -403,7 +403,7 @@ const MeetingScheduleCard = memo(function MeetingScheduleCard({
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.95 }}
                               >
-                                <span className="text-xs">✕</span>
+                                <span className="text-sm sm:text-xs">✕</span>
                               </motion.button>
                             </div>
                             <div className="space-y-2">

@@ -567,3 +567,98 @@
 [class*='transition-transform'] {
   transition-property: all;
 }
+
+/* ==========================================
+   Mobile-Specific UI Enhancements
+   ========================================== */
+
+/* 1. Increase meeting close button size on mobile devices */
+@media (max-width: 768px) {
+  /* Meeting details close button - increase size to match meeting name */
+  .meeting-close-btn {
+    font-size: 0.875rem !important;
+    padding: 0.375rem !important;
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* 2. Modal padding on mobile devices for better visual appeal */
+@media (max-width: 768px) {
+  /* Add horizontal padding to modal containers on mobile */
+  .fixed.inset-0.flex.items-start.justify-center,
+  .fixed.inset-0.flex.items-center.justify-center {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Ensure modal content has proper spacing from edges */
+  .fixed.inset-0 > [role='dialog'],
+  .fixed.inset-0 > div > [role='dialog'] {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    max-width: calc(100vw - 2rem) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Slightly less padding on very small screens but still maintain spacing */
+  .fixed.inset-0.flex.items-start.justify-center,
+  .fixed.inset-0.flex.items-center.justify-center {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  .fixed.inset-0 > [role='dialog'],
+  .fixed.inset-0 > div > [role='dialog'] {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    max-width: calc(100vw - 1.5rem) !important;
+  }
+}
+
+/* 3. Prevent zoom on input focus for mobile devices (iOS fix) */
+@media (max-width: 768px) {
+  /* Set minimum font-size of 16px on inputs to prevent iOS zoom */
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='number'],
+  input[type='tel'],
+  input[type='url'],
+  input[type='search'],
+  input[type='date'],
+  input[type='time'],
+  input[type='datetime-local'],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Ensure the viewport doesn't zoom on focus */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    font-size: 16px !important;
+  }
+}
+
+/* Reset zoom behavior - ensure proper viewport on blur */
+@media (max-width: 768px) {
+  /* Use touch-action to help with zoom behavior */
+  input,
+  textarea,
+  select {
+    touch-action: manipulation;
+  }
+
+  /* Prevent double-tap zoom on interactive elements */
+  button,
+  a,
+  [role='button'] {
+    touch-action: manipulation;
+  }
+}
