@@ -654,3 +654,9 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 Built for sales and business development professionals.
 
 **Copyright 2026 LeadFlow. All rights reserved.**
+
+---
+
+## Copyright
+
+Copyright (c) 2026 Green Rider Technology LLP (Ethara AI). All rights reserved.
