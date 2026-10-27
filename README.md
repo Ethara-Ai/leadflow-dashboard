@@ -7,7 +7,6 @@ A modern, responsive dashboard for sales teams, marketing professionals, and bus
 ![React](https://img.shields.io/badge/React-19.2.0-61dafb?style=flat-square&logo=react)
 ![Vite](https://img.shields.io/badge/Vite-7.2.4-646cff?style=flat-square&logo=vite)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.18-38bdf8?style=flat-square&logo=tailwindcss)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 ---
 
@@ -507,7 +506,6 @@ leadflow-dashboard/
 ├── .gitignore            # Git ignore rules
 ├── eslint.config.js      # ESLint configuration
 ├── index.html            # HTML template
-├── LICENSE               # MIT License
 ├── package.json          # Project dependencies
 ├── PROMPT.md             # Project specification
 ├── README.md             # Project documentation
@@ -634,12 +632,6 @@ We welcome contributions from the community! Here is how you can help:
 - Use GitHub Issues to report bugs or request features
 - Include clear reproduction steps for bugs
 - Provide screenshots or recordings when helpful
-
----
-
-## License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
